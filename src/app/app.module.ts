@@ -14,11 +14,19 @@ import { SampleIconsPage } from '../pages/sample-icons/sample-icons';
 import { ConfigPage } from '../pages/config/config';
 import { PdfPage } from '../pages/pdf/pdf';
 
+
+import { CustomerPage } from '../pages/customer/customer';
+import { InvoicePage } from '../pages/invoice/invoice';
+import { ReportPage } from '../pages/report/report';
+import { TabsPage } from '../pages/tabs/tabs';
+
 import { StorageServiceModule } from 'angular-webstorage-service';
 import { ApiStorageService } from '../services/apiStorageService';
 
 import { ApiAuthService } from '../services/apiAuthService';
 import { ApiImageService } from '../services/apiImageService';
+
+import { ApiHttpPublicService } from '../services/apiHttpPublicServices'
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptor } from '../interceptors/requestInterceptor';
@@ -28,6 +36,11 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
 @NgModule({
   declarations: [
     MyApp,
+    CustomerPage,
+    InvoicePage,
+    ReportPage,
+    TabsPage,
+
     HomePage,
     RegisterPage,
     LoginPage,
@@ -47,6 +60,11 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    CustomerPage,
+    InvoicePage,
+    ReportPage,
+    TabsPage,
+
     HomePage,
     RegisterPage,
     LoginPage,
@@ -61,6 +79,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
     ApiAuthService,
     ApiImageService,
     ApiStorageService,
+    ApiHttpPublicService,
     RequestInterceptor,
     {
       provide: HTTP_INTERCEPTORS,
