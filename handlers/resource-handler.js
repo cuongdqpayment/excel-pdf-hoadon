@@ -7,6 +7,7 @@ var exceltojson; //ham phu thuoc vao xlsx/xls
 const PDFDocument = require('pdfkit');
 var fs = require('fs');
 
+const vnd = require('../utils/number-2-vnd')
 
 class ResourceHandler {
 
@@ -115,6 +116,9 @@ class ResourceHandler {
                 //{"status":"","stt":"1","full_name":"Phan Thanh Hiệp","type":"Hộ KH Bình Thường","tax_id":"","charge":"20,000","area":"Thôn Lương Viện","address":"Thôn Lương Viện","phone":"","staff":"Bốn","cus_id":"R000000001","last_name":"Phan Thanh","first_name":"Hiệp","type_id":"1","price_id":"1","area_id":"1","staff_id":"1","start_date":"01/01/2018","end_date":"","change_date":""}
 
                 result.forEach((el,idx) => {
+
+                    let charge = parseInt(el.charge.replace(',',''));
+
                     if (idx>0) doc.addPage();
                     doc.text(el.cus_id, 100);
                     doc.moveDown(0.5)
@@ -124,7 +128,9 @@ class ResourceHandler {
                     doc.moveDown(0.5)
                     doc.text(el.tax_id);
                     doc.moveDown(0.5)
-                    doc.text(el.charge);
+                    doc.text(charge);
+                    doc.moveDown(0.5)
+                    doc.text(vnd.DocTienBangChu(charge));
                     doc.moveDown()
                     doc.text(el.staff);
 
@@ -139,7 +145,9 @@ class ResourceHandler {
                     doc.moveDown(0.5)
                     doc.text(el.tax_id);
                     doc.moveDown(0.5)
-                    doc.text(el.charge);
+                    doc.text(charge);
+                    doc.moveDown(0.5)
+                    doc.text(vnd.DocTienBangChu(charge));
                     doc.moveDown(0.5)
                     doc.text(el.staff);
                 });
