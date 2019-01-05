@@ -1,5 +1,7 @@
 {
   "name": "excel-pdf-hoadon",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }
