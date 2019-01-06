@@ -12,7 +12,8 @@ for (let sheet_name in results) {
     results[sheet_name].forEach((e,i) => {
         if (i==0){
             for (let col in e){
-                console.log(sheet_name+';'+e[col]);                
+                //in tao bang
+                //console.log(sheet_name+';'+e[col]);                
             }
         }
 });

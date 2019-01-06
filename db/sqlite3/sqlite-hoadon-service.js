@@ -80,7 +80,7 @@ class HandleDatabase {
             tables.forEach(tablename=>{
                 let sheet = results[tablename];
                 if (sheet!=undefined){
-                    console.log('sheet-tablename: ',tablename);
+                    console.log('sheet-tablename insert db: ',tablename);
                     //chuyen doi kieu doc dong 1 la header
                     let header=sheet[0];
                     let jsonOut = [];
