@@ -3,7 +3,7 @@ var xlsxtojson = require("xlsx-to-json-lc");
 
 var exceltojson; //ham phu thuoc vao xlsx/xls
 
-var filename = './db/ql-hoadon.xlsx';
+var filename = './db/admin-setting.xlsx';
 
 
 exceltojson = xlsxtojson;
@@ -17,7 +17,7 @@ try {
         if(err) {
             console.log(err);
         } 
-        console.log(result[0]);
+        console.log(result);
 
     });
 } catch (e){

@@ -55,7 +55,6 @@ var DocSo3ChuSo = (baso)=>{
 }
 
 //2. Hàm đọc số thành chữ (Sử dụng hàm đọc số có ba chữ số)
-
 var DocTienBangChu = (SoTien)=>{
     var lan=0;
     var i=0;
@@ -138,8 +137,18 @@ var DocTienBangChu = (SoTien)=>{
    return KetQua + ' đồng./.';//.substring(0, 1);//.toUpperCase();// + KetQua.substring(1);
 }
 
+
+var VietHoaHoVaTen = (str)=>{
+    str = str.split(" ");
+    for (var i = 0, x = str.length; i < x; i++) {
+        str[i] = str[i][0].toUpperCase() + str[i].substr(1);
+    }
+    return str.join(" ");
+}
+
 module.exports = {
-    DocTienBangChu: DocTienBangChu
+    DocTienBangChu: DocTienBangChu,
+    VietHoaHoVaTen: VietHoaHoVaTen
 };
 
 //console.log(DocTienBangChu(13445555));
