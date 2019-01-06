@@ -1,4 +1,9 @@
+
 "use strict"
+/**
+ * doi tuong sqlite-dao - cuong.dq version 3.0 
+ * repaired 20190105: col.value !=undefined && !=null 
+ */
 const sqlite3 = require('sqlite3').verbose();
 const isSilence = require('./sqlite-config').keep_silence;
 

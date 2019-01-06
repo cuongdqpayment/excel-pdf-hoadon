@@ -7,15 +7,27 @@ const dirDB = 'db';
 const xlsxtojson1st = require("xlsx-to-json-lc");
 const databaseSetting = './db/admin-setting.xlsx';
 const excelToJsonAll = require('convert-excel-to-json');
-
+const dbFileName = './' + dirDB + '/hoadon-database.db';
 
 if (!fs.existsSync(dirDB)) {
     fs.mkdirSync(dirDB);
 }
-const db = new SQLiteDAO('./' + dirDB + '/hoadon-database.db');
+
+const db = new SQLiteDAO(dbFileName);
+
 class HandleDatabase {
-    //khoi tao cac bang luu so lieu
+
     init(){
+        if (fs.existsSync(databaseSetting)) {
+            this.initTable();
+        }else if (fs.existsSync(dbFileName)){
+            console.log('Database '+ dbFileName + ' ready!');
+        }else{
+            throw 'No Database Setting xlsx and Database Sqlite'
+        }
+    }
+    //khoi tao cac bang luu so lieu
+    initTable(){
         //doc excel
         try {
             xlsxtojson1st({
