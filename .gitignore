@@ -29,6 +29,7 @@ plugins/android.json
 plugins/ios.json
 #bo qua file setting parameter he thong
 db/admin-setting.xlsx
+db/~$*.*
 #www/
 $RECYCLE.BIN/
 
