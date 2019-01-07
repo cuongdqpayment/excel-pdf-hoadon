@@ -110,7 +110,7 @@ var createExcel = (jsonRows)=>{
         });
       }                
       
-      const dataset = jsonRows.sort(); //sap xep mat dinh theo stt
+      const dataset = jsonRows; //sap xep mat dinh theo stt
       
     return excel.buildExport(
         [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
@@ -157,6 +157,7 @@ class ResourceHandler {
                       where a.type_id = b.code\
                       and a.area_id = c.code\
                       and a.staff_id = d.code\
+                      order by stt\
                       ')
             .then(results=>{
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -363,6 +364,7 @@ class ResourceHandler {
                       where a.type_id = b.code\
                       and a.area_id = c.code\
                       and a.staff_id = d.code\
+                      order by stt\
                       ')
             .then(results=>{
               let excelBuffuer = createExcel(results);
@@ -405,6 +407,7 @@ class ResourceHandler {
                       where a.type_id = b.code\
                       and a.area_id = c.code\
                       and a.staff_id = d.code\
+                      order by stt\
                       ')
             .then(results=>{
               let excelBuffuer = createExcel(results);
