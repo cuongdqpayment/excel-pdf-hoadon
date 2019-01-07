@@ -9,7 +9,7 @@ const fs = require('fs');
 
 const vnd = require('../utils/number-2-vnd');
 
-const db = require('./db/sqlite3/sqlite-hoadon-service.js');
+const db = require('../db/sqlite3/sqlite-hoadon-service.js');
 setTimeout(()=>{
   db.handler.init();
 },1000); //doi 3 giay de oracle ket noi
@@ -324,6 +324,8 @@ class ResourceHandler {
                       ')
             .then(results=>{
               let excelBuffuer = createExcel(results);
+              //thuc hien gui file kieu dinh kem 
+              //khong view ma tu save vao download tren client
                res.attachment('ds_khach_hang_hoa_don.xlsx'); // ten file tra ve 
                res.send(excelBuffuer);
                //res.end();
