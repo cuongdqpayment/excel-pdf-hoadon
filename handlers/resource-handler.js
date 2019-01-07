@@ -474,7 +474,7 @@ class ResourceHandler {
         db.db.getRsts(sql)
             .then(results=>{
 
-              let outputFilename = './pdf/hoadon_'+cust_id+'.pdf';
+              let outputFilename = './pdf/hoadon_1.pdf';
               let stream = createPdfInvoices(results,outputFilename);
               
               stream.on('finish', () =>{

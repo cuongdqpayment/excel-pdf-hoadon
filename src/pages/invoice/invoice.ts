@@ -20,6 +20,6 @@ export class InvoicePage {
   }
 
   getInvoices(){
-    this.pdfLink = this.sanitizer.bypassSecurityTrustResourceUrl(this.resourceServer + "/excel/invoices");
+    this.pdfLink = this.sanitizer.bypassSecurityTrustResourceUrl(this.resourceServer + "/db/pdf-invoices");
   }
 }
