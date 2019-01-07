@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, Slides } from 'ionic-angular';
+
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { ApiHttpPublicService } from '../../services/apiHttpPublicServices'
 
@@ -9,21 +11,38 @@ import { ApiHttpPublicService } from '../../services/apiHttpPublicServices'
   templateUrl: 'customer.html'
 })
 export class CustomerPage {
+  @ViewChild(Slides) slides: Slides;
+  slideIndex = 0;
+
   customers:any = [];
   customersOrigin:any = [];
   isSearch: boolean = false;
   searchString:string='';
   maxCurrentId:number=0;
+  currentCustomer:any;
+
+  public myFromGroup: FormGroup;
 
   constructor(
               private navCtrl: NavController,
+              private formBuilder: FormBuilder,
               private http: ApiHttpPublicService
               ) {
 
   }
 
   ngOnInit(){
-    this.getCustomers();
+    this.getCustomers(); //cai nay lay tu load trang dau luon
+    //khong cho quet bang tay
+    this.slides.lockSwipes(true);
+    this.myFromGroup = this.formBuilder.group({
+      full_name: '',
+      address: '',
+      phone: '',
+      email: '',
+      area: '',
+      type: '',
+    });
   }
 
   getCustomers(){
@@ -64,5 +83,56 @@ export class CustomerPage {
   searchEnter(){
     this.isSearch = false;
   }
+
+  gotoSlideEdit(cus){
+    //console.log('cus',cus);
+    this.currentCustomer = cus;
+    this.myFromGroup = this.formBuilder.group({
+      full_name: cus.full_name,
+      address: cus.address?cus.address:cus.area,
+      phone: cus.phone,
+      email: cus.email,
+      area: cus.area,
+      type: cus.cust_type,
+    });
+    this.goToSlide(1);
+  }
+  /**
+   * Dieu khien slide
+   * @param i 
+   */
+  goToSlide(i) {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(i, 500);
+    this.slides.lockSwipes(true);
+  }
+
+  /**
+   * xac dinh slide
+   */
+  slideChanged() {
+    this.slideIndex = this.slides.getActiveIndex();
+  }
+
+  goBack(){
+    this.goToSlide(0);
+  }
+
+  /**
+   * Lay noi dung co thay doi
+   * luu vao array customers luu xuong dia, luu csdl
+   */
+  onSubmit(){
+    this.currentCustomer.full_name = this.myFromGroup.get('full_name').value;
+    this.currentCustomer.address = this.myFromGroup.get('address').value;
+    this.currentCustomer.phone = this.myFromGroup.get('phone').value;
+    this.currentCustomer.email = this.myFromGroup.get('email').value;
+    this.currentCustomer.change_date = new Date().getTime();
+
+    
+
+    this.goToSlide(0);
+  }
+
 
 }
