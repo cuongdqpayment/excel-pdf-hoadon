@@ -4,8 +4,8 @@ const resourceHandler = require('../handlers/resource-handler');
 let handlers = resourceHandler.ResourceHandler;
 //kiem tra token dung
 router.get('/customers', handlers.getCustomers);
-router.get('/invoice', handlers.getInvoice);
-router.get('/invoices', handlers.getInvoices);
+router.get('/pdf-invoice', handlers.getPdfInvoice);
+router.get('/pdf-invoices', handlers.getPdfInvoices);
 router.get('/save-customers', handlers.getAttachCustomers);
 router.get('/view-customers', handlers.viewExcelCustomers);
 

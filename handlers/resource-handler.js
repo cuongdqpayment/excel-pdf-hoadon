@@ -128,6 +128,46 @@ var createExcel = (jsonRows)=>{
 class ResourceHandler {
 
     getCustomers(req, res, next) {
+        db.db.getRsts('select \
+                        a.stt\
+                        ,a.full_name\
+                        ,a.tax_id\
+                        ,a.address\
+                        ,a.email\
+                        ,a.phone\
+                        ,a.cust_id\
+                        ,a.last_name \
+                        ,a.first_name \
+                        ,a.type_id\
+                        ,b.description as cust_type\
+                        ,b.value as charge\
+                        ,a.price_id\
+                        ,a.area_id\
+                        ,c.description as area\
+                        ,a.staff_id\
+                        ,d.description as staff\
+                        ,a.start_date\
+                        ,a.end_date\
+                        ,a.change_date\
+                        ,a.status\
+                     from customers a\
+                     ,(select code, description, value from parameters where type = 5) b\
+                     ,(select code, description from parameters where type = 6) c\
+                     ,(select code, description from parameters where type = 4) d\
+                      where a.type_id = b.code\
+                      and a.area_id = c.code\
+                      and a.staff_id = d.code\
+                      ')
+            .then(results=>{
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify(results));
+            })
+            .catch(err=>{
+                res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                res.end(JSON.stringify(err));
+            });
+    }
+    getCustomersFromExcel(req, res, next) {
 
         var inputFilename = './db/ql-hoadon.xlsx';
 
@@ -153,12 +193,9 @@ class ResourceHandler {
         } catch (e) {
             throw "Corupted excel file";
         }
-
-
-
     }
 
-    getInvoice(req, res, next) {
+    getPdfInvoice(req, res, next) {
         var doc = new PDFDocument();
         var outputFilename = './pdf/hoadon.pdf';
         var stream = doc.pipe(fs.createWriteStream(outputFilename));
@@ -200,7 +237,7 @@ class ResourceHandler {
         });
     }
 
-    getInvoices(req, res, next) {
+    getPdfInvoices(req, res, next) {
 
         var inputFilename = './db/ql-hoadon.xlsx';
         exceltojson = xlsxtojson;
@@ -329,11 +366,8 @@ class ResourceHandler {
                       ')
             .then(results=>{
               let excelBuffuer = createExcel(results);
-              //thuc hien gui file kieu dinh kem 
-              //khong view ma tu save vao download tren client
                res.attachment(new Date().toISOString().replace(/T/, '_').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '')+'_ds_khach_hang_hoa_don.xlsx'); // ten file tra ve 
                res.send(excelBuffuer);
-               //res.end();
             })
             .catch(err=>{
                 res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -376,7 +410,6 @@ class ResourceHandler {
               let excelBuffuer = createExcel(results);
                //show file excel
                res.writeHead(200, { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;'
-                                    //,"Content-disposition": "attachment; filename=" + new Date().toISOString().replace(/T/, '_').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '')+'_ds_khach_hang_hoa_don.xlsx'
                                     ,"Content-disposition": "filename=" + new Date().toISOString().replace(/T/, '_').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '')+'_ds_khach_hang_hoa_don.xlsx'
                                      });
                res.end(excelBuffuer);
