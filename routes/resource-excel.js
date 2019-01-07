@@ -6,5 +6,6 @@ let handlers = resourceHandler.ResourceHandler;
 router.get('/customers', handlers.getCustomers);
 router.get('/invoice', handlers.getInvoice);
 router.get('/invoices', handlers.getInvoices);
+router.get('/backup-customers', handlers.getBackupCustomers);
 
 module.exports = router;

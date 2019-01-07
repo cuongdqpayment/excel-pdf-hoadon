@@ -1,4 +1,9 @@
+
 "use strict"
+/**
+ * doi tuong sqlite-dao - cuong.dq version 3.0 
+ * repaired 20190105: col.value !=undefined && !=null 
+ */
 const sqlite3 = require('sqlite3').verbose();
 const isSilence = require('./sqlite-config').keep_silence;
 
@@ -64,7 +69,7 @@ class SQLiteDAO {
     let sqlValues='';
     let params = [];
     for (let col of insertTable.cols) {
-      if (col.value){
+      if (col.value!=undefined&&col.value!=null){
         params.push(col.value);
         if (i++ == 0) {
           sqlNames += col.name;
@@ -104,7 +109,7 @@ class SQLiteDAO {
     let i = 0;
     let params = [];
     for (let col of updateTable.cols) {
-      if (col.value){
+      if (col.value!=undefined&&col.value!=null){
         //neu gia tri khong phai undefined moi duoc thuc thi
         params.push(col.value);
         if (i++ == 0) {
@@ -117,7 +122,7 @@ class SQLiteDAO {
 
     i = 0;
     for (let col of updateTable.wheres) {
-      if (col.value){
+      if (col.value!=undefined&&col.value!=null){
         params.push(col.value);
         if (i++ == 0) {
           sql += ' WHERE ' + col.name + '= ?';
@@ -141,7 +146,7 @@ class SQLiteDAO {
     let i = 0;
     let params = [];
     for (let col of deleteTable.wheres) {
-      if (col.value){
+      if (col.value!=undefined&&col.value!=null){
         params.push(col.value);
         if (i++ == 0) {
           sql += ' WHERE ' + col.name + '= ?';
@@ -175,7 +180,7 @@ class SQLiteDAO {
     sql = 'SELECT '+sqlNames+' FROM ' + selectTable.name;
     i = 0;
     for (let col of selectTable.wheres) {
-      if (col.value){
+      if (col.value!=undefined&&col.value!=null){
         params.push(col.value);
         if (i++ == 0) {
           sql += ' WHERE ' + col.name + '= ?';
