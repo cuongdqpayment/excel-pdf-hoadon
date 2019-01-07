@@ -10,14 +10,16 @@ const fs = require('fs');
 const vnd = require('../utils/number-2-vnd');
 
 const db = require('../db/sqlite3/sqlite-hoadon-service.js');
+
 setTimeout(()=>{
   db.handler.init();
 },1000); //doi 3 giay de oracle ket noi
 
 
 var createExcel = (jsonRows)=>{
-    
+    //lay doi tuong excel
     const excel = require('node-excel-export');
+    //dinh nghia style de gan de dan
     const styles = {
         headerDark: {
           fill: {
@@ -47,77 +49,80 @@ var createExcel = (jsonRows)=>{
               rgb: 'FF00FF00'
             }
           }
+        },
+        cellBrơwn: {
+          fill: {
+            fgColor: {
+              rgb: 'ccccd485'
+            }
+          }
+        },
+        cellRed: {
+          fill: {
+            fgColor: {
+              rgb: 'FFFF0000'
+            }
+          }
         }
+        
       };
-       
-      //Array of objects representing heading rows (very top)
-      const heading = [
-        [{value: 'a1', style: styles.headerDark}, {value: 'b1', style: styles.headerDark}, {value: 'c1', style: styles.headerDark}],
-        ['a2', 'b2', 'c2'] // <-- It can be only values
-      ];
-       
-      //Here you specify the export structure
-      const specification = {
-        customer_name: { // <- the key should match the actual data key
-          displayName: 'Customer', // <- Here you specify the column header
-          headerStyle: styles.headerDark, // <- Header style
-          cellStyle: function(value, row) { // <- style renderer function
-            // if the status is 1 then color in green else color in red
-            // Notice how we use another cell value to style the current one
-            return (row.status_id == 1) ? styles.cellGreen : {fill: {fgColor: {rgb: 'FFFF0000'}}}; // <- Inline cell style is possible 
-          },
-          width: 120 // <- width in pixels
-        },
-        status_id: {
-          displayName: 'Status',
-          headerStyle: styles.headerDark,
-          cellFormat: function(value, row) { // <- Renderer function, you can access also any row.property
-            return (value == 1) ? 'Active' : 'Inactive';
-          },
-          width: '10' // <- width in chars (when the number is passed as string)
-        },
-        note: {
-          displayName: 'Description',
-          headerStyle: styles.headerDark,
-          cellStyle: styles.cellPink, // <- Cell style
-          width: 220 // <- width in pixels
-        }
-      }
-       
-      // The data set should have the following shape (Array of Objects)
-      // The order of the keys is irrelevant, it is also irrelevant if the
-      // dataset contains more fields as the report is build based on the
-      // specification provided above. But you should have all the fields
-      // that are listed in the report specification
-      const dataset = [
-        {customer_name: 'IBM', status_id: 1, note: 'some note', misc: 'not shown'},
-        {customer_name: 'HP', status_id: 0, note: 'some note'},
-        {customer_name: 'MS', status_id: 0, note: 'some note', misc: 'not shown'}
-      ]
-       
-      // Define an array of merges. 1-1 = A:1
-      // The merges are independent of the data.
-      // A merge will overwrite all data _not_ in the top-left cell.
-      const merges = [
-        { start: { row: 7, column: 1 }, end: { row: 7, column: 10 } },
-        { start: { row: 8, column: 1 }, end: { row: 8, column: 5 } },
-        { start: { row: 8, column: 6 }, end: { row: 8, column: 10 } }
-      ]
-
+      //dinh nghia cac ten 
+      const colsOrder = [
+                         {json_name: "stt", column_name: "stt", width: 50 }
+                        ,{json_name: "full_name", column_name: "Tên khách hàng", width: 150 }
+                        ,{json_name: "tax_id", column_name: "Mã số thuế", width: 120 }
+                        ,{json_name: "address", column_name: "Địa chỉ", width: 120 }
+                        ,{json_name: "email", column_name: "Email", width: 120 }
+                        ,{json_name: "phone", column_name: "Điện thoại", width: 100 }
+                        ,{json_name: "cust_id", column_name: "Mã khách hàng", width: 100 }
+                        //,{json_name: "last_name", column_name: "Họ và chữ lót", width: 100 }
+                        //,{json_name: "first_name", column_name: "Tên", width: 100 }
+                        ,{json_name: "type_id", column_name: "Mã loại", width: 50 }
+                        ,{json_name: "cust_type", column_name: "Loại khách hàng", width: 120 }
+                        ,{json_name: "charge", column_name: "Tiền cước", width: 100 }
+                        ,{json_name: "price_id", column_name: "Mã giá", width: 50 }
+                        ,{json_name: "area_id", column_name: "Mã vùng", width: 50 }
+                        ,{json_name: "area", column_name: "Vùng quản lý", width: 120 }
+                        ,{json_name: "staff_id", column_name: "Mã nhân viên", width: 50 }
+                        ,{json_name: "staff", column_name: "Nhân viên quản lý", width: 120 }
+                        ,{json_name: "start_date", column_name: "Ngày bắt đầu", width: 100 }
+                        ,{json_name: "end_date", column_name: "Ngày kết thúc", width: 100 }
+                        ,{json_name: "change_date", column_name: "Ngày thay đổi gần nhất", width: 100 }
+                        ,{json_name: "status", column_name: "Trạng thái", width: 100 }
+                      ]
+      var sheetspecification = {}
+      for (let i=0;i<colsOrder.length;i++){
+        Object.defineProperty(sheetspecification, colsOrder[i].json_name, { //dat ten thuoc tinh la ten truong
+            value: { 
+                displayName: colsOrder[i].column_name,  //ten hien thi tren cot header 
+                headerStyle: styles.cellBrơwn, // mau style cua header
+                cellStyle: function(value, row) { 
+                  //hien thi mau theo gia tri du lieu can phan biet
+                  return (colsOrder[i].json_name!='stt'&&colsOrder[i].json_name!='status')?{}:(row.status == 1) ? styles.cellGreen : styles.cellRed; // mau nen cua cell co gia tri status can phan biet
+                },
+                cellFormat: function(value, row) { // chuyen doi gia tri cua cell, neu la o trang thai 
+                    return (colsOrder[i].json_name!='status')?value:(value == 1) ? 'Phải thu' : 'Ngưng thu';
+                  },
+                width: colsOrder[i].width // do rong cua cell neu can cau hinh tren mang order luon
+              }, //gia tri la mot doi tuong
+            writable: false, //khong cho phep sua du lieu sau khi gan gia tri vao
+            enumerable: true, //cho phep gan thanh thuoc tinh truy van sau khi hoan thanh
+        });
+      }                
+      
+      const dataset = jsonRows.sort(); //sap xep mat dinh theo stt
+      
     return excel.buildExport(
         [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
           {
             name: 'khach_hang', // <- Specify sheet name (optional)
-            heading: heading, // <- Raw heading array (optional)
-            merges: merges, // <- Merge cell ranges
-            specification: specification, // <- Report specification
+            specification: sheetspecification, // <- Report specification
             data: dataset // <-- Report data
           }
         ]
       );
 
 }
-
 
 
 class ResourceHandler {
@@ -291,7 +296,7 @@ class ResourceHandler {
      * @param {*} res 
      * @param {*} next 
      */
-    getBackupCustomers(req, res, next){
+    getAttachCustomers(req, res, next){
         db.db.getRsts('select \
                         a.stt\
                         ,a.full_name\
@@ -326,9 +331,55 @@ class ResourceHandler {
               let excelBuffuer = createExcel(results);
               //thuc hien gui file kieu dinh kem 
               //khong view ma tu save vao download tren client
-               res.attachment('ds_khach_hang_hoa_don.xlsx'); // ten file tra ve 
+               res.attachment(new Date().toISOString().replace(/T/, '_').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '')+'_ds_khach_hang_hoa_don.xlsx'); // ten file tra ve 
                res.send(excelBuffuer);
                //res.end();
+            })
+            .catch(err=>{
+                res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                res.end(JSON.stringify(err));
+            });
+    }
+
+    viewExcelCustomers(req, res, next){
+        db.db.getRsts('select \
+                        a.stt\
+                        ,a.full_name\
+                        ,a.tax_id\
+                        ,a.address\
+                        ,a.email\
+                        ,a.phone\
+                        ,a.cust_id\
+                        ,a.last_name \
+                        ,a.first_name \
+                        ,a.type_id\
+                        ,b.description as cust_type\
+                        ,b.value as charge\
+                        ,a.price_id\
+                        ,a.area_id\
+                        ,c.description as area\
+                        ,a.staff_id\
+                        ,d.description as staff\
+                        ,a.start_date\
+                        ,a.end_date\
+                        ,a.change_date\
+                        ,a.status\
+                     from customers a\
+                     ,(select code, description, value from parameters where type = 5) b\
+                     ,(select code, description from parameters where type = 6) c\
+                     ,(select code, description from parameters where type = 4) d\
+                      where a.type_id = b.code\
+                      and a.area_id = c.code\
+                      and a.staff_id = d.code\
+                      ')
+            .then(results=>{
+              let excelBuffuer = createExcel(results);
+               //show file excel
+               res.writeHead(200, { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;'
+                                    //,"Content-disposition": "attachment; filename=" + new Date().toISOString().replace(/T/, '_').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '')+'_ds_khach_hang_hoa_don.xlsx'
+                                    ,"Content-disposition": "filename=" + new Date().toISOString().replace(/T/, '_').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '')+'_ds_khach_hang_hoa_don.xlsx'
+                                     });
+               res.end(excelBuffuer);
             })
             .catch(err=>{
                 res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
