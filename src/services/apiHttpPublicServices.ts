@@ -34,13 +34,11 @@ export class ApiHttpPublicService {
     }
 
     getAllCutomers(){
-        return this.httpClient.get(this.resourceServer+'/excel/customers')
+        return this.httpClient.get(this.resourceServer+'/db/json-customers')
         .toPromise()
         .then(results=>{
-            let resultsReturn;
-            resultsReturn = results;
-            if (resultsReturn&&resultsReturn.success&&resultsReturn.data) {
-                return resultsReturn.data;
+            if (results) {
+                return results;
             }else{
                 throw 'No customer!';
             }

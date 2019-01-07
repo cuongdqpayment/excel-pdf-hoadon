@@ -13,6 +13,7 @@ export class CustomerPage {
   customersOrigin:any = [];
   isSearch: boolean = false;
   searchString:string='';
+  maxCurrentId:number=0;
 
   constructor(
               private navCtrl: NavController,
@@ -31,6 +32,9 @@ export class CustomerPage {
     .then(customers=>{
       this.customersOrigin = customers;
       this.customers = this.customersOrigin;
+      //tim gia tri max cua ma khach hang
+      this.maxCurrentId = Math.max.apply(Math, this.customersOrigin.map((o)=>{return o.stt}));
+      console.log('MAX Ma khach hang',this.maxCurrentId);
     })
     .catch(err=>{
       this.customersOrigin = [];
