@@ -100,8 +100,8 @@ class HandleDatabase {
                         let row = {};
                         for (let col in header){
                             if (sheet[i][col]!=undefined){
-                                Object.defineProperty(row, header[col], {
-                                    value: sheet[i][col], //gia tri bien duoc bind vao bindVars.p_in_0,1,...n
+                                Object.defineProperty(row, header[col], { //ten thuoc tinh
+                                    value: (tablename=='customers'&&header[col]=='start_date')?new Date().getTime():sheet[i][col], //gia tri cua thuoc tinh
                                     writable: false, //khong cho phep sua du lieu sau khi gan gia tri vao
                                     enumerable: true, //cho phep gan thanh thuoc tinh truy van sau khi hoan thanh
                                     //configurable: false default

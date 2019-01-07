@@ -1,4 +1,6 @@
 
+const timeZoneOffset = +7;
+
 const xlstojson = require("xls-to-json-lc");
 const xlsxtojson = require("xlsx-to-json-lc");
 
@@ -85,11 +87,21 @@ var createExcel = (jsonRows)=>{
                         ,{json_name: "area", column_name: "Vùng quản lý", width: 120 }
                         ,{json_name: "staff_id", column_name: "Mã nhân viên", width: 50 }
                         ,{json_name: "staff", column_name: "Nhân viên quản lý", width: 120 }
-                        ,{json_name: "start_date", column_name: "Ngày bắt đầu", width: 100 }
-                        ,{json_name: "end_date", column_name: "Ngày kết thúc", width: 100 }
-                        ,{json_name: "change_date", column_name: "Ngày thay đổi gần nhất", width: 100 }
+                        ,{json_name: "start_date", column_name: "Ngày bắt đầu", width: 130 }
+                        ,{json_name: "end_date", column_name: "Ngày kết thúc", width: 130 }
+                        ,{json_name: "change_date", column_name: "Ngày thay đổi gần nhất", width: 130 }
                         ,{json_name: "status", column_name: "Trạng thái", width: 100 }
                       ]
+    
+       //header json var for upload again
+       var heading = [];
+       var rows = [];
+        //[{value: 'a1', style: styles.headerDark}, {value: 'b1', style: styles.headerDark}, {value: 'c1', style: styles.headerDark}]
+        for (let i=0;i<colsOrder.length;i++){
+            rows.push({value:colsOrder[i].json_name,style:styles.headerDark})
+        }
+        heading.push(rows);
+
       var sheetspecification = {}
       for (let i=0;i<colsOrder.length;i++){
         Object.defineProperty(sheetspecification, colsOrder[i].json_name, { //dat ten thuoc tinh la ten truong
@@ -110,12 +122,24 @@ var createExcel = (jsonRows)=>{
         });
       }                
       
-      const dataset = jsonRows; //sap xep mat dinh theo stt
-      
+      var old = JSON.stringify(jsonRows
+                                ,(key, value) => {
+                                if (key=='start_date'){
+                                    //chuyen doi thoi gian milisecond thanh string ngay gio
+                                    return new Date(value + timeZoneOffset*60*60*1000).toISOString().replace(/T/, ' ').replace(/\..+/, '') 
+                                }
+                                return value;
+                                }
+        ); //convert to JSON string
+
+      const dataset = JSON.parse(old); //convert back to array
+
+
     return excel.buildExport(
         [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
           {
             name: 'khach_hang', // <- Specify sheet name (optional)
+            heading: heading,
             specification: sheetspecification, // <- Report specification
             data: dataset // <-- Report data
           }
@@ -127,6 +151,46 @@ var createExcel = (jsonRows)=>{
 
 class ResourceHandler {
 
+    /**
+     * Lay tham so he thong ve mang tham so
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
+    getParameters(req, res, next) {
+        db.db.getRsts('select\
+                        id\
+                        ,parent\
+                        ,type\
+                        ,code\
+                        ,name\
+                        ,description\
+                        ,value\
+                        ,order_1\
+                     from parameters\
+                      ')
+            .then(results=>{
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify(results
+                    ,(key, value) => {
+                        //chuyen doi null khong xuat hien
+                        if (value === null) {return undefined;}
+                        return value;
+                        }
+                ));
+            })
+            .catch(err=>{
+                res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                res.end(JSON.stringify(err));
+            });
+    }
+
+    /**
+     * Lay json khach hang
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     getCustomers(req, res, next) {
         db.db.getRsts('select \
                         a.stt\
@@ -161,13 +225,32 @@ class ResourceHandler {
                       ')
             .then(results=>{
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-                res.end(JSON.stringify(results));
+                res.end(JSON.stringify(results
+                    ,(key, value) => {
+                    if (value === null) {
+                        //chuyen doi null khong xuat hien
+                        return undefined;
+                    }
+                    if (key=='start_date'){
+                        //chuyen doi thoi gian milisecond thanh string ngay gio
+                        return new Date(value + timeZoneOffset*60*60*1000).toISOString().replace(/T/, ' ').replace(/\..+/, '') 
+                    }
+                    return value;
+                    }
+                    ));
             })
             .catch(err=>{
                 res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
                 res.end(JSON.stringify(err));
             });
     }
+
+    /**
+     * Doc file excel tra ket qua json
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     getCustomersFromExcel(req, res, next) {
 
         var inputFilename = './db/ql-hoadon.xlsx';
@@ -178,18 +261,12 @@ class ResourceHandler {
                 input: inputFilename,
                 output: null, //since we don't need output.json
                 lowerCaseHeaders: true
-            }, function (err, result) {
+            }, function (err, results) {
                 if (err) {
                     throw err;
                 }
-
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-                res.end(JSON.stringify({
-                    success: true,
-                    message: 'Thành công!',
-                    data: result
-                }));
-
+                res.end(JSON.stringify(results));
             });
         } catch (e) {
             throw "Corupted excel file";
@@ -377,6 +454,12 @@ class ResourceHandler {
             });
     }
 
+    /**
+     * view file excel
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     viewExcelCustomers(req, res, next){
         db.db.getRsts('select \
                         a.stt\

@@ -21,7 +21,7 @@ function main(isHttp, isHttps) {
   app.use('/auth', userAuth); 
 
   const resource = require('./routes/resource-excel');
-  app.use('/excel', resource); 
+  app.use('/db', resource); 
 
   //ham tra loi cac dia chi khong co
   //The 404 Route (ALWAYS Keep this as the last route)
