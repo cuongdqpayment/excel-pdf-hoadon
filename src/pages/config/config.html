@@ -1,417 +1,546 @@
 <ion-header>
-    <ion-navbar>
-  
-        <ion-buttons *ngIf="!isSearch" start>
-          <button ion-button icon-only color="royal" (click)="goSearch()">
-            <ion-icon name="search"></ion-icon>
-          </button>
-        </ion-buttons>
-    
-        <ion-buttons end>
-          <button ion-button icon-only (click)="addGroupParameters()">
-            <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-buttons>
+  <ion-navbar color="primary">
+
+    <ion-buttons *ngIf="!isSearch" start>
+      
+      <button ion-button icon-only color="royal" (click)="goSearch()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+
+      <button ion-button icon-only color="excel1" (click)="itemSample(0)">
+          <ion-icon name="contact"></ion-icon>
+      </button>
+
+      <button ion-button icon-only color="excel2" (click)="itemSample(1)">
+          <ion-icon name="contact"></ion-icon>
+      </button>
+
+      <button ion-button icon-only color="excel3" (click)="itemSample(2)">
+          <ion-icon name="contact"></ion-icon>
+      </button>
+
+      <button ion-button icon-only color="excel4" (click)="itemSample(3)">
+          <ion-icon name="contact"></ion-icon>
+      </button>
+
+      <button ion-button icon-only color="excel5" (click)="itemSample(4)">
+          <ion-icon name="contact"></ion-icon>
+      </button>
+
+      <button ion-button icon-only color="excel6" (click)="itemSample(5)">
+          <ion-icon name="contact"></ion-icon>
+      </button>
+
+      <button ion-button icon-only color="excel7" (click)="itemSample(6)">
+          <ion-icon name="contact"></ion-icon>
+      </button>
+
+    </ion-buttons>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addButton()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-searchbar *ngIf="isSearch" placeholder="Tìm theo loại tham số" [(ngModel)]="searchString" [showCancelButton]="shouldShowCancel"
+      (ionInput)="onInput($event)" (keyup.enter)="searchEnter()" (keyup.esc)="searchEnter()" start>
+    </ion-searchbar>
+
+    <ion-title *ngIf="!isSearch">MẪU USER INTERFACE IONIC</ion-title>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-slides (ionSlideDidChange)="slideChanged()">
+        <!-- #id=0 Select Options-->
+        <ion-slide>
+
+            <ion-item>
+                <ion-label>Gender - Single Value</ion-label>
+                <ion-select [(ngModel)]="gender">
+                  <ion-option value="f">Female</ion-option>
+                  <ion-option value="m">Male</ion-option>
+                </ion-select>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label>Hair Color</ion-label>
+                <ion-select [(ngModel)]="hairColor" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">
+                  <ion-option *ngFor="let o of hairColorData" [value]="o">{{o.text}}</ion-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label>Gender - Popover Interface select</ion-label>
+                  <ion-select [(ngModel)]="gender" interface="popover">
+                    <ion-option value="f">Female</ion-option>
+                    <ion-option value="m">Male</ion-option>
+                  </ion-select>
+                </ion-item>
         
-        <ion-searchbar *ngIf="isSearch" placeholder="Tìm theo loại tham số"
-          [(ngModel)]="searchString"
-          [showCancelButton]="shouldShowCancel"
-          (ionInput)="onInput($event)"
-          (keyup.enter)="searchEnter()"
-          (keyup.esc)="searchEnter()"
-          start>
-        </ion-searchbar>
+                <ion-item>
+                  <ion-label>Gaming</ion-label>
+                  <ion-select [(ngModel)]="gaming" okText="Okay" cancelText="Dismiss" interface="popover">
+                    <ion-option value="nes">NES</ion-option>
+                    <ion-option value="n64">Nintendo64</ion-option>
+                    <ion-option value="ps">PlayStation</ion-option>
+                    <ion-option value="genesis">Sega Genesis</ion-option>
+                    <ion-option value="saturn">Sega Saturn</ion-option>
+                    <ion-option value="snes">SNES</ion-option>
+                  </ion-select>
+                </ion-item>
+        
+                <ion-item>
+                  <ion-label>Date</ion-label>
+                  <ion-select (ionChange)="monthChange($event)" interface="popover">
+                    <ion-option value="01">January</ion-option>
+                    <ion-option value="02">February</ion-option>
+                    <ion-option value="03" selected="true">March</ion-option>
+                    <ion-option value="04">April</ion-option>
+                    <ion-option value="05">May</ion-option>
+                    <ion-option value="06">June</ion-option>
+                    <ion-option value="07">July</ion-option>
+                    <ion-option value="08">August</ion-option>
+                    <ion-option value="09">September</ion-option>
+                    <ion-option value="10">October</ion-option>
+                    <ion-option value="11">November</ion-option>
+                    <ion-option value="12">December</ion-option>
+                  </ion-select>
+                  <ion-select (ionChange)="yearChange($event)" interface="popover">
+                    <ion-option>1989</ion-option>
+                    <ion-option>1990</ion-option>
+                    <ion-option>1991</ion-option>
+                    <ion-option>1992</ion-option>
+                    <ion-option>1993</ion-option>
+                    <ion-option selected="true">1994</ion-option>
+                    <ion-option>1995</ion-option>
+                    <ion-option>1996</ion-option>
+                    <ion-option>1997</ion-option>
+                    <ion-option>1998</ion-option>
+                    <ion-option>1999</ion-option>
+                  </ion-select>
+                </ion-item>
+
+
+                <ion-item>
+                    <ion-label>Toppings - Multiple Select</ion-label>
+                    <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!">
+                      <ion-option value="bacon">Bacon</ion-option>
+                      <ion-option value="olives">Black Olives</ion-option>
+                      <ion-option value="xcheese">Extra Cheese</ion-option>
+                      <ion-option value="peppers">Green Peppers</ion-option>
+                      <ion-option value="mushrooms">Mushrooms</ion-option>
+                      <ion-option value="onions">Onions</ion-option>
+                      <ion-option value="pepperoni">Pepperoni</ion-option>
+                      <ion-option value="pineapple">Pineapple</ion-option>
+                      <ion-option value="sausage">Sausage</ion-option>
+                      <ion-option value="Spinach">Spinach</ion-option>
+                    </ion-select>
+                  </ion-item>
+        
+                  <ion-item>
+                    <ion-label>Pets</ion-label>
+                    <ion-select [(ngModel)]="pets" multiple="true" [selectOptions]="petAlertOpts">
+                      <ion-option *ngFor="let o of petData" [value]="o.value">{{o.text}}</ion-option>
+                    </ion-select>
+                  </ion-item>
+        
+                  <ion-item>
+                    <ion-label>Skittles</ion-label>
+                    <ion-select [(ngModel)]="skittles" multiple="true" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">
+                      <ion-option *ngFor="let o of skittlesData" [value]="o">{{o.text}}</ion-option>
+                    </ion-select>
+                  </ion-item>
+        
+                  <ion-item>
+                    <ion-label>Disabled</ion-label>
+                    <ion-select multiple disabled="true">
+                      <ion-option checked="true">Selected Text</ion-option>
+                    </ion-select>
+                  </ion-item>
+
+
+              <ion-item>
+                  <ion-label>Mute Notifications - Action sheet interface select</ion-label>
+                  <ion-select [(ngModel)]="notifications" interface="action-sheet">
+                    <ion-option value="mute_15">For 15 Minutes</ion-option>
+                    <ion-option value="mute_1">For 1 Hour</ion-option>
+                    <ion-option value="mute_23">For 24 Hours</ion-option>
+                    <ion-option value="mute_inf">Until I turn it back on</ion-option>
+                  </ion-select>
+                </ion-item>
+      
+                <ion-item>
+                  <ion-label>Rating</ion-label>
+                  <ion-select [(ngModel)]="rating" interface="action-sheet">
+                    <ion-option value="1">1 Star</ion-option>
+                    <ion-option value="2">2 Stars</ion-option>
+                    <ion-option value="3">3 Stars</ion-option>
+                    <ion-option value="4">4 Stars</ion-option>
+                    <ion-option value="5">5 Stars</ion-option>
+                  </ion-select>
+                </ion-item>
+      
+        </ion-slide>
+        
+        <!-- #id=1 Toolbar navbar-->
+        <ion-slide>
+            <ion-toolbar>
+                <ion-title>This is the title that never ends. It just goes on and on my friend.</ion-title>
+              </ion-toolbar>
+            
+              <ion-toolbar>
+                <button ion-button menuToggle>
+                  <ion-icon name="menu"></ion-icon>
+                </button>
+                <ion-buttons start>
+                  <button ion-button icon-only showWhen="ios">
+                    <ion-icon name="contact"></ion-icon>
+                  </button>
+                  <button ion-button icon-only>
+                    <ion-icon name="search"></ion-icon>
+                  </button>
+                </ion-buttons>
+                <ion-buttons end>
+                  <button ion-button color="secondary" icon-only>
+                    <ion-icon name="more"></ion-icon>
+                  </button>
+                </ion-buttons>
+                <ion-title>Default</ion-title>
+              </ion-toolbar>
+            
+              <ion-toolbar color="primary">
+                <ion-buttons start>
+                  <button ion-button showWhen="ios" icon-only>
+                    <ion-icon name="contact"></ion-icon>
+                  </button>
+                  <button ion-button icon-only>
+                    <ion-icon name="search"></ion-icon>
+                  </button>
+                </ion-buttons>
+                <ion-buttons end>
+                  <button ion-button color="secondary" icon-only>
+                    <ion-icon name="more"></ion-icon>
+                  </button>
+                </ion-buttons>
+                <ion-title>Primary</ion-title>
+              </ion-toolbar>
+            
+              <ion-toolbar color="primary">
+                <ion-buttons start>
+                  <button ion-button showWhen="ios" icon-only class="activated">
+                    <ion-icon name="contact"></ion-icon>
+                  </button>
+                  <button ion-button icon-only class="activated">
+                    <ion-icon name="search"></ion-icon>
+                  </button>
+                </ion-buttons>
+                <ion-buttons end>
+                  <button ion-button color="secondary" icon-only class="activated">
+                    <ion-icon name="more"></ion-icon>
+                  </button>
+                </ion-buttons>
+                <ion-title>Primary.activated</ion-title>
+              </ion-toolbar>
+            
+              <ion-toolbar color="secondary">
+                <ion-buttons start>
+                  <button ion-button icon-only color="primary">
+                    <ion-icon name="contact"></ion-icon>
+                  </button>
+                  <button ion-button icon-start solid>
+                    <ion-icon name="contact"></ion-icon>
+                    Solid
+                  </button>
+                </ion-buttons>
+                <ion-title>Secondary</ion-title>
+                <ion-buttons end>
+                  <button ion-button icon-end solid color="danger">
+                    Help
+                    <ion-icon name="help-circle"></ion-icon>
+                  </button>
+                </ion-buttons>
+              </ion-toolbar>
+            
+              <ion-toolbar color="secondary">
+                <ion-buttons start>
+                  <button ion-button icon-only color="primary" class="activated">
+                    <ion-icon name="contact"></ion-icon>
+                  </button>
+                  <button ion-button icon-start solid class="activated">
+                    <ion-icon name="contact"></ion-icon>
+                    Solid
+                  </button>
+                </ion-buttons>
+                <ion-title>Secondary Activated</ion-title>
+                <ion-buttons end>
+                  <button ion-button icon-end solid color="danger" class="activated">
+                    Help
+                    <ion-icon name="help-circle"></ion-icon>
+                  </button>
+                </ion-buttons>
+              </ion-toolbar>
+            
+              <ion-toolbar color="dark">
+                <ion-buttons start>
+                  <button ion-button icon-only outline>
+                    <ion-icon name="contact"></ion-icon>
+                  </button>
+                  <button ion-button icon-start outline>
+                    <ion-icon name="star"></ion-icon>
+                    Star
+                  </button>
+                </ion-buttons>
+                <ion-buttons end>
+                  <button ion-button icon-only color="secondary" outline>
+                    <ion-icon name="contact"></ion-icon>
+                  </button>
+                </ion-buttons>
+                <ion-title>Dark</ion-title>
+              </ion-toolbar>
+            
+              <ion-toolbar color="dark">
+                <ion-buttons start>
+                  <button ion-button outline icon-only class="activated">
+                    <ion-icon name="contact"></ion-icon>
+                  </button>
+                  <button ion-button outline icon-start class="activated">
+                    <ion-icon name="star"></ion-icon>
+                    Star
+                  </button>
+                </ion-buttons>
+                <ion-buttons end>
+                  <button ion-button color="secondary" outline icon-only class="activated">
+                    <ion-icon name="contact"></ion-icon>
+                  </button>
+                </ion-buttons>
+                <ion-title>Dark.activated</ion-title>
+              </ion-toolbar>
+            
+              <ion-toolbar color="danger">
+                <ion-buttons start>
+                  <button ion-button icon-start>
+                    <ion-icon name="contact"></ion-icon>
+                    Clear
+                  </button>
+                </ion-buttons>
+                <ion-buttons end>
+                  <button ion-button icon-end>
+                    Edit
+                    <ion-icon name="create"></ion-icon>
+                  </button>
+                </ion-buttons>
+                <ion-title>Danger</ion-title>
+              </ion-toolbar>
+            
+              <ion-toolbar color="danger">
+                <button ion-button menuToggle>
+                  <ion-icon name="menu"></ion-icon>
+                </button>
+                <ion-buttons start>
+                  <button ion-button icon-only>
+                    <ion-icon name="star"></ion-icon>
+                  </button>
+                </ion-buttons>
+                <ion-title>Danger</ion-title>
+              </ion-toolbar>
+            
+              <ion-toolbar color="light">
+                <ion-buttons start>
+                  <button ion-button icon-start>
+                    <ion-icon name="contact"></ion-icon>
+                    Clear
+                  </button>
+                </ion-buttons>
+                <ion-buttons end>
+                  <button ion-button icon-end>
+                    Edit
+                    <ion-icon name="create"></ion-icon>
+                  </button>
+                </ion-buttons>
+                <ion-title>Light</ion-title>
+              </ion-toolbar>
+            
+              <ion-toolbar color="light">
+                <button ion-button menuToggle>
+                  <ion-icon name="menu"></ion-icon>
+                </button>
+                <ion-buttons start>
+                  <button ion-button icon-only>
+                    <ion-icon name="star"></ion-icon>
+                  </button>
+                </ion-buttons>
+                <ion-title>Light</ion-title>
+              </ion-toolbar>
+            
+              <ion-toolbar transparent>
+                <ion-buttons end>
+                  <button ion-button #button1 icon-only (click)="buttonClick(button1)">
+                    <ion-icon name="star"></ion-icon>
+                  </button>
+                </ion-buttons>
+                <ion-title>Transparent</ion-title>
+                <button ion-button menuToggle right>
+                  <ion-icon name="menu"></ion-icon>
+                </button>
+              </ion-toolbar>
+            
+              <ion-toolbar color="greyYellow">
+                <ion-title>Grey Yellow</ion-title>
+              </ion-toolbar>
+              <ion-toolbar color="greyWhite">
+                <ion-title>Grey White</ion-title>
+              </ion-toolbar>
+        </ion-slide>
+
+        <!-- #id=2 card header card footer-->
+        <ion-slide>
+            <ion-card color="secondary">
+                <ion-card-header>
+                  Card Header
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-card-title>
+                    Title
+                  </ion-card-title>
+                  Some normal text in content.
+                  <h3>h3 in content</h3>
+                  <p>
+                    Paragraph in content.
+                  </p>
+                  <p>
+                    Another paragraph in content.
+                  </p>
+                </ion-card-content>
+              </ion-card>
+            
+              <ion-card color="primary" class="rainbow-content">
+                <ion-card-header>
+                  Card Header
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-card-title>
+                    Title
+                  </ion-card-title>
+                  Some normal text in content.
+                  <h3>h3 in content</h3>
+                  <p>
+                    Paragraph in content.
+                  </p>
+                  <p>
+                    Another paragraph in content.
+                  </p>
+                </ion-card-content>
+              </ion-card>
+            
+              <ion-card color="primary">
+                <ion-card-header>
+                  Card Header
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-card-title>
+                    Title
+                  </ion-card-title>
+                  Some normal text in content.
+                  <h3>h3 in content</h3>
+                  <p>
+                    Paragraph in content.
+                  </p>
+                  <p>
+                    Another paragraph in content.
+                  </p>
+                </ion-card-content>
+              </ion-card>
+            
+              <ion-list>
+                <ion-item *ngFor="let item of [0,1,2,3,4,5,6,7,8,9]">
+                  {{ item }}
+                </ion-item>
+              </ion-list>
+        </ion-slide>
+
+        <!-- #id=3 -->
+        <ion-slide>
+            <ion-item>
+                <ion-label>Username</ion-label>
+                <ion-input></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label fixed>Website</ion-label>
+                <ion-input type="url"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label floating>Email</ion-label>
+                <ion-input type="email"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label stacked>Phone</ion-label>
+                <ion-input type="tel"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label>Toggle</ion-label>
+                <ion-toggle></ion-toggle>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label>Checkbox</ion-label>
+                <ion-checkbox></ion-checkbox>
+              </ion-item>
+        </ion-slide>
+
+        <!-- #id=4 -->
+        <ion-slide>
+
+        </ion-slide>
+
+        <!-- #id=5 -->
+        <ion-slide>
+
+        </ion-slide>
+
+        <!-- #id=6 -->
+        <ion-slide>
+
+        </ion-slide>
+
+        <!-- #id=7 -->
+        <ion-slide>
+
+        </ion-slide>
+
+    </ion-slides>
+ 
+</ion-content>
+
+<!-- 
+<ion-header>
+    <ion-navbar >
   
-        <ion-title *ngIf="!isSearch">CÁC THAM SỐ</ion-title>
-  
+      <ion-buttons start>
+        <button ion-button icon-only>
+          <ion-icon name="contact"></ion-icon>
+        </button>
+        <button ion-button icon-only>
+          <ion-icon name="search"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-buttons end>
+        <button ion-button icon-only color="secondary">
+          <ion-icon name="more"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>Subheader</ion-title>
     </ion-navbar>
   </ion-header>
   
-  <ion-content class="outer-content">
+  <ion-content fullscreen="true">
+    
   
-    <ion-list>
-      <ion-list-header>Single Value Select</ion-list-header>
-  
-      <ion-item>
-        <ion-label>Gender</ion-label>
-        <ion-select [(ngModel)]="gender">
-          <ion-option value="f">Female</ion-option>
-          <ion-option value="m">Male</ion-option>
-        </ion-select>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Hair Color</ion-label>
-        <ion-select [(ngModel)]="hairColor" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">
-          <ion-option *ngFor="let o of hairColorData" [value]="o">{{o.text}}</ion-option>
-        </ion-select>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Gaming</ion-label>
-        <ion-select [(ngModel)]="gaming" okText="Okay" cancelText="Dismiss">
-          <ion-option value="nes">NES</ion-option>
-          <ion-option value="n64">Nintendo64</ion-option>
-          <ion-option value="ps">PlayStation</ion-option>
-          <ion-option value="genesis">Sega Genesis</ion-option>
-          <ion-option value="saturn">Sega Saturn</ion-option>
-          <ion-option value="snes">SNES</ion-option>
-        </ion-select>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Date</ion-label>
-        <ion-select (ionChange)="monthChange($event)">
-          <ion-option value="01">January</ion-option>
-          <ion-option value="02">February</ion-option>
-          <ion-option value="03" selected="true">March</ion-option>
-          <ion-option value="04">April</ion-option>
-          <ion-option value="05">May</ion-option>
-          <ion-option value="06">June</ion-option>
-          <ion-option value="07">July</ion-option>
-          <ion-option value="08">August</ion-option>
-          <ion-option value="09">September</ion-option>
-          <ion-option value="10">October</ion-option>
-          <ion-option value="11">November</ion-option>
-          <ion-option value="12">December</ion-option>
-        </ion-select>
-        <ion-select (ionChange)="yearChange($event)">
-          <ion-option>1989</ion-option>
-          <ion-option>1990</ion-option>
-          <ion-option>1991</ion-option>
-          <ion-option>1992</ion-option>
-          <ion-option>1993</ion-option>
-          <ion-option selected="true">1994</ion-option>
-          <ion-option>1995</ion-option>
-          <ion-option>1996</ion-option>
-          <ion-option>1997</ion-option>
-          <ion-option>1998</ion-option>
-          <ion-option>1999</ion-option>
-        </ion-select>
-      </ion-item>
-  
-    </ion-list>
-  
-    <ion-list>
-      <ion-list-header>Popover Interface Select</ion-list-header>
-  
-      <ion-item>
-        <ion-label>Gender</ion-label>
-        <ion-select [(ngModel)]="gender" interface="popover">
-          <ion-option value="f">Female</ion-option>
-          <ion-option value="m">Male</ion-option>
-        </ion-select>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Gaming</ion-label>
-        <ion-select [(ngModel)]="gaming" okText="Okay" cancelText="Dismiss" interface="popover">
-          <ion-option value="nes">NES</ion-option>
-          <ion-option value="n64">Nintendo64</ion-option>
-          <ion-option value="ps">PlayStation</ion-option>
-          <ion-option value="genesis">Sega Genesis</ion-option>
-          <ion-option value="saturn">Sega Saturn</ion-option>
-          <ion-option value="snes">SNES</ion-option>
-        </ion-select>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Date</ion-label>
-        <ion-select (ionChange)="monthChange($event)" interface="popover">
-          <ion-option value="01">January</ion-option>
-          <ion-option value="02">February</ion-option>
-          <ion-option value="03" selected="true">March</ion-option>
-          <ion-option value="04">April</ion-option>
-          <ion-option value="05">May</ion-option>
-          <ion-option value="06">June</ion-option>
-          <ion-option value="07">July</ion-option>
-          <ion-option value="08">August</ion-option>
-          <ion-option value="09">September</ion-option>
-          <ion-option value="10">October</ion-option>
-          <ion-option value="11">November</ion-option>
-          <ion-option value="12">December</ion-option>
-        </ion-select>
-        <ion-select (ionChange)="yearChange($event)" interface="popover">
-          <ion-option>1989</ion-option>
-          <ion-option>1990</ion-option>
-          <ion-option>1991</ion-option>
-          <ion-option>1992</ion-option>
-          <ion-option>1993</ion-option>
-          <ion-option selected="true">1994</ion-option>
-          <ion-option>1995</ion-option>
-          <ion-option>1996</ion-option>
-          <ion-option>1997</ion-option>
-          <ion-option>1998</ion-option>
-          <ion-option>1999</ion-option>
-        </ion-select>
-      </ion-item>
-  
-    </ion-list>
-  
-    <ion-list>
-      <ion-list-header>Multiple Value Select</ion-list-header>
-  
-      <ion-item>
-        <ion-label>Toppings</ion-label>
-        <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!">
-          <ion-option value="bacon">Bacon</ion-option>
-          <ion-option value="olives">Black Olives</ion-option>
-          <ion-option value="xcheese">Extra Cheese</ion-option>
-          <ion-option value="peppers">Green Peppers</ion-option>
-          <ion-option value="mushrooms">Mushrooms</ion-option>
-          <ion-option value="onions">Onions</ion-option>
-          <ion-option value="pepperoni">Pepperoni</ion-option>
-          <ion-option value="pineapple">Pineapple</ion-option>
-          <ion-option value="sausage">Sausage</ion-option>
-          <ion-option value="Spinach">Spinach</ion-option>
-        </ion-select>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Pets</ion-label>
-        <ion-select [(ngModel)]="pets" multiple="true" [selectOptions]="petAlertOpts">
-          <ion-option *ngFor="let o of petData" [value]="o.value">{{o.text}}</ion-option>
-        </ion-select>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Skittles</ion-label>
-        <ion-select [(ngModel)]="skittles" multiple="true" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">
-          <ion-option *ngFor="let o of skittlesData" [value]="o">{{o.text}}</ion-option>
-        </ion-select>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Disabled</ion-label>
-        <ion-select multiple disabled="true">
-          <ion-option checked="true">Selected Text</ion-option>
-        </ion-select>
-      </ion-item>
-  
-    </ion-list>
-  
-    <ion-list>
-      <ion-list-header>Action Sheet Interface Select</ion-list-header>
-  
-      <ion-item>
-        <ion-label>Mute Notifications</ion-label>
-        <ion-select [(ngModel)]="notifications" interface="action-sheet">
-          <ion-option value="mute_15">For 15 Minutes</ion-option>
-          <ion-option value="mute_1">For 1 Hour</ion-option>
-          <ion-option value="mute_23">For 24 Hours</ion-option>
-          <ion-option value="mute_inf">Until I turn it back on</ion-option>
-        </ion-select>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Rating</ion-label>
-        <ion-select [(ngModel)]="rating" interface="action-sheet">
-          <ion-option value="1">1 Star</ion-option>
-          <ion-option value="2">2 Stars</ion-option>
-          <ion-option value="3">3 Stars</ion-option>
-          <ion-option value="4">4 Stars</ion-option>
-          <ion-option value="5">5 Stars</ion-option>
-        </ion-select>
-      </ion-item>
-  
-    </ion-list>
-  
-    <ion-header>
-  
-        <ion-navbar>
-          <ion-title>Select</ion-title>
-        </ion-navbar>
-      
-      </ion-header>
-      
-      
-      <ion-content class="outer-content">
-      
-        <ion-list>
-          <ion-list-header>Single Value Select</ion-list-header>
-      
-          <ion-item>
-            <ion-label>Gender</ion-label>
-            <ion-select [(ngModel)]="gender">
-              <ion-option value="f">Female</ion-option>
-              <ion-option value="m">Male</ion-option>
-            </ion-select>
-          </ion-item>
-      
-          <ion-item>
-            <ion-label>Hair Color</ion-label>
-            <ion-select [(ngModel)]="hairColor" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">
-              <ion-option *ngFor="let o of hairColorData" [value]="o">{{o.text}}</ion-option>
-            </ion-select>
-          </ion-item>
-      
-          <ion-item>
-            <ion-label>Gaming</ion-label>
-            <ion-select [(ngModel)]="gaming" okText="Okay" cancelText="Dismiss">
-              <ion-option value="nes">NES</ion-option>
-              <ion-option value="n64">Nintendo64</ion-option>
-              <ion-option value="ps">PlayStation</ion-option>
-              <ion-option value="genesis">Sega Genesis</ion-option>
-              <ion-option value="saturn">Sega Saturn</ion-option>
-              <ion-option value="snes">SNES</ion-option>
-            </ion-select>
-          </ion-item>
-      
-          <ion-item>
-            <ion-label>Date</ion-label>
-            <ion-select (ionChange)="monthChange($event)">
-              <ion-option value="01">January</ion-option>
-              <ion-option value="02">February</ion-option>
-              <ion-option value="03" selected="true">March</ion-option>
-              <ion-option value="04">April</ion-option>
-              <ion-option value="05">May</ion-option>
-              <ion-option value="06">June</ion-option>
-              <ion-option value="07">July</ion-option>
-              <ion-option value="08">August</ion-option>
-              <ion-option value="09">September</ion-option>
-              <ion-option value="10">October</ion-option>
-              <ion-option value="11">November</ion-option>
-              <ion-option value="12">December</ion-option>
-            </ion-select>
-            <ion-select (ionChange)="yearChange($event)">
-              <ion-option>1989</ion-option>
-              <ion-option>1990</ion-option>
-              <ion-option>1991</ion-option>
-              <ion-option>1992</ion-option>
-              <ion-option>1993</ion-option>
-              <ion-option selected="true">1994</ion-option>
-              <ion-option>1995</ion-option>
-              <ion-option>1996</ion-option>
-              <ion-option>1997</ion-option>
-              <ion-option>1998</ion-option>
-              <ion-option>1999</ion-option>
-            </ion-select>
-          </ion-item>
-      
-        </ion-list>
-      
-        <ion-list>
-          <ion-list-header>Popover Interface Select</ion-list-header>
-      
-          <ion-item>
-            <ion-label>Gender</ion-label>
-            <ion-select [(ngModel)]="gender" interface="popover">
-              <ion-option value="f">Female</ion-option>
-              <ion-option value="m">Male</ion-option>
-            </ion-select>
-          </ion-item>
-      
-          <ion-item>
-            <ion-label>Gaming</ion-label>
-            <ion-select [(ngModel)]="gaming" okText="Okay" cancelText="Dismiss" interface="popover">
-              <ion-option value="nes">NES</ion-option>
-              <ion-option value="n64">Nintendo64</ion-option>
-              <ion-option value="ps">PlayStation</ion-option>
-              <ion-option value="genesis">Sega Genesis</ion-option>
-              <ion-option value="saturn">Sega Saturn</ion-option>
-              <ion-option value="snes">SNES</ion-option>
-            </ion-select>
-          </ion-item>
-      
-          <ion-item>
-            <ion-label>Date</ion-label>
-            <ion-select (ionChange)="monthChange($event)" interface="popover">
-              <ion-option value="01">January</ion-option>
-              <ion-option value="02">February</ion-option>
-              <ion-option value="03" selected="true">March</ion-option>
-              <ion-option value="04">April</ion-option>
-              <ion-option value="05">May</ion-option>
-              <ion-option value="06">June</ion-option>
-              <ion-option value="07">July</ion-option>
-              <ion-option value="08">August</ion-option>
-              <ion-option value="09">September</ion-option>
-              <ion-option value="10">October</ion-option>
-              <ion-option value="11">November</ion-option>
-              <ion-option value="12">December</ion-option>
-            </ion-select>
-            <ion-select (ionChange)="yearChange($event)" interface="popover">
-              <ion-option>1989</ion-option>
-              <ion-option>1990</ion-option>
-              <ion-option>1991</ion-option>
-              <ion-option>1992</ion-option>
-              <ion-option>1993</ion-option>
-              <ion-option selected="true">1994</ion-option>
-              <ion-option>1995</ion-option>
-              <ion-option>1996</ion-option>
-              <ion-option>1997</ion-option>
-              <ion-option>1998</ion-option>
-              <ion-option>1999</ion-option>
-            </ion-select>
-          </ion-item>
-      
-        </ion-list>
-      
-        <ion-list>
-          <ion-list-header>Multiple Value Select</ion-list-header>
-      
-          <ion-item>
-            <ion-label>Toppings</ion-label>
-            <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!">
-              <ion-option value="bacon">Bacon</ion-option>
-              <ion-option value="olives">Black Olives</ion-option>
-              <ion-option value="xcheese">Extra Cheese</ion-option>
-              <ion-option value="peppers">Green Peppers</ion-option>
-              <ion-option value="mushrooms">Mushrooms</ion-option>
-              <ion-option value="onions">Onions</ion-option>
-              <ion-option value="pepperoni">Pepperoni</ion-option>
-              <ion-option value="pineapple">Pineapple</ion-option>
-              <ion-option value="sausage">Sausage</ion-option>
-              <ion-option value="Spinach">Spinach</ion-option>
-            </ion-select>
-          </ion-item>
-      
-          <ion-item>
-            <ion-label>Pets</ion-label>
-            <ion-select [(ngModel)]="pets" multiple="true" [selectOptions]="petAlertOpts">
-              <ion-option *ngFor="let o of petData" [value]="o.value">{{o.text}}</ion-option>
-            </ion-select>
-          </ion-item>
-      
-          <ion-item>
-            <ion-label>Skittles</ion-label>
-            <ion-select [(ngModel)]="skittles" multiple="true" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">
-              <ion-option *ngFor="let o of skittlesData" [value]="o">{{o.text}}</ion-option>
-            </ion-select>
-          </ion-item>
-      
-          <ion-item>
-            <ion-label>Disabled</ion-label>
-            <ion-select multiple disabled="true">
-              <ion-option checked="true">Selected Text</ion-option>
-            </ion-select>
-          </ion-item>
-      
-        </ion-list>
-      
-        <ion-list>
-          <ion-list-header>Action Sheet Interface Select</ion-list-header>
-      
-          <ion-item>
-            <ion-label>Mute Notifications</ion-label>
-            <ion-select [(ngModel)]="notifications" interface="action-sheet">
-              <ion-option value="mute_15">For 15 Minutes</ion-option>
-              <ion-option value="mute_1">For 1 Hour</ion-option>
-              <ion-option value="mute_23">For 24 Hours</ion-option>
-              <ion-option value="mute_inf">Until I turn it back on</ion-option>
-            </ion-select>
-          </ion-item>
-      
-          <ion-item>
-            <ion-label>Rating</ion-label>
-            <ion-select [(ngModel)]="rating" interface="action-sheet">
-              <ion-option value="1">1 Star</ion-option>
-              <ion-option value="2">2 Stars</ion-option>
-              <ion-option value="3">3 Stars</ion-option>
-              <ion-option value="4">4 Stars</ion-option>
-              <ion-option value="5">5 Stars</ion-option>
-            </ion-select>
-          </ion-item>
-      
-        </ion-list>
-      
-      </ion-content>
+  -->

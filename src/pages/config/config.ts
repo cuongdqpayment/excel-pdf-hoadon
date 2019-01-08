@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, LoadingController, Events, ToastController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, LoadingController, Events, ToastController, Slides } from 'ionic-angular';
 
 import { ApiStorageService } from '../../services/apiStorageService';
 import { ApiHttpPublicService } from '../../services/apiHttpPublicServices';
@@ -10,7 +10,9 @@ import { ApiHttpPublicService } from '../../services/apiHttpPublicServices';
 })
 
 export class ConfigPage {
-  
+  @ViewChild(Slides) slides: Slides;
+  slideIndex = 0;
+
   isSearch: boolean = false;
   searchString:string='';
 
@@ -86,22 +88,7 @@ export class ConfigPage {
               }
 
   ngOnInit() {    
-    let loading = this.loadingCtrl.create({
-      content: 'Đang lấy danh sách tham số...'
-    });
-    loading.present();
-
-    this.http.getParamters()
-    .then(parameters=>{
-      this.parametersOrigin = parameters;
-      this.parameters = this.parametersOrigin;
-      loading.dismiss();
-    })
-    .catch(err=>{
-      this.parameters = [];
-      this.parametersOrigin = [];
-      loading.dismiss();
-    })
+    
   }
 
   goSearch(){
@@ -116,11 +103,30 @@ export class ConfigPage {
     this.isSearch = false;
   }
 
-  addGroupParameters(){
+  addButton(){
 
   }
 
+  itemSample(sl){
+    this.goToSlide(sl);
+  }
 
+  /**
+   * Dieu khien slide
+   * @param i 
+   */
+  goToSlide(i) {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(i, 300);
+    this.slides.lockSwipes(true);
+  }
+
+  /**
+   * xac dinh slide
+   */
+  slideChanged() {
+    this.slideIndex = this.slides.getActiveIndex();
+  }
 
 
   ////////////////////

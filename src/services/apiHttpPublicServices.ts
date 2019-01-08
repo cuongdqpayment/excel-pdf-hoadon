@@ -49,7 +49,7 @@ export class ApiHttpPublicService {
     }
 
     getParamters(){
-        return this.httpClient.get(this.resourceServer+'/db/json-paramters')
+        return this.httpClient.get(this.resourceServer+'/db/json-parameters')
         .toPromise()
         .then(results=>{
             if (results) {
