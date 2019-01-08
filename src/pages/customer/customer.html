@@ -1,20 +1,34 @@
 <ion-header>
   <ion-navbar>
-    <ion-item  *ngIf="!isSearch" no-lines class="background-transparent" start>
-      <ion-title>CUSTOMER</ion-title>
-    </ion-item>
-    <ion-buttons  *ngIf="!isSearch" end>
+
+    <ion-buttons *ngIf="!isSearch" start>
       <button ion-button icon-only color="royal" (click)="goSearch()">
         <ion-icon name="search"></ion-icon>
       </button>
+
+      <button ion-button icon-only (click)="newCustomter()">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+
     </ion-buttons>
+
+    <ion-buttons end>
+      <button ion-button icon-only color="secondary" (click)="goParameters()">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+    
     <ion-searchbar *ngIf="isSearch" placeholder="Tìm theo mã/tên khách hàng/khu vực/người quản lý hoặc số điện thoại"
       [(ngModel)]="searchString"
       [showCancelButton]="shouldShowCancel"
       (ionInput)="onInput($event)"
       (keyup.enter)="searchEnter()"
-      (keyup.esc)="searchEnter()">
+      (keyup.esc)="searchEnter()"
+      start>
     </ion-searchbar>
+    
+    <ion-title *ngIf="!isSearch">CUSTOMER</ion-title>
+
   </ion-navbar>
 </ion-header>
 

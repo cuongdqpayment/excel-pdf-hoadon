@@ -1,9 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Slides } from 'ionic-angular';
+import { NavController, LoadingController, Slides } from 'ionic-angular';
 
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { ApiHttpPublicService } from '../../services/apiHttpPublicServices'
+import { ParametersPage } from '../parameters/parameters';
+import { ConfigPage } from '../config/config';
 
 
 @Component({
@@ -26,12 +28,14 @@ export class CustomerPage {
   constructor(
               private navCtrl: NavController,
               private formBuilder: FormBuilder,
-              private http: ApiHttpPublicService
+              private http: ApiHttpPublicService,
+              private loadingCtrl: LoadingController
               ) {
 
   }
 
   ngOnInit(){
+
     this.getCustomers(); //cai nay lay tu load trang dau luon
     //khong cho quet bang tay
     this.slides.lockSwipes(true);
@@ -46,6 +50,10 @@ export class CustomerPage {
   }
 
   getCustomers(){
+    let loading = this.loadingCtrl.create({
+      content: 'Đang lấy danh sách khách hàng...'
+    });
+    loading.present();
 
     this.http.getAllCutomers()
     .then(customers=>{
@@ -54,10 +62,12 @@ export class CustomerPage {
       //tim gia tri max cua ma khach hang
       this.maxCurrentId = Math.max.apply(Math, this.customersOrigin.map((o)=>{return o.stt}));
       //console.log('MAX Ma khach hang',this.maxCurrentId);
+      loading.dismiss();
     })
     .catch(err=>{
       this.customersOrigin = [];
       this.customers =  [];
+      loading.dismiss();
     })
 
   }
@@ -134,5 +144,12 @@ export class CustomerPage {
     this.goToSlide(0);
   }
 
+  goParameters(){
+    this.navCtrl.push(ParametersPage)
+  }
+
+  newCustomter(){
+    this.navCtrl.push(ConfigPage)
+  }
 
 }

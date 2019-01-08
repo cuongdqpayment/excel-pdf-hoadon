@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+
+      <ion-buttons *ngIf="!isSearch" start>
+        <button ion-button icon-only color="royal" (click)="goSearch()">
+          <ion-icon name="search"></ion-icon>
+        </button>
+      </ion-buttons>
+  
+      <ion-buttons end>
+        <button ion-button icon-only (click)="addGroupParameters()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-buttons>
+      
+      <ion-searchbar *ngIf="isSearch" placeholder="Tìm theo loại tham số"
+        [(ngModel)]="searchString"
+        [showCancelButton]="shouldShowCancel"
+        (ionInput)="onInput($event)"
+        (keyup.enter)="searchEnter()"
+        (keyup.esc)="searchEnter()"
+        start>
+      </ion-searchbar>
+
+      <ion-title *ngIf="!isSearch">CÁC THAM SỐ</ion-title>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="outer-content">
+
+</ion-content>

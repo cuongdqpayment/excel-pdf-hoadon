@@ -65428,6 +65428,40 @@ ion-navbar.toolbar {
   min-height: calc(46px + env(safe-area-inset-bottom));
 }
 
+.input-item {
+  border-radius: 2em !important;
+  opacity: 0.7;
+  font-size: 0.9em;
+}
+
+.swiper-slide {
+  overflow-y: scroll;
+  display: block;
+}
+
+.background-transparent {
+  background-color: transparent;
+  color: #e5e8f1f6;
+}
+
+.item-settings {
+  color: #9c2626;
+  margin-bottom: 1px;
+  font-size: 2rem;
+  cursor: pointer;
+  background-color: #abd6c8;
+}
+
+.item-settings:hover {
+  background-color: #2289a8;
+}
+
+ion-searchbar .searchbar-input-container .searchbar-input {
+  border-radius: 2em !important;
+  opacity: 3;
+  font-size: 1.2em;
+}
+
 page-config .item-settings {
   color: #9c2626;
   margin-bottom: 1px;
@@ -65438,28 +65472,6 @@ page-config .item-settings {
 
 page-config .item-settings:hover {
   background-color: #2289a8;
-}
-
-page-customer .background-transparent {
-  background-color: transparent;
-  color: #e5e8f1f6;
-}
-
-page-customer .input-item {
-  border-radius: 2em !important;
-  opacity: 0.7;
-  font-size: 0.9em;
-}
-
-page-customer .swiper-slide {
-  overflow-y: scroll;
-  display: block;
-}
-
-page-customer ion-searchbar .searchbar-input-container .searchbar-input {
-  border-radius: 2em !important;
-  opacity: 3;
-  font-size: 1.2em;
 }
 
 page-login input[type="file"] {

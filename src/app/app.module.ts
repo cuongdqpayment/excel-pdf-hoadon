@@ -14,7 +14,7 @@ import { SampleIconsPage } from '../pages/sample-icons/sample-icons';
 import { ConfigPage } from '../pages/config/config';
 import { PdfPage } from '../pages/pdf/pdf';
 
-
+import { ParametersPage } from '../pages/parameters/parameters';
 import { CustomerPage } from '../pages/customer/customer';
 import { InvoicePage } from '../pages/invoice/invoice';
 import { ReportPage } from '../pages/report/report';
@@ -36,6 +36,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
 @NgModule({
   declarations: [
     MyApp,
+    ParametersPage,
     CustomerPage,
     InvoicePage,
     ReportPage,
@@ -60,6 +61,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    ParametersPage,
     CustomerPage,
     InvoicePage,
     ReportPage,

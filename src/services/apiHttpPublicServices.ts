@@ -48,6 +48,21 @@ export class ApiHttpPublicService {
         })
     }
 
+    getParamters(){
+        return this.httpClient.get(this.resourceServer+'/db/json-paramters')
+        .toPromise()
+        .then(results=>{
+            if (results) {
+                return results;
+            }else{
+                throw 'No paramter!';
+            }
+        })
+        .catch(err=>{
+            throw err;
+        })
+    }
+
 
 
 }
