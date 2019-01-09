@@ -70731,6 +70731,11 @@ page-login .card-background-page .card-subtitle {
   color: #fff;
 }
 
+page-parameters {
+  /* TODO: spinner is dropping classes so we have to use ids: https://github.com/ionic-team/ionic/issues/7087 */
+  /* TODO: spinner doesn't have a good way to do this yet: https://github.com/ionic-team/ionic/issues/7087 */
+}
+
 page-parameters .invisible {
   visibility: hidden !important;
 }
@@ -70789,6 +70794,48 @@ page-parameters .hidden-xs-up {
 
 page-parameters .hidden-xl-down {
   display: none !important;
+}
+
+page-parameters #archive-spinner,
+page-parameters #download-spinner,
+page-parameters .archiving .expand-hide,
+page-parameters .downloading .expand-hide {
+  display: none;
+}
+
+page-parameters #archive-spinner.spinner-ios line,
+page-parameters #archive-spinner.spinner-crescent circle {
+  stroke: #fff;
+}
+
+page-parameters #archive-spinner.spinner-circles circle {
+  fill: #fff;
+}
+
+page-parameters .archiving #archive-spinner,
+page-parameters .downloading #download-spinner {
+  display: block;
+}
+
+page-parameters .chat-sliding-demo ion-note {
+  font-size: 13px;
+  margin-top: -8px;
+}
+
+page-parameters .chat-sliding-demo img {
+  pointer-events: none;
+}
+
+page-parameters .login-sliding-demo .ion-logo-twitter {
+  color: #53ACEB;
+}
+
+page-parameters .login-sliding-demo .ion-logo-github {
+  color: #000000;
+}
+
+page-parameters .login-sliding-demo .ion-logo-instagram {
+  color: #235D8D;
 }
 
 page-register input[type="file"] {
