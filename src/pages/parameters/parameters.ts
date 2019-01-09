@@ -77,8 +77,28 @@ export class ParametersPage {
       this.editButton = 'Ghi lại';
     } else {
       this.editButton = 'Sắp xếp';
+
       this.parameters.forEach((el,idx) => {
-        console.log(el.description,el,idx,el.order_1)
+        //console.log(el.description,el,idx,el.order_1)
+        el.change_time = new Date().getTime();
+        el.order_1 = idx;
+      });
+
+      //thay the cac gia tri da thay doi trong mang param
+      this.parametersOrigin = this.parametersOrigin.map(obj => this.parameters.find(o => o.id === obj.id) || obj);
+
+      //sap xep lai theo order moi thay
+      this.parametersOrigin = this.parametersOrigin.sort((a,b)=>{
+        if (a.type<b.type) return -2;
+        if (a.type>b.type) return 2;
+        if (a.order_1<b.order_1) return -1;
+        if (a.order_1>b.order_1) return 1;
+        return 0;
+        
+    })
+
+      this.parametersOrigin.forEach((el,idx) => {
+        console.log(el.description,el)
       });
     }
   }
