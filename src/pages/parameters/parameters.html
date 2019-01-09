@@ -7,26 +7,73 @@
         </button>
       </ion-buttons>
   
-      <ion-buttons end>
-        <button ion-button icon-only (click)="addGroupParameters()">
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-buttons>
-      
-      <ion-searchbar *ngIf="isSearch" placeholder="Tìm theo loại tham số"
-        [(ngModel)]="searchString"
-        [showCancelButton]="shouldShowCancel"
-        (ionInput)="onInput($event)"
-        (keyup.enter)="searchEnter()"
-        (keyup.esc)="searchEnter()"
-        start>
-      </ion-searchbar>
-
       <ion-title *ngIf="!isSearch">CÁC THAM SỐ</ion-title>
+
+      <ion-searchbar *ngIf="isSearch" placeholder="Tìm theo loại tham số"
+            [(ngModel)]="searchString"
+            [showCancelButton]="shouldShowCancel"
+            (ionInput)="onInput($event)"
+            (keyup.enter)="searchEnter()"
+            (keyup.esc)="searchEnter()"
+            start>
+      </ion-searchbar>
 
   </ion-navbar>
 </ion-header>
 
 <ion-content class="outer-content">
+
+  <ion-list>
+    <ion-list-header color="primary">
+          <ion-row>
+              <ion-col text-left col-6 col-xl-3 col-lg-4 col-sm-5>
+                  <h2>Mô tả tham số</h2>
+              </ion-col>
+              <ion-col class="hidden-sm-down" text-center col-xl-3 col-lg-2 col-sm-3>
+                  <h2>Tên</h2>
+              </ion-col>
+              <ion-col text-center col-4 col-xl-3 col-lg-1 col-sm-2>
+                  <h2>Giá trị</h2>
+              </ion-col>
+              <ion-col text-right col-2 offset-xl-2 col-xl-1 offset-lg-4 col-lg-1 col-sm-2>
+                  <h2>Thứ tự</h2>
+              </ion-col>
+            </ion-row>
+    </ion-list-header>
+
+    <ion-toolbar color="thirdary">
+        <ion-buttons start>
+          <button ion-button outline icon-start class="activated" (click)="toggleEdit()">
+            <ion-icon name="swap"></ion-icon>
+            {{editButton}}
+          </button>
+        </ion-buttons>
+        <ion-buttons end>
+          <button ion-button color="secondary" outline icon-only class="activated" (click)="addGroupParameters()">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-title>ĐỊNH NGHĨA THAM SỐ</ion-title>
+    </ion-toolbar>
+
+    <ion-item-group [reorder]="editing" (ionItemReorder)="reorderData($event)">
+      <ion-item *ngFor="let p of parameters">
+        <ion-row>
+            <ion-col text-left col-6 col-xl-3 col-lg-4 col-sm-5>
+                <h2>{{ p.type }}.{{ p.code?p.code:p.id }} • {{ p.description }}</h2>
+            </ion-col>
+            <ion-col class="hidden-sm-down" text-center col-xl-3 col-lg-2 col-sm-3>
+                {{ p.name }}
+            </ion-col>
+            <ion-col text-right col-4 offset-xl-3 col-xl-3 offset-lg-4 col-lg-2 col-sm-2>
+                {{ p.value }}
+            </ion-col>
+            <ion-col text-right col-2 offset-xl-3 col-xl-3 offset-lg-4 col-lg-2 col-sm-2>
+                {{ p.order_1 }}
+            </ion-col>
+          </ion-row>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
 
 </ion-content>

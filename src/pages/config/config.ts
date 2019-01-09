@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, LoadingController, Events, ToastController, Slides } from 'ionic-angular';
+import { NavController, LoadingController, Events, ToastController, Slides, reorderArray, ItemSliding} from 'ionic-angular';
 
 import { ApiStorageService } from '../../services/apiStorageService';
 import { ApiHttpPublicService } from '../../services/apiHttpPublicServices';
@@ -34,6 +34,16 @@ export class ConfigPage {
   notifications: string = 'mute_1';
   rating: number = 2;
 ////////////////////
+//REORDER ARRAY
+  songs: any[];
+  editButton: string = 'Edit';
+  editing: boolean = false;
+////////////////////////
+
+//itemsliding
+chats: any[];
+logins: any[];
+
 
   constructor(private navCtrl: NavController, 
               private apiStorageService: ApiStorageService,
@@ -88,7 +98,92 @@ export class ConfigPage {
               }
 
   ngOnInit() {    
-    
+    //REORDER ARRAY:
+    this.songs = [
+      {
+        title: 'Everything Beta',
+        band: 'Phoria',
+        album: 'Volition'
+      },
+      {
+        title: 'Hello',
+        band: 'Adele',
+        album: '25'
+      },
+      {
+        title: 'Bohemian Rhapsody',
+        band: 'Queen',
+        album: 'A Night at the Opera'
+      },
+      {
+        title: 'Don\'t Stop Believin\'',
+        band: 'Journey',
+        album: 'Escape'
+      },
+      {
+        title: 'Smells Like Teen Spirit',
+        band: 'Nirvana',
+        album: 'Nevermind'
+      },
+      {
+        title: 'All You Need Is Love',
+        band: 'The Beatles',
+        album: 'Magical Mystery Tour'
+      },
+      {
+        title: 'Hotel California',
+        band: 'The Eagles',
+        album: 'Hotel California'
+      },
+      {
+        title: 'The Hand That Feeds',
+        band: 'Nine Inch Nails',
+        album: 'With Teeth'
+      },
+      {
+        title: 'Who Are You',
+        band: 'The Who',
+        album: 'Who Are You'
+      }];
+
+    //itemsliding
+    this.chats = [
+      {
+        img: './assets/avatar-cher.png',
+        name: 'Cher',
+        message: 'Ugh. As if.',
+        time: '9:38 pm'
+      }, {
+        img: './assets/avatar-dionne.png',
+        name: 'Dionne',
+        message: 'Mr. Hall was way harsh.',
+        time: '8:59 pm'
+      }, {
+        img: './assets/avatar-murray.png',
+        name: 'Murray',
+        message: 'Excuse me, "Ms. Dione."',
+        time: 'Wed'
+      }];
+  
+      this.logins = [
+      {
+          icon: 'logo-twitter',
+          name: 'Twitter',
+          username: 'admin',
+      }, {
+          icon: 'logo-github',
+          name: 'GitHub',
+          username: 'admin37',
+      }, {
+          icon: 'logo-instagram',
+          name: 'Instagram',
+          username: 'imanadmin',
+      }, {
+          icon: 'logo-codepen',
+          name: 'Codepen',
+          username: 'administrator',
+      }];
+
   }
 
   goSearch(){
@@ -142,5 +237,59 @@ export class ConfigPage {
     console.log('Year Change:', val);
   }
   ////////////////////
+
+  //REORDER ARRAY:
+  toggleEdit() {
+    this.editing = !this.editing;
+    if (this.editing) {
+      this.editButton = 'Done';
+    } else {
+      this.editButton = 'Edit';
+    }
+  }
+
+  reorderData(indexes: any) {
+    this.songs = reorderArray(this.songs, indexes);
+  }
+
+
+  //item sliding
+  more(item: ItemSliding) {
+    console.log('More');
+    item.close();
+  }
+
+  delete(item: ItemSliding) {
+    console.log('Delete');
+    item.close();
+  }
+
+  mute(item: ItemSliding) {
+    console.log('Mute');
+    item.close();
+  }
+
+  archive(item: ItemSliding) {
+    this.expandAction(item, 'archiving', 'Chat was archived.');
+  }
+
+  download(item: ItemSliding) {
+    this.expandAction(item, 'downloading', 'Login was downloaded.');
+  }
+
+  expandAction(item: ItemSliding, _: any, text: string) {
+    // TODO item.setElementClass(action, true);
+
+    setTimeout(() => {
+      const toast = this.toastCtrl.create({
+        message: text
+      });
+      toast.present();
+      // TODO item.setElementClass(action, false);
+      item.close();
+
+      setTimeout(() => toast.dismiss(), 2000);
+    }, 1500);
+  }
 
 }

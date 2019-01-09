@@ -49,6 +49,10 @@
 
     <ion-title *ngIf="!isSearch">MẪU USER INTERFACE IONIC</ion-title>
 
+    <ion-buttons end>
+      <button ion-button (click)="toggleEdit()">{{editButton}}</button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
@@ -497,17 +501,185 @@
 
         <!-- #id=4 -->
         <ion-slide>
-
+          <ion-list>
+            <ion-list-header>
+              Settings
+              <button ion-button icon-only item-end clear>
+                <ion-icon name="cog"></ion-icon>
+              </button>
+            </ion-list-header>
+        
+            <ion-item-group>
+              <ion-item>
+                <ion-icon name="plane" item-start color="danger"></ion-icon>
+                <ion-label>Airplane Mode</ion-label>
+                <ion-toggle color="secondary"></ion-toggle>
+              </ion-item>
+        
+              <button ion-item>
+                <ion-icon name="wifi" item-start color="primary"></ion-icon>
+                <ion-label>Wi-Fi</ion-label>
+                <ion-note item-end>The Interwebz</ion-note>
+              </button>
+        
+              <button ion-item>
+                <ion-icon name="bluetooth" item-start color="primary"></ion-icon>
+                <ion-label>Bluetooth</ion-label>
+                <ion-note item-end>Off</ion-note>
+              </button>
+            </ion-item-group>
+        
+            <ion-item-divider color="primary">
+              Other Settings
+              <button ion-button item-end outline color="light">Clear</button>
+            </ion-item-divider>
+        
+            <button ion-item>
+              <ion-icon name="call" item-start color="secondary"></ion-icon>
+              <ion-label>Cellular</ion-label>
+            </button>
+        
+            <button ion-item>
+              <ion-icon name="link" item-start color="secondary"></ion-icon>
+              <ion-label>Personal Hotspot</ion-label>
+              <ion-note item-end>Off</ion-note>
+            </button>
+          </ion-list>
+        
+          <ion-list radio-group>
+            <ion-list-header>
+              <ion-icon item-start name="phone-portrait"></ion-icon>
+              Silence Phone
+            </ion-list-header>
+        
+            <ion-item>
+              <ion-label color="dark">Always</ion-label>
+              <ion-radio value="always" checked></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label color="dark">Only while phone is locked</ion-label>
+              <ion-radio value="locked"></ion-radio>
+            </ion-item>
+          </ion-list>
+        
+          <ion-list>
+            <ion-list-header>
+              Apps Installed
+            </ion-list-header>
+        
+            <ion-item>
+              <ion-icon name="ionic" item-start color="primary"></ion-icon>
+              <ion-label>Ionic View</ion-label>
+              <button ion-button outline item-end>Uninstall</button>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="brush" item-start color="primary"></ion-icon>
+              <ion-label>Ionic Creator</ion-label>
+              <button ion-button outline item-end>Uninstall</button>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="logo-octocat" item-start color="dark"></ion-icon>
+              <ion-label>Hubstruck</ion-label>
+              <button ion-button outline item-end>Uninstall</button>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="paw" item-start color="danger"></ion-icon>
+              <ion-label>Barkpark</ion-label>
+              <button ion-button outline item-end>Uninstall</button>
+            </ion-item>
+          </ion-list>
         </ion-slide>
 
         <!-- #id=5 -->
         <ion-slide>
-
+          <ion-list class="chat-sliding-demo">
+            <ion-list-header>
+              Playlist
+            </ion-list-header>
+        
+            <ion-item-group [reorder]="editing" (ionItemReorder)="reorderData($event)">
+              <ion-item *ngFor="let song of songs">
+                <h2>{{ song.title }}</h2>
+                <p>{{ song.band }} • {{ song.album }}</p>
+              </ion-item>
+            </ion-item-group>
+          </ion-list>
         </ion-slide>
 
         <!-- #id=6 -->
         <ion-slide>
-
+          <ion-list class="chat-sliding-demo">
+            <ion-list-header>
+              Chats
+            </ion-list-header>
+        
+            <ion-item-sliding *ngFor="let chat of chats" #item>
+              <ion-item>
+                <ion-avatar item-start>
+                  <img [src]="chat.img">
+                </ion-avatar>
+                <h2>{{chat.name}}</h2>
+                <p>{{chat.message}}</p>
+                <ion-note item-end>
+                  {{chat.time}}
+                </ion-note>
+              </ion-item>
+        
+              <ion-item-options>
+                <button ion-button color="secondary" (click)="more(item)">
+                  <ion-icon name="menu"></ion-icon>
+                  More
+                </button>
+                <button ion-button color="dark" (click)="mute(item)">
+                  <ion-icon name="volume-off"></ion-icon>
+                  Mute
+                </button>
+                <button ion-button color="danger" (click)="delete(item)">
+                  <ion-icon name="trash"></ion-icon>
+                  Delete
+                </button>
+              </ion-item-options>
+        
+              <ion-item-options side="left" (ionSwipe)="archive(item)">
+                <button ion-button color="primary" expandable (click)="archive(item)">
+                  <ion-icon name="archive" class="expand-hide"></ion-icon>
+                  <div class="expand-hide">Archive</div>
+                  <ion-spinner id="archive-spinner"></ion-spinner>
+                </button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
+        
+          <ion-list class="login-sliding-demo">
+            <ion-list-header>
+              Logins
+            </ion-list-header>
+        
+            <ion-item-sliding *ngFor="let login of logins" #item>
+              <ion-item>
+                <ion-icon [name]="login.icon" item-start></ion-icon>
+                <h2>{{login.name}}</h2>
+                <p>{{login.username}}</p>
+              </ion-item>
+              <ion-item-options side="left">
+                <button ion-button color="danger">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </ion-item-options>
+              <ion-item-options (ionSwipe)="download(item)" icon-start>
+                <button ion-button color="dark" (click)="more(item)">
+                  <ion-icon name="volume-off"></ion-icon>
+                  Mute
+                </button>
+                <button ion-button color="light" expandable (click)="download(item)">
+                  <ion-icon name="download" class="expand-hide"></ion-icon>
+                  <div class="expand-hide">Download</div>
+                  <ion-spinner id="download-spinner"></ion-spinner>
+                </button>
+              </ion-item-options>
+            </ion-item-sliding>
+        
+          </ion-list>
         </ion-slide>
 
         <!-- #id=7 -->
