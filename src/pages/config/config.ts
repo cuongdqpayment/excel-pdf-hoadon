@@ -167,7 +167,7 @@ logins: any[];
   
       this.logins = [
       {
-          icon: 'logo-twitter',
+          icon: 'logo-twitter', //ten cua ionicicons
           name: 'Twitter',
           username: 'admin',
       }, {

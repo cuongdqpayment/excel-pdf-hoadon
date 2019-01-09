@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, Events, ToastController, reorderArray } from 'ionic-angular';
+import { NavController, LoadingController, Events, ToastController, reorderArray, ItemSliding } from 'ionic-angular';
 
 import { ApiStorageService } from '../../services/apiStorageService';
 import { ApiHttpPublicService } from '../../services/apiHttpPublicServices';
@@ -19,6 +19,9 @@ export class ParametersPage {
 
   editButton: string = 'Sắp xếp';
   editing: boolean = false;
+
+  //sliding
+  logins: any[];
 
   constructor(private navCtrl: NavController, 
               private apiStorageService: ApiStorageService,
@@ -45,6 +48,27 @@ export class ParametersPage {
       this.parametersOrigin = [];
       loading.dismiss();
     })
+
+    this.logins = [
+      {
+          icon: 'logo-twitter', //ten cua ionicicons
+          name: 'Twitter',
+          username: 'admin',
+      }, {
+          icon: 'logo-github',
+          name: 'GitHub',
+          username: 'admin37',
+      }, {
+          icon: 'logo-instagram',
+          name: 'Instagram',
+          username: 'imanadmin',
+      }, {
+          icon: 'logo-codepen',
+          name: 'Codepen',
+          username: 'administrator',
+      }]
+
+      
   }
 
   goSearch(){
@@ -107,6 +131,49 @@ export class ParametersPage {
     this.parameters = reorderArray(this.parameters, indexes);
   }
 
+
+
+
+
+
+  //item sliding
+  more(item: ItemSliding) {
+    console.log('More');
+    item.close();
+  }
+
+  delete(item: ItemSliding) {
+    console.log('Delete');
+    item.close();
+  }
+
+  mute(item: ItemSliding) {
+    console.log('Mute');
+    item.close();
+  }
+
+  archive(item: ItemSliding) {
+    this.expandAction(item, 'archiving', 'Chat was archived.');
+  }
+
+  download(item: ItemSliding) {
+    this.expandAction(item, 'downloading', 'Login was downloaded.');
+  }
+
+  expandAction(item: ItemSliding, _: any, text: string) {
+    // TODO item.setElementClass(action, true);
+
+    setTimeout(() => {
+      const toast = this.toastCtrl.create({
+        message: text
+      });
+      toast.present();
+      // TODO item.setElementClass(action, false);
+      item.close();
+
+      setTimeout(() => toast.dismiss(), 2000);
+    }, 1500);
+  }
 
 
 }
