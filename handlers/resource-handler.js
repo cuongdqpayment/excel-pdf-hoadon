@@ -10,7 +10,7 @@ const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const url = require('url');
 
-const vnd = require('../utils/number-2-vnd');
+const vnd = require('../utils/converter-2-vietnamese');
 
 const db = require('../db/sqlite3/sqlite-hoadon-service.js');
 
@@ -177,7 +177,7 @@ var createPdfInvoices = (jsonRows,outputFilename)=>{
         doc.moveDown(0.5)
         doc.text(charge);
         doc.moveDown(0.5)
-        doc.text(vnd.DocTienBangChu(charge));
+        doc.text(vnd.StringVietnamDong(charge));
         doc.moveDown()
         doc.text(el.staff);
 
@@ -193,7 +193,7 @@ var createPdfInvoices = (jsonRows,outputFilename)=>{
         doc.moveDown(0.5)
         doc.text(charge);
         doc.moveDown(0.5)
-        doc.text(vnd.DocTienBangChu(charge));
+        doc.text(vnd.StringVietnamDong(charge));
         doc.moveDown(0.5)
         doc.text(el.staff);
     });

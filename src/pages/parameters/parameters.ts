@@ -14,6 +14,7 @@ export class ParametersPage {
   isSearch: boolean = false;
   searchString:string='';
 
+  iconDefault = "list";
   parameters:any=[];
   parametersOrigin:any=[];
 
@@ -22,6 +23,7 @@ export class ParametersPage {
 
   //sliding
   logins: any[];
+
 
   constructor(private navCtrl: NavController, 
               private apiStorageService: ApiStorageService,
@@ -39,8 +41,11 @@ export class ParametersPage {
     this.http.getParamters()
     .then(parameters=>{
       this.parametersOrigin = parameters;
-      this.parameters = this.parametersOrigin;
-      //console.log(this.parameters);
+      this.parameters = this.parametersOrigin.filter(x=>x.id!==0);
+      console.log('param',this.parameters);
+      this.parameters = this.apiStorageService.createTree(this.parameters,{id:'id',parentId:'type',startWith:0})
+      console.log('tree',this.parameters);
+      
       loading.dismiss();
     })
     .catch(err=>{
@@ -121,9 +126,8 @@ export class ParametersPage {
         
     })
 
-      this.parametersOrigin.forEach((el,idx) => {
-        console.log(el.description,el)
-      });
+    console.log(this.parametersOrigin);
+      
     }
   }
 
@@ -131,9 +135,7 @@ export class ParametersPage {
     this.parameters = reorderArray(this.parameters, indexes);
   }
 
-
-
-
+  
 
 
   //item sliding
@@ -174,6 +176,5 @@ export class ParametersPage {
       setTimeout(() => toast.dismiss(), 2000);
     }, 1500);
   }
-
 
 }

@@ -26,16 +26,19 @@
   <ion-list>
     <ion-list-header color="primary">
           <ion-row>
-              <ion-col text-left col-6 col-xl-3 col-lg-4 col-sm-5>
+              <ion-col text-center col-6 col-xl-3 col-lg-4 col-md-5 col-sm-5>
                   <h2>Mô tả tham số</h2>
               </ion-col>
-              <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-sm-3>
+              <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-md-2 col-sm-3>
                   <h2>Tên</h2>
               </ion-col>
-              <ion-col text-center col-4 col-xl-2 col-lg-2 col-sm-2>
+              <ion-col class="hidden-md-down" text-center col-xl-1 col-lg-1 col-md-1>
+                  <h2>Mã(code)</h2>
+              </ion-col>
+              <ion-col text-right col-4 col-xl-2 col-lg-2 col-md-2 col-sm-2>
                   <h2>Giá trị</h2>
               </ion-col>
-              <ion-col text-right col-2 offset-xl-3 col-xl-2 offset-lg-2 col-lg-2 col-sm-2>
+              <ion-col text-right col-2 offset-xl-2 col-xl-2 offset-lg-1 col-lg-2 col-md-2 col-sm-2>
                   <h2>Thứ tự</h2>
               </ion-col>
             </ion-row>
@@ -58,23 +61,42 @@
 
     <ion-item-group [reorder]="editing" (ionItemReorder)="reorderData($event)">
       <ion-item *ngFor="let p of parameters">
-        
-        
+        <ion-icon [name]="p.icon?p.icon:iconDefault" item-start></ion-icon>
         <ion-row>
-          <ion-col text-left col-6 col-xl-3 col-lg-4 col-sm-5>
-              <ion-icon [name]="p.icon" item-start></ion-icon>
+          <ion-col text-left col-6 col-xl-3 col-lg-4 col-md-5 col-sm-5>
               <h2>{{ p.type }}.{{ p.code?p.code:p.id }} • {{ p.description }}</h2>
           </ion-col>
-          <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-sm-3>
+          <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-md-2 col-sm-3>
               {{ p.name }}
           </ion-col>
-          <ion-col text-right col-4 col-xl-2 col-lg-2 col-sm-2>
+          <ion-col class="hidden-md-down" text-center col-xl-1 col-lg-1 col-md-1>
+              {{ p.code }}
+          </ion-col>
+          <ion-col text-right col-4 col-xl-2 col-lg-2 col-md-2 col-sm-2>
               {{ p.value }}
           </ion-col>
-          <ion-col text-right col-2 offset-xl-3 col-xl-2 offset-lg-2 col-lg-2 col-sm-2>
+          <ion-col text-right col-2 offset-xl-2 col-xl-2 offset-lg-1 col-lg-2 col-md-2 col-sm-2>
               {{ p.order_1 }}
           </ion-col>
           </ion-row>
+
+          <ion-row >
+              <ion-col text-left col-6 col-xl-3 col-lg-4 col-md-5 col-sm-5>
+                  <h2>{{ p.type }}.{{ p.code?p.code:p.id }} • {{ p.description }}</h2>
+              </ion-col>
+              <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-md-2 col-sm-3>
+                  {{ p.name }}
+              </ion-col>
+              <ion-col class="hidden-md-down" text-center col-xl-1 col-lg-1 col-md-1>
+                  {{ p.code }}
+              </ion-col>
+              <ion-col text-right col-4 col-xl-2 col-lg-2 col-md-2 col-sm-2>
+                  {{ p.value }}
+              </ion-col>
+              <ion-col text-right col-2 offset-xl-2 col-xl-2 offset-lg-1 col-lg-2 col-md-2 col-sm-2>
+                  {{ p.order_1 }}
+              </ion-col>
+            </ion-row>
       </ion-item>
     </ion-item-group>
 
