@@ -61,10 +61,14 @@
 
     <ion-item-group [reorder]="editing" (ionItemReorder)="reorderData($event)">
       <ion-item *ngFor="let p of parameters">
-        <ion-icon [name]="p.icon?p.icon:iconDefault" item-start></ion-icon>
         <ion-row>
           <ion-col text-left col-6 col-xl-3 col-lg-4 col-md-5 col-sm-5>
-              <h2>{{ p.type }}.{{ p.code?p.code:p.id }} • {{ p.description }}</h2>
+            <ion-buttons>
+              <button ion-button color="secondary" outline icon-only>
+                <ion-icon [name]="p.icon?p.icon:'arrow-dropdown-circle'"></ion-icon>
+                {{ p.type }}.{{ p.code?p.code:p.id }} • {{ p.description }}
+              </button>
+            </ion-buttons>
           </ion-col>
           <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-md-2 col-sm-3>
               {{ p.name }}
@@ -79,24 +83,26 @@
               {{ p.order_1 }}
           </ion-col>
           </ion-row>
-
-          <ion-row >
-              <ion-col text-left col-6 col-xl-3 col-lg-4 col-md-5 col-sm-5>
-                  <h2>{{ p.type }}.{{ p.code?p.code:p.id }} • {{ p.description }}</h2>
-              </ion-col>
-              <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-md-2 col-sm-3>
-                  {{ p.name }}
-              </ion-col>
-              <ion-col class="hidden-md-down" text-center col-xl-1 col-lg-1 col-md-1>
-                  {{ p.code }}
-              </ion-col>
-              <ion-col text-right col-4 col-xl-2 col-lg-2 col-md-2 col-sm-2>
-                  {{ p.value }}
-              </ion-col>
-              <ion-col text-right col-2 offset-xl-2 col-xl-2 offset-lg-1 col-lg-2 col-md-2 col-sm-2>
-                  {{ p.order_1 }}
-              </ion-col>
-            </ion-row>
+          <ion-item *ngFor="let ch of p.$children">
+              <ion-row>
+                <ion-col text-left offset-1 col-5 offset-xl-1 col-xl-2 offset-lg-1 col-lg-3 offset-md-1 col-md-4 offset-lg-1 col-sm-4>
+                    <ion-icon [name]="p.icon?p.icon:'return-right'"></ion-icon>
+                    {{ ch.type }}.{{ ch.code?ch.code:ch.id }} • {{ ch.description }}
+                </ion-col>
+                <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-md-2 col-sm-3>
+                    {{ ch.name }}
+                </ion-col>
+                <ion-col class="hidden-md-down" text-center col-xl-1 col-lg-1 col-md-1>
+                    {{ ch.code }}
+                </ion-col>
+                <ion-col text-right col-4 col-xl-2 col-lg-2 col-md-2 col-sm-2>
+                    {{ ch.value }}
+                </ion-col>
+                <ion-col text-right col-2 offset-xl-2 col-xl-2 offset-lg-1 col-lg-2 col-md-2 col-sm-2>
+                    {{ ch.order_1 }}
+                </ion-col>
+              </ion-row>
+          </ion-item>
       </ion-item>
     </ion-item-group>
 

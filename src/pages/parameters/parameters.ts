@@ -42,7 +42,7 @@ export class ParametersPage {
     .then(parameters=>{
       this.parametersOrigin = parameters;
       this.parameters = this.parametersOrigin.filter(x=>x.id!==0);
-      console.log('param',this.parameters);
+      //console.log('param',this.parameters);
       this.parameters = this.apiStorageService.createTree(this.parameters,{id:'id',parentId:'type',startWith:0})
       console.log('tree',this.parameters);
       
