@@ -242,26 +242,20 @@ export class ApiAuthService {
             });
     }
 
-    requestIsdn(isdn){
+    requestIsdn(jsonString){
         //chuyen len bang form co ma hoa
-        return this.httpClient.post(this.authenticationServer + '/login-isdn', JSON.stringify({
-             isdn:isdn
-             }))
+        return this.httpClient.post(this.authenticationServer + '/request-isdn', jsonString)
              .toPromise()
              .then(data => {
-                 console.log(data);
                  return data;
              });
      }
 
-     confirmKey(key){
+    confirmKey(jsonString){
          //chuyen di bang form co ma hoa
-        return this.httpClient.post(this.authenticationServer + '/confirm-key', JSON.stringify({
-             key:key
-             }))
+        return this.httpClient.post(this.authenticationServer + '/confirm-key', jsonString)
              .toPromise()
              .then(data => {
-                 console.log(data);
                  return data;
              });
      }

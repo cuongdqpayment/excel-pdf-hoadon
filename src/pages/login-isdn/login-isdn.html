@@ -5,19 +5,45 @@
 </ion-header>
 
 <ion-content padding>
-  <form [formGroup]="myFormGroup">
-    <ion-item>
-      <ion-label floating>Nhập số điện thoại</ion-label>
-      <ion-input type="text" formControlName="number"></ion-input>
-    </ion-item>
-    <p *ngIf="myFormGroup.controls.number.invalid && myFormGroup.controls.number.touched">
-      <span class="error">Vui lòng nhập số điện thoại di động gồm 10 chữ số gồm số 0 ở đầu</span>
-    </p>
-    <ion-buttons start>
-      <button ion-button type="button" icon-end round [disabled]="myFormGroup.invalid" (click)="onSubmit()">
-        OK
-        <ion-icon name="share-alt"></ion-icon>
-      </button>
-    </ion-buttons>
-  </form>
+  <ion-slides (ionSlideDidChange)="slideChanged()">
+    <!-- #id=0 -->
+    <ion-slide>
+
+      <form [formGroup]="isdnFormGroup">
+        <ion-item>
+          <ion-label floating>Nhập số điện thoại</ion-label>
+          <ion-input type="text" formControlName="isdn"></ion-input>
+        </ion-item>
+        <p *ngIf="isdnFormGroup.controls.isdn.invalid && isdnFormGroup.controls.isdn.touched">
+          <span class="error">Vui lòng nhập số điện thoại di động gồm 10 chữ số gồm số 0 ở đầu</span>
+        </p>
+        <ion-buttons start>
+          <button ion-button type="button" icon-end round [disabled]="isdnFormGroup.invalid" (click)="onSubmit()">
+            OK
+            <ion-icon name="share-alt"></ion-icon>
+          </button>
+        </ion-buttons>
+      </form>
+
+    </ion-slide>
+
+    <!-- #id=1 -->
+    <ion-slide>
+        <form [formGroup]="keyFormGroup">
+            <ion-item>
+              <ion-label floating>Nhập mã OTP</ion-label>
+              <ion-input type="text" formControlName="key"></ion-input>
+            </ion-item>
+            <p *ngIf="keyFormGroup.controls.key.invalid && keyFormGroup.controls.key.touched">
+              <span class="error">Vui lòng nhập mã OTP có 6 chữ cái và số không có số 0</span>
+            </p>
+            <ion-buttons start>
+              <button ion-button type="button" icon-end round [disabled]="keyFormGroup.invalid" (click)="onSubmitKey()">
+                OK
+                <ion-icon name="share-alt"></ion-icon>
+              </button>
+            </ion-buttons>
+          </form>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
