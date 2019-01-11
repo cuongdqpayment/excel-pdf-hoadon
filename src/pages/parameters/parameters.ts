@@ -17,13 +17,11 @@ export class ParametersPage {
   iconDefault = "list";
   parameters:any=[];
   parametersOrigin:any=[];
+  groupName:any;
+  children:any=[];
 
   editButton: string = 'Sắp xếp';
   editing: boolean = false;
-
-  //sliding
-  logins: any[];
-
 
   constructor(private navCtrl: NavController, 
               private apiStorageService: ApiStorageService,
@@ -44,7 +42,7 @@ export class ParametersPage {
       this.parameters = this.parametersOrigin.filter(x=>x.id!==0);
       //console.log('param',this.parameters);
       this.parameters = this.apiStorageService.createTree(this.parameters,{id:'id',parentId:'type',startWith:0})
-      console.log('tree',this.parameters);
+      //console.log('tree',this.parameters);
       
       loading.dismiss();
     })
@@ -53,25 +51,6 @@ export class ParametersPage {
       this.parametersOrigin = [];
       loading.dismiss();
     })
-
-    this.logins = [
-      {
-          icon: 'logo-twitter', //ten cua ionicicons
-          name: 'Twitter',
-          username: 'admin',
-      }, {
-          icon: 'logo-github',
-          name: 'GitHub',
-          username: 'admin37',
-      }, {
-          icon: 'logo-instagram',
-          name: 'Instagram',
-          username: 'imanadmin',
-      }, {
-          icon: 'logo-codepen',
-          name: 'Codepen',
-          username: 'administrator',
-      }]
 
       
   }
@@ -107,14 +86,14 @@ export class ParametersPage {
     } else {
       this.editButton = 'Sắp xếp';
 
-      this.parameters.forEach((el,idx) => {
+      this.children.forEach((el,idx) => {
         //console.log(el.description,el,idx,el.order_1)
         el.change_time = new Date().getTime();
         el.order_1 = idx;
       });
 
       //thay the cac gia tri da thay doi trong mang param
-      this.parametersOrigin = this.parametersOrigin.map(obj => this.parameters.find(o => o.id === obj.id) || obj);
+      this.parametersOrigin = this.parametersOrigin.map(obj => this.children.find(o => o.id === obj.id) || obj);
 
       //sap xep lai theo order moi thay
       this.parametersOrigin = this.parametersOrigin.sort((a,b)=>{
@@ -132,10 +111,21 @@ export class ParametersPage {
   }
 
   reorderData(indexes: any) {
-    this.parameters = reorderArray(this.parameters, indexes);
+    this.children = reorderArray(this.children, indexes);
   }
 
-  
+  selectGroup(parent){
+    if (parent&&parent.$children){
+      this.groupName = parent.description;
+      
+      //console.log(this.groupName.length);
+
+      this.children=parent.$children;
+    } else{
+      this.children=[];
+    }
+
+  }
 
 
   //item sliding

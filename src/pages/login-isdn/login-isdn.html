@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="myFormGroup">
+    <ion-item>
+      <ion-label floating>Nhập số điện thoại</ion-label>
+      <ion-input type="text" formControlName="number"></ion-input>
+    </ion-item>
+    <p *ngIf="myFormGroup.controls.number.invalid && myFormGroup.controls.number.touched">
+      <span class="error">Vui lòng nhập số điện thoại di động gồm 10 chữ số gồm số 0 ở đầu</span>
+    </p>
+    <ion-buttons start>
+      <button ion-button type="button" icon-end round [disabled]="myFormGroup.invalid" (click)="onSubmit()">
+        OK
+        <ion-icon name="share-alt"></ion-icon>
+      </button>
+    </ion-buttons>
+  </form>
+</ion-content>
