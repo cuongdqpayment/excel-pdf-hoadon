@@ -50,19 +50,19 @@ var RequestInterceptor = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 137:
+/***/ 153:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__register_register__ = __webpack_require__(257);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__setting_setting__ = __webpack_require__(303);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_apiAuthService__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__register_register__ = __webpack_require__(297);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__setting_setting__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_apiAuthService__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_apiStorageService__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(296);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -218,7 +218,7 @@ var LoginPage = /** @class */ (function () {
     };
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/login/login.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Login form\n    </ion-title>\n    <ion-buttons start>\n      <img src="assets/imgs/logo.png">\n   </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content padding class="card-background-page">\n   <ion-item *ngIf="isShowInfo">\n        <ion-grid>\n            <ion-row>\n                <ion-col col-12 col-xl-4 col-lg-6 col-sm-12>\n                    <ion-card>\n                        <img *ngIf="(serverTokenUserInfo?.image)" [src]="serverTokenUserInfo?.image"/>\n                        <ion-card-content>\n                            <ion-card-title>\n                                {{serverTokenUserInfo?.username}}\n                            </ion-card-title>\n                            <p>{{serverTokenUserInfo?.nickname}}</p>\n                            <p>{{serverTokenUserInfo?.req_time}}</p>\n                        </ion-card-content>\n                        <ion-row>\n                            <ion-col>\n                                <button ion-button type="button" clear small color="secondary" icon-start (click)="callLogout()">\n                                    <ion-icon name=\'backspace\' ios="ios-backspace" md="md-backspace"></ion-icon>\n                                    Logout\n                                </button>\n                            </ion-col>\n                            <ion-col text-right>\n                                <button ion-button type="button" clear small color="secondary" icon-start (click)="callEdit()">\n                                    <ion-icon name=\'share-alt\'></ion-icon>\n                                    Edit\n                                </button>\n                            </ion-col>\n                        </ion-row>\n                    </ion-card>\n                </ion-col>\n            </ion-row>\n        </ion-grid>\n  </ion-item>\n  <form (ngSubmit)="onSubmit()" [formGroup]="myFromGroup" *ngIf="!(isShowInfo)">\n    <ion-card col-12 col-xl-4 col-lg-6 col-sm-12>\n      <ion-item>\n        <ion-label floating>Username</ion-label>\n        <ion-input type="text" formControlName="user"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Password</ion-label>\n        <ion-input type="password" formControlName="pass"></ion-input>\n      </ion-item>\n      <ion-row no-padding>\n\n          <ion-col>\n              <ion-buttons start>\n                  <button ion-button type="button" icon-end round (click)="callRegister()">\n                      Đăng ký\n                      <ion-icon name="contact"></ion-icon>\n                  </button>\n              </ion-buttons>\n          </ion-col>\n\n        <ion-col text-right>\n          <ion-buttons start>\n            <button ion-button type="submit" icon-end round>\n              Đăng nhập\n              <ion-icon name="share-alt"></ion-icon>\n            </button>\n          </ion-buttons>\n        </ion-col>\n\n      </ion-row>\n\n    </ion-card>\n  </form>\n\n\n  <ion-fab right bottom auto-close-on-click-outside *ngIf="isShowInfo">\n    <button ion-fab mini color="primary">\n      <ion-icon name="arrow-dropleft"></ion-icon>\n    </button>\n    <ion-fab-list side="left">\n      <button color="primary" ion-fab (click)="callHome()">\n        <ion-icon name="chatbubbles" ios="ios-chatbubbles" md="md-chatbubbles"></ion-icon>\n      </button>\n    </ion-fab-list>\n  </ion-fab>\n\n</ion-content>'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/login/login.html"*/
+            selector: 'page-login',template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\login\login.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>\n\n      Login form\n\n    </ion-title>\n\n    <ion-buttons start>\n\n      <img src="assets/imgs/logo.png">\n\n   </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="card-background-page">\n\n   <ion-item *ngIf="isShowInfo">\n\n        <ion-grid>\n\n            <ion-row>\n\n                <ion-col col-12 col-xl-4 col-lg-6 col-sm-12>\n\n                    <ion-card>\n\n                        <img *ngIf="(serverTokenUserInfo?.image)" [src]="serverTokenUserInfo?.image"/>\n\n                        <ion-card-content>\n\n                            <ion-card-title>\n\n                                {{serverTokenUserInfo?.username}}\n\n                            </ion-card-title>\n\n                            <p>{{serverTokenUserInfo?.nickname}}</p>\n\n                            <p>{{serverTokenUserInfo?.req_time}}</p>\n\n                        </ion-card-content>\n\n                        <ion-row>\n\n                            <ion-col>\n\n                                <button ion-button type="button" clear small color="secondary" icon-start (click)="callLogout()">\n\n                                    <ion-icon name=\'backspace\' ios="ios-backspace" md="md-backspace"></ion-icon>\n\n                                    Logout\n\n                                </button>\n\n                            </ion-col>\n\n                            <ion-col text-right>\n\n                                <button ion-button type="button" clear small color="secondary" icon-start (click)="callEdit()">\n\n                                    <ion-icon name=\'share-alt\'></ion-icon>\n\n                                    Edit\n\n                                </button>\n\n                            </ion-col>\n\n                        </ion-row>\n\n                    </ion-card>\n\n                </ion-col>\n\n            </ion-row>\n\n        </ion-grid>\n\n  </ion-item>\n\n  <form (ngSubmit)="onSubmit()" [formGroup]="myFromGroup" *ngIf="!(isShowInfo)">\n\n    <ion-card col-12 col-xl-4 col-lg-6 col-sm-12>\n\n      <ion-item>\n\n        <ion-label floating>Username</ion-label>\n\n        <ion-input type="text" formControlName="user"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label floating>Password</ion-label>\n\n        <ion-input type="password" formControlName="pass"></ion-input>\n\n      </ion-item>\n\n      <ion-row no-padding>\n\n\n\n          <ion-col>\n\n              <ion-buttons start>\n\n                  <button ion-button type="button" icon-end round (click)="callRegister()">\n\n                      Đăng ký\n\n                      <ion-icon name="contact"></ion-icon>\n\n                  </button>\n\n              </ion-buttons>\n\n          </ion-col>\n\n\n\n        <ion-col text-right>\n\n          <ion-buttons start>\n\n            <button ion-button type="submit" icon-end round>\n\n              Đăng nhập\n\n              <ion-icon name="share-alt"></ion-icon>\n\n            </button>\n\n          </ion-buttons>\n\n        </ion-col>\n\n\n\n      </ion-row>\n\n\n\n    </ion-card>\n\n  </form>\n\n\n\n\n\n  <ion-fab right bottom auto-close-on-click-outside *ngIf="isShowInfo">\n\n    <button ion-fab mini color="primary">\n\n      <ion-icon name="arrow-dropleft"></ion-icon>\n\n    </button>\n\n    <ion-fab-list side="left">\n\n      <button color="primary" ion-fab (click)="callHome()">\n\n        <ion-icon name="chatbubbles" ios="ios-chatbubbles" md="md-chatbubbles"></ion-icon>\n\n      </button>\n\n    </ion-fab-list>\n\n  </ion-fab>\n\n\n\n</ion-content>'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\login\login.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
@@ -273,11 +273,11 @@ webpackEmptyAsyncContext.id = 205;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginIsdnPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__customer_customer__ = __webpack_require__(250);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__invoice_invoice__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__report_report__ = __webpack_require__(255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__ = __webpack_require__(60);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -291,193 +291,65 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var TabsPage = /** @class */ (function () {
-    function TabsPage() {
-        this.tab1Root = __WEBPACK_IMPORTED_MODULE_1__customer_customer__["a" /* CustomerPage */];
-        this.tab2Root = __WEBPACK_IMPORTED_MODULE_2__invoice_invoice__["a" /* InvoicePage */];
-        this.tab3Root = __WEBPACK_IMPORTED_MODULE_3__report_report__["a" /* ReportPage */];
-    }
-    TabsPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/tabs/tabs.html"*/'<ion-tabs>\n  <ion-tab [root]="tab1Root" tabTitle="Khách hàng" tabIcon="contacts"></ion-tab>\n  <ion-tab [root]="tab2Root" tabTitle="Hóa đơn" tabIcon="list-box"></ion-tab>\n  <ion-tab [root]="tab3Root" tabTitle="Báo cáo" tabIcon="document"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/tabs/tabs.html"*/
-        }),
-        __metadata("design:paramtypes", [])
-    ], TabsPage);
-    return TabsPage;
-}());
-
-//# sourceMappingURL=tabs.js.map
-
-/***/ }),
-
-/***/ 250:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CustomerPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__parameters_parameters__ = __webpack_require__(252);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__config_config__ = __webpack_require__(253);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-var CustomerPage = /** @class */ (function () {
-    function CustomerPage(navCtrl, formBuilder, http, loadingCtrl) {
-        this.navCtrl = navCtrl;
+var LoginIsdnPage = /** @class */ (function () {
+    function LoginIsdnPage(formBuilder, auth, navCtrl) {
         this.formBuilder = formBuilder;
-        this.http = http;
-        this.loadingCtrl = loadingCtrl;
-        this.slideIndex = 0;
-        this.customers = [];
-        this.customersOrigin = [];
-        this.isSearch = false;
-        this.searchString = '';
-        this.maxCurrentId = 0;
+        this.auth = auth;
+        this.navCtrl = navCtrl;
+        this.myFormGroup = this.formBuilder.group({
+            number: ['',
+                [
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern("^[0-9]*$"),
+                    phoneNumberValidator,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(9),
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].maxLength(9)
+                ]],
+        });
     }
-    CustomerPage.prototype.ngOnInit = function () {
-        //this.getCustomers(); //cai nay lay tu load trang dau luon
-        //khong cho quet bang tay
-        this.slides.lockSwipes(true);
-        this.myFromGroup = this.formBuilder.group({
-            full_name: '',
-            address: '',
-            phone: '',
-            email: '',
-            area: '',
-            type: '',
-        });
-    };
-    CustomerPage.prototype.getCustomers = function () {
-        var _this = this;
-        var loading = this.loadingCtrl.create({
-            content: 'Đang lấy danh sách khách hàng...'
-        });
-        loading.present();
-        this.http.getAllCutomers()
-            .then(function (customers) {
-            _this.customersOrigin = customers;
-            _this.customers = _this.customersOrigin;
-            //tim gia tri max cua ma khach hang
-            _this.maxCurrentId = Math.max.apply(Math, _this.customersOrigin.map(function (o) { return o.stt; }));
-            //console.log('MAX Ma khach hang',this.maxCurrentId);
-            loading.dismiss();
+    LoginIsdnPage.prototype.onSubmit = function () {
+        var a = this.myFormGroup.value.number;
+        this.auth.sendSMS(a, 'my key ' + a)
+            .then(function (data) {
+            var a;
+            a = data;
+            var b = JSON.parse(a);
+            console.log('data', b);
         })
             .catch(function (err) {
-            _this.customersOrigin = [];
-            _this.customers = [];
-            loading.dismiss();
+            console.log('err', err);
         });
     };
-    CustomerPage.prototype.goSearch = function () {
-        this.isSearch = true;
-    };
-    CustomerPage.prototype.onInput = function (e) {
-        var _this = this;
-        this.customers = this.customersOrigin.filter(function (x) { return (x.full_name.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0
-            ||
-                x.cus_id.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0
-            ||
-                x.area.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0
-            ||
-                x.staff.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0
-            ||
-                (x.phone && x.phone.indexOf(_this.searchString) >= 0)); });
-    };
-    CustomerPage.prototype.searchEnter = function () {
-        this.isSearch = false;
-    };
-    CustomerPage.prototype.gotoSlideEdit = function (cus) {
-        //console.log('cus',cus);
-        this.currentCustomer = cus;
-        this.myFromGroup = this.formBuilder.group({
-            full_name: cus.full_name,
-            address: cus.address ? cus.address : cus.area,
-            phone: cus.phone,
-            email: cus.email,
-            area: cus.area,
-            type: cus.cust_type,
-        });
-        this.goToSlide(1);
-    };
-    /**
-     * Dieu khien slide
-     * @param i
-     */
-    CustomerPage.prototype.goToSlide = function (i) {
-        this.slides.lockSwipes(false);
-        this.slides.slideTo(i, 500);
-        this.slides.lockSwipes(true);
-    };
-    /**
-     * xac dinh slide
-     */
-    CustomerPage.prototype.slideChanged = function () {
-        this.slideIndex = this.slides.getActiveIndex();
-    };
-    CustomerPage.prototype.goBack = function () {
-        this.goToSlide(0);
-    };
-    /**
-     * Lay noi dung co thay doi
-     * luu vao array customers luu xuong dia, luu csdl
-     */
-    CustomerPage.prototype.onSubmit = function () {
-        this.currentCustomer.full_name = this.myFromGroup.get('full_name').value;
-        this.currentCustomer.address = this.myFromGroup.get('address').value;
-        this.currentCustomer.phone = this.myFromGroup.get('phone').value;
-        this.currentCustomer.email = this.myFromGroup.get('email').value;
-        this.currentCustomer.change_date = new Date().getTime();
-        this.goToSlide(0);
-    };
-    CustomerPage.prototype.goParameters = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__parameters_parameters__["a" /* ParametersPage */]);
-    };
-    CustomerPage.prototype.newCustomter = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__config_config__["a" /* ConfigPage */]);
-    };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Slides */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Slides */])
-    ], CustomerPage.prototype, "slides", void 0);
-    CustomerPage = __decorate([
+    LoginIsdnPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-customer',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/customer/customer.html"*/'<ion-header>\n  <ion-navbar>\n\n    <ion-buttons *ngIf="!isSearch" start>\n      <button ion-button icon-only color="royal" (click)="goSearch()">\n        <ion-icon name="search"></ion-icon>\n      </button>\n\n      <button ion-button icon-only (click)="newCustomter()">\n        <ion-icon name="contact"></ion-icon>\n      </button>\n\n    </ion-buttons>\n\n    <ion-buttons end>\n      <button ion-button icon-only color="secondary" (click)="goParameters()">\n        <ion-icon name="more"></ion-icon>\n      </button>\n    </ion-buttons>\n    \n    <ion-searchbar *ngIf="isSearch" placeholder="Tìm theo mã/tên khách hàng/khu vực/người quản lý hoặc số điện thoại"\n      [(ngModel)]="searchString"\n      [showCancelButton]="shouldShowCancel"\n      (ionInput)="onInput($event)"\n      (keyup.enter)="searchEnter()"\n      (keyup.esc)="searchEnter()"\n      start>\n    </ion-searchbar>\n    \n    <ion-title *ngIf="!isSearch">CUSTOMER</ion-title>\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-slides (ionSlideDidChange)="slideChanged()">\n      <!-- #id=0 -->\n      <ion-slide>\n          <ion-list>\n              <button ion-item *ngFor="let customer of customers" (click)="gotoSlideEdit(customer)">\n                <ion-avatar item-start>\n                  <img src={{customer.image}}>\n                </ion-avatar>\n                <h2>{{customer.cust_id}} - {{customer.full_name}}</h2>\n                <p>{{customer.area}} ({{customer.staff}})</p>\n                <ion-note>{{customer.cust_type}} {{customer.charge}} </ion-note>\n              </button>\n          </ion-list>\n      </ion-slide>\n      \n      <!-- #id=1 -->\n      <ion-slide>\n          <form [formGroup]="myFromGroup" (ngSubmit)="onSubmit()">\n\n              <ion-item>\n                <ion-label floating>Họ và Tên</ion-label>\n                <ion-input formControlName="full_name" type="text"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Địa chỉ</ion-label>\n                <ion-input formControlName="address" type="address"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Điện thoại</ion-label>\n                <ion-input formControlName="phone" type="phone"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Email</ion-label>\n                <ion-input formControlName="email" type="email"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Khu vực quản lý</ion-label>\n                <ion-input formControlName="area" type="text"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Loại khách hàng</ion-label>\n                <ion-input formControlName="type" type="text"></ion-input>\n              </ion-item>\n              \n              <ion-row>\n                <ion-col text-center col-12 col-xl-3 col-lg-4 col-sm-6>\n                  <button ion-button block color="secondary" type="button" (click)="goBack()">\n                    Trở về\n                  </button>\n                </ion-col>\n                <ion-col text-center col-12 offset-xl-6 col-xl-3 offset-lg-4 col-lg-4 col-sm-6>\n                  <button ion-button block color="secondary" type="submit">\n                    Thay đổi\n                  </button>\n                </ion-col>\n              </ion-row>\n              \n            </form>\n      </ion-slide>\n  \n      <!-- #id=2 -->\n      <!-- #id=4 -->\n      <!-- #id=5 -->\n      <!-- #id=6 -->\n    </ion-slides>\n</ion-content>\n'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/customer/customer.html"*/
+            selector: 'page-login-isdn',template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\login-isdn\login-isdn.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>Home</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <form [formGroup]="myFormGroup">\n\n    <ion-item>\n\n      <ion-label floating>Nhập số điện thoại</ion-label>\n\n      <ion-input type="text" formControlName="number"></ion-input>\n\n    </ion-item>\n\n    <p *ngIf="myFormGroup.controls.number.invalid && myFormGroup.controls.number.touched">\n\n      <span class="error">Vui lòng nhập số điện thoại di động gồm 10 chữ số gồm số 0 ở đầu</span>\n\n    </p>\n\n    <ion-buttons start>\n\n      <button ion-button type="button" icon-end round [disabled]="myFormGroup.invalid" (click)="onSubmit()">\n\n        OK\n\n        <ion-icon name="share-alt"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </form>\n\n</ion-content>'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\login-isdn\login-isdn.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__["a" /* ApiHttpPublicService */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */]])
-    ], CustomerPage);
-    return CustomerPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__["a" /* ApiAuthService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
+    ], LoginIsdnPage);
+    return LoginIsdnPage;
 }());
 
-//# sourceMappingURL=customer.js.map
+function phoneNumberValidator(formControl) {
+    if (formControl.value.charAt(0) != "0")
+        return null;
+    else
+        return { phoneNumber: true };
+}
+//# sourceMappingURL=login-isdn.js.map
 
 /***/ }),
 
-/***/ 252:
+/***/ 296:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ParametersPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_apiStorageService__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_print_js__ = __webpack_require__(500);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_print_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_print_js__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -490,167 +362,474 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-var ParametersPage = /** @class */ (function () {
-    function ParametersPage(navCtrl, apiStorageService, http, events, loadingCtrl, toastCtrl) {
+var HomePage = /** @class */ (function () {
+    function HomePage(navCtrl) {
         this.navCtrl = navCtrl;
-        this.apiStorageService = apiStorageService;
-        this.http = http;
-        this.events = events;
-        this.loadingCtrl = loadingCtrl;
-        this.toastCtrl = toastCtrl;
-        this.isSearch = false;
-        this.searchString = '';
-        this.iconDefault = "list";
-        this.parameters = [];
-        this.parametersOrigin = [];
-        this.editButton = 'Sắp xếp';
-        this.editing = false;
     }
-    ParametersPage.prototype.ngOnInit = function () {
-        var _this = this;
-        var loading = this.loadingCtrl.create({
-            content: 'Đang lấy danh sách tham số...'
+    HomePage.prototype.printPdf = function () {
+        __WEBPACK_IMPORTED_MODULE_2_print_js___default()('/test/manual/test.pdf');
+    };
+    HomePage.prototype.printPdfWithModal = function () {
+        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
+            printable: '/test/manual/test.pdf',
+            type: 'pdf',
+            showModal: true
         });
-        loading.present();
-        this.http.getParamters()
-            .then(function (parameters) {
-            _this.parametersOrigin = parameters;
-            _this.parameters = _this.parametersOrigin.filter(function (x) { return x.id !== 0; });
-            //console.log('param',this.parameters);
-            _this.parameters = _this.apiStorageService.createTree(_this.parameters, { id: 'id', parentId: 'type', startWith: 0 });
-            console.log('tree', _this.parameters);
-            loading.dismiss();
-        })
-            .catch(function (err) {
-            _this.parameters = [];
-            _this.parametersOrigin = [];
-            loading.dismiss();
+    };
+    HomePage.prototype.printPdfWithModalAndCloseCallback = function () {
+        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
+            printable: '/test/manual/test.pdf',
+            type: 'pdf',
+            showModal: true,
+            onPrintDialogClose: function () { return console.log('The print dialog was closed'); },
+            onPdfOpen: function () { return console.log('Pdf was opened in a new tab due to an incompatible browser'); }
         });
-        this.logins = [
+    };
+    HomePage.prototype.printHtml = function () {
+        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
+            printable: 'test',
+            type: 'html'
+        });
+    };
+    HomePage.prototype.printHtmlCustomStyle = function () {
+        var style = '@page { margin: 0 } @media print { h1 { color: blue } }';
+        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
+            printable: 'test',
+            type: 'html',
+            style: style,
+            scanStyles: false
+        });
+    };
+    HomePage.prototype.printHtmlCss = function () {
+        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
+            printable: 'test',
+            type: 'html',
+            css: 'test.css',
+            scanStyles: false
+        });
+    };
+    HomePage.prototype.printJson = function () {
+        var data = [];
+        for (var i = 0; i <= 1000; i++) {
+            data.push({
+                test1: this.createRandomString(),
+                test2: this.createRandomString()
+            });
+        }
+        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
+            printable: data,
+            properties: [{
+                    field: 'test1',
+                    displayName: 'test 1',
+                    columnSize: 1
+                }, {
+                    field: 'test2',
+                    displayName: 'test 2',
+                    columnSize: 4
+                }],
+            type: 'json'
+        });
+    };
+    HomePage.prototype.printStyledJson = function () {
+        var data = [
             {
-                icon: 'logo-twitter',
-                name: 'Twitter',
-                username: 'admin',
-            }, {
-                icon: 'logo-github',
-                name: 'GitHub',
-                username: 'admin37',
-            }, {
-                icon: 'logo-instagram',
-                name: 'Instagram',
-                username: 'imanadmin',
-            }, {
-                icon: 'logo-codepen',
-                name: 'Codepen',
-                username: 'administrator',
+                test1: 'Test1 string',
+                test2: 'Test2 string'
+            },
+            {
+                test1: 'more Test1 string',
+                test2: 'more Test2 string'
             }
         ];
+        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({ printable: data, properties: ['test1', 'test2'], type: 'json', gridStyle: 'border: 2px solid #3971A5;', gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;' });
     };
-    ParametersPage.prototype.goSearch = function () {
-        this.isSearch = true;
-    };
-    ParametersPage.prototype.onInput = function (e) {
-        var _this = this;
-        var types = this.parametersOrigin.filter(function (y) { return (y.type == 0 && y.description.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0); });
-        var typesMax = 0;
-        if (types.length == 1)
-            typesMax = Math.max.apply(Math, types.map(function (o) { return o.id; }));
-        this.parameters = this.parametersOrigin.filter(function (x) { return typesMax == 0 || x.type == typesMax; });
-    };
-    ParametersPage.prototype.searchEnter = function () {
-        this.isSearch = false;
-    };
-    ParametersPage.prototype.addGroupParameters = function () {
-    };
-    ParametersPage.prototype.toggleEdit = function () {
-        var _this = this;
-        this.editing = !this.editing;
-        if (this.editing) {
-            this.editButton = 'Ghi lại';
+    HomePage.prototype.printNestedJson = function () {
+        var data = [];
+        for (var i = 0; i <= 100; i++) {
+            data.push({
+                test1: this.createRandomString(),
+                test2: {
+                    a: this.createRandomString()
+                }
+            });
         }
-        else {
-            this.editButton = 'Sắp xếp';
-            this.parameters.forEach(function (el, idx) {
-                //console.log(el.description,el,idx,el.order_1)
-                el.change_time = new Date().getTime();
-                el.order_1 = idx;
-            });
-            //thay the cac gia tri da thay doi trong mang param
-            this.parametersOrigin = this.parametersOrigin.map(function (obj) { return _this.parameters.find(function (o) { return o.id === obj.id; }) || obj; });
-            //sap xep lai theo order moi thay
-            this.parametersOrigin = this.parametersOrigin.sort(function (a, b) {
-                if (a.type < b.type)
-                    return -2;
-                if (a.type > b.type)
-                    return 2;
-                if (a.order_1 < b.order_1)
-                    return -1;
-                if (a.order_1 > b.order_1)
-                    return 1;
-                return 0;
-            });
-            console.log(this.parametersOrigin);
-        }
+        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
+            printable: data,
+            properties: [{
+                    field: 'test1',
+                    displayName: 'test 1',
+                    columnSize: 1
+                }, {
+                    field: 'test2.a',
+                    displayName: 'test 2 - a',
+                    columnSize: 4
+                }],
+            type: 'json'
+        });
     };
-    ParametersPage.prototype.reorderData = function (indexes) {
-        this.parameters = Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* reorderArray */])(this.parameters, indexes);
+    HomePage.prototype.createRandomString = function () {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < 5; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        return text;
     };
-    //item sliding
-    ParametersPage.prototype.more = function (item) {
-        console.log('More');
-        item.close();
-    };
-    ParametersPage.prototype.delete = function (item) {
-        console.log('Delete');
-        item.close();
-    };
-    ParametersPage.prototype.mute = function (item) {
-        console.log('Mute');
-        item.close();
-    };
-    ParametersPage.prototype.archive = function (item) {
-        this.expandAction(item, 'archiving', 'Chat was archived.');
-    };
-    ParametersPage.prototype.download = function (item) {
-        this.expandAction(item, 'downloading', 'Login was downloaded.');
-    };
-    ParametersPage.prototype.expandAction = function (item, _, text) {
-        // TODO item.setElementClass(action, true);
-        var _this = this;
-        setTimeout(function () {
-            var toast = _this.toastCtrl.create({
-                message: text
-            });
-            toast.present();
-            // TODO item.setElementClass(action, false);
-            item.close();
-            setTimeout(function () { return toast.dismiss(); }, 2000);
-        }, 1500);
-    };
-    ParametersPage = __decorate([
+    HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-parameters',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/parameters/parameters.html"*/'<ion-header>\n  <ion-navbar>\n\n      <ion-buttons *ngIf="!isSearch" start>\n        <button ion-button icon-only color="royal" (click)="goSearch()">\n          <ion-icon name="search"></ion-icon>\n        </button>\n      </ion-buttons>\n  \n      <ion-title *ngIf="!isSearch">CÁC THAM SỐ</ion-title>\n\n      <ion-searchbar *ngIf="isSearch" placeholder="Tìm theo loại tham số"\n            [(ngModel)]="searchString"\n            [showCancelButton]="shouldShowCancel"\n            (ionInput)="onInput($event)"\n            (keyup.enter)="searchEnter()"\n            (keyup.esc)="searchEnter()"\n            start>\n      </ion-searchbar>\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="outer-content">\n\n  <ion-list>\n    <ion-list-header color="primary">\n          <ion-row>\n              <ion-col text-center col-6 col-xl-3 col-lg-4 col-md-5 col-sm-5>\n                  <h2>Mô tả tham số</h2>\n              </ion-col>\n              <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-md-2 col-sm-3>\n                  <h2>Tên</h2>\n              </ion-col>\n              <ion-col class="hidden-md-down" text-center col-xl-1 col-lg-1 col-md-1>\n                  <h2>Mã(code)</h2>\n              </ion-col>\n              <ion-col text-right col-4 col-xl-2 col-lg-2 col-md-2 col-sm-2>\n                  <h2>Giá trị</h2>\n              </ion-col>\n              <ion-col text-right col-2 offset-xl-2 col-xl-2 offset-lg-1 col-lg-2 col-md-2 col-sm-2>\n                  <h2>Thứ tự</h2>\n              </ion-col>\n            </ion-row>\n    </ion-list-header>\n\n    <ion-toolbar color="thirdary">\n        <ion-buttons start>\n          <button ion-button outline icon-start class="activated" (click)="toggleEdit()">\n            <ion-icon name="swap"></ion-icon>\n            {{editButton}}\n          </button>\n        </ion-buttons>\n        <ion-buttons end>\n          <button ion-button color="secondary" outline icon-only class="activated" (click)="addGroupParameters()">\n            <ion-icon name="add"></ion-icon>\n          </button>\n        </ion-buttons>\n        <ion-title>ĐỊNH NGHĨA THAM SỐ</ion-title>\n    </ion-toolbar>\n\n    <ion-item-group [reorder]="editing" (ionItemReorder)="reorderData($event)">\n      <ion-item *ngFor="let p of parameters">\n        <ion-row>\n          <ion-col text-left col-6 col-xl-3 col-lg-4 col-md-5 col-sm-5>\n            <ion-buttons>\n              <button ion-button color="secondary" outline icon-only>\n                <ion-icon [name]="p.icon?p.icon:\'arrow-dropdown-circle\'"></ion-icon>\n                {{ p.type }}.{{ p.code?p.code:p.id }} • {{ p.description }}\n              </button>\n            </ion-buttons>\n          </ion-col>\n          <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-md-2 col-sm-3>\n              {{ p.name }}\n          </ion-col>\n          <ion-col class="hidden-md-down" text-center col-xl-1 col-lg-1 col-md-1>\n              {{ p.code }}\n          </ion-col>\n          <ion-col text-right col-4 col-xl-2 col-lg-2 col-md-2 col-sm-2>\n              {{ p.value }}\n          </ion-col>\n          <ion-col text-right col-2 offset-xl-2 col-xl-2 offset-lg-1 col-lg-2 col-md-2 col-sm-2>\n              {{ p.order_1 }}\n          </ion-col>\n          </ion-row>\n          <ion-item *ngFor="let ch of p.$children">\n              <ion-row>\n                <ion-col text-left offset-1 col-5 offset-xl-1 col-xl-2 offset-lg-1 col-lg-3 offset-md-1 col-md-4 offset-lg-1 col-sm-4>\n                    <ion-icon [name]="p.icon?p.icon:\'return-right\'"></ion-icon>\n                    {{ ch.type }}.{{ ch.code?ch.code:ch.id }} • {{ ch.description }}\n                </ion-col>\n                <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-md-2 col-sm-3>\n                    {{ ch.name }}\n                </ion-col>\n                <ion-col class="hidden-md-down" text-center col-xl-1 col-lg-1 col-md-1>\n                    {{ ch.code }}\n                </ion-col>\n                <ion-col text-right col-4 col-xl-2 col-lg-2 col-md-2 col-sm-2>\n                    {{ ch.value }}\n                </ion-col>\n                <ion-col text-right col-2 offset-xl-2 col-xl-2 offset-lg-1 col-lg-2 col-md-2 col-sm-2>\n                    {{ ch.order_1 }}\n                </ion-col>\n              </ion-row>\n          </ion-item>\n      </ion-item>\n    </ion-item-group>\n\n  </ion-list>\n\n  <ion-list class="login-sliding-demo">\n      <ion-list-header>\n        Logins\n      </ion-list-header>\n  \n      <ion-item-sliding *ngFor="let login of logins" #item>\n        <ion-item>\n          <ion-icon [name]="login.icon" item-start></ion-icon>\n          <h2>{{login.name}}</h2>\n          <p>{{login.username}}</p>\n        </ion-item>\n        <ion-item-options side="left">\n          <button ion-button color="danger">\n            <ion-icon name="trash"></ion-icon>\n          </button>\n        </ion-item-options>\n        <ion-item-options (ionSwipe)="download(item)" icon-start>\n          <button ion-button color="dark" (click)="more(item)">\n            <ion-icon name="volume-off"></ion-icon>\n            Mute\n          </button>\n          <button ion-button color="light" expandable (click)="download(item)">\n            <ion-icon name="download" class="expand-hide"></ion-icon>\n            <div class="expand-hide">Download</div>\n            <ion-spinner id="download-spinner"></ion-spinner>\n          </button>\n        </ion-item-options>\n      </ion-item-sliding>\n  \n    </ion-list>\n\n</ion-content>'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/parameters/parameters.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>\n\n      Ionic Blank\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n    <button color="primary" ion-fab (click)="printPdfWithModal()">\n\n        <ion-icon name="chatbubbles" ios="ios-chatbubbles" md="md-chatbubbles"></ion-icon>\n\n    </button>\n\n\n\n    <button color="primary" ion-fab (click)="printJson()">\n\n        <ion-icon name="chatbubbles" ios="ios-chatbubbles" md="md-chatbubbles"></ion-icon>\n\n    </button>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\home\home.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_apiStorageService__["a" /* ApiStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_apiStorageService__["a" /* ApiStorageService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__["a" /* ApiHttpPublicService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__["a" /* ApiHttpPublicService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Events */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]) === "function" && _f || Object])
-    ], ParametersPage);
-    return ParametersPage;
-    var _a, _b, _c, _d, _e, _f;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
+    ], HomePage);
+    return HomePage;
 }());
 
-//# sourceMappingURL=parameters.js.map
+//# sourceMappingURL=home.js.map
 
 /***/ }),
 
-/***/ 253:
+/***/ 297:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__login_login__ = __webpack_require__(153);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var RegisterPage = /** @class */ (function () {
+    function RegisterPage(navCtrl, loadingCtrl, toastCtrl, formBuilder, apiService) {
+        this.navCtrl = navCtrl;
+        this.loadingCtrl = loadingCtrl;
+        this.toastCtrl = toastCtrl;
+        this.formBuilder = formBuilder;
+        this.apiService = apiService;
+        this.isImageViewer = false;
+        this.resourceImages = [];
+    }
+    RegisterPage.prototype.ngOnInit = function () {
+        var _this = this;
+        this.apiService.getServerPublicRSAKey()
+            .then(function (pk) { return _this.serverKey = pk; })
+            .catch(function (err) { return console.log(err); });
+        this.myFromGroup = this.formBuilder.group({
+            user: '',
+            pass: ''
+        });
+    };
+    RegisterPage.prototype.onSubmit = function () {
+        var _this = this;
+        //ma hoa du lieu truoc khi truyen di
+        var passEncrypted = '';
+        try {
+            passEncrypted = this.serverKey.encrypt(this.myFromGroup.get('pass').value, 'base64', 'utf8');
+        }
+        catch (err) {
+            console.log(err);
+        }
+        var formData = new FormData();
+        formData.append("username", this.myFromGroup.get('user').value);
+        formData.append("password", passEncrypted);
+        //gui lenh login 
+        var loading = this.loadingCtrl.create({
+            content: 'Saving user info...'
+        });
+        loading.present();
+        this.apiService.register(formData)
+            .then(function (status) {
+            loading.dismiss();
+            if (status) {
+                _this.toastCtrl.create({
+                    message: "Thank you " + _this.myFromGroup.get('user').value + "! You are registered!",
+                    duration: 3000,
+                    position: 'middle'
+                }).present();
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__login_login__["a" /* LoginPage */]);
+            }
+            else {
+                _this.toastCtrl.create({
+                    message: "Your new " + _this.myFromGroup.get('user').value + ". Existed in our System, please choose another...",
+                    duration: 5000,
+                    position: 'bottom'
+                }).present();
+            }
+        })
+            .catch(function (err) {
+            loading.dismiss();
+            _this.toastCtrl.create({
+                message: "result: " + JSON.stringify(err),
+                duration: 5000,
+                position: 'bottom'
+            }).present();
+        });
+    };
+    RegisterPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-register',template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\register\register.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>\n\n      Register form\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="card-background-page">\n\n  <form (ngSubmit)="onSubmit()" [formGroup]="myFromGroup">\n\n    <ion-card col-12 col-xl-4 col-lg-6 col-sm-12>\n\n      <ion-item>\n\n        <ion-label floating>Username</ion-label>\n\n        <ion-input type="text" formControlName="user"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label floating>Password</ion-label>\n\n        <ion-input type="password" formControlName="pass"></ion-input>\n\n      </ion-item>\n\n      <ion-row no-padding>\n\n\n\n        <ion-col text-right>\n\n          <ion-buttons start>\n\n            <button ion-button type="submit" icon-end round>\n\n              Đăng ký\n\n              <ion-icon name="share-alt"></ion-icon>\n\n            </button>\n\n          </ion-buttons>\n\n        </ion-col>\n\n        \n\n      </ion-row>\n\n\n\n    </ion-card>\n\n  </form>\n\n\n\n</ion-content>'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\register\register.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__["a" /* ApiAuthService */]])
+    ], RegisterPage);
+    return RegisterPage;
+}());
+
+//# sourceMappingURL=register.js.map
+
+/***/ }),
+
+/***/ 298:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SettingPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__login_login__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_apiAuthService__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_apiImageService__ = __webpack_require__(299);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var SettingPage = /** @class */ (function () {
+    function SettingPage(navCtrl, loadingCtrl, toastCtrl, formBuilder, apiImageService, apiService) {
+        this.navCtrl = navCtrl;
+        this.loadingCtrl = loadingCtrl;
+        this.toastCtrl = toastCtrl;
+        this.formBuilder = formBuilder;
+        this.apiImageService = apiImageService;
+        this.apiService = apiService;
+        this.isImageViewer = false;
+        this.resourceImages = []; //: { imageViewer: any, file: any, name: string }[] = [];
+    }
+    SettingPage.prototype.ngOnInit = function () {
+        var _this = this;
+        this.apiService.getServerPublicRSAKey()
+            .then(function (pk) { return _this.serverKey = pk; })
+            .catch(function (err) { return console.log(err); });
+        this.userInfo = this.apiService.getUserInfoSetting();
+        //console.log(this.userInfo);
+        this.myFromGroup = this.formBuilder.group({
+            DISPLAY_NAME: (this.userInfo) ? this.userInfo.DISPLAY_NAME : '',
+            FULL_NAME: (this.userInfo) ? this.userInfo.FULL_NAME : '',
+            PHONE: (this.userInfo) ? this.userInfo.PHONE : '',
+            EMAIL: (this.userInfo) ? this.userInfo.EMAIL : '',
+            FULL_ADDRESS: (this.userInfo) ? this.userInfo.FULL_ADDRESS : '',
+            fileload: '',
+        });
+    };
+    SettingPage.prototype.fileChange = function (event) {
+        var _this = this;
+        if (event.target && event.target.files) {
+            var files = event.target.files;
+            for (var key in files) {
+                if (!isNaN(parseInt(key))) {
+                    this.apiImageService.resizeImage(files[key].name, files[key], 300)
+                        .then(function (data) {
+                        _this.resourceImages.push(data);
+                        _this.isImageViewer = true;
+                    })
+                        .catch(function (err) {
+                        console.log(err);
+                    });
+                }
+            } //
+        }
+    };
+    SettingPage.prototype.deleteImage = function (evt) {
+        this.resourceImages = this.resourceImages.filter(function (value, index, arr) {
+            return value != evt;
+        });
+    };
+    //thuc hien submit
+    SettingPage.prototype.onSubmit = function () {
+        var _this = this;
+        var formData = new FormData();
+        //bo cai nay di vi da xu ly interceptor roi
+        //formData.append("Authorization", 'Bearer ' + this.apiService.getUserToken());
+        if (this.myFromGroup.get("DISPLAY_NAME").value)
+            formData.append("DISPLAY_NAME", this.myFromGroup.get("DISPLAY_NAME").value);
+        if (this.myFromGroup.get("FULL_NAME").value)
+            formData.append("FULL_NAME", this.myFromGroup.get("FULL_NAME").value);
+        if (this.myFromGroup.get("PHONE").value)
+            formData.append("PHONE", this.myFromGroup.get("PHONE").value);
+        if (this.myFromGroup.get("EMAIL").value)
+            formData.append("EMAIL", this.myFromGroup.get("EMAIL").value);
+        if (this.myFromGroup.get("FULL_ADDRESS").value)
+            formData.append("FULL_ADDRESS", this.myFromGroup.get("FULL_ADDRESS").value);
+        var i = 0;
+        this.resourceImages.forEach(function (fileObj) {
+            //console.log(fileObj.name);
+            formData.append('file2Upload' + i++, fileObj.file, fileObj.name);
+            //gui tung file hoac tat ca cac file
+        });
+        //gui lenh user/save 
+        var loading = this.loadingCtrl.create({
+            content: 'Saving user info...'
+        });
+        loading.present();
+        this.apiService.editUser(formData)
+            .then(function (status) {
+            loading.dismiss();
+            if (status) {
+                _this.toastCtrl.create({
+                    message: "Thank you for your setting successful!",
+                    duration: 3000,
+                    position: 'middle'
+                }).present();
+            }
+            else {
+                _this.toastCtrl.create({
+                    message: "CAN NOT edit this user! Some reason unknow, please try again later",
+                    duration: 5000,
+                    position: 'bottom'
+                }).present();
+            }
+            _this.apiService.logout()
+                .then(function (d) {
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__login_login__["a" /* LoginPage */]);
+            })
+                .catch(function (e) { });
+        })
+            .catch(function (err) {
+            loading.dismiss();
+            _this.toastCtrl.create({
+                message: "result: " + JSON.stringify(err),
+                duration: 5000,
+                position: 'bottom'
+            }).present();
+        });
+    };
+    SettingPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-setting',template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\setting\setting.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>\n\n      Thay đổi thông tin cá nhân\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="card-background-page">\n\n  <form (ngSubmit)="onSubmit()" [formGroup]="myFromGroup">\n\n    <ion-card col-12 col-xl-4 col-lg-6 col-sm-12>\n\n      <ion-item>\n\n        <ion-label floating>Nick Name - Tên hiển thị</ion-label>\n\n        <ion-input type="text" formControlName="DISPLAY_NAME"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n          <ion-label floating>Full Name - Tên Đầy đủ</ion-label>\n\n          <ion-input type="text" formControlName="FULL_NAME"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n          <ion-label floating>Phone - Điện thoại</ion-label>\n\n          <ion-input type="text" formControlName="PHONE"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n          <ion-label floating>Email - Hộp thư điện tử</ion-label>\n\n          <ion-input type="text" formControlName="EMAIL"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n          <ion-label floating>Address - Địa chỉ đầy đủ</ion-label>\n\n          <ion-input type="text" formControlName="FULL_ADDRESS"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item *ngIf="(userInfo?.URL_IMAGE)">\n\n          <ion-grid>\n\n              <ion-row>\n\n                  <ion-col col-12>\n\n                      <ion-card>\n\n                          <img [src]="userInfo?.URL_IMAGE"/>\n\n                      </ion-card>\n\n                  </ion-col>\n\n              </ion-row>\n\n          </ion-grid>\n\n      </ion-item>\n\n\n\n      <ion-item *ngIf="isImageViewer">\n\n          <ion-grid>\n\n              <ion-row>\n\n                  <ion-col *ngFor="let obj of resourceImages" col-12>\n\n                      <ion-card>\n\n                          <img [src]="obj?.imageViewer" style="width: 100%; height: 100%;" />\n\n                          <ion-row>\n\n                              <ion-col>\n\n                                  <button ion-button type="button" clear small color="secondary" icon-start (click)="deleteImage(obj)">\n\n                                      <ion-icon name=\'backspace\' ios="ios-backspace" md="md-backspace"></ion-icon>\n\n                                      Xóa bỏ\n\n                                  </button>\n\n                              </ion-col>\n\n                          </ion-row>\n\n                      </ion-card>\n\n                  </ion-col>\n\n              </ion-row>\n\n          </ion-grid>\n\n      </ion-item>\n\n      \n\n    <ion-item>  \n\n      <ion-buttons start>\n\n          <button ion-button type="button" icon-end round>\n\n              <input type="file" expandable accept="image/*" formControlName="fileload" (change)="fileChange($event)">\n\n              Avantar - Chọn ảnh đại diện\n\n              <ion-icon name="images"></ion-icon>\n\n          </button>\n\n      </ion-buttons>\n\n    </ion-item>\n\n\n\n      <ion-row no-padding>\n\n        <ion-col text-right>\n\n          <ion-buttons start>\n\n            <button ion-button type="submit" icon-end round>\n\n              Cập nhập\n\n              <ion-icon name="share-alt"></ion-icon>\n\n            </button>\n\n          </ion-buttons>\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n    </ion-card>\n\n  </form>\n\n\n\n</ion-content>'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\setting\setting.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_5__services_apiImageService__["a" /* ApiImageService */],
+            __WEBPACK_IMPORTED_MODULE_4__services_apiAuthService__["a" /* ApiAuthService */]])
+    ], SettingPage);
+    return SettingPage;
+}());
+
+//# sourceMappingURL=setting.js.map
+
+/***/ }),
+
+/***/ 299:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ApiImageService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ApiImageService = /** @class */ (function () {
+    function ApiImageService() {
+    }
+    //dua vao doi tuong file image
+    //tra ve doi tuong file image co kich co nho hon
+    ApiImageService.prototype.resizeImage = function (filename, file, newSize) {
+        return new Promise(function (resolve, reject) {
+            try {
+                var canvas = document.createElement('canvas');
+                var context = canvas.getContext('2d');
+                var maxW = newSize;
+                var maxH = newSize;
+                var img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.onload = function () {
+                    var iw = img.width;
+                    var ih = img.height;
+                    var scale = Math.min((maxW / iw), (maxH / ih));
+                    var iwScaled = iw * scale;
+                    var ihScaled = ih * scale;
+                    canvas.width = iwScaled;
+                    canvas.height = ihScaled;
+                    context.drawImage(img, 0, 0, iwScaled, ihScaled);
+                    //image.src=canvas.toDataURL(); //gan canvas cho image viewer
+                    //xu ly chat luong anh qua cac tham so cua ham toDataURL()
+                    //chuyen sang file de ghi xuong dia hoac truyen tren mang
+                    //su dung ham toBlob sau
+                    canvas.toBlob(function (blob) {
+                        var reader = new FileReader();
+                        reader.readAsArrayBuffer(blob); //ket qua la mot mang Uint8Array 
+                        reader.onload = function () {
+                            //console.log(reader.result); //ket qua la mot mang Uint8Array 
+                            //newFile la mot file image da duoc resize roi nhe
+                            resolve({
+                                imageViewer: canvas.toDataURL(),
+                                file: new Blob([reader.result], { type: 'image/png' }),
+                                name: filename
+                            });
+                        };
+                    });
+                };
+            }
+            catch (err) {
+                reject(err);
+            }
+        });
+    };
+    ApiImageService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [])
+    ], ApiImageService);
+    return ApiImageService;
+}());
+
+//# sourceMappingURL=apiImageService.js.map
+
+/***/ }),
+
+/***/ 300:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfigPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_apiStorageService__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__ = __webpack_require__(85);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -897,7 +1076,7 @@ var ConfigPage = /** @class */ (function () {
     ], ConfigPage.prototype, "slides", void 0);
     ConfigPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-config',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/config/config.html"*/'<ion-header>\n  <ion-navbar color="primary">\n\n    <ion-buttons *ngIf="!isSearch" start>\n      \n      <button ion-button icon-only color="royal" (click)="goSearch()">\n        <ion-icon name="search"></ion-icon>\n      </button>\n\n      <button ion-button icon-only color="excel1" (click)="itemSample(0)">\n          <ion-icon name="contact"></ion-icon>\n      </button>\n\n      <button ion-button icon-only color="excel2" (click)="itemSample(1)">\n          <ion-icon name="contact"></ion-icon>\n      </button>\n\n      <button ion-button icon-only color="excel3" (click)="itemSample(2)">\n          <ion-icon name="contact"></ion-icon>\n      </button>\n\n      <button ion-button icon-only color="excel4" (click)="itemSample(3)">\n          <ion-icon name="contact"></ion-icon>\n      </button>\n\n      <button ion-button icon-only color="excel5" (click)="itemSample(4)">\n          <ion-icon name="contact"></ion-icon>\n      </button>\n\n      <button ion-button icon-only color="excel6" (click)="itemSample(5)">\n          <ion-icon name="contact"></ion-icon>\n      </button>\n\n      <button ion-button icon-only color="excel7" (click)="itemSample(6)">\n          <ion-icon name="contact"></ion-icon>\n      </button>\n\n    </ion-buttons>\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="addButton()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n\n    <ion-searchbar *ngIf="isSearch" placeholder="Tìm theo loại tham số" [(ngModel)]="searchString" [showCancelButton]="shouldShowCancel"\n      (ionInput)="onInput($event)" (keyup.enter)="searchEnter()" (keyup.esc)="searchEnter()" start>\n    </ion-searchbar>\n\n    <ion-title *ngIf="!isSearch">MẪU USER INTERFACE IONIC</ion-title>\n\n    <ion-buttons end>\n      <button ion-button (click)="toggleEdit()">{{editButton}}</button>\n    </ion-buttons>\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n    <ion-slides (ionSlideDidChange)="slideChanged()">\n        <!-- #id=0 Select Options-->\n        <ion-slide>\n\n            <ion-item>\n                <ion-label>Gender - Single Value</ion-label>\n                <ion-select [(ngModel)]="gender">\n                  <ion-option value="f">Female</ion-option>\n                  <ion-option value="m">Male</ion-option>\n                </ion-select>\n              </ion-item>\n      \n              <ion-item>\n                <ion-label>Hair Color</ion-label>\n                <ion-select [(ngModel)]="hairColor" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">\n                  <ion-option *ngFor="let o of hairColorData" [value]="o">{{o.text}}</ion-option>\n                </ion-select>\n              </ion-item>\n\n              <ion-item>\n                  <ion-label>Gender - Popover Interface select</ion-label>\n                  <ion-select [(ngModel)]="gender" interface="popover">\n                    <ion-option value="f">Female</ion-option>\n                    <ion-option value="m">Male</ion-option>\n                  </ion-select>\n                </ion-item>\n        \n                <ion-item>\n                  <ion-label>Gaming</ion-label>\n                  <ion-select [(ngModel)]="gaming" okText="Okay" cancelText="Dismiss" interface="popover">\n                    <ion-option value="nes">NES</ion-option>\n                    <ion-option value="n64">Nintendo64</ion-option>\n                    <ion-option value="ps">PlayStation</ion-option>\n                    <ion-option value="genesis">Sega Genesis</ion-option>\n                    <ion-option value="saturn">Sega Saturn</ion-option>\n                    <ion-option value="snes">SNES</ion-option>\n                  </ion-select>\n                </ion-item>\n        \n                <ion-item>\n                  <ion-label>Date</ion-label>\n                  <ion-select (ionChange)="monthChange($event)" interface="popover">\n                    <ion-option value="01">January</ion-option>\n                    <ion-option value="02">February</ion-option>\n                    <ion-option value="03" selected="true">March</ion-option>\n                    <ion-option value="04">April</ion-option>\n                    <ion-option value="05">May</ion-option>\n                    <ion-option value="06">June</ion-option>\n                    <ion-option value="07">July</ion-option>\n                    <ion-option value="08">August</ion-option>\n                    <ion-option value="09">September</ion-option>\n                    <ion-option value="10">October</ion-option>\n                    <ion-option value="11">November</ion-option>\n                    <ion-option value="12">December</ion-option>\n                  </ion-select>\n                  <ion-select (ionChange)="yearChange($event)" interface="popover">\n                    <ion-option>1989</ion-option>\n                    <ion-option>1990</ion-option>\n                    <ion-option>1991</ion-option>\n                    <ion-option>1992</ion-option>\n                    <ion-option>1993</ion-option>\n                    <ion-option selected="true">1994</ion-option>\n                    <ion-option>1995</ion-option>\n                    <ion-option>1996</ion-option>\n                    <ion-option>1997</ion-option>\n                    <ion-option>1998</ion-option>\n                    <ion-option>1999</ion-option>\n                  </ion-select>\n                </ion-item>\n\n\n                <ion-item>\n                    <ion-label>Toppings - Multiple Select</ion-label>\n                    <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!">\n                      <ion-option value="bacon">Bacon</ion-option>\n                      <ion-option value="olives">Black Olives</ion-option>\n                      <ion-option value="xcheese">Extra Cheese</ion-option>\n                      <ion-option value="peppers">Green Peppers</ion-option>\n                      <ion-option value="mushrooms">Mushrooms</ion-option>\n                      <ion-option value="onions">Onions</ion-option>\n                      <ion-option value="pepperoni">Pepperoni</ion-option>\n                      <ion-option value="pineapple">Pineapple</ion-option>\n                      <ion-option value="sausage">Sausage</ion-option>\n                      <ion-option value="Spinach">Spinach</ion-option>\n                    </ion-select>\n                  </ion-item>\n        \n                  <ion-item>\n                    <ion-label>Pets</ion-label>\n                    <ion-select [(ngModel)]="pets" multiple="true" [selectOptions]="petAlertOpts">\n                      <ion-option *ngFor="let o of petData" [value]="o.value">{{o.text}}</ion-option>\n                    </ion-select>\n                  </ion-item>\n        \n                  <ion-item>\n                    <ion-label>Skittles</ion-label>\n                    <ion-select [(ngModel)]="skittles" multiple="true" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">\n                      <ion-option *ngFor="let o of skittlesData" [value]="o">{{o.text}}</ion-option>\n                    </ion-select>\n                  </ion-item>\n        \n                  <ion-item>\n                    <ion-label>Disabled</ion-label>\n                    <ion-select multiple disabled="true">\n                      <ion-option checked="true">Selected Text</ion-option>\n                    </ion-select>\n                  </ion-item>\n\n\n              <ion-item>\n                  <ion-label>Mute Notifications - Action sheet interface select</ion-label>\n                  <ion-select [(ngModel)]="notifications" interface="action-sheet">\n                    <ion-option value="mute_15">For 15 Minutes</ion-option>\n                    <ion-option value="mute_1">For 1 Hour</ion-option>\n                    <ion-option value="mute_23">For 24 Hours</ion-option>\n                    <ion-option value="mute_inf">Until I turn it back on</ion-option>\n                  </ion-select>\n                </ion-item>\n      \n                <ion-item>\n                  <ion-label>Rating</ion-label>\n                  <ion-select [(ngModel)]="rating" interface="action-sheet">\n                    <ion-option value="1">1 Star</ion-option>\n                    <ion-option value="2">2 Stars</ion-option>\n                    <ion-option value="3">3 Stars</ion-option>\n                    <ion-option value="4">4 Stars</ion-option>\n                    <ion-option value="5">5 Stars</ion-option>\n                  </ion-select>\n                </ion-item>\n      \n        </ion-slide>\n        \n        <!-- #id=1 Toolbar navbar-->\n        <ion-slide>\n            <ion-toolbar>\n                <ion-title>This is the title that never ends. It just goes on and on my friend.</ion-title>\n              </ion-toolbar>\n            \n              <ion-toolbar>\n                <button ion-button menuToggle>\n                  <ion-icon name="menu"></ion-icon>\n                </button>\n                <ion-buttons start>\n                  <button ion-button icon-only showWhen="ios">\n                    <ion-icon name="contact"></ion-icon>\n                  </button>\n                  <button ion-button icon-only>\n                    <ion-icon name="search"></ion-icon>\n                  </button>\n                </ion-buttons>\n                <ion-buttons end>\n                  <button ion-button color="secondary" icon-only>\n                    <ion-icon name="more"></ion-icon>\n                  </button>\n                </ion-buttons>\n                <ion-title>Default</ion-title>\n              </ion-toolbar>\n            \n              <ion-toolbar color="primary">\n                <ion-buttons start>\n                  <button ion-button showWhen="ios" icon-only>\n                    <ion-icon name="contact"></ion-icon>\n                  </button>\n                  <button ion-button icon-only>\n                    <ion-icon name="search"></ion-icon>\n                  </button>\n                </ion-buttons>\n                <ion-buttons end>\n                  <button ion-button color="secondary" icon-only>\n                    <ion-icon name="more"></ion-icon>\n                  </button>\n                </ion-buttons>\n                <ion-title>Primary</ion-title>\n              </ion-toolbar>\n            \n              <ion-toolbar color="primary">\n                <ion-buttons start>\n                  <button ion-button showWhen="ios" icon-only class="activated">\n                    <ion-icon name="contact"></ion-icon>\n                  </button>\n                  <button ion-button icon-only class="activated">\n                    <ion-icon name="search"></ion-icon>\n                  </button>\n                </ion-buttons>\n                <ion-buttons end>\n                  <button ion-button color="secondary" icon-only class="activated">\n                    <ion-icon name="more"></ion-icon>\n                  </button>\n                </ion-buttons>\n                <ion-title>Primary.activated</ion-title>\n              </ion-toolbar>\n            \n              <ion-toolbar color="secondary">\n                <ion-buttons start>\n                  <button ion-button icon-only color="primary">\n                    <ion-icon name="contact"></ion-icon>\n                  </button>\n                  <button ion-button icon-start solid>\n                    <ion-icon name="contact"></ion-icon>\n                    Solid\n                  </button>\n                </ion-buttons>\n                <ion-title>Secondary</ion-title>\n                <ion-buttons end>\n                  <button ion-button icon-end solid color="danger">\n                    Help\n                    <ion-icon name="help-circle"></ion-icon>\n                  </button>\n                </ion-buttons>\n              </ion-toolbar>\n            \n              <ion-toolbar color="secondary">\n                <ion-buttons start>\n                  <button ion-button icon-only color="primary" class="activated">\n                    <ion-icon name="contact"></ion-icon>\n                  </button>\n                  <button ion-button icon-start solid class="activated">\n                    <ion-icon name="contact"></ion-icon>\n                    Solid\n                  </button>\n                </ion-buttons>\n                <ion-title>Secondary Activated</ion-title>\n                <ion-buttons end>\n                  <button ion-button icon-end solid color="danger" class="activated">\n                    Help\n                    <ion-icon name="help-circle"></ion-icon>\n                  </button>\n                </ion-buttons>\n              </ion-toolbar>\n            \n              <ion-toolbar color="dark">\n                <ion-buttons start>\n                  <button ion-button icon-only outline>\n                    <ion-icon name="contact"></ion-icon>\n                  </button>\n                  <button ion-button icon-start outline>\n                    <ion-icon name="star"></ion-icon>\n                    Star\n                  </button>\n                </ion-buttons>\n                <ion-buttons end>\n                  <button ion-button icon-only color="secondary" outline>\n                    <ion-icon name="contact"></ion-icon>\n                  </button>\n                </ion-buttons>\n                <ion-title>Dark</ion-title>\n              </ion-toolbar>\n            \n              <ion-toolbar color="dark">\n                <ion-buttons start>\n                  <button ion-button outline icon-only class="activated">\n                    <ion-icon name="contact"></ion-icon>\n                  </button>\n                  <button ion-button outline icon-start class="activated">\n                    <ion-icon name="star"></ion-icon>\n                    Star\n                  </button>\n                </ion-buttons>\n                <ion-buttons end>\n                  <button ion-button color="secondary" outline icon-only class="activated">\n                    <ion-icon name="contact"></ion-icon>\n                  </button>\n                </ion-buttons>\n                <ion-title>Dark.activated</ion-title>\n              </ion-toolbar>\n            \n              <ion-toolbar color="danger">\n                <ion-buttons start>\n                  <button ion-button icon-start>\n                    <ion-icon name="contact"></ion-icon>\n                    Clear\n                  </button>\n                </ion-buttons>\n                <ion-buttons end>\n                  <button ion-button icon-end>\n                    Edit\n                    <ion-icon name="create"></ion-icon>\n                  </button>\n                </ion-buttons>\n                <ion-title>Danger</ion-title>\n              </ion-toolbar>\n            \n              <ion-toolbar color="danger">\n                <button ion-button menuToggle>\n                  <ion-icon name="menu"></ion-icon>\n                </button>\n                <ion-buttons start>\n                  <button ion-button icon-only>\n                    <ion-icon name="star"></ion-icon>\n                  </button>\n                </ion-buttons>\n                <ion-title>Danger</ion-title>\n              </ion-toolbar>\n            \n              <ion-toolbar color="light">\n                <ion-buttons start>\n                  <button ion-button icon-start>\n                    <ion-icon name="contact"></ion-icon>\n                    Clear\n                  </button>\n                </ion-buttons>\n                <ion-buttons end>\n                  <button ion-button icon-end>\n                    Edit\n                    <ion-icon name="create"></ion-icon>\n                  </button>\n                </ion-buttons>\n                <ion-title>Light</ion-title>\n              </ion-toolbar>\n            \n              <ion-toolbar color="light">\n                <button ion-button menuToggle>\n                  <ion-icon name="menu"></ion-icon>\n                </button>\n                <ion-buttons start>\n                  <button ion-button icon-only>\n                    <ion-icon name="star"></ion-icon>\n                  </button>\n                </ion-buttons>\n                <ion-title>Light</ion-title>\n              </ion-toolbar>\n            \n              <ion-toolbar transparent>\n                <ion-buttons end>\n                  <button ion-button #button1 icon-only (click)="buttonClick(button1)">\n                    <ion-icon name="star"></ion-icon>\n                  </button>\n                </ion-buttons>\n                <ion-title>Transparent</ion-title>\n                <button ion-button menuToggle right>\n                  <ion-icon name="menu"></ion-icon>\n                </button>\n              </ion-toolbar>\n            \n              <ion-toolbar color="greyYellow">\n                <ion-title>Grey Yellow</ion-title>\n              </ion-toolbar>\n              <ion-toolbar color="greyWhite">\n                <ion-title>Grey White</ion-title>\n              </ion-toolbar>\n        </ion-slide>\n\n        <!-- #id=2 card header card footer-->\n        <ion-slide>\n            <ion-card color="secondary">\n                <ion-card-header>\n                  Card Header\n                </ion-card-header>\n                <ion-card-content>\n                  <ion-card-title>\n                    Title\n                  </ion-card-title>\n                  Some normal text in content.\n                  <h3>h3 in content</h3>\n                  <p>\n                    Paragraph in content.\n                  </p>\n                  <p>\n                    Another paragraph in content.\n                  </p>\n                </ion-card-content>\n              </ion-card>\n            \n              <ion-card color="primary" class="rainbow-content">\n                <ion-card-header>\n                  Card Header\n                </ion-card-header>\n                <ion-card-content>\n                  <ion-card-title>\n                    Title\n                  </ion-card-title>\n                  Some normal text in content.\n                  <h3>h3 in content</h3>\n                  <p>\n                    Paragraph in content.\n                  </p>\n                  <p>\n                    Another paragraph in content.\n                  </p>\n                </ion-card-content>\n              </ion-card>\n            \n              <ion-card color="primary">\n                <ion-card-header>\n                  Card Header\n                </ion-card-header>\n                <ion-card-content>\n                  <ion-card-title>\n                    Title\n                  </ion-card-title>\n                  Some normal text in content.\n                  <h3>h3 in content</h3>\n                  <p>\n                    Paragraph in content.\n                  </p>\n                  <p>\n                    Another paragraph in content.\n                  </p>\n                </ion-card-content>\n              </ion-card>\n            \n              <ion-list>\n                <ion-item *ngFor="let item of [0,1,2,3,4,5,6,7,8,9]">\n                  {{ item }}\n                </ion-item>\n              </ion-list>\n        </ion-slide>\n\n        <!-- #id=3 -->\n        <ion-slide>\n            <ion-item>\n                <ion-label>Username</ion-label>\n                <ion-input></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label fixed>Website</ion-label>\n                <ion-input type="url"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Email</ion-label>\n                <ion-input type="email"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label stacked>Phone</ion-label>\n                <ion-input type="tel"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label>Toggle</ion-label>\n                <ion-toggle></ion-toggle>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label>Checkbox</ion-label>\n                <ion-checkbox></ion-checkbox>\n              </ion-item>\n        </ion-slide>\n\n        <!-- #id=4 -->\n        <ion-slide>\n          <ion-list>\n            <ion-list-header>\n              Settings\n              <button ion-button icon-only item-end clear>\n                <ion-icon name="cog"></ion-icon>\n              </button>\n            </ion-list-header>\n        \n            <ion-item-group>\n              <ion-item>\n                <ion-icon name="plane" item-start color="danger"></ion-icon>\n                <ion-label>Airplane Mode</ion-label>\n                <ion-toggle color="secondary"></ion-toggle>\n              </ion-item>\n        \n              <button ion-item>\n                <ion-icon name="wifi" item-start color="primary"></ion-icon>\n                <ion-label>Wi-Fi</ion-label>\n                <ion-note item-end>The Interwebz</ion-note>\n              </button>\n        \n              <button ion-item>\n                <ion-icon name="bluetooth" item-start color="primary"></ion-icon>\n                <ion-label>Bluetooth</ion-label>\n                <ion-note item-end>Off</ion-note>\n              </button>\n            </ion-item-group>\n        \n            <ion-item-divider color="primary">\n              Other Settings\n              <button ion-button item-end outline color="light">Clear</button>\n            </ion-item-divider>\n        \n            <button ion-item>\n              <ion-icon name="call" item-start color="secondary"></ion-icon>\n              <ion-label>Cellular</ion-label>\n            </button>\n        \n            <button ion-item>\n              <ion-icon name="link" item-start color="secondary"></ion-icon>\n              <ion-label>Personal Hotspot</ion-label>\n              <ion-note item-end>Off</ion-note>\n            </button>\n          </ion-list>\n        \n          <ion-list radio-group>\n            <ion-list-header>\n              <ion-icon item-start name="phone-portrait"></ion-icon>\n              Silence Phone\n            </ion-list-header>\n        \n            <ion-item>\n              <ion-label color="dark">Always</ion-label>\n              <ion-radio value="always" checked></ion-radio>\n            </ion-item>\n            <ion-item>\n              <ion-label color="dark">Only while phone is locked</ion-label>\n              <ion-radio value="locked"></ion-radio>\n            </ion-item>\n          </ion-list>\n        \n          <ion-list>\n            <ion-list-header>\n              Apps Installed\n            </ion-list-header>\n        \n            <ion-item>\n              <ion-icon name="ionic" item-start color="primary"></ion-icon>\n              <ion-label>Ionic View</ion-label>\n              <button ion-button outline item-end>Uninstall</button>\n            </ion-item>\n            <ion-item>\n              <ion-icon name="brush" item-start color="primary"></ion-icon>\n              <ion-label>Ionic Creator</ion-label>\n              <button ion-button outline item-end>Uninstall</button>\n            </ion-item>\n            <ion-item>\n              <ion-icon name="logo-octocat" item-start color="dark"></ion-icon>\n              <ion-label>Hubstruck</ion-label>\n              <button ion-button outline item-end>Uninstall</button>\n            </ion-item>\n            <ion-item>\n              <ion-icon name="paw" item-start color="danger"></ion-icon>\n              <ion-label>Barkpark</ion-label>\n              <button ion-button outline item-end>Uninstall</button>\n            </ion-item>\n          </ion-list>\n        </ion-slide>\n\n        <!-- #id=5 -->\n        <ion-slide>\n          <ion-list class="chat-sliding-demo">\n            <ion-list-header>\n              Playlist\n            </ion-list-header>\n        \n            <ion-item-group [reorder]="editing" (ionItemReorder)="reorderData($event)">\n              <ion-item *ngFor="let song of songs">\n                <h2>{{ song.title }}</h2>\n                <p>{{ song.band }} • {{ song.album }}</p>\n              </ion-item>\n            </ion-item-group>\n          </ion-list>\n        </ion-slide>\n\n        <!-- #id=6 -->\n        <ion-slide>\n          <ion-list class="chat-sliding-demo">\n            <ion-list-header>\n              Chats\n            </ion-list-header>\n        \n            <ion-item-sliding *ngFor="let chat of chats" #item>\n              <ion-item>\n                <ion-avatar item-start>\n                  <img [src]="chat.img">\n                </ion-avatar>\n                <h2>{{chat.name}}</h2>\n                <p>{{chat.message}}</p>\n                <ion-note item-end>\n                  {{chat.time}}\n                </ion-note>\n              </ion-item>\n        \n              <ion-item-options>\n                <button ion-button color="secondary" (click)="more(item)">\n                  <ion-icon name="menu"></ion-icon>\n                  More\n                </button>\n                <button ion-button color="dark" (click)="mute(item)">\n                  <ion-icon name="volume-off"></ion-icon>\n                  Mute\n                </button>\n                <button ion-button color="danger" (click)="delete(item)">\n                  <ion-icon name="trash"></ion-icon>\n                  Delete\n                </button>\n              </ion-item-options>\n        \n              <ion-item-options side="left" (ionSwipe)="archive(item)">\n                <button ion-button color="primary" expandable (click)="archive(item)">\n                  <ion-icon name="archive" class="expand-hide"></ion-icon>\n                  <div class="expand-hide">Archive</div>\n                  <ion-spinner id="archive-spinner"></ion-spinner>\n                </button>\n              </ion-item-options>\n            </ion-item-sliding>\n          </ion-list>\n        \n          <ion-list class="login-sliding-demo">\n            <ion-list-header>\n              Logins\n            </ion-list-header>\n        \n            <ion-item-sliding *ngFor="let login of logins" #item>\n              <ion-item>\n                <ion-icon [name]="login.icon" item-start></ion-icon>\n                <h2>{{login.name}}</h2>\n                <p>{{login.username}}</p>\n              </ion-item>\n              <ion-item-options side="left">\n                <button ion-button color="danger">\n                  <ion-icon name="trash"></ion-icon>\n                </button>\n              </ion-item-options>\n              <ion-item-options (ionSwipe)="download(item)" icon-start>\n                <button ion-button color="dark" (click)="more(item)">\n                  <ion-icon name="volume-off"></ion-icon>\n                  Mute\n                </button>\n                <button ion-button color="light" expandable (click)="download(item)">\n                  <ion-icon name="download" class="expand-hide"></ion-icon>\n                  <div class="expand-hide">Download</div>\n                  <ion-spinner id="download-spinner"></ion-spinner>\n                </button>\n              </ion-item-options>\n            </ion-item-sliding>\n        \n          </ion-list>\n          \n        </ion-slide>\n\n        <!-- #id=7 -->\n        <ion-slide>\n\n        </ion-slide>\n\n    </ion-slides>\n \n</ion-content>\n\n<!-- \n<ion-header>\n    <ion-navbar >\n  \n      <ion-buttons start>\n        <button ion-button icon-only>\n          <ion-icon name="contact"></ion-icon>\n        </button>\n        <button ion-button icon-only>\n          <ion-icon name="search"></ion-icon>\n        </button>\n      </ion-buttons>\n      <ion-buttons end>\n        <button ion-button icon-only color="secondary">\n          <ion-icon name="more"></ion-icon>\n        </button>\n      </ion-buttons>\n      <ion-title>Subheader</ion-title>\n    </ion-navbar>\n  </ion-header>\n  \n  <ion-content fullscreen="true">\n    \n  \n  -->'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/config/config.html"*/
+            selector: 'page-config',template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\config\config.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n\n\n    <ion-buttons *ngIf="!isSearch" start>\n\n      \n\n      <button ion-button icon-only color="royal" (click)="goSearch()">\n\n        <ion-icon name="search"></ion-icon>\n\n      </button>\n\n\n\n      <button ion-button icon-only color="excel1" (click)="itemSample(0)">\n\n          <ion-icon name="contact"></ion-icon>\n\n      </button>\n\n\n\n      <button ion-button icon-only color="excel2" (click)="itemSample(1)">\n\n          <ion-icon name="contact"></ion-icon>\n\n      </button>\n\n\n\n      <button ion-button icon-only color="excel3" (click)="itemSample(2)">\n\n          <ion-icon name="contact"></ion-icon>\n\n      </button>\n\n\n\n      <button ion-button icon-only color="excel4" (click)="itemSample(3)">\n\n          <ion-icon name="contact"></ion-icon>\n\n      </button>\n\n\n\n      <button ion-button icon-only color="excel5" (click)="itemSample(4)">\n\n          <ion-icon name="contact"></ion-icon>\n\n      </button>\n\n\n\n      <button ion-button icon-only color="excel6" (click)="itemSample(5)">\n\n          <ion-icon name="contact"></ion-icon>\n\n      </button>\n\n\n\n      <button ion-button icon-only color="excel7" (click)="itemSample(6)">\n\n          <ion-icon name="contact"></ion-icon>\n\n      </button>\n\n\n\n    </ion-buttons>\n\n\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="addButton()">\n\n        <ion-icon name="add"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n\n\n    <ion-searchbar *ngIf="isSearch" placeholder="Tìm theo loại tham số" [(ngModel)]="searchString" [showCancelButton]="shouldShowCancel"\n\n      (ionInput)="onInput($event)" (keyup.enter)="searchEnter()" (keyup.esc)="searchEnter()" start>\n\n    </ion-searchbar>\n\n\n\n    <ion-title *ngIf="!isSearch">MẪU USER INTERFACE IONIC</ion-title>\n\n\n\n    <ion-buttons end>\n\n      <button ion-button (click)="toggleEdit()">{{editButton}}</button>\n\n    </ion-buttons>\n\n\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n\n\n    <ion-slides (ionSlideDidChange)="slideChanged()">\n\n        <!-- #id=0 Select Options-->\n\n        <ion-slide>\n\n\n\n            <ion-item>\n\n                <ion-label>Gender - Single Value</ion-label>\n\n                <ion-select [(ngModel)]="gender">\n\n                  <ion-option value="f">Female</ion-option>\n\n                  <ion-option value="m">Male</ion-option>\n\n                </ion-select>\n\n              </ion-item>\n\n      \n\n              <ion-item>\n\n                <ion-label>Hair Color</ion-label>\n\n                <ion-select [(ngModel)]="hairColor" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">\n\n                  <ion-option *ngFor="let o of hairColorData" [value]="o">{{o.text}}</ion-option>\n\n                </ion-select>\n\n              </ion-item>\n\n\n\n              <ion-item>\n\n                  <ion-label>Gender - Popover Interface select</ion-label>\n\n                  <ion-select [(ngModel)]="gender" interface="popover">\n\n                    <ion-option value="f">Female</ion-option>\n\n                    <ion-option value="m">Male</ion-option>\n\n                  </ion-select>\n\n                </ion-item>\n\n        \n\n                <ion-item>\n\n                  <ion-label>Gaming</ion-label>\n\n                  <ion-select [(ngModel)]="gaming" okText="Okay" cancelText="Dismiss" interface="popover">\n\n                    <ion-option value="nes">NES</ion-option>\n\n                    <ion-option value="n64">Nintendo64</ion-option>\n\n                    <ion-option value="ps">PlayStation</ion-option>\n\n                    <ion-option value="genesis">Sega Genesis</ion-option>\n\n                    <ion-option value="saturn">Sega Saturn</ion-option>\n\n                    <ion-option value="snes">SNES</ion-option>\n\n                  </ion-select>\n\n                </ion-item>\n\n        \n\n                <ion-item>\n\n                  <ion-label>Date</ion-label>\n\n                  <ion-select (ionChange)="monthChange($event)" interface="popover">\n\n                    <ion-option value="01">January</ion-option>\n\n                    <ion-option value="02">February</ion-option>\n\n                    <ion-option value="03" selected="true">March</ion-option>\n\n                    <ion-option value="04">April</ion-option>\n\n                    <ion-option value="05">May</ion-option>\n\n                    <ion-option value="06">June</ion-option>\n\n                    <ion-option value="07">July</ion-option>\n\n                    <ion-option value="08">August</ion-option>\n\n                    <ion-option value="09">September</ion-option>\n\n                    <ion-option value="10">October</ion-option>\n\n                    <ion-option value="11">November</ion-option>\n\n                    <ion-option value="12">December</ion-option>\n\n                  </ion-select>\n\n                  <ion-select (ionChange)="yearChange($event)" interface="popover">\n\n                    <ion-option>1989</ion-option>\n\n                    <ion-option>1990</ion-option>\n\n                    <ion-option>1991</ion-option>\n\n                    <ion-option>1992</ion-option>\n\n                    <ion-option>1993</ion-option>\n\n                    <ion-option selected="true">1994</ion-option>\n\n                    <ion-option>1995</ion-option>\n\n                    <ion-option>1996</ion-option>\n\n                    <ion-option>1997</ion-option>\n\n                    <ion-option>1998</ion-option>\n\n                    <ion-option>1999</ion-option>\n\n                  </ion-select>\n\n                </ion-item>\n\n\n\n\n\n                <ion-item>\n\n                    <ion-label>Toppings - Multiple Select</ion-label>\n\n                    <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!">\n\n                      <ion-option value="bacon">Bacon</ion-option>\n\n                      <ion-option value="olives">Black Olives</ion-option>\n\n                      <ion-option value="xcheese">Extra Cheese</ion-option>\n\n                      <ion-option value="peppers">Green Peppers</ion-option>\n\n                      <ion-option value="mushrooms">Mushrooms</ion-option>\n\n                      <ion-option value="onions">Onions</ion-option>\n\n                      <ion-option value="pepperoni">Pepperoni</ion-option>\n\n                      <ion-option value="pineapple">Pineapple</ion-option>\n\n                      <ion-option value="sausage">Sausage</ion-option>\n\n                      <ion-option value="Spinach">Spinach</ion-option>\n\n                    </ion-select>\n\n                  </ion-item>\n\n        \n\n                  <ion-item>\n\n                    <ion-label>Pets</ion-label>\n\n                    <ion-select [(ngModel)]="pets" multiple="true" [selectOptions]="petAlertOpts">\n\n                      <ion-option *ngFor="let o of petData" [value]="o.value">{{o.text}}</ion-option>\n\n                    </ion-select>\n\n                  </ion-item>\n\n        \n\n                  <ion-item>\n\n                    <ion-label>Skittles</ion-label>\n\n                    <ion-select [(ngModel)]="skittles" multiple="true" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">\n\n                      <ion-option *ngFor="let o of skittlesData" [value]="o">{{o.text}}</ion-option>\n\n                    </ion-select>\n\n                  </ion-item>\n\n        \n\n                  <ion-item>\n\n                    <ion-label>Disabled</ion-label>\n\n                    <ion-select multiple disabled="true">\n\n                      <ion-option checked="true">Selected Text</ion-option>\n\n                    </ion-select>\n\n                  </ion-item>\n\n\n\n\n\n              <ion-item>\n\n                  <ion-label>Mute Notifications - Action sheet interface select</ion-label>\n\n                  <ion-select [(ngModel)]="notifications" interface="action-sheet">\n\n                    <ion-option value="mute_15">For 15 Minutes</ion-option>\n\n                    <ion-option value="mute_1">For 1 Hour</ion-option>\n\n                    <ion-option value="mute_23">For 24 Hours</ion-option>\n\n                    <ion-option value="mute_inf">Until I turn it back on</ion-option>\n\n                  </ion-select>\n\n                </ion-item>\n\n      \n\n                <ion-item>\n\n                  <ion-label>Rating</ion-label>\n\n                  <ion-select [(ngModel)]="rating" interface="action-sheet">\n\n                    <ion-option value="1">1 Star</ion-option>\n\n                    <ion-option value="2">2 Stars</ion-option>\n\n                    <ion-option value="3">3 Stars</ion-option>\n\n                    <ion-option value="4">4 Stars</ion-option>\n\n                    <ion-option value="5">5 Stars</ion-option>\n\n                  </ion-select>\n\n                </ion-item>\n\n      \n\n        </ion-slide>\n\n        \n\n        <!-- #id=1 Toolbar navbar-->\n\n        <ion-slide>\n\n            <ion-toolbar>\n\n                <ion-title>This is the title that never ends. It just goes on and on my friend.</ion-title>\n\n              </ion-toolbar>\n\n            \n\n              <ion-toolbar>\n\n                <button ion-button menuToggle>\n\n                  <ion-icon name="menu"></ion-icon>\n\n                </button>\n\n                <ion-buttons start>\n\n                  <button ion-button icon-only showWhen="ios">\n\n                    <ion-icon name="contact"></ion-icon>\n\n                  </button>\n\n                  <button ion-button icon-only>\n\n                    <ion-icon name="search"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-buttons end>\n\n                  <button ion-button color="secondary" icon-only>\n\n                    <ion-icon name="more"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-title>Default</ion-title>\n\n              </ion-toolbar>\n\n            \n\n              <ion-toolbar color="primary">\n\n                <ion-buttons start>\n\n                  <button ion-button showWhen="ios" icon-only>\n\n                    <ion-icon name="contact"></ion-icon>\n\n                  </button>\n\n                  <button ion-button icon-only>\n\n                    <ion-icon name="search"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-buttons end>\n\n                  <button ion-button color="secondary" icon-only>\n\n                    <ion-icon name="more"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-title>Primary</ion-title>\n\n              </ion-toolbar>\n\n            \n\n              <ion-toolbar color="primary">\n\n                <ion-buttons start>\n\n                  <button ion-button showWhen="ios" icon-only class="activated">\n\n                    <ion-icon name="contact"></ion-icon>\n\n                  </button>\n\n                  <button ion-button icon-only class="activated">\n\n                    <ion-icon name="search"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-buttons end>\n\n                  <button ion-button color="secondary" icon-only class="activated">\n\n                    <ion-icon name="more"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-title>Primary.activated</ion-title>\n\n              </ion-toolbar>\n\n            \n\n              <ion-toolbar color="secondary">\n\n                <ion-buttons start>\n\n                  <button ion-button icon-only color="primary">\n\n                    <ion-icon name="contact"></ion-icon>\n\n                  </button>\n\n                  <button ion-button icon-start solid>\n\n                    <ion-icon name="contact"></ion-icon>\n\n                    Solid\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-title>Secondary</ion-title>\n\n                <ion-buttons end>\n\n                  <button ion-button icon-end solid color="danger">\n\n                    Help\n\n                    <ion-icon name="help-circle"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n              </ion-toolbar>\n\n            \n\n              <ion-toolbar color="secondary">\n\n                <ion-buttons start>\n\n                  <button ion-button icon-only color="primary" class="activated">\n\n                    <ion-icon name="contact"></ion-icon>\n\n                  </button>\n\n                  <button ion-button icon-start solid class="activated">\n\n                    <ion-icon name="contact"></ion-icon>\n\n                    Solid\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-title>Secondary Activated</ion-title>\n\n                <ion-buttons end>\n\n                  <button ion-button icon-end solid color="danger" class="activated">\n\n                    Help\n\n                    <ion-icon name="help-circle"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n              </ion-toolbar>\n\n            \n\n              <ion-toolbar color="dark">\n\n                <ion-buttons start>\n\n                  <button ion-button icon-only outline>\n\n                    <ion-icon name="contact"></ion-icon>\n\n                  </button>\n\n                  <button ion-button icon-start outline>\n\n                    <ion-icon name="star"></ion-icon>\n\n                    Star\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-buttons end>\n\n                  <button ion-button icon-only color="secondary" outline>\n\n                    <ion-icon name="contact"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-title>Dark</ion-title>\n\n              </ion-toolbar>\n\n            \n\n              <ion-toolbar color="dark">\n\n                <ion-buttons start>\n\n                  <button ion-button outline icon-only class="activated">\n\n                    <ion-icon name="contact"></ion-icon>\n\n                  </button>\n\n                  <button ion-button outline icon-start class="activated">\n\n                    <ion-icon name="star"></ion-icon>\n\n                    Star\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-buttons end>\n\n                  <button ion-button color="secondary" outline icon-only class="activated">\n\n                    <ion-icon name="contact"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-title>Dark.activated</ion-title>\n\n              </ion-toolbar>\n\n            \n\n              <ion-toolbar color="danger">\n\n                <ion-buttons start>\n\n                  <button ion-button icon-start>\n\n                    <ion-icon name="contact"></ion-icon>\n\n                    Clear\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-buttons end>\n\n                  <button ion-button icon-end>\n\n                    Edit\n\n                    <ion-icon name="create"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-title>Danger</ion-title>\n\n              </ion-toolbar>\n\n            \n\n              <ion-toolbar color="danger">\n\n                <button ion-button menuToggle>\n\n                  <ion-icon name="menu"></ion-icon>\n\n                </button>\n\n                <ion-buttons start>\n\n                  <button ion-button icon-only>\n\n                    <ion-icon name="star"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-title>Danger</ion-title>\n\n              </ion-toolbar>\n\n            \n\n              <ion-toolbar color="light">\n\n                <ion-buttons start>\n\n                  <button ion-button icon-start>\n\n                    <ion-icon name="contact"></ion-icon>\n\n                    Clear\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-buttons end>\n\n                  <button ion-button icon-end>\n\n                    Edit\n\n                    <ion-icon name="create"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-title>Light</ion-title>\n\n              </ion-toolbar>\n\n            \n\n              <ion-toolbar color="light">\n\n                <button ion-button menuToggle>\n\n                  <ion-icon name="menu"></ion-icon>\n\n                </button>\n\n                <ion-buttons start>\n\n                  <button ion-button icon-only>\n\n                    <ion-icon name="star"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-title>Light</ion-title>\n\n              </ion-toolbar>\n\n            \n\n              <ion-toolbar transparent>\n\n                <ion-buttons end>\n\n                  <button ion-button #button1 icon-only (click)="buttonClick(button1)">\n\n                    <ion-icon name="star"></ion-icon>\n\n                  </button>\n\n                </ion-buttons>\n\n                <ion-title>Transparent</ion-title>\n\n                <button ion-button menuToggle right>\n\n                  <ion-icon name="menu"></ion-icon>\n\n                </button>\n\n              </ion-toolbar>\n\n            \n\n              <ion-toolbar color="greyYellow">\n\n                <ion-title>Grey Yellow</ion-title>\n\n              </ion-toolbar>\n\n              <ion-toolbar color="greyWhite">\n\n                <ion-title>Grey White</ion-title>\n\n              </ion-toolbar>\n\n        </ion-slide>\n\n\n\n        <!-- #id=2 card header card footer-->\n\n        <ion-slide>\n\n            <ion-card color="secondary">\n\n                <ion-card-header>\n\n                  Card Header\n\n                </ion-card-header>\n\n                <ion-card-content>\n\n                  <ion-card-title>\n\n                    Title\n\n                  </ion-card-title>\n\n                  Some normal text in content.\n\n                  <h3>h3 in content</h3>\n\n                  <p>\n\n                    Paragraph in content.\n\n                  </p>\n\n                  <p>\n\n                    Another paragraph in content.\n\n                  </p>\n\n                </ion-card-content>\n\n              </ion-card>\n\n            \n\n              <ion-card color="primary" class="rainbow-content">\n\n                <ion-card-header>\n\n                  Card Header\n\n                </ion-card-header>\n\n                <ion-card-content>\n\n                  <ion-card-title>\n\n                    Title\n\n                  </ion-card-title>\n\n                  Some normal text in content.\n\n                  <h3>h3 in content</h3>\n\n                  <p>\n\n                    Paragraph in content.\n\n                  </p>\n\n                  <p>\n\n                    Another paragraph in content.\n\n                  </p>\n\n                </ion-card-content>\n\n              </ion-card>\n\n            \n\n              <ion-card color="primary">\n\n                <ion-card-header>\n\n                  Card Header\n\n                </ion-card-header>\n\n                <ion-card-content>\n\n                  <ion-card-title>\n\n                    Title\n\n                  </ion-card-title>\n\n                  Some normal text in content.\n\n                  <h3>h3 in content</h3>\n\n                  <p>\n\n                    Paragraph in content.\n\n                  </p>\n\n                  <p>\n\n                    Another paragraph in content.\n\n                  </p>\n\n                </ion-card-content>\n\n              </ion-card>\n\n            \n\n              <ion-list>\n\n                <ion-item *ngFor="let item of [0,1,2,3,4,5,6,7,8,9]">\n\n                  {{ item }}\n\n                </ion-item>\n\n              </ion-list>\n\n        </ion-slide>\n\n\n\n        <!-- #id=3 -->\n\n        <ion-slide>\n\n            <ion-item>\n\n                <ion-label>Username</ion-label>\n\n                <ion-input></ion-input>\n\n              </ion-item>\n\n              \n\n              <ion-item>\n\n                <ion-label fixed>Website</ion-label>\n\n                <ion-input type="url"></ion-input>\n\n              </ion-item>\n\n              \n\n              <ion-item>\n\n                <ion-label floating>Email</ion-label>\n\n                <ion-input type="email"></ion-input>\n\n              </ion-item>\n\n              \n\n              <ion-item>\n\n                <ion-label stacked>Phone</ion-label>\n\n                <ion-input type="tel"></ion-input>\n\n              </ion-item>\n\n              \n\n              <ion-item>\n\n                <ion-label>Toggle</ion-label>\n\n                <ion-toggle></ion-toggle>\n\n              </ion-item>\n\n              \n\n              <ion-item>\n\n                <ion-label>Checkbox</ion-label>\n\n                <ion-checkbox></ion-checkbox>\n\n              </ion-item>\n\n        </ion-slide>\n\n\n\n        <!-- #id=4 -->\n\n        <ion-slide>\n\n          <ion-list>\n\n            <ion-list-header>\n\n              Settings\n\n              <button ion-button icon-only item-end clear>\n\n                <ion-icon name="cog"></ion-icon>\n\n              </button>\n\n            </ion-list-header>\n\n        \n\n            <ion-item-group>\n\n              <ion-item>\n\n                <ion-icon name="plane" item-start color="danger"></ion-icon>\n\n                <ion-label>Airplane Mode</ion-label>\n\n                <ion-toggle color="secondary"></ion-toggle>\n\n              </ion-item>\n\n        \n\n              <button ion-item>\n\n                <ion-icon name="wifi" item-start color="primary"></ion-icon>\n\n                <ion-label>Wi-Fi</ion-label>\n\n                <ion-note item-end>The Interwebz</ion-note>\n\n              </button>\n\n        \n\n              <button ion-item>\n\n                <ion-icon name="bluetooth" item-start color="primary"></ion-icon>\n\n                <ion-label>Bluetooth</ion-label>\n\n                <ion-note item-end>Off</ion-note>\n\n              </button>\n\n            </ion-item-group>\n\n        \n\n            <ion-item-divider color="primary">\n\n              Other Settings\n\n              <button ion-button item-end outline color="light">Clear</button>\n\n            </ion-item-divider>\n\n        \n\n            <button ion-item>\n\n              <ion-icon name="call" item-start color="secondary"></ion-icon>\n\n              <ion-label>Cellular</ion-label>\n\n            </button>\n\n        \n\n            <button ion-item>\n\n              <ion-icon name="link" item-start color="secondary"></ion-icon>\n\n              <ion-label>Personal Hotspot</ion-label>\n\n              <ion-note item-end>Off</ion-note>\n\n            </button>\n\n          </ion-list>\n\n        \n\n          <ion-list radio-group>\n\n            <ion-list-header>\n\n              <ion-icon item-start name="phone-portrait"></ion-icon>\n\n              Silence Phone\n\n            </ion-list-header>\n\n        \n\n            <ion-item>\n\n              <ion-label color="dark">Always</ion-label>\n\n              <ion-radio value="always" checked></ion-radio>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-label color="dark">Only while phone is locked</ion-label>\n\n              <ion-radio value="locked"></ion-radio>\n\n            </ion-item>\n\n          </ion-list>\n\n        \n\n          <ion-list>\n\n            <ion-list-header>\n\n              Apps Installed\n\n            </ion-list-header>\n\n        \n\n            <ion-item>\n\n              <ion-icon name="ionic" item-start color="primary"></ion-icon>\n\n              <ion-label>Ionic View</ion-label>\n\n              <button ion-button outline item-end>Uninstall</button>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-icon name="brush" item-start color="primary"></ion-icon>\n\n              <ion-label>Ionic Creator</ion-label>\n\n              <button ion-button outline item-end>Uninstall</button>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-icon name="logo-octocat" item-start color="dark"></ion-icon>\n\n              <ion-label>Hubstruck</ion-label>\n\n              <button ion-button outline item-end>Uninstall</button>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-icon name="paw" item-start color="danger"></ion-icon>\n\n              <ion-label>Barkpark</ion-label>\n\n              <button ion-button outline item-end>Uninstall</button>\n\n            </ion-item>\n\n          </ion-list>\n\n        </ion-slide>\n\n\n\n        <!-- #id=5 -->\n\n        <ion-slide>\n\n          <ion-list class="chat-sliding-demo">\n\n            <ion-list-header>\n\n              Playlist\n\n            </ion-list-header>\n\n        \n\n            <ion-item-group [reorder]="editing" (ionItemReorder)="reorderData($event)">\n\n              <ion-item *ngFor="let song of songs">\n\n                <h2>{{ song.title }}</h2>\n\n                <p>{{ song.band }} • {{ song.album }}</p>\n\n              </ion-item>\n\n            </ion-item-group>\n\n          </ion-list>\n\n        </ion-slide>\n\n\n\n        <!-- #id=6 -->\n\n        <ion-slide>\n\n          <ion-list class="chat-sliding-demo">\n\n            <ion-list-header>\n\n              Chats\n\n            </ion-list-header>\n\n        \n\n            <ion-item-sliding *ngFor="let chat of chats" #item>\n\n              <ion-item>\n\n                <ion-avatar item-start>\n\n                  <img [src]="chat.img">\n\n                </ion-avatar>\n\n                <h2>{{chat.name}}</h2>\n\n                <p>{{chat.message}}</p>\n\n                <ion-note item-end>\n\n                  {{chat.time}}\n\n                </ion-note>\n\n              </ion-item>\n\n        \n\n              <ion-item-options>\n\n                <button ion-button color="secondary" (click)="more(item)">\n\n                  <ion-icon name="menu"></ion-icon>\n\n                  More\n\n                </button>\n\n                <button ion-button color="dark" (click)="mute(item)">\n\n                  <ion-icon name="volume-off"></ion-icon>\n\n                  Mute\n\n                </button>\n\n                <button ion-button color="danger" (click)="delete(item)">\n\n                  <ion-icon name="trash"></ion-icon>\n\n                  Delete\n\n                </button>\n\n              </ion-item-options>\n\n        \n\n              <ion-item-options side="left" (ionSwipe)="archive(item)">\n\n                <button ion-button color="primary" expandable (click)="archive(item)">\n\n                  <ion-icon name="archive" class="expand-hide"></ion-icon>\n\n                  <div class="expand-hide">Archive</div>\n\n                  <ion-spinner id="archive-spinner"></ion-spinner>\n\n                </button>\n\n              </ion-item-options>\n\n            </ion-item-sliding>\n\n          </ion-list>\n\n        \n\n          <ion-list class="login-sliding-demo">\n\n            <ion-list-header>\n\n              Logins\n\n            </ion-list-header>\n\n        \n\n            <ion-item-sliding *ngFor="let login of logins" #item>\n\n              <ion-item>\n\n                <ion-icon [name]="login.icon" item-start></ion-icon>\n\n                <h2>{{login.name}}</h2>\n\n                <p>{{login.username}}</p>\n\n              </ion-item>\n\n              <ion-item-options side="left">\n\n                <button ion-button color="danger">\n\n                  <ion-icon name="trash"></ion-icon>\n\n                </button>\n\n              </ion-item-options>\n\n              <ion-item-options (ionSwipe)="download(item)" icon-start>\n\n                <button ion-button color="dark" (click)="more(item)">\n\n                  <ion-icon name="volume-off"></ion-icon>\n\n                  Mute\n\n                </button>\n\n                <button ion-button color="light" expandable (click)="download(item)">\n\n                  <ion-icon name="download" class="expand-hide"></ion-icon>\n\n                  <div class="expand-hide">Download</div>\n\n                  <ion-spinner id="download-spinner"></ion-spinner>\n\n                </button>\n\n              </ion-item-options>\n\n            </ion-item-sliding>\n\n        \n\n          </ion-list>\n\n          \n\n        </ion-slide>\n\n\n\n        <!-- #id=7 -->\n\n        <ion-slide>\n\n\n\n        </ion-slide>\n\n\n\n    </ion-slides>\n\n \n\n</ion-content>\n\n\n\n<!-- \n\n<ion-header>\n\n    <ion-navbar >\n\n  \n\n      <ion-buttons start>\n\n        <button ion-button icon-only>\n\n          <ion-icon name="contact"></ion-icon>\n\n        </button>\n\n        <button ion-button icon-only>\n\n          <ion-icon name="search"></ion-icon>\n\n        </button>\n\n      </ion-buttons>\n\n      <ion-buttons end>\n\n        <button ion-button icon-only color="secondary">\n\n          <ion-icon name="more"></ion-icon>\n\n        </button>\n\n      </ion-buttons>\n\n      <ion-title>Subheader</ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n  \n\n  <ion-content fullscreen="true">\n\n    \n\n  \n\n  -->'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\config\config.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_2__services_apiStorageService__["a" /* ApiStorageService */],
@@ -913,13 +1092,342 @@ var ConfigPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 254:
+/***/ 301:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ParametersPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_apiStorageService__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__ = __webpack_require__(85);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var ParametersPage = /** @class */ (function () {
+    function ParametersPage(navCtrl, apiStorageService, http, events, loadingCtrl, toastCtrl) {
+        this.navCtrl = navCtrl;
+        this.apiStorageService = apiStorageService;
+        this.http = http;
+        this.events = events;
+        this.loadingCtrl = loadingCtrl;
+        this.toastCtrl = toastCtrl;
+        this.isSearch = false;
+        this.searchString = '';
+        this.iconDefault = "list";
+        this.parameters = [];
+        this.parametersOrigin = [];
+        this.children = [];
+        this.editButton = 'Sắp xếp';
+        this.editing = false;
+    }
+    ParametersPage.prototype.ngOnInit = function () {
+        var _this = this;
+        var loading = this.loadingCtrl.create({
+            content: 'Đang lấy danh sách tham số...'
+        });
+        loading.present();
+        this.http.getParamters()
+            .then(function (parameters) {
+            _this.parametersOrigin = parameters;
+            _this.parameters = _this.parametersOrigin.filter(function (x) { return x.id !== 0; });
+            //console.log('param',this.parameters);
+            _this.parameters = _this.apiStorageService.createTree(_this.parameters, { id: 'id', parentId: 'type', startWith: 0 });
+            //console.log('tree',this.parameters);
+            loading.dismiss();
+        })
+            .catch(function (err) {
+            _this.parameters = [];
+            _this.parametersOrigin = [];
+            loading.dismiss();
+        });
+    };
+    ParametersPage.prototype.goSearch = function () {
+        this.isSearch = true;
+    };
+    ParametersPage.prototype.onInput = function (e) {
+        var _this = this;
+        var types = this.parametersOrigin.filter(function (y) { return (y.type == 0 && y.description.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0); });
+        var typesMax = 0;
+        if (types.length == 1)
+            typesMax = Math.max.apply(Math, types.map(function (o) { return o.id; }));
+        this.parameters = this.parametersOrigin.filter(function (x) { return typesMax == 0 || x.type == typesMax; });
+    };
+    ParametersPage.prototype.searchEnter = function () {
+        this.isSearch = false;
+    };
+    ParametersPage.prototype.addGroupParameters = function () {
+    };
+    ParametersPage.prototype.toggleEdit = function () {
+        var _this = this;
+        this.editing = !this.editing;
+        if (this.editing) {
+            this.editButton = 'Ghi lại';
+        }
+        else {
+            this.editButton = 'Sắp xếp';
+            this.children.forEach(function (el, idx) {
+                //console.log(el.description,el,idx,el.order_1)
+                el.change_time = new Date().getTime();
+                el.order_1 = idx;
+            });
+            //thay the cac gia tri da thay doi trong mang param
+            this.parametersOrigin = this.parametersOrigin.map(function (obj) { return _this.children.find(function (o) { return o.id === obj.id; }) || obj; });
+            //sap xep lai theo order moi thay
+            this.parametersOrigin = this.parametersOrigin.sort(function (a, b) {
+                if (a.type < b.type)
+                    return -2;
+                if (a.type > b.type)
+                    return 2;
+                if (a.order_1 < b.order_1)
+                    return -1;
+                if (a.order_1 > b.order_1)
+                    return 1;
+                return 0;
+            });
+            console.log(this.parametersOrigin);
+        }
+    };
+    ParametersPage.prototype.reorderData = function (indexes) {
+        this.children = Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* reorderArray */])(this.children, indexes);
+    };
+    ParametersPage.prototype.selectGroup = function (parent) {
+        if (parent && parent.$children) {
+            this.groupName = parent.description;
+            //console.log(this.groupName.length);
+            this.children = parent.$children;
+        }
+        else {
+            this.children = [];
+        }
+    };
+    //item sliding
+    ParametersPage.prototype.more = function (item) {
+        console.log('More');
+        item.close();
+    };
+    ParametersPage.prototype.delete = function (item) {
+        console.log('Delete');
+        item.close();
+    };
+    ParametersPage.prototype.mute = function (item) {
+        console.log('Mute');
+        item.close();
+    };
+    ParametersPage.prototype.archive = function (item) {
+        this.expandAction(item, 'archiving', 'Chat was archived.');
+    };
+    ParametersPage.prototype.download = function (item) {
+        this.expandAction(item, 'downloading', 'Login was downloaded.');
+    };
+    ParametersPage.prototype.expandAction = function (item, _, text) {
+        // TODO item.setElementClass(action, true);
+        var _this = this;
+        setTimeout(function () {
+            var toast = _this.toastCtrl.create({
+                message: text
+            });
+            toast.present();
+            // TODO item.setElementClass(action, false);
+            item.close();
+            setTimeout(function () { return toast.dismiss(); }, 2000);
+        }, 1500);
+    };
+    ParametersPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-parameters',template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\parameters\parameters.html"*/'<ion-header>\n\n  <ion-navbar>\n\n      <ion-title *ngIf="!isSearch">CÁC THAM SỐ</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="outer-content">\n\n\n\n  <ion-list>\n\n    \n\n    <ion-item *ngFor="let p of parameters">\n\n      <ion-row>\n\n        <ion-col text-left col-6 col-xl-3 col-lg-4 col-md-5 col-sm-5>\n\n          <ion-buttons>\n\n            <button ion-button color="secondary" outline icon-only (click)="selectGroup(p)">\n\n              <ion-icon [name]="p.icon?p.icon:\'arrow-dropdown-circle\'"></ion-icon>\n\n              {{ p.type }}.{{ p.code?p.code:p.id }} • {{ p.description }}\n\n            </button>\n\n          </ion-buttons>\n\n        </ion-col>\n\n        <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-md-2 col-sm-3>\n\n            {{ p.name }}\n\n        </ion-col>\n\n        <ion-col class="hidden-md-down" text-center col-xl-1 col-lg-1 col-md-1>\n\n            {{ p.code }}\n\n        </ion-col>\n\n        <ion-col text-right col-4 col-xl-2 col-lg-2 col-md-2 col-sm-2>\n\n            {{ p.value }}\n\n        </ion-col>\n\n        <ion-col text-right col-2 offset-xl-2 col-xl-2 offset-lg-1 col-lg-2 col-md-2 col-sm-2>\n\n            {{ p.order_1 }}\n\n        </ion-col>\n\n        </ion-row>\n\n        \n\n    </ion-item>\n\n\n\n  </ion-list>\n\n\n\n  <ion-list>\n\n\n\n      <ion-toolbar color="primary">\n\n          <ion-buttons start>\n\n            <button ion-button color="secondary" outline icon-only class="activated" (click)="addGroupParameters()"  *ngIf="groupName?.length > 0">\n\n              <ion-icon name="add"></ion-icon>\n\n            </button>\n\n          </ion-buttons>\n\n          <ion-buttons end>\n\n              <button ion-button outline icon-start class="activated" (click)="toggleEdit()" *ngIf="children?.length > 1">\n\n                <ion-icon name="swap"></ion-icon>\n\n                {{editButton}}\n\n              </button>\n\n            </ion-buttons>\n\n          <ion-row>\n\n              <ion-col text-center col-6 col-xl-3 col-lg-4 col-md-5 col-sm-5>\n\n                  <ion-title>{{groupName}}</ion-title>\n\n              </ion-col>\n\n              <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-md-2 col-sm-3>\n\n                  <ion-title>Tên</ion-title>\n\n              </ion-col>\n\n              <ion-col class="hidden-md-down" text-center col-xl-1 col-lg-1 col-md-1>\n\n                  <ion-title>Mã(code)</ion-title>\n\n              </ion-col>\n\n              <ion-col text-right col-4 col-xl-2 col-lg-2 col-md-2 col-sm-2>\n\n                  <ion-title>Giá trị</ion-title>\n\n              </ion-col>\n\n              <ion-col text-right col-2 offset-xl-2 col-xl-2 offset-lg-1 col-lg-2 col-md-2 col-sm-2>\n\n                  <ion-title>Thứ tự</ion-title>\n\n              </ion-col>\n\n          </ion-row>\n\n      </ion-toolbar>\n\n      <ion-item-group [reorder]="editing" (ionItemReorder)="reorderData($event)">\n\n        <ion-item-sliding *ngFor="let ch of children" #item>\n\n          <ion-item>\n\n            <ion-icon [name]="ch.icon?ch.icon:\'logo-google\'" item-start></ion-icon>\n\n            <ion-row>\n\n              <ion-col text-left col-6 col-xl-3 col-lg-4 col-md-5 col-sm-5>\n\n                  {{ ch.type }}.{{ ch.code?ch.code:ch.id }} • {{ ch.description }}\n\n              </ion-col>\n\n              <ion-col class="hidden-sm-down" text-center col-xl-2 col-lg-2 col-md-2 col-sm-3>\n\n                {{ ch.name }}\n\n              </ion-col>\n\n              <ion-col class="hidden-md-down" text-center col-xl-1 col-lg-1 col-md-1>\n\n                {{ ch.code }}\n\n              </ion-col>\n\n              <ion-col text-right col-4 col-xl-2 col-lg-2 col-md-2 col-sm-2>\n\n                {{ ch.value }}\n\n              </ion-col>\n\n              <ion-col text-right col-2 offset-xl-2 col-xl-2 offset-lg-1 col-lg-2 col-md-2 col-sm-2>\n\n                {{ ch.order_1 }}\n\n              </ion-col>\n\n            </ion-row>\n\n          </ion-item>\n\n\n\n          <ion-item-options side="left">\n\n              <button ion-button color="danger">\n\n                <ion-icon name="trash"></ion-icon>\n\n              </button>\n\n            </ion-item-options>\n\n\n\n            <ion-item-options (ionSwipe)="download(item)" icon-start>\n\n              <button ion-button color="dark" (click)="more(item)">\n\n                <ion-icon name="volume-off"></ion-icon>\n\n                Mute\n\n              </button>\n\n              <button ion-button color="light" expandable (click)="download(item)">\n\n                <ion-icon name="download" class="expand-hide"></ion-icon>\n\n                <div class="expand-hide">Download</div>\n\n                <ion-spinner id="download-spinner"></ion-spinner>\n\n              </button>\n\n            </ion-item-options>\n\n          </ion-item-sliding>\n\n      </ion-item-group>\n\n    </ion-list>\n\n\n\n</ion-content>'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\parameters\parameters.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2__services_apiStorageService__["a" /* ApiStorageService */],
+            __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__["a" /* ApiHttpPublicService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]])
+    ], ParametersPage);
+    return ParametersPage;
+}());
+
+//# sourceMappingURL=parameters.js.map
+
+/***/ }),
+
+/***/ 302:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CustomerPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__parameters_parameters__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__config_config__ = __webpack_require__(300);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var CustomerPage = /** @class */ (function () {
+    function CustomerPage(navCtrl, formBuilder, http, loadingCtrl) {
+        this.navCtrl = navCtrl;
+        this.formBuilder = formBuilder;
+        this.http = http;
+        this.loadingCtrl = loadingCtrl;
+        this.slideIndex = 0;
+        this.customers = [];
+        this.customersOrigin = [];
+        this.isSearch = false;
+        this.searchString = '';
+        this.maxCurrentId = 0;
+    }
+    CustomerPage.prototype.ngOnInit = function () {
+        this.getCustomers(); //cai nay lay tu load trang dau luon
+        //khong cho quet bang tay
+        this.slides.lockSwipes(true);
+        this.myFromGroup = this.formBuilder.group({
+            full_name: '',
+            address: '',
+            phone: '',
+            email: '',
+            area: '',
+            type: '',
+        });
+    };
+    CustomerPage.prototype.getCustomers = function () {
+        var _this = this;
+        var loading = this.loadingCtrl.create({
+            content: 'Đang lấy danh sách khách hàng...'
+        });
+        loading.present();
+        this.http.getAllCutomers()
+            .then(function (customers) {
+            _this.customersOrigin = customers;
+            _this.customers = _this.customersOrigin;
+            //tim gia tri max cua ma khach hang
+            _this.maxCurrentId = Math.max.apply(Math, _this.customersOrigin.map(function (o) { return o.stt; }));
+            //console.log('MAX Ma khach hang',this.maxCurrentId);
+            loading.dismiss();
+        })
+            .catch(function (err) {
+            _this.customersOrigin = [];
+            _this.customers = [];
+            loading.dismiss();
+        });
+    };
+    CustomerPage.prototype.goSearch = function () {
+        this.isSearch = true;
+    };
+    CustomerPage.prototype.onInput = function (e) {
+        var _this = this;
+        this.customers = this.customersOrigin.filter(function (x) { return (x.full_name.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0
+            ||
+                x.cus_id.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0
+            ||
+                x.area.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0
+            ||
+                x.staff.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0
+            ||
+                (x.phone && x.phone.indexOf(_this.searchString) >= 0)); });
+    };
+    CustomerPage.prototype.searchEnter = function () {
+        this.isSearch = false;
+    };
+    CustomerPage.prototype.gotoSlideEdit = function (cus) {
+        //console.log('cus',cus);
+        this.currentCustomer = cus;
+        this.myFromGroup = this.formBuilder.group({
+            full_name: cus.full_name,
+            address: cus.address ? cus.address : cus.area,
+            phone: cus.phone,
+            email: cus.email,
+            area: cus.area,
+            type: cus.cust_type,
+        });
+        this.goToSlide(1);
+    };
+    /**
+     * Dieu khien slide
+     * @param i
+     */
+    CustomerPage.prototype.goToSlide = function (i) {
+        this.slides.lockSwipes(false);
+        this.slides.slideTo(i, 500);
+        this.slides.lockSwipes(true);
+    };
+    /**
+     * xac dinh slide
+     */
+    CustomerPage.prototype.slideChanged = function () {
+        this.slideIndex = this.slides.getActiveIndex();
+    };
+    CustomerPage.prototype.goBack = function () {
+        this.goToSlide(0);
+    };
+    /**
+     * Lay noi dung co thay doi
+     * luu vao array customers luu xuong dia, luu csdl
+     */
+    CustomerPage.prototype.onSubmit = function () {
+        this.currentCustomer.full_name = this.myFromGroup.get('full_name').value;
+        this.currentCustomer.address = this.myFromGroup.get('address').value;
+        this.currentCustomer.phone = this.myFromGroup.get('phone').value;
+        this.currentCustomer.email = this.myFromGroup.get('email').value;
+        this.currentCustomer.change_date = new Date().getTime();
+        this.goToSlide(0);
+    };
+    CustomerPage.prototype.goParameters = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__parameters_parameters__["a" /* ParametersPage */]);
+    };
+    CustomerPage.prototype.newCustomter = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__config_config__["a" /* ConfigPage */]);
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Slides */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Slides */])
+    ], CustomerPage.prototype, "slides", void 0);
+    CustomerPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-customer',template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\customer\customer.html"*/'<ion-header>\n\n  <ion-navbar>\n\n\n\n    <ion-buttons *ngIf="!isSearch" start>\n\n      <button ion-button icon-only color="royal" (click)="goSearch()">\n\n        <ion-icon name="search"></ion-icon>\n\n      </button>\n\n\n\n      <button ion-button icon-only (click)="newCustomter()">\n\n        <ion-icon name="contact"></ion-icon>\n\n      </button>\n\n\n\n    </ion-buttons>\n\n\n\n    <ion-buttons end>\n\n      <button ion-button icon-only color="secondary" (click)="goParameters()">\n\n        <ion-icon name="more"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    \n\n    <ion-searchbar *ngIf="isSearch" placeholder="Tìm theo mã/tên khách hàng/khu vực/người quản lý hoặc số điện thoại"\n\n      [(ngModel)]="searchString"\n\n      [showCancelButton]="shouldShowCancel"\n\n      (ionInput)="onInput($event)"\n\n      (keyup.enter)="searchEnter()"\n\n      (keyup.esc)="searchEnter()"\n\n      start>\n\n    </ion-searchbar>\n\n    \n\n    <ion-title *ngIf="!isSearch">CUSTOMER</ion-title>\n\n\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-slides (ionSlideDidChange)="slideChanged()">\n\n      <!-- #id=0 -->\n\n      <ion-slide>\n\n          <ion-list>\n\n              <button ion-item *ngFor="let customer of customers" (click)="gotoSlideEdit(customer)">\n\n                <ion-avatar item-start>\n\n                  <img src={{customer.image}}>\n\n                </ion-avatar>\n\n                <h2>{{customer.cust_id}} - {{customer.full_name}}</h2>\n\n                <p>{{customer.area}} ({{customer.staff}})</p>\n\n                <ion-note>{{customer.cust_type}} {{customer.charge}} </ion-note>\n\n              </button>\n\n          </ion-list>\n\n      </ion-slide>\n\n      \n\n      <!-- #id=1 -->\n\n      <ion-slide>\n\n          <form [formGroup]="myFromGroup" (ngSubmit)="onSubmit()">\n\n\n\n              <ion-item>\n\n                <ion-label floating>Họ và Tên</ion-label>\n\n                <ion-input formControlName="full_name" type="text"></ion-input>\n\n              </ion-item>\n\n              \n\n              <ion-item>\n\n                <ion-label floating>Địa chỉ</ion-label>\n\n                <ion-input formControlName="address" type="address"></ion-input>\n\n              </ion-item>\n\n              \n\n              <ion-item>\n\n                <ion-label floating>Điện thoại</ion-label>\n\n                <ion-input formControlName="phone" type="phone"></ion-input>\n\n              </ion-item>\n\n              \n\n              <ion-item>\n\n                <ion-label floating>Email</ion-label>\n\n                <ion-input formControlName="email" type="email"></ion-input>\n\n              </ion-item>\n\n              \n\n              <ion-item>\n\n                <ion-label floating>Khu vực quản lý</ion-label>\n\n                <ion-input formControlName="area" type="text"></ion-input>\n\n              </ion-item>\n\n              \n\n              <ion-item>\n\n                <ion-label floating>Loại khách hàng</ion-label>\n\n                <ion-input formControlName="type" type="text"></ion-input>\n\n              </ion-item>\n\n              \n\n              <ion-row>\n\n                <ion-col text-center col-12 col-xl-3 col-lg-4 col-sm-6>\n\n                  <button ion-button block color="secondary" type="button" (click)="goBack()">\n\n                    Trở về\n\n                  </button>\n\n                </ion-col>\n\n                <ion-col text-center col-12 offset-xl-6 col-xl-3 offset-lg-4 col-lg-4 col-sm-6>\n\n                  <button ion-button block color="secondary" type="submit">\n\n                    Thay đổi\n\n                  </button>\n\n                </ion-col>\n\n              </ion-row>\n\n              \n\n            </form>\n\n      </ion-slide>\n\n  \n\n      <!-- #id=2 -->\n\n      <!-- #id=4 -->\n\n      <!-- #id=5 -->\n\n      <!-- #id=6 -->\n\n    </ion-slides>\n\n</ion-content>\n\n'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\customer\customer.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__["a" /* ApiHttpPublicService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */]])
+    ], CustomerPage);
+    return CustomerPage;
+}());
+
+//# sourceMappingURL=customer.js.map
+
+/***/ }),
+
+/***/ 303:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvoicePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_apiStorageService__ = __webpack_require__(42);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -949,7 +1457,7 @@ var InvoicePage = /** @class */ (function () {
     };
     InvoicePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-invoice',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/invoice/invoice.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Invoice\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <iframe *ngIf="pdfLink" [src]="pdfLink" width="100%" height="100%" frameborder="0" ></iframe>\n</ion-content>\n'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/invoice/invoice.html"*/
+            selector: 'page-invoice',template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\invoice\invoice.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>\n\n      Invoice\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <iframe *ngIf="pdfLink" [src]="pdfLink" width="100%" height="100%" frameborder="0" ></iframe>\n\n</ion-content>\n\n'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\invoice\invoice.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["c" /* DomSanitizer */]])
@@ -961,13 +1469,13 @@ var InvoicePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 255:
+/***/ 304:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ReportPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1057,7 +1565,7 @@ var ReportPage = /** @class */ (function () {
     };
     ReportPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-report',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/report/report.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>Item Reorder</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content class="outer-content">\n\n  <ion-list class="chat-sliding-demo">\n    <ion-list-header>\n      Chats\n    </ion-list-header>\n\n    <ion-item-sliding *ngFor="let chat of chats" #item>\n      <ion-item>\n        <ion-avatar item-start>\n          <img [src]="chat.img">\n        </ion-avatar>\n        <h2>{{chat.name}}</h2>\n        <p>{{chat.message}}</p>\n        <ion-note item-end>\n          {{chat.time}}\n        </ion-note>\n      </ion-item>\n\n      <ion-item-options>\n        <button ion-button color="secondary" (click)="more(item)">\n          <ion-icon name="menu"></ion-icon>\n          More\n        </button>\n        <button ion-button color="dark" (click)="mute(item)">\n          <ion-icon name="volume-off"></ion-icon>\n          Mute\n        </button>\n        <button ion-button color="danger" (click)="delete(item)">\n          <ion-icon name="trash"></ion-icon>\n          Delete\n        </button>\n      </ion-item-options>\n\n      <ion-item-options side="left" (ionSwipe)="archive(item)">\n        <button ion-button color="primary" expandable (click)="archive(item)">\n          <ion-icon name="archive" class="expand-hide"></ion-icon>\n          <div class="expand-hide">Archive</div>\n          <ion-spinner id="archive-spinner"></ion-spinner>\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n\n  <ion-list class="login-sliding-demo">\n    <ion-list-header>\n      Logins\n    </ion-list-header>\n\n    <ion-item-sliding *ngFor="let login of logins" #item>\n      <ion-item>\n        <ion-icon [name]="login.icon" item-start></ion-icon>\n        <h2>{{login.name}}</h2>\n        <p>{{login.username}}</p>\n      </ion-item>\n      <ion-item-options side="left">\n        <button ion-button color="danger">\n          <ion-icon name="trash"></ion-icon>\n        </button>\n      </ion-item-options>\n      <ion-item-options (ionSwipe)="download(item)" icon-start>\n        <button ion-button color="dark" (click)="more(item)">\n          <ion-icon name="volume-off"></ion-icon>\n          Mute\n        </button>\n        <button ion-button color="light" expandable (click)="download(item)">\n          <ion-icon name="download" class="expand-hide"></ion-icon>\n          <div class="expand-hide">Download</div>\n          <ion-spinner id="download-spinner"></ion-spinner>\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/report/report.html"*/
+            selector: 'page-report',template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\report\report.html"*/'<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Item Reorder</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content class="outer-content">\n\n\n\n  <ion-list class="chat-sliding-demo">\n\n    <ion-list-header>\n\n      Chats\n\n    </ion-list-header>\n\n\n\n    <ion-item-sliding *ngFor="let chat of chats" #item>\n\n      <ion-item>\n\n        <ion-avatar item-start>\n\n          <img [src]="chat.img">\n\n        </ion-avatar>\n\n        <h2>{{chat.name}}</h2>\n\n        <p>{{chat.message}}</p>\n\n        <ion-note item-end>\n\n          {{chat.time}}\n\n        </ion-note>\n\n      </ion-item>\n\n\n\n      <ion-item-options>\n\n        <button ion-button color="secondary" (click)="more(item)">\n\n          <ion-icon name="menu"></ion-icon>\n\n          More\n\n        </button>\n\n        <button ion-button color="dark" (click)="mute(item)">\n\n          <ion-icon name="volume-off"></ion-icon>\n\n          Mute\n\n        </button>\n\n        <button ion-button color="danger" (click)="delete(item)">\n\n          <ion-icon name="trash"></ion-icon>\n\n          Delete\n\n        </button>\n\n      </ion-item-options>\n\n\n\n      <ion-item-options side="left" (ionSwipe)="archive(item)">\n\n        <button ion-button color="primary" expandable (click)="archive(item)">\n\n          <ion-icon name="archive" class="expand-hide"></ion-icon>\n\n          <div class="expand-hide">Archive</div>\n\n          <ion-spinner id="archive-spinner"></ion-spinner>\n\n        </button>\n\n      </ion-item-options>\n\n    </ion-item-sliding>\n\n  </ion-list>\n\n\n\n  <ion-list class="login-sliding-demo">\n\n    <ion-list-header>\n\n      Logins\n\n    </ion-list-header>\n\n\n\n    <ion-item-sliding *ngFor="let login of logins" #item>\n\n      <ion-item>\n\n        <ion-icon [name]="login.icon" item-start></ion-icon>\n\n        <h2>{{login.name}}</h2>\n\n        <p>{{login.username}}</p>\n\n      </ion-item>\n\n      <ion-item-options side="left">\n\n        <button ion-button color="danger">\n\n          <ion-icon name="trash"></ion-icon>\n\n        </button>\n\n      </ion-item-options>\n\n      <ion-item-options (ionSwipe)="download(item)" icon-start>\n\n        <button ion-button color="dark" (click)="more(item)">\n\n          <ion-icon name="volume-off"></ion-icon>\n\n          Mute\n\n        </button>\n\n        <button ion-button color="light" expandable (click)="download(item)">\n\n          <ion-icon name="download" class="expand-hide"></ion-icon>\n\n          <div class="expand-hide">Download</div>\n\n          <ion-spinner id="download-spinner"></ion-spinner>\n\n        </button>\n\n      </ion-item-options>\n\n    </ion-item-sliding>\n\n\n\n  </ion-list>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\report\report.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]])
     ], ReportPage);
@@ -1065,486 +1573,6 @@ var ReportPage = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=report.js.map
-
-/***/ }),
-
-/***/ 256:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_print_js__ = __webpack_require__(381);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_print_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_print_js__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var HomePage = /** @class */ (function () {
-    function HomePage(navCtrl) {
-        this.navCtrl = navCtrl;
-    }
-    HomePage.prototype.printPdf = function () {
-        __WEBPACK_IMPORTED_MODULE_2_print_js___default()('/test/manual/test.pdf');
-    };
-    HomePage.prototype.printPdfWithModal = function () {
-        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
-            printable: '/test/manual/test.pdf',
-            type: 'pdf',
-            showModal: true
-        });
-    };
-    HomePage.prototype.printPdfWithModalAndCloseCallback = function () {
-        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
-            printable: '/test/manual/test.pdf',
-            type: 'pdf',
-            showModal: true,
-            onPrintDialogClose: function () { return console.log('The print dialog was closed'); },
-            onPdfOpen: function () { return console.log('Pdf was opened in a new tab due to an incompatible browser'); }
-        });
-    };
-    HomePage.prototype.printHtml = function () {
-        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
-            printable: 'test',
-            type: 'html'
-        });
-    };
-    HomePage.prototype.printHtmlCustomStyle = function () {
-        var style = '@page { margin: 0 } @media print { h1 { color: blue } }';
-        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
-            printable: 'test',
-            type: 'html',
-            style: style,
-            scanStyles: false
-        });
-    };
-    HomePage.prototype.printHtmlCss = function () {
-        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
-            printable: 'test',
-            type: 'html',
-            css: 'test.css',
-            scanStyles: false
-        });
-    };
-    HomePage.prototype.printJson = function () {
-        var data = [];
-        for (var i = 0; i <= 1000; i++) {
-            data.push({
-                test1: this.createRandomString(),
-                test2: this.createRandomString()
-            });
-        }
-        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
-            printable: data,
-            properties: [{
-                    field: 'test1',
-                    displayName: 'test 1',
-                    columnSize: 1
-                }, {
-                    field: 'test2',
-                    displayName: 'test 2',
-                    columnSize: 4
-                }],
-            type: 'json'
-        });
-    };
-    HomePage.prototype.printStyledJson = function () {
-        var data = [
-            {
-                test1: 'Test1 string',
-                test2: 'Test2 string'
-            },
-            {
-                test1: 'more Test1 string',
-                test2: 'more Test2 string'
-            }
-        ];
-        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({ printable: data, properties: ['test1', 'test2'], type: 'json', gridStyle: 'border: 2px solid #3971A5;', gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;' });
-    };
-    HomePage.prototype.printNestedJson = function () {
-        var data = [];
-        for (var i = 0; i <= 100; i++) {
-            data.push({
-                test1: this.createRandomString(),
-                test2: {
-                    a: this.createRandomString()
-                }
-            });
-        }
-        __WEBPACK_IMPORTED_MODULE_2_print_js___default()({
-            printable: data,
-            properties: [{
-                    field: 'test1',
-                    displayName: 'test 1',
-                    columnSize: 1
-                }, {
-                    field: 'test2.a',
-                    displayName: 'test 2 - a',
-                    columnSize: 4
-                }],
-            type: 'json'
-        });
-    };
-    HomePage.prototype.createRandomString = function () {
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        for (var i = 0; i < 5; i++)
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-        return text;
-    };
-    HomePage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Ionic Blank\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n    <button color="primary" ion-fab (click)="printPdfWithModal()">\n        <ion-icon name="chatbubbles" ios="ios-chatbubbles" md="md-chatbubbles"></ion-icon>\n    </button>\n\n    <button color="primary" ion-fab (click)="printJson()">\n        <ion-icon name="chatbubbles" ios="ios-chatbubbles" md="md-chatbubbles"></ion-icon>\n    </button>\n\n</ion-content>\n'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/home/home.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
-    ], HomePage);
-    return HomePage;
-}());
-
-//# sourceMappingURL=home.js.map
-
-/***/ }),
-
-/***/ 257:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__login_login__ = __webpack_require__(137);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-var RegisterPage = /** @class */ (function () {
-    function RegisterPage(navCtrl, loadingCtrl, toastCtrl, formBuilder, apiService) {
-        this.navCtrl = navCtrl;
-        this.loadingCtrl = loadingCtrl;
-        this.toastCtrl = toastCtrl;
-        this.formBuilder = formBuilder;
-        this.apiService = apiService;
-        this.isImageViewer = false;
-        this.resourceImages = [];
-    }
-    RegisterPage.prototype.ngOnInit = function () {
-        var _this = this;
-        this.apiService.getServerPublicRSAKey()
-            .then(function (pk) { return _this.serverKey = pk; })
-            .catch(function (err) { return console.log(err); });
-        this.myFromGroup = this.formBuilder.group({
-            user: '',
-            pass: ''
-        });
-    };
-    RegisterPage.prototype.onSubmit = function () {
-        var _this = this;
-        //ma hoa du lieu truoc khi truyen di
-        var passEncrypted = '';
-        try {
-            passEncrypted = this.serverKey.encrypt(this.myFromGroup.get('pass').value, 'base64', 'utf8');
-        }
-        catch (err) {
-            console.log(err);
-        }
-        var formData = new FormData();
-        formData.append("username", this.myFromGroup.get('user').value);
-        formData.append("password", passEncrypted);
-        //gui lenh login 
-        var loading = this.loadingCtrl.create({
-            content: 'Saving user info...'
-        });
-        loading.present();
-        this.apiService.register(formData)
-            .then(function (status) {
-            loading.dismiss();
-            if (status) {
-                _this.toastCtrl.create({
-                    message: "Thank you " + _this.myFromGroup.get('user').value + "! You are registered!",
-                    duration: 3000,
-                    position: 'middle'
-                }).present();
-                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__login_login__["a" /* LoginPage */]);
-            }
-            else {
-                _this.toastCtrl.create({
-                    message: "Your new " + _this.myFromGroup.get('user').value + ". Existed in our System, please choose another...",
-                    duration: 5000,
-                    position: 'bottom'
-                }).present();
-            }
-        })
-            .catch(function (err) {
-            loading.dismiss();
-            _this.toastCtrl.create({
-                message: "result: " + JSON.stringify(err),
-                duration: 5000,
-                position: 'bottom'
-            }).present();
-        });
-    };
-    RegisterPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-register',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/register/register.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Register form\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content padding class="card-background-page">\n  <form (ngSubmit)="onSubmit()" [formGroup]="myFromGroup">\n    <ion-card col-12 col-xl-4 col-lg-6 col-sm-12>\n      <ion-item>\n        <ion-label floating>Username</ion-label>\n        <ion-input type="text" formControlName="user"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Password</ion-label>\n        <ion-input type="password" formControlName="pass"></ion-input>\n      </ion-item>\n      <ion-row no-padding>\n\n        <ion-col text-right>\n          <ion-buttons start>\n            <button ion-button type="submit" icon-end round>\n              Đăng ký\n              <ion-icon name="share-alt"></ion-icon>\n            </button>\n          </ion-buttons>\n        </ion-col>\n        \n      </ion-row>\n\n    </ion-card>\n  </form>\n\n</ion-content>'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/register/register.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__["a" /* ApiAuthService */]])
-    ], RegisterPage);
-    return RegisterPage;
-}());
-
-//# sourceMappingURL=register.js.map
-
-/***/ }),
-
-/***/ 303:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SettingPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__login_login__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_apiAuthService__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_apiImageService__ = __webpack_require__(304);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-var SettingPage = /** @class */ (function () {
-    function SettingPage(navCtrl, loadingCtrl, toastCtrl, formBuilder, apiImageService, apiService) {
-        this.navCtrl = navCtrl;
-        this.loadingCtrl = loadingCtrl;
-        this.toastCtrl = toastCtrl;
-        this.formBuilder = formBuilder;
-        this.apiImageService = apiImageService;
-        this.apiService = apiService;
-        this.isImageViewer = false;
-        this.resourceImages = []; //: { imageViewer: any, file: any, name: string }[] = [];
-    }
-    SettingPage.prototype.ngOnInit = function () {
-        var _this = this;
-        this.apiService.getServerPublicRSAKey()
-            .then(function (pk) { return _this.serverKey = pk; })
-            .catch(function (err) { return console.log(err); });
-        this.userInfo = this.apiService.getUserInfoSetting();
-        //console.log(this.userInfo);
-        this.myFromGroup = this.formBuilder.group({
-            DISPLAY_NAME: (this.userInfo) ? this.userInfo.DISPLAY_NAME : '',
-            FULL_NAME: (this.userInfo) ? this.userInfo.FULL_NAME : '',
-            PHONE: (this.userInfo) ? this.userInfo.PHONE : '',
-            EMAIL: (this.userInfo) ? this.userInfo.EMAIL : '',
-            FULL_ADDRESS: (this.userInfo) ? this.userInfo.FULL_ADDRESS : '',
-            fileload: '',
-        });
-    };
-    SettingPage.prototype.fileChange = function (event) {
-        var _this = this;
-        if (event.target && event.target.files) {
-            var files = event.target.files;
-            for (var key in files) {
-                if (!isNaN(parseInt(key))) {
-                    this.apiImageService.resizeImage(files[key].name, files[key], 300)
-                        .then(function (data) {
-                        _this.resourceImages.push(data);
-                        _this.isImageViewer = true;
-                    })
-                        .catch(function (err) {
-                        console.log(err);
-                    });
-                }
-            } //
-        }
-    };
-    SettingPage.prototype.deleteImage = function (evt) {
-        this.resourceImages = this.resourceImages.filter(function (value, index, arr) {
-            return value != evt;
-        });
-    };
-    //thuc hien submit
-    SettingPage.prototype.onSubmit = function () {
-        var _this = this;
-        var formData = new FormData();
-        //bo cai nay di vi da xu ly interceptor roi
-        //formData.append("Authorization", 'Bearer ' + this.apiService.getUserToken());
-        if (this.myFromGroup.get("DISPLAY_NAME").value)
-            formData.append("DISPLAY_NAME", this.myFromGroup.get("DISPLAY_NAME").value);
-        if (this.myFromGroup.get("FULL_NAME").value)
-            formData.append("FULL_NAME", this.myFromGroup.get("FULL_NAME").value);
-        if (this.myFromGroup.get("PHONE").value)
-            formData.append("PHONE", this.myFromGroup.get("PHONE").value);
-        if (this.myFromGroup.get("EMAIL").value)
-            formData.append("EMAIL", this.myFromGroup.get("EMAIL").value);
-        if (this.myFromGroup.get("FULL_ADDRESS").value)
-            formData.append("FULL_ADDRESS", this.myFromGroup.get("FULL_ADDRESS").value);
-        var i = 0;
-        this.resourceImages.forEach(function (fileObj) {
-            //console.log(fileObj.name);
-            formData.append('file2Upload' + i++, fileObj.file, fileObj.name);
-            //gui tung file hoac tat ca cac file
-        });
-        //gui lenh user/save 
-        var loading = this.loadingCtrl.create({
-            content: 'Saving user info...'
-        });
-        loading.present();
-        this.apiService.editUser(formData)
-            .then(function (status) {
-            loading.dismiss();
-            if (status) {
-                _this.toastCtrl.create({
-                    message: "Thank you for your setting successful!",
-                    duration: 3000,
-                    position: 'middle'
-                }).present();
-            }
-            else {
-                _this.toastCtrl.create({
-                    message: "CAN NOT edit this user! Some reason unknow, please try again later",
-                    duration: 5000,
-                    position: 'bottom'
-                }).present();
-            }
-            _this.apiService.logout()
-                .then(function (d) {
-                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__login_login__["a" /* LoginPage */]);
-            })
-                .catch(function (e) { });
-        })
-            .catch(function (err) {
-            loading.dismiss();
-            _this.toastCtrl.create({
-                message: "result: " + JSON.stringify(err),
-                duration: 5000,
-                position: 'bottom'
-            }).present();
-        });
-    };
-    SettingPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-setting',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/setting/setting.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Thay đổi thông tin cá nhân\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content padding class="card-background-page">\n  <form (ngSubmit)="onSubmit()" [formGroup]="myFromGroup">\n    <ion-card col-12 col-xl-4 col-lg-6 col-sm-12>\n      <ion-item>\n        <ion-label floating>Nick Name - Tên hiển thị</ion-label>\n        <ion-input type="text" formControlName="DISPLAY_NAME"></ion-input>\n      </ion-item>\n      <ion-item>\n          <ion-label floating>Full Name - Tên Đầy đủ</ion-label>\n          <ion-input type="text" formControlName="FULL_NAME"></ion-input>\n      </ion-item>\n      <ion-item>\n          <ion-label floating>Phone - Điện thoại</ion-label>\n          <ion-input type="text" formControlName="PHONE"></ion-input>\n      </ion-item>\n      <ion-item>\n          <ion-label floating>Email - Hộp thư điện tử</ion-label>\n          <ion-input type="text" formControlName="EMAIL"></ion-input>\n      </ion-item>\n      <ion-item>\n          <ion-label floating>Address - Địa chỉ đầy đủ</ion-label>\n          <ion-input type="text" formControlName="FULL_ADDRESS"></ion-input>\n      </ion-item>\n\n      <ion-item *ngIf="(userInfo?.URL_IMAGE)">\n          <ion-grid>\n              <ion-row>\n                  <ion-col col-12>\n                      <ion-card>\n                          <img [src]="userInfo?.URL_IMAGE"/>\n                      </ion-card>\n                  </ion-col>\n              </ion-row>\n          </ion-grid>\n      </ion-item>\n\n      <ion-item *ngIf="isImageViewer">\n          <ion-grid>\n              <ion-row>\n                  <ion-col *ngFor="let obj of resourceImages" col-12>\n                      <ion-card>\n                          <img [src]="obj?.imageViewer" style="width: 100%; height: 100%;" />\n                          <ion-row>\n                              <ion-col>\n                                  <button ion-button type="button" clear small color="secondary" icon-start (click)="deleteImage(obj)">\n                                      <ion-icon name=\'backspace\' ios="ios-backspace" md="md-backspace"></ion-icon>\n                                      Xóa bỏ\n                                  </button>\n                              </ion-col>\n                          </ion-row>\n                      </ion-card>\n                  </ion-col>\n              </ion-row>\n          </ion-grid>\n      </ion-item>\n      \n    <ion-item>  \n      <ion-buttons start>\n          <button ion-button type="button" icon-end round>\n              <input type="file" expandable accept="image/*" formControlName="fileload" (change)="fileChange($event)">\n              Avantar - Chọn ảnh đại diện\n              <ion-icon name="images"></ion-icon>\n          </button>\n      </ion-buttons>\n    </ion-item>\n\n      <ion-row no-padding>\n        <ion-col text-right>\n          <ion-buttons start>\n            <button ion-button type="submit" icon-end round>\n              Cập nhập\n              <ion-icon name="share-alt"></ion-icon>\n            </button>\n          </ion-buttons>\n        </ion-col>\n      </ion-row>\n\n    </ion-card>\n  </form>\n\n</ion-content>'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/setting/setting.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_5__services_apiImageService__["a" /* ApiImageService */],
-            __WEBPACK_IMPORTED_MODULE_4__services_apiAuthService__["a" /* ApiAuthService */]])
-    ], SettingPage);
-    return SettingPage;
-}());
-
-//# sourceMappingURL=setting.js.map
-
-/***/ }),
-
-/***/ 304:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ApiImageService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var ApiImageService = /** @class */ (function () {
-    function ApiImageService() {
-    }
-    //dua vao doi tuong file image
-    //tra ve doi tuong file image co kich co nho hon
-    ApiImageService.prototype.resizeImage = function (filename, file, newSize) {
-        return new Promise(function (resolve, reject) {
-            try {
-                var canvas = document.createElement('canvas');
-                var context = canvas.getContext('2d');
-                var maxW = newSize;
-                var maxH = newSize;
-                var img = document.createElement('img');
-                img.src = URL.createObjectURL(file);
-                img.onload = function () {
-                    var iw = img.width;
-                    var ih = img.height;
-                    var scale = Math.min((maxW / iw), (maxH / ih));
-                    var iwScaled = iw * scale;
-                    var ihScaled = ih * scale;
-                    canvas.width = iwScaled;
-                    canvas.height = ihScaled;
-                    context.drawImage(img, 0, 0, iwScaled, ihScaled);
-                    //image.src=canvas.toDataURL(); //gan canvas cho image viewer
-                    //xu ly chat luong anh qua cac tham so cua ham toDataURL()
-                    //chuyen sang file de ghi xuong dia hoac truyen tren mang
-                    //su dung ham toBlob sau
-                    canvas.toBlob(function (blob) {
-                        var reader = new FileReader();
-                        reader.readAsArrayBuffer(blob); //ket qua la mot mang Uint8Array 
-                        reader.onload = function () {
-                            //console.log(reader.result); //ket qua la mot mang Uint8Array 
-                            //newFile la mot file image da duoc resize roi nhe
-                            resolve({
-                                imageViewer: canvas.toDataURL(),
-                                file: new Blob([reader.result], { type: 'image/png' }),
-                                name: filename
-                            });
-                        };
-                    });
-                };
-            }
-            catch (err) {
-                reject(err);
-            }
-        });
-    };
-    ApiImageService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [])
-    ], ApiImageService);
-    return ApiImageService;
-}());
-
-//# sourceMappingURL=apiImageService.js.map
 
 /***/ }),
 
@@ -1569,37 +1597,41 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_common_http__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(245);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(248);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(380);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(256);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_login_login__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_register_register__ = __webpack_require__(257);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_setting_setting__ = __webpack_require__(303);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_sample_icons_sample_icons__ = __webpack_require__(501);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_config_config__ = __webpack_require__(253);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_pdf_pdf__ = __webpack_require__(503);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_parameters_parameters__ = __webpack_require__(252);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_customer_customer__ = __webpack_require__(250);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_invoice_invoice__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_report_report__ = __webpack_require__(255);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_tabs_tabs__ = __webpack_require__(249);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular_webstorage_service__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__services_apiStorageService__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__services_apiAuthService__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_apiImageService__ = __webpack_require__(304);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_apiHttpPublicServices__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__interceptors_requestInterceptor__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__interceptors_responseInterceptor__ = __webpack_require__(504);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_login_login__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_login_isdn_login_isdn__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_confirm_key_confirm_key__ = __webpack_require__(501);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_register_register__ = __webpack_require__(297);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_setting_setting__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_sample_icons_sample_icons__ = __webpack_require__(502);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_config_config__ = __webpack_require__(300);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_pdf_pdf__ = __webpack_require__(504);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_parameters_parameters__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_customer_customer__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_invoice_invoice__ = __webpack_require__(303);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_report_report__ = __webpack_require__(304);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_tabs_tabs__ = __webpack_require__(505);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_angular_webstorage_service__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_apiStorageService__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_apiAuthService__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_apiImageService__ = __webpack_require__(299);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_apiHttpPublicServices__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__interceptors_requestInterceptor__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__interceptors_responseInterceptor__ = __webpack_require__(506);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -1635,25 +1667,27 @@ var AppModule = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_15__pages_parameters_parameters__["a" /* ParametersPage */],
-                __WEBPACK_IMPORTED_MODULE_16__pages_customer_customer__["a" /* CustomerPage */],
-                __WEBPACK_IMPORTED_MODULE_17__pages_invoice_invoice__["a" /* InvoicePage */],
-                __WEBPACK_IMPORTED_MODULE_18__pages_report_report__["a" /* ReportPage */],
-                __WEBPACK_IMPORTED_MODULE_19__pages_tabs_tabs__["a" /* TabsPage */],
+                __WEBPACK_IMPORTED_MODULE_10__pages_login_isdn_login_isdn__["a" /* LoginIsdnPage */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_confirm_key_confirm_key__["a" /* ConfirmKeyPage */],
+                __WEBPACK_IMPORTED_MODULE_17__pages_parameters_parameters__["a" /* ParametersPage */],
+                __WEBPACK_IMPORTED_MODULE_18__pages_customer_customer__["a" /* CustomerPage */],
+                __WEBPACK_IMPORTED_MODULE_19__pages_invoice_invoice__["a" /* InvoicePage */],
+                __WEBPACK_IMPORTED_MODULE_20__pages_report_report__["a" /* ReportPage */],
+                __WEBPACK_IMPORTED_MODULE_21__pages_tabs_tabs__["a" /* TabsPage */],
                 __WEBPACK_IMPORTED_MODULE_8__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_10__pages_register_register__["a" /* RegisterPage */],
+                __WEBPACK_IMPORTED_MODULE_12__pages_register_register__["a" /* RegisterPage */],
                 __WEBPACK_IMPORTED_MODULE_9__pages_login_login__["a" /* LoginPage */],
-                __WEBPACK_IMPORTED_MODULE_11__pages_setting_setting__["a" /* SettingPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_sample_icons_sample_icons__["a" /* SampleIconsPage */],
-                __WEBPACK_IMPORTED_MODULE_14__pages_pdf_pdf__["a" /* PdfPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_config_config__["a" /* ConfigPage */]
+                __WEBPACK_IMPORTED_MODULE_13__pages_setting_setting__["a" /* SettingPage */],
+                __WEBPACK_IMPORTED_MODULE_14__pages_sample_icons_sample_icons__["a" /* SampleIconsPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pdf_pdf__["a" /* PdfPage */],
+                __WEBPACK_IMPORTED_MODULE_15__pages_config_config__["a" /* ConfigPage */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["e" /* ReactiveFormsModule */],
                 __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["c" /* HttpClientModule */],
-                __WEBPACK_IMPORTED_MODULE_20_angular_webstorage_service__["b" /* StorageServiceModule */],
+                __WEBPACK_IMPORTED_MODULE_22_angular_webstorage_service__["b" /* StorageServiceModule */],
                 __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["d" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */], {}, {
                     links: []
                 })
@@ -1661,35 +1695,37 @@ var AppModule = /** @class */ (function () {
             bootstrap: [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* IonicApp */]],
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_15__pages_parameters_parameters__["a" /* ParametersPage */],
-                __WEBPACK_IMPORTED_MODULE_16__pages_customer_customer__["a" /* CustomerPage */],
-                __WEBPACK_IMPORTED_MODULE_17__pages_invoice_invoice__["a" /* InvoicePage */],
-                __WEBPACK_IMPORTED_MODULE_18__pages_report_report__["a" /* ReportPage */],
-                __WEBPACK_IMPORTED_MODULE_19__pages_tabs_tabs__["a" /* TabsPage */],
+                __WEBPACK_IMPORTED_MODULE_10__pages_login_isdn_login_isdn__["a" /* LoginIsdnPage */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_confirm_key_confirm_key__["a" /* ConfirmKeyPage */],
+                __WEBPACK_IMPORTED_MODULE_17__pages_parameters_parameters__["a" /* ParametersPage */],
+                __WEBPACK_IMPORTED_MODULE_18__pages_customer_customer__["a" /* CustomerPage */],
+                __WEBPACK_IMPORTED_MODULE_19__pages_invoice_invoice__["a" /* InvoicePage */],
+                __WEBPACK_IMPORTED_MODULE_20__pages_report_report__["a" /* ReportPage */],
+                __WEBPACK_IMPORTED_MODULE_21__pages_tabs_tabs__["a" /* TabsPage */],
                 __WEBPACK_IMPORTED_MODULE_8__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_10__pages_register_register__["a" /* RegisterPage */],
+                __WEBPACK_IMPORTED_MODULE_12__pages_register_register__["a" /* RegisterPage */],
                 __WEBPACK_IMPORTED_MODULE_9__pages_login_login__["a" /* LoginPage */],
-                __WEBPACK_IMPORTED_MODULE_11__pages_setting_setting__["a" /* SettingPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_sample_icons_sample_icons__["a" /* SampleIconsPage */],
-                __WEBPACK_IMPORTED_MODULE_14__pages_pdf_pdf__["a" /* PdfPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_config_config__["a" /* ConfigPage */]
+                __WEBPACK_IMPORTED_MODULE_13__pages_setting_setting__["a" /* SettingPage */],
+                __WEBPACK_IMPORTED_MODULE_14__pages_sample_icons_sample_icons__["a" /* SampleIconsPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pdf_pdf__["a" /* PdfPage */],
+                __WEBPACK_IMPORTED_MODULE_15__pages_config_config__["a" /* ConfigPage */]
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__["a" /* StatusBar */],
                 __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__["a" /* SplashScreen */],
-                __WEBPACK_IMPORTED_MODULE_22__services_apiAuthService__["a" /* ApiAuthService */],
-                __WEBPACK_IMPORTED_MODULE_23__services_apiImageService__["a" /* ApiImageService */],
-                __WEBPACK_IMPORTED_MODULE_21__services_apiStorageService__["a" /* ApiStorageService */],
-                __WEBPACK_IMPORTED_MODULE_24__services_apiHttpPublicServices__["a" /* ApiHttpPublicService */],
-                __WEBPACK_IMPORTED_MODULE_25__interceptors_requestInterceptor__["a" /* RequestInterceptor */],
+                __WEBPACK_IMPORTED_MODULE_24__services_apiAuthService__["a" /* ApiAuthService */],
+                __WEBPACK_IMPORTED_MODULE_25__services_apiImageService__["a" /* ApiImageService */],
+                __WEBPACK_IMPORTED_MODULE_23__services_apiStorageService__["a" /* ApiStorageService */],
+                __WEBPACK_IMPORTED_MODULE_26__services_apiHttpPublicServices__["a" /* ApiHttpPublicService */],
+                __WEBPACK_IMPORTED_MODULE_27__interceptors_requestInterceptor__["a" /* RequestInterceptor */],
                 {
                     provide: __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["a" /* HTTP_INTERCEPTORS */],
-                    useClass: __WEBPACK_IMPORTED_MODULE_25__interceptors_requestInterceptor__["a" /* RequestInterceptor */],
+                    useClass: __WEBPACK_IMPORTED_MODULE_27__interceptors_requestInterceptor__["a" /* RequestInterceptor */],
                     multi: true
                 },
                 {
                     provide: __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["a" /* HTTP_INTERCEPTORS */],
-                    useClass: __WEBPACK_IMPORTED_MODULE_26__interceptors_responseInterceptor__["a" /* ResponseInterceptor */],
+                    useClass: __WEBPACK_IMPORTED_MODULE_28__interceptors_responseInterceptor__["a" /* ResponseInterceptor */],
                     multi: true
                 },
                 {
@@ -1712,10 +1748,10 @@ var AppModule = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(248);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(245);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_login_isdn_login_isdn__ = __webpack_require__(249);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1732,16 +1768,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var MyApp = /** @class */ (function () {
     function MyApp(platform, statusBar, splashScreen) {
-        this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__["a" /* TabsPage */];
+        this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_login_isdn_login_isdn__["a" /* LoginIsdnPage */];
         platform.ready().then(function () {
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
             statusBar.styleDefault();
             splashScreen.hide();
         });
     }
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/app/app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n\n'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\app\app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
@@ -1752,14 +1786,14 @@ var MyApp = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 387:
+/***/ 386:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 389:
+/***/ 388:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -1772,7 +1806,7 @@ var MyApp = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ApiStorageService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular_webstorage_service__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular_webstorage_service__ = __webpack_require__(250);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1911,7 +1945,7 @@ var ApiStorageService = /** @class */ (function () {
     ApiStorageService.apiServer = 'https://qld-invoices.herokuapp.com';
     //public static apiServer = 'http://localhost:9235'; 
     //public static apiServer = 'https://c3.mobifone.vn';
-    ApiStorageService.authenticationServer = ApiStorageService_1.apiServer + '/auth';
+    ApiStorageService.authenticationServer = 'https://c3.mobifone.vn/api/auth';
     ApiStorageService = ApiStorageService_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
         __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1_angular_webstorage_service__["a" /* LOCAL_STORAGE */])),
@@ -1925,14 +1959,14 @@ var ApiStorageService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 424:
+/***/ 423:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 425:
+/***/ 424:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -1943,10 +1977,60 @@ var ApiStorageService = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfirmKeyPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(14);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var ConfirmKeyPage = /** @class */ (function () {
+    function ConfirmKeyPage(formBuilder, navCtrl) {
+        this.formBuilder = formBuilder;
+        this.navCtrl = navCtrl;
+        this.myFormGroup = this.formBuilder.group({
+            code: ['',
+                [
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(4),
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].maxLength(4)
+                ]
+            ],
+        });
+    }
+    ConfirmKeyPage.prototype.onSubmit = function () {
+        console.log(this.myFormGroup.value);
+    };
+    ConfirmKeyPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-confirm-key',template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\confirm-key\confirm-key.html"*/'<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>confirm</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <form [formGroup]="myFormGroup">\n\n    <ion-item>\n\n      <ion-label floating>Enter code</ion-label>\n\n      <ion-input type="text" formControlName="code" (keyup.enter)="onSubmit()"></ion-input>\n\n    </ion-item>\n\n    <p *ngIf="myFormGroup.controls.code.invalid && myFormGroup.controls.code.touched">\n\n      <span class="error">This form is invalid</span>\n\n    </p>\n\n    <ion-buttons start>\n\n      <button ion-button type="button" icon-end round [disabled]="myFormGroup.invalid" (click)="onSubmit()">\n\n        OK\n\n        <ion-icon name="share-alt"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </form>\n\n</ion-content>\n\n'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\confirm-key\confirm-key.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
+    ], ConfirmKeyPage);
+    return ConfirmKeyPage;
+}());
+
+//# sourceMappingURL=confirm-key.js.map
+
+/***/ }),
+
+/***/ 502:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SampleIconsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_icon_icons__ = __webpack_require__(502);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_icon_icons__ = __webpack_require__(503);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_icon_icons___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__assets_icon_icons__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2002,7 +2086,7 @@ var SampleIconsPage = /** @class */ (function () {
     ], SampleIconsPage.prototype, "slides", void 0);
     SampleIconsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-sample-icons',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/sample-icons/sample-icons.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-item>\n\n      <ion-searchbar item-start placeholder="Tìm để lọc biểu tượng" (ionInput)="searchIcons($event)" (ionClear)="resetFilter($event)"></ion-searchbar>\n      <ion-select item-end [(ngModel)]="iconType">\n          <ion-option *ngFor="let type of iconTypeList" value="{{type.value}}">{{type.name}}</ion-option>\n      </ion-select>\n\n    </ion-item>\n\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list *ngIf="iconType==iconTypes.icon">\n    <ion-icon *ngFor="let icon of icons" (click)="selectIcon(icon)" name={{icon}} color="primary"></ion-icon>\n  </ion-list>\n      \n  <ion-list *ngIf="iconType==iconTypes.list">\n    <ion-item *ngFor="let icon of icons" (click)="selectIcon(icon)">\n        <ion-icon name={{icon}} item-start></ion-icon>\n        <ion-label>{{icon}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list *ngIf="iconType==iconTypes.avatar">\n      <ion-grid>\n          <ion-row *ngFor="let icon of icons" (click)="selectIcon(icon)">\n            <ion-col>\n              <ion-avatar item-start>\n                <ion-icon name={{icon}} item-start></ion-icon>\n              </ion-avatar>\n              <h1>{{icon}}</h1>\n              <h2>Finn</h2>\n              <h3>Don\'t Know What To Do!</h3>\n              <p>I\'ve had a pretty messed up day. If we just...</p>\n            </ion-col>\n          </ion-row>  \n      </ion-grid>\n  </ion-list>\n\n  <ion-list *ngIf="iconType==iconTypes.button">\n    <button ion-button type="button" round *ngFor="let icon of icons" (click)="selectIcon(icon)" color="primary">\n      <ion-icon name={{icon}}></ion-icon>\n    </button>\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/sample-icons/sample-icons.html"*/
+            selector: 'page-sample-icons',template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\sample-icons\sample-icons.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-item>\n\n\n\n      <ion-searchbar item-start placeholder="Tìm để lọc biểu tượng" (ionInput)="searchIcons($event)" (ionClear)="resetFilter($event)"></ion-searchbar>\n\n      <ion-select item-end [(ngModel)]="iconType">\n\n          <ion-option *ngFor="let type of iconTypeList" value="{{type.value}}">{{type.name}}</ion-option>\n\n      </ion-select>\n\n\n\n    </ion-item>\n\n\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-list *ngIf="iconType==iconTypes.icon">\n\n    <ion-icon *ngFor="let icon of icons" (click)="selectIcon(icon)" name={{icon}} color="primary"></ion-icon>\n\n  </ion-list>\n\n      \n\n  <ion-list *ngIf="iconType==iconTypes.list">\n\n    <ion-item *ngFor="let icon of icons" (click)="selectIcon(icon)">\n\n        <ion-icon name={{icon}} item-start></ion-icon>\n\n        <ion-label>{{icon}}</ion-label>\n\n    </ion-item>\n\n  </ion-list>\n\n\n\n  <ion-list *ngIf="iconType==iconTypes.avatar">\n\n      <ion-grid>\n\n          <ion-row *ngFor="let icon of icons" (click)="selectIcon(icon)">\n\n            <ion-col>\n\n              <ion-avatar item-start>\n\n                <ion-icon name={{icon}} item-start></ion-icon>\n\n              </ion-avatar>\n\n              <h1>{{icon}}</h1>\n\n              <h2>Finn</h2>\n\n              <h3>Don\'t Know What To Do!</h3>\n\n              <p>I\'ve had a pretty messed up day. If we just...</p>\n\n            </ion-col>\n\n          </ion-row>  \n\n      </ion-grid>\n\n  </ion-list>\n\n\n\n  <ion-list *ngIf="iconType==iconTypes.button">\n\n    <button ion-button type="button" round *ngFor="let icon of icons" (click)="selectIcon(icon)" color="primary">\n\n      <ion-icon name={{icon}}></ion-icon>\n\n    </button>\n\n  </ion-list>\n\n\n\n</ion-content>'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\sample-icons\sample-icons.html"*/
         }),
         __metadata("design:paramtypes", [])
     ], SampleIconsPage);
@@ -2013,7 +2097,7 @@ var SampleIconsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 502:
+/***/ 503:
 /***/ (function(module, exports) {
 
 module.exports =
@@ -2369,13 +2453,13 @@ module.exports =
 
 /***/ }),
 
-/***/ 503:
+/***/ 504:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PdfPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2399,7 +2483,7 @@ var PdfPage = /** @class */ (function () {
     };
     PdfPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-pdf',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/pdf/pdf.html"*/'\n<ion-header>\n\n    <ion-toolbar>\n      <ion-title>Select Item: Multiple Value</ion-title>\n    </ion-toolbar>\n  \n  </ion-header>\n  \n  \n  <ion-content class="outer-content">\n  \n    <ion-item>\n      <ion-label>Toppings</ion-label>\n      <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!" class="e2eSelectToppings">\n        <ion-option value="bacon">Bacon</ion-option>\n        <ion-option value="olives">Black Olives</ion-option>\n        <ion-option value="xcheese">Extra Cheese</ion-option>\n        <ion-option value="peppers">Green Peppers</ion-option>\n        <ion-option value="mushrooms">Mushrooms</ion-option>\n        <ion-option value="onions">Onions</ion-option>\n        <ion-option value="pepperoni">Pepperoni</ion-option>\n        <ion-option value="pineapple" (ionSelect)="toppingsSelect($event)">Pineapple</ion-option>\n        <ion-option value="sausage">Sausage</ion-option>\n        <ion-option value="Spinach">Spinach</ion-option>\n      </ion-select>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Car Features</ion-label>\n      <ion-select [(ngModel)]="carFeatures" [multiple]="true" (ionChange)="carChange($event)">\n        <ion-option value="backupcamera">Backup Camera</ion-option>\n        <ion-option value="heatedseats">Headted Seats</ion-option>\n        <ion-option value="keyless">Keyless Entry</ion-option>\n        <ion-option value="navigation">Navigation</ion-option>\n        <ion-option value="parkingassist">Parking Assist</ion-option>\n        <ion-option value="sunroof">Sun Roof</ion-option>\n      </ion-select>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Pets</ion-label>\n      <ion-select [(ngModel)]="pets" multiple>\n        <ion-option *ngFor="let o of petOptions" [value]="o.value">{{o.text}}</ion-option>\n      </ion-select>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Disabled</ion-label>\n      <ion-select multiple disabled>\n        <ion-option selected="true">Selected Text</ion-option>\n      </ion-select>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Statuses</ion-label>\n      <ion-select multiple [(ngModel)]="status">\n        <ion-option value="selected" selected="true">Selected</ion-option>\n        <ion-option value="default">Default</ion-option>\n        <ion-option value="disabled" disabled="true">Disabled</ion-option>\n      </ion-select>\n    </ion-item>\n  \n    <p aria-hidden="true" padding>\n      <code>toppings: {{toppings}}</code><br>\n      <code>carFeatures: {{carFeatures}}</code><br>\n      <code>pets: {{pets}}</code><br>\n    </p>\n  \n    <form [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)">\n      <ion-list padding-vertical>\n        <ion-item>\n          <ion-input formControlName="name" type="text"></ion-input>\n        </ion-item>\n        <ion-item class="no-border">\n          <ion-label>Select</ion-label>\n          <ion-select multiple="true" formControlName="select">\n            <ion-option>1</ion-option>\n            <ion-option>2</ion-option>\n            <ion-option>3</ion-option>\n          </ion-select>\n        </ion-item>\n        <button ion-button full block class="no-margin" type="submit">Submit</button>\n      </ion-list>\n    </form>\n  \n    <ion-item>\n      <ion-label floating>Floating label</ion-label>\n      <ion-select multiple="true">\n        <ion-option value="bacon">Bacon</ion-option>\n        <ion-option value="olives">Black Olives</ion-option>\n        <ion-option value="xcheese">Extra Cheese</ion-option>\n        <ion-option value="peppers">Green Peppers</ion-option>\n        <ion-option value="mushrooms">Mushrooms</ion-option>\n        <ion-option value="onions">Onions</ion-option>\n        <ion-option value="pepperoni">Pepperoni</ion-option>\n        <ion-option value="pineapple">Pineapple</ion-option>\n        <ion-option value="sausage">Sausage</ion-option>\n        <ion-option value="Spinach">Spinach</ion-option>\n      </ion-select>\n    </ion-item>\n  \n  </ion-content>'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/pdf/pdf.html"*/
+            selector: 'page-pdf',template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\pdf\pdf.html"*/'\n\n<ion-header>\n\n\n\n    <ion-toolbar>\n\n      <ion-title>Select Item: Multiple Value</ion-title>\n\n    </ion-toolbar>\n\n  \n\n  </ion-header>\n\n  \n\n  \n\n  <ion-content class="outer-content">\n\n  \n\n    <ion-item>\n\n      <ion-label>Toppings</ion-label>\n\n      <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!" class="e2eSelectToppings">\n\n        <ion-option value="bacon">Bacon</ion-option>\n\n        <ion-option value="olives">Black Olives</ion-option>\n\n        <ion-option value="xcheese">Extra Cheese</ion-option>\n\n        <ion-option value="peppers">Green Peppers</ion-option>\n\n        <ion-option value="mushrooms">Mushrooms</ion-option>\n\n        <ion-option value="onions">Onions</ion-option>\n\n        <ion-option value="pepperoni">Pepperoni</ion-option>\n\n        <ion-option value="pineapple" (ionSelect)="toppingsSelect($event)">Pineapple</ion-option>\n\n        <ion-option value="sausage">Sausage</ion-option>\n\n        <ion-option value="Spinach">Spinach</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n  \n\n    <ion-item>\n\n      <ion-label>Car Features</ion-label>\n\n      <ion-select [(ngModel)]="carFeatures" [multiple]="true" (ionChange)="carChange($event)">\n\n        <ion-option value="backupcamera">Backup Camera</ion-option>\n\n        <ion-option value="heatedseats">Headted Seats</ion-option>\n\n        <ion-option value="keyless">Keyless Entry</ion-option>\n\n        <ion-option value="navigation">Navigation</ion-option>\n\n        <ion-option value="parkingassist">Parking Assist</ion-option>\n\n        <ion-option value="sunroof">Sun Roof</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n  \n\n    <ion-item>\n\n      <ion-label>Pets</ion-label>\n\n      <ion-select [(ngModel)]="pets" multiple>\n\n        <ion-option *ngFor="let o of petOptions" [value]="o.value">{{o.text}}</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n  \n\n    <ion-item>\n\n      <ion-label>Disabled</ion-label>\n\n      <ion-select multiple disabled>\n\n        <ion-option selected="true">Selected Text</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n  \n\n    <ion-item>\n\n      <ion-label>Statuses</ion-label>\n\n      <ion-select multiple [(ngModel)]="status">\n\n        <ion-option value="selected" selected="true">Selected</ion-option>\n\n        <ion-option value="default">Default</ion-option>\n\n        <ion-option value="disabled" disabled="true">Disabled</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n  \n\n    <p aria-hidden="true" padding>\n\n      <code>toppings: {{toppings}}</code><br>\n\n      <code>carFeatures: {{carFeatures}}</code><br>\n\n      <code>pets: {{pets}}</code><br>\n\n    </p>\n\n  \n\n    <form [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)">\n\n      <ion-list padding-vertical>\n\n        <ion-item>\n\n          <ion-input formControlName="name" type="text"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="no-border">\n\n          <ion-label>Select</ion-label>\n\n          <ion-select multiple="true" formControlName="select">\n\n            <ion-option>1</ion-option>\n\n            <ion-option>2</ion-option>\n\n            <ion-option>3</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <button ion-button full block class="no-margin" type="submit">Submit</button>\n\n      </ion-list>\n\n    </form>\n\n  \n\n    <ion-item>\n\n      <ion-label floating>Floating label</ion-label>\n\n      <ion-select multiple="true">\n\n        <ion-option value="bacon">Bacon</ion-option>\n\n        <ion-option value="olives">Black Olives</ion-option>\n\n        <ion-option value="xcheese">Extra Cheese</ion-option>\n\n        <ion-option value="peppers">Green Peppers</ion-option>\n\n        <ion-option value="mushrooms">Mushrooms</ion-option>\n\n        <ion-option value="onions">Onions</ion-option>\n\n        <ion-option value="pepperoni">Pepperoni</ion-option>\n\n        <ion-option value="pineapple">Pineapple</ion-option>\n\n        <ion-option value="sausage">Sausage</ion-option>\n\n        <ion-option value="Spinach">Spinach</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n  \n\n  </ion-content>'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\pdf\pdf.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]])
@@ -2411,13 +2495,53 @@ var PdfPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 504:
+/***/ 505:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__customer_customer__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__invoice_invoice__ = __webpack_require__(303);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__report_report__ = __webpack_require__(304);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var TabsPage = /** @class */ (function () {
+    function TabsPage() {
+        this.tab1Root = __WEBPACK_IMPORTED_MODULE_1__customer_customer__["a" /* CustomerPage */];
+        this.tab2Root = __WEBPACK_IMPORTED_MODULE_2__invoice_invoice__["a" /* InvoicePage */];
+        this.tab3Root = __WEBPACK_IMPORTED_MODULE_3__report_report__["a" /* ReportPage */];
+    }
+    TabsPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"D:\IONIC\excel-pdf-hoadon\src\pages\tabs\tabs.html"*/'<ion-tabs>\n\n  <ion-tab [root]="tab1Root" tabTitle="Khách hàng" tabIcon="contacts"></ion-tab>\n\n  <ion-tab [root]="tab2Root" tabTitle="Hóa đơn" tabIcon="list-box"></ion-tab>\n\n  <ion-tab [root]="tab3Root" tabTitle="Báo cáo" tabIcon="document"></ion-tab>\n\n</ion-tabs>\n\n'/*ion-inline-end:"D:\IONIC\excel-pdf-hoadon\src\pages\tabs\tabs.html"*/
+        }),
+        __metadata("design:paramtypes", [])
+    ], TabsPage);
+    return TabsPage;
+}());
+
+//# sourceMappingURL=tabs.js.map
+
+/***/ }),
+
+/***/ 506:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ResponseInterceptor; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_operator_do__ = __webpack_require__(505);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_operator_do__ = __webpack_require__(507);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_operator_do___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_add_operator_do__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http___ = __webpack_require__(59);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2459,95 +2583,7 @@ var ResponseInterceptor = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 77:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ApiHttpPublicService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__apiStorageService__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interceptors_requestInterceptor__ = __webpack_require__(136);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var ApiHttpPublicService = /** @class */ (function () {
-    function ApiHttpPublicService(httpClient, reqInterceptor) {
-        this.httpClient = httpClient;
-        this.reqInterceptor = reqInterceptor;
-        this.resourceServer = __WEBPACK_IMPORTED_MODULE_2__apiStorageService__["a" /* ApiStorageService */].apiServer;
-    }
-    /**
-     * Lay danh sach cac quoc gia ve Ma so dien thoai, co, ten, ngon ngu, tien...
-     */
-    ApiHttpPublicService.prototype.getAllCoutries = function () {
-        return this.httpClient.get('https://restcountries.eu/rest/v2/all')
-            .toPromise()
-            .then(function (countries) {
-            return countries;
-        })
-            .catch(function (err) {
-            throw err;
-        });
-    };
-    /**
-     * Lay danh sach user demo phuc vu so lieu demo
-     */
-    ApiHttpPublicService.prototype.getRandomUser = function () {
-    };
-    ApiHttpPublicService.prototype.getAllCutomers = function () {
-        return this.httpClient.get(this.resourceServer + '/db/json-customers')
-            .toPromise()
-            .then(function (results) {
-            if (results) {
-                return results;
-            }
-            else {
-                throw 'No customer!';
-            }
-        })
-            .catch(function (err) {
-            throw err;
-        });
-    };
-    ApiHttpPublicService.prototype.getParamters = function () {
-        return this.httpClient.get(this.resourceServer + '/db/json-parameters')
-            .toPromise()
-            .then(function (results) {
-            if (results) {
-                return results;
-            }
-            else {
-                throw 'No paramter!';
-            }
-        })
-            .catch(function (err) {
-            throw err;
-        });
-    };
-    ApiHttpPublicService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["b" /* HttpClient */],
-            __WEBPACK_IMPORTED_MODULE_3__interceptors_requestInterceptor__["a" /* RequestInterceptor */]])
-    ], ApiHttpPublicService);
-    return ApiHttpPublicService;
-}());
-
-//# sourceMappingURL=apiHttpPublicServices.js.map
-
-/***/ }),
-
-/***/ 78:
+/***/ 60:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2556,11 +2592,11 @@ var ApiHttpPublicService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__apiStorageService__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interceptors_requestInterceptor__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(382);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(381);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_node_rsa__ = __webpack_require__(383);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_node_rsa__ = __webpack_require__(382);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_node_rsa___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_node_rsa__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jsonwebtoken__ = __webpack_require__(485);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jsonwebtoken__ = __webpack_require__(484);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jsonwebtoken___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_jsonwebtoken__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2784,6 +2820,39 @@ var ApiAuthService = /** @class */ (function () {
             return false;
         });
     };
+    //send sms
+    ApiAuthService.prototype.sendSMS = function (isdn, sms) {
+        return this.httpClient.post(this.authenticationServer + '/send-sms', JSON.stringify({
+            isdn: isdn,
+            sms: sms
+        }))
+            .toPromise()
+            .then(function (data) {
+            return data;
+        });
+    };
+    ApiAuthService.prototype.requestIsdn = function (isdn) {
+        //chuyen len bang form co ma hoa
+        return this.httpClient.post(this.authenticationServer + '/login-isdn', JSON.stringify({
+            isdn: isdn
+        }))
+            .toPromise()
+            .then(function (data) {
+            console.log(data);
+            return data;
+        });
+    };
+    ApiAuthService.prototype.confirmKey = function (key) {
+        //chuyen di bang form co ma hoa
+        return this.httpClient.post(this.authenticationServer + '/confirm-key', JSON.stringify({
+            key: key
+        }))
+            .toPromise()
+            .then(function (data) {
+            console.log(data);
+            return data;
+        });
+    };
     ApiAuthService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["b" /* HttpClient */],
@@ -2794,6 +2863,94 @@ var ApiAuthService = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=apiAuthService.js.map
+
+/***/ }),
+
+/***/ 85:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ApiHttpPublicService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__apiStorageService__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interceptors_requestInterceptor__ = __webpack_require__(136);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var ApiHttpPublicService = /** @class */ (function () {
+    function ApiHttpPublicService(httpClient, reqInterceptor) {
+        this.httpClient = httpClient;
+        this.reqInterceptor = reqInterceptor;
+        this.resourceServer = __WEBPACK_IMPORTED_MODULE_2__apiStorageService__["a" /* ApiStorageService */].apiServer;
+    }
+    /**
+     * Lay danh sach cac quoc gia ve Ma so dien thoai, co, ten, ngon ngu, tien...
+     */
+    ApiHttpPublicService.prototype.getAllCoutries = function () {
+        return this.httpClient.get('https://restcountries.eu/rest/v2/all')
+            .toPromise()
+            .then(function (countries) {
+            return countries;
+        })
+            .catch(function (err) {
+            throw err;
+        });
+    };
+    /**
+     * Lay danh sach user demo phuc vu so lieu demo
+     */
+    ApiHttpPublicService.prototype.getRandomUser = function () {
+    };
+    ApiHttpPublicService.prototype.getAllCutomers = function () {
+        return this.httpClient.get(this.resourceServer + '/db/json-customers')
+            .toPromise()
+            .then(function (results) {
+            if (results) {
+                return results;
+            }
+            else {
+                throw 'No customer!';
+            }
+        })
+            .catch(function (err) {
+            throw err;
+        });
+    };
+    ApiHttpPublicService.prototype.getParamters = function () {
+        return this.httpClient.get(this.resourceServer + '/db/json-parameters')
+            .toPromise()
+            .then(function (results) {
+            if (results) {
+                return results;
+            }
+            else {
+                throw 'No paramter!';
+            }
+        })
+            .catch(function (err) {
+            throw err;
+        });
+    };
+    ApiHttpPublicService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["b" /* HttpClient */],
+            __WEBPACK_IMPORTED_MODULE_3__interceptors_requestInterceptor__["a" /* RequestInterceptor */]])
+    ], ApiHttpPublicService);
+    return ApiHttpPublicService;
+}());
+
+//# sourceMappingURL=apiHttpPublicServices.js.map
 
 /***/ })
 

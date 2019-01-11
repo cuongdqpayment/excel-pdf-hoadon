@@ -36,7 +36,7 @@ export class CustomerPage {
 
   ngOnInit(){
 
-    //this.getCustomers(); //cai nay lay tu load trang dau luon
+    this.getCustomers(); //cai nay lay tu load trang dau luon
     
     //khong cho quet bang tay
     this.slides.lockSwipes(true);

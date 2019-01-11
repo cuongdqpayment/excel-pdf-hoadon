@@ -229,4 +229,41 @@ export class ApiAuthService {
             });
     }
 
+
+    //send sms
+    sendSMS(isdn,sms){
+       return this.httpClient.post(this.authenticationServer + '/send-sms', JSON.stringify({
+            isdn:isdn,
+            sms:sms
+            }))
+            .toPromise()
+            .then(data => {
+                return data;
+            });
+    }
+
+    requestIsdn(isdn){
+        //chuyen len bang form co ma hoa
+        return this.httpClient.post(this.authenticationServer + '/login-isdn', JSON.stringify({
+             isdn:isdn
+             }))
+             .toPromise()
+             .then(data => {
+                 console.log(data);
+                 return data;
+             });
+     }
+
+     confirmKey(key){
+         //chuyen di bang form co ma hoa
+        return this.httpClient.post(this.authenticationServer + '/confirm-key', JSON.stringify({
+             key:key
+             }))
+             .toPromise()
+             .then(data => {
+                 console.log(data);
+                 return data;
+             });
+     }
+
 }
