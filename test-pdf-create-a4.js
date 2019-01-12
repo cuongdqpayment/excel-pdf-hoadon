@@ -1,7 +1,7 @@
 var PDFDocument = require('pdfkit');
 var fs = require('fs');
 var doc = new PDFDocument;
-doc.pipe(fs.createWriteStream('./pdf/hoadon.pdf'));
+doc.pipe(fs.createWriteStream('./pdf/hoadon-a4.pdf'));
 doc.info['Title'] = 'Hoa don';
 doc.info['Author'] = 'Cuong.dq';
 doc.registerFont('Palatino', 'fonts/PalatinoBold.ttf');
