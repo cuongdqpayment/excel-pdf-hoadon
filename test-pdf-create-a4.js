@@ -1,34 +1,49 @@
-var PDFDocument = require('pdfkit');
-var fs = require('fs');
-var doc = new PDFDocument;
-doc.pipe(fs.createWriteStream('./pdf/hoadon-a4.pdf'));
-doc.info['Title'] = 'Hoa don';
-doc.info['Author'] = 'Cuong.dq';
-doc.registerFont('Palatino', 'fonts/PalatinoBold.ttf');
 
-/*   doc.save()
-   .moveTo(100, 150)
-   .lineTo(100, 250)
-   .lineTo(200, 250)
-   .fill("#FF3300")
- */
 
-   var lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in suscipit purus.  Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus nec hendrerit felis. Morbi aliquam facilisis risus eu lacinia. Sed eu leo in turpis fringilla hendrerit. Ut nec accumsan nisl.'
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
 
-   doc.fontSize(8);
-   
-   doc.text('This text is left aligned. ' + lorem,
-     {width: 410,
-     align: 'left'}
-     )
-   
-   doc.moveDown()
-   doc.text ('This text is centered. ' + lorem,{
-     width: 410,
-     align: 'center'})
-   
+var outputFilename = './pdf/pdf-sample-a4.pdf';
 
-     
-doc.end();
+//tao grid de canh mau
+const maxRow = 36;
+const maxCol = 10;
+const zipperRow=20; 
+const zipperCol=60;
 
+var matrix = [];
+
+//khoi tao rows, cols and matrix
+for (let row=0;row<maxRow;row++){
+  for (let col=0;col<maxCol;col++){
+    matrix.push({
+      x: col * zipperCol , //giãn cột
+      y: row * zipperRow , //giãn dòng
+      value:'(' + (row) + ',' + (col) + ')'
+      //value:'(' + row + '.' + (row * zipperRow) + ',' + (col * zipperCol) + ')'
+    })
+  }
+}
+
+//bat dau tao pdf
+    var doc = new PDFDocument();
+    
+    var stream = doc.pipe(fs.createWriteStream(outputFilename));
+
+    doc.info['Title'] = 'Mẫu in hóa đơn A4 1 trang';
+    doc.info['Author'] = 'Đoàn Quốc Cường';
+    
+    doc.registerFont('Time-new-roman-utf8', './fonts/times.ttf');
+    doc.font('Time-new-roman-utf8');
+
+    doc.fontSize(12);
+    
+    matrix.forEach((el,idx) => {
+        //doc.moveDown(el.line); //xuong dong de ghi
+        doc.text(el.value,el.x,el.y);
+    });
+    
+    doc.end();
+
+   // console.log(stream);
 
