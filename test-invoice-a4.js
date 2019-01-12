@@ -70,7 +70,7 @@ var isEquikeylent= (a, b) =>{
 // console.log('compare Key', isEquikeylent(point1,point2),  isEquikeylent(point1,point3));
 
  var billPrintMatrix = {
-    bill_date: [{col:285,row:65},{col:340,row:65},{col:390,row:65}],
+    bill_date: [{col:285,row:65},{col:340,row:65},{col:375,row:65}],
     bill_id:{col:480,row:55},
     full_name:{col:160,row:90},
     organization_name:{col:120,row:105},
@@ -80,10 +80,10 @@ var isEquikeylent= (a, b) =>{
     account_number:{col:310,row:148},
     bill_details:[
         {
-        don_vi_tinh: {col:280,row:190},
-        so_luong: {col:350,row:190},
-        don_gia: {col:400,row:190},
-        thanh_tien: {col:480,row:190}
+        don_vi_tinh: {col:280,row:185},
+        so_luong: {col:350,row:185},
+        don_gia: {col:400,row:185},
+        thanh_tien: {col:480,row:185}
         }
     ],
     bill_total:{
@@ -91,7 +91,7 @@ var isEquikeylent= (a, b) =>{
         total_vat:{col:480,row:238},
         total_paid: {col:480,row:255}
     },
-    bill_spell: {col:130,row:278},
+    bill_spell: {col:155,row:273},
     sign_customer:{
         signature:{col:120,row:330},
         full_name:{col:110,row:375}
@@ -109,7 +109,7 @@ var isEquikeylent= (a, b) =>{
 const colxrow = {col:0,row:0}; //co the thay doi mat na toa do diem nay them thuoc tinh
 
 var GetMatrix = (maskMatrix, data, point)=>{
-    var arrayPrintMatrix = [];
+    var matrix = [];
 
     var PrintMatrix = (objPrintMatrix, dataObject)=>{
         for (let key of Object.keys(objPrintMatrix)){
@@ -120,7 +120,7 @@ var GetMatrix = (maskMatrix, data, point)=>{
                         //day la toa do
                         console.log('point X', key, idx , x , dataObject[key][idx]);
                         x.value = dataObject[key][idx];
-                        if (x.value!==undefined&&x.value!==null&&x.value!=='') arrayPrintMatrix.push(x);
+                        if (x.value!==undefined&&x.value!==null&&x.value!=='') matrix.push(x);
                     }else{
                         //day la doi tuong hoac mang con
                         if (Array.isArray(x)){
@@ -140,7 +140,7 @@ var GetMatrix = (maskMatrix, data, point)=>{
                     let x = objPrintMatrix[key];
                     console.log('point X', key , 0 , x , dataObject[key])
                     x.value = dataObject[key];
-                    if (x.value!==undefined&&x.value!==null&&x.value!=='') arrayPrintMatrix.push(x);
+                    if (x.value!==undefined&&x.value!==null&&x.value!=='') matrix.push(x);
                 }else{
                     //day la doi tuong con xu ly de quy
                     //console.log('data next', dataObject[key])
@@ -153,11 +153,11 @@ var GetMatrix = (maskMatrix, data, point)=>{
 
     PrintMatrix(maskMatrix, data);
 
-    return arrayPrintMatrix;
+    return matrix;
 }
 
-console.log(GetMatrix(billPrintMatrix,billPrint,colxrow));
-
+let arrayPrintMatrix = GetMatrix(billPrintMatrix,billPrint,colxrow);
+console.log(arrayPrintMatrix);
 
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
@@ -166,7 +166,7 @@ var outputFilename = './pdf/hoadon-rac-a4.pdf';
 
 
 //hoa don lien 2 giao cho khach
-const offset = 420;
+const offset = 422;
 
 //bat dau tao pdf
 var doc = new PDFDocument({
