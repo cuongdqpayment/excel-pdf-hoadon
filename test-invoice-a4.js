@@ -37,7 +37,6 @@ var billPrint = {
     }
 }
 
-var colxrow = {col:0,row:0};
 
 /**
  * so sanh 2 doi tuong co cung thuoc tinh ma gia tri giong nhau hay khong
@@ -107,50 +106,57 @@ var isEquikeylent= (a, b) =>{
     }
 }
 
+const colxrow = {col:0,row:0}; //co the thay doi mat na toa do diem nay them thuoc tinh
 
-var arrayPrintMatrix = [];
-var viewPrintMatrix = (objPrintMatrix, dataObject)=>{
-    for (let key of Object.keys(objPrintMatrix)){
-        //console.log(typeof billPrintMatrix[key]);
-        if (Array.isArray(objPrintMatrix[key])){
-            objPrintMatrix[key].forEach((x,idx)=>{
-                if (isEquikeylent(colxrow,x)){
-                    //day la toa do
-                    console.log('point X', key, idx , x , dataObject[key][idx]);
-                    x.value = dataObject[key][idx];
-                    arrayPrintMatrix.push(x);
-                }else{
-                    //day la doi tuong hoac mang con
-                    if (Array.isArray(x)){
-                        //chua xu ly
-                        console.log('ARRAY KHONG XU LY: ', key , idx , x);
+var GetMatrix = (maskMatrix, data, point)=>{
+    var arrayPrintMatrix = [];
+
+    var PrintMatrix = (objPrintMatrix, dataObject)=>{
+        for (let key of Object.keys(objPrintMatrix)){
+            //console.log(typeof billPrintMatrix[key]);
+            if (Array.isArray(objPrintMatrix[key])){
+                objPrintMatrix[key].forEach((x,idx)=>{
+                    if (isEquikeylent(point,x)){
+                        //day la toa do
+                        console.log('point X', key, idx , x , dataObject[key][idx]);
+                        x.value = dataObject[key][idx];
+                        if (x.value!==undefined&&x.value!==null&&x.value!=='') arrayPrintMatrix.push(x);
                     }else{
-                        //la doi tuong thi xu ly de quy
-                        //console.log('data array', x,  dataObject[key][idx])
-                        if (dataObject[key]&&dataObject[key][idx]) viewPrintMatrix( x, dataObject[key][idx]);
+                        //day la doi tuong hoac mang con
+                        if (Array.isArray(x)){
+                            //chua xu ly
+                            console.log('ARRAY KHONG XU LY: ', key , idx , x);
+                        }else{
+                            //la doi tuong thi xu ly de quy
+                            //console.log('data array', x,  dataObject[key][idx])
+                            if (dataObject[key]&&dataObject[key][idx]) PrintMatrix( x, dataObject[key][idx]);
+                        }
                     }
-                }
-            })
-            //console.log(key,'array');
-        }else{
-            if (isEquikeylent(colxrow,objPrintMatrix[key])){
-                //day la toa do
-                let x = objPrintMatrix[key];
-                console.log('point X', key , 0 , x , dataObject[key])
-                x.value = dataObject[key];
-                arrayPrintMatrix.push(x);
+                })
+                //console.log(key,'array');
             }else{
-                //day la doi tuong con xu ly de quy
-                //console.log('data next', dataObject[key])
-                if (dataObject[key]) viewPrintMatrix(objPrintMatrix[key],dataObject[key]);
+                if (isEquikeylent(point,objPrintMatrix[key])){
+                    //day la toa do
+                    let x = objPrintMatrix[key];
+                    console.log('point X', key , 0 , x , dataObject[key])
+                    x.value = dataObject[key];
+                    if (x.value!==undefined&&x.value!==null&&x.value!=='') arrayPrintMatrix.push(x);
+                }else{
+                    //day la doi tuong con xu ly de quy
+                    //console.log('data next', dataObject[key])
+                    if (dataObject[key]) PrintMatrix(objPrintMatrix[key],dataObject[key]);
+                }
             }
         }
+    
     }
 
+    PrintMatrix(maskMatrix, data);
+
+    return arrayPrintMatrix;
 }
 
-viewPrintMatrix(billPrintMatrix,billPrint);
-console.log(arrayPrintMatrix);
+console.log(GetMatrix(billPrintMatrix,billPrint,colxrow));
 
 
 const PDFDocument = require('pdfkit');

@@ -223,7 +223,54 @@ var isEquikeylent= (a, b) =>{
     return true;
 }
 
+//Mau du lieu ma tran cot va dong 
+
+const point = { col:0,
+                row:0,
+                width:0, //do rong
+                height:0, //do cao
+                align:0   //dieu chinh
+            }; //mau toa do, tham so, canh chinh...
+
+var GetMatrix = (mask, data, point)=>{
+    var arrayPrintMatrix = [];
+
+    var PrintMatrix = (objPrintMatrix, dataObject)=>{
+        for (let key of Object.keys(objPrintMatrix)){
+            if (Array.isArray(objPrintMatrix[key])){
+                objPrintMatrix[key].forEach((x,idx)=>{
+                    if (isEquikeylent(point,x)){
+                        x.value = dataObject[key][idx];
+                        if (x.value!==undefined&&x.value!==null&&x.value!=='') arrayPrintMatrix.push(x);
+                    }else{
+                        if (Array.isArray(x)){
+                            //chua xu ly
+                            console.log('ARRAY KHONG XU LY: ', key , idx , x);
+                        }else{
+                            if (dataObject[key]&&dataObject[key][idx]) PrintMatrix( x, dataObject[key][idx]);
+                        }
+                    }
+                })
+            }else{
+                if (isEquikeylent(point,objPrintMatrix[key])){
+                    let x = objPrintMatrix[key];
+                    x.value = dataObject[key];
+                    if (x.value!==undefined&&x.value!==null&&x.value!=='') arrayPrintMatrix.push(x);
+                }else{
+                    if (dataObject[key]) PrintMatrix(objPrintMatrix[key],dataObject[key]);
+                }
+            }
+        }
+    
+    }
+
+    PrintMatrix(mask, data);
+
+    return arrayPrintMatrix;
+}
+
 module.exports = {
+    GetMatrix : GetMatrix, //tao mat na in 
     CompareObjectValues:isEquivalent,
     CompareObjectKeys:isEquikeylent,
     CreateTree: CreateTree,
