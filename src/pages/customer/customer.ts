@@ -3,6 +3,9 @@ import { NavController, LoadingController, Slides } from 'ionic-angular';
 
 import { FormGroup, FormBuilder } from '@angular/forms';
 
+import { ApiAuthService } from '../../services/apiAuthService';
+import { ApiStorageService } from '../../services/apiStorageService';
+
 import { ApiHttpPublicService } from '../../services/apiHttpPublicServices'
 import { ParametersPage } from '../parameters/parameters';
 import { ConfigPage } from '../config/config';
@@ -16,6 +19,8 @@ export class CustomerPage {
   @ViewChild(Slides) slides: Slides;
   slideIndex = 0;
 
+  userInfo:any;
+
   customers:any = [];
   customersOrigin:any = [];
   isSearch: boolean = false;
@@ -28,6 +33,8 @@ export class CustomerPage {
   constructor(
               private navCtrl: NavController,
               private formBuilder: FormBuilder,
+              private auth : ApiAuthService,
+              private apiStorageService: ApiStorageService,
               private http: ApiHttpPublicService,
               private loadingCtrl: LoadingController
               ) {
@@ -35,11 +42,15 @@ export class CustomerPage {
   }
 
   ngOnInit(){
+    //khong cho quet bang tay
+    this.slides.lockSwipes(true);
+
+    this.userInfo = this.auth.getUserInfo();
+    console.log('Login page ready authorize', this.userInfo);
 
     this.getCustomers(); //cai nay lay tu load trang dau luon
     
-    //khong cho quet bang tay
-    this.slides.lockSwipes(true);
+
     this.myFromGroup = this.formBuilder.group({
       full_name: '',
       address: '',
@@ -81,7 +92,7 @@ export class CustomerPage {
     this.customers = this.customersOrigin.filter(x=>(
       x.full_name.toLowerCase().indexOf(this.searchString.toLowerCase())>=0
       ||
-      x.cus_id.toLowerCase().indexOf(this.searchString.toLowerCase())>=0
+      x.cust_id.toLowerCase().indexOf(this.searchString.toLowerCase())>=0
       ||
       x.area.toLowerCase().indexOf(this.searchString.toLowerCase())>=0
       ||
@@ -149,8 +160,14 @@ export class CustomerPage {
     this.navCtrl.push(ParametersPage)
   }
 
+  userAction(){
+    //popup menu logout
+  }
+
   newCustomter(){
     this.navCtrl.push(ConfigPage)
   }
+
+
 
 }

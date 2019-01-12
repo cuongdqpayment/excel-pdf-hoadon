@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, AlertController, Slides } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ApiAuthService } from '../../services/apiAuthService';
+import { ApiStorageService } from '../../services/apiStorageService';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-login-isdn',
@@ -14,11 +16,19 @@ export class LoginIsdnPage {
 
   isdnFormGroup: FormGroup;
   keyFormGroup: FormGroup;
+  
 
   constructor( private formBuilder: FormBuilder,
                private auth : ApiAuthService,
                private alertCtrl: AlertController,
-               private navCtrl: NavController) {
+               private apiStorageService: ApiStorageService,
+               private navCtrl: NavController) {}
+
+
+  ngOnInit(){
+
+    this.slides.lockSwipes(true);
+
     this.isdnFormGroup = this.formBuilder.group({
       isdn: ['',
         [
@@ -38,8 +48,34 @@ export class LoginIsdnPage {
         ]
       ],
     })
-  }
 
+
+    if (this.apiStorageService.getToken()){
+      this.auth.authorize(this.apiStorageService.getToken())
+      .then(status=>{
+        //get public key de truyen ma hoa mat khau
+        //chi khi nao token duoc xac thuc moi cho public key
+        //ktra public key phai ycau token key bang dien thoai
+        this.auth.getServerPublicRSAKey()
+        .then(pk => {
+          
+          console.log('Public key ok');
+          this.navCtrl.setRoot(TabsPage);
+        })
+        .catch(err=>{
+          console.log('Public key err', err);
+        });
+      })
+      .catch(err=>{
+        console.log('Token invalid: ', err);
+        this.auth.deleteToken();
+      });
+    }
+
+    
+
+
+  }
 
   onSubmit() {
     let isdn = this.isdnFormGroup.value.isdn;
@@ -52,43 +88,38 @@ export class LoginIsdnPage {
       let b = JSON.parse(a.v_out);
       console.log('token',a.token); 
       console.log('status',b); //hack
+      this.token = a.token;
+      this.goToSlide(1); //ve form confirmKey
       if (b.status==1&&a.token){
-        this.token = a.token;
-        this.goToSlide(1); //ve form confirmKey
       }else{
         //neu ho nhap so dien thoai nhieu lan sai so spam thi ??
-        throw 'So dien thoai '+isdn+' khong hop le';
+        this.presentAlert('Số điện thoại '+isdn+' không hợp lệ.<br> Vui lòng liên hệ Quản trị hệ thống');
       }
     })
     .catch(err=>{
-      this.presentAlert(JSON.stringify(err))
+
+      this.presentAlert('Lỗi xác thực <br>' + JSON.stringify(err));
     })
   }
 
   onSubmitKey(){
     let key = this.keyFormGroup.value.key;
-    console.log(key);
+    //console.log(key);
     
     this.auth.confirmKey(JSON.stringify({
       key:key,
       token:this.token
       }))
-    .then(data=>{
-      let a;
-      a = data;
-      console.log('status',a); //hack
-      /* let b = JSON.parse(a.v_out);
-      console.log('token',a.token); 
-      if (b.status==1&&a.token){
-        this.token = a.token;
-        this.goToSlide(1); //ve form confirmKey
-      }else{
-        //neu ho nhap so dien thoai nhieu lan sai so spam thi ??
-        throw 'So dien thoai '+isdn+' khong hop le';
-      } */
+    .then(token=>{
+        this.token = token;
+        this.auth.saveToken(token); //luu tru tren xac thuc va xuong dia
+        
+        this.navCtrl.setRoot(TabsPage);
     })
     .catch(err=>{
-      this.presentAlert(JSON.stringify(err))
+      this.presentAlert('Mã OTP của bạn không đúng vui lòng kiểm tra lại trên số điện thoại của bạn <br>'
+               );
+      this.goToSlide(0); //ve form isdn
     })
   }
 

@@ -30,6 +30,10 @@ export class ApiAuthService {
         this.midleKey.importKey(this.clientKey.exportKey('public'));
     }
 
+    /**
+     * ham nay phai lay sau khi xac thuc token OTP bang dien thoai
+     * tranh viec hacker ma hoa du lieu lung tung gui len server
+     */
     getServerPublicRSAKey() {
         //console.log('get Public key');
         if (this.publicKey && this.publicKey.PUBLIC_KEY) {
@@ -211,6 +215,26 @@ export class ApiAuthService {
 
 
     /**
+     * Ham nay luu lai token cho phien lam viec sau do
+     * dong thoi luu xuong dia token da login thanh cong
+     * @param token 
+     */
+    saveToken(token){
+        this.apiStorageService.saveToken(token);
+        this.userToken={token:token};
+    }
+
+    /**
+     * truong hop logout hoac 
+     * token da het hieu luc, 
+     * ta se xoa khoi de khong tu dong login duoc nua
+     */
+    deleteToken(){
+        this.apiStorageService.deleteToken();
+        this.userToken=null;
+    }
+
+    /**
      * Gui len server kiem tra token co verify thi tra ve token, khong thi khong ghi 
      * @param token 
      */
@@ -219,14 +243,10 @@ export class ApiAuthService {
         return this.httpClient.get(this.authenticationServer + '/authorize')
             .toPromise()
             .then(data => {
-                //console.log(data);                
+                //console.log('/authorize',data);                
                 this.userToken={token:token};
                 return true; 
             })
-            .catch(err => {
-                //console.log(err);
-                return false; 
-            });
     }
 
 
@@ -256,7 +276,14 @@ export class ApiAuthService {
         return this.httpClient.post(this.authenticationServer + '/confirm-key', jsonString)
              .toPromise()
              .then(data => {
-                 return data;
+                 this.userToken = data;
+                 if (this.userToken&&this.userToken.token){
+                    this.reqInterceptor.setRequestToken(this.userToken.token); //login nguoi khac
+                    return this.userToken.token;
+                }else{
+                    //neu ho nhap so dien thoai nhieu lan sai so spam thi ??
+                    throw 'Không đúng máy chủ<br>';
+                }
              });
      }
 

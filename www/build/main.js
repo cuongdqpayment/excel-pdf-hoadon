@@ -278,6 +278,8 @@ webpackEmptyAsyncContext.id = 205;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_apiStorageService__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tabs_tabs__ = __webpack_require__(505);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -291,13 +293,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var LoginIsdnPage = /** @class */ (function () {
-    function LoginIsdnPage(formBuilder, auth, alertCtrl, navCtrl) {
+    function LoginIsdnPage(formBuilder, auth, alertCtrl, apiStorageService, navCtrl) {
         this.formBuilder = formBuilder;
         this.auth = auth;
         this.alertCtrl = alertCtrl;
+        this.apiStorageService = apiStorageService;
         this.navCtrl = navCtrl;
         this.slideIndex = 0;
+    }
+    LoginIsdnPage.prototype.ngOnInit = function () {
+        var _this = this;
+        this.slides.lockSwipes(true);
         this.isdnFormGroup = this.formBuilder.group({
             isdn: ['',
                 [
@@ -317,7 +326,27 @@ var LoginIsdnPage = /** @class */ (function () {
                 ]
             ],
         });
-    }
+        if (this.apiStorageService.getToken()) {
+            this.auth.authorize(this.apiStorageService.getToken())
+                .then(function (status) {
+                //get public key de truyen ma hoa mat khau
+                //chi khi nao token duoc xac thuc moi cho public key
+                //ktra public key phai ycau token key bang dien thoai
+                _this.auth.getServerPublicRSAKey()
+                    .then(function (pk) {
+                    console.log('Public key ok');
+                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__tabs_tabs__["a" /* TabsPage */]);
+                })
+                    .catch(function (err) {
+                    console.log('Public key err', err);
+                });
+            })
+                .catch(function (err) {
+                console.log('Token invalid: ', err);
+                _this.auth.deleteToken();
+            });
+        }
+    };
     LoginIsdnPage.prototype.onSubmit = function () {
         var _this = this;
         var isdn = this.isdnFormGroup.value.isdn;
@@ -330,43 +359,35 @@ var LoginIsdnPage = /** @class */ (function () {
             var b = JSON.parse(a.v_out);
             console.log('token', a.token);
             console.log('status', b); //hack
+            _this.token = a.token;
+            _this.goToSlide(1); //ve form confirmKey
             if (b.status == 1 && a.token) {
-                _this.token = a.token;
-                _this.goToSlide(1); //ve form confirmKey
             }
             else {
                 //neu ho nhap so dien thoai nhieu lan sai so spam thi ??
-                throw 'So dien thoai ' + isdn + ' khong hop le';
+                _this.presentAlert('Số điện thoại ' + isdn + ' không hợp lệ.<br> Vui lòng liên hệ Quản trị hệ thống');
             }
         })
             .catch(function (err) {
-            _this.presentAlert(JSON.stringify(err));
+            _this.presentAlert('Lỗi xác thực <br>' + JSON.stringify(err));
         });
     };
     LoginIsdnPage.prototype.onSubmitKey = function () {
         var _this = this;
         var key = this.keyFormGroup.value.key;
-        console.log(key);
+        //console.log(key);
         this.auth.confirmKey(JSON.stringify({
             key: key,
             token: this.token
         }))
-            .then(function (data) {
-            var a;
-            a = data;
-            console.log('status', a); //hack
-            /* let b = JSON.parse(a.v_out);
-            console.log('token',a.token);
-            if (b.status==1&&a.token){
-              this.token = a.token;
-              this.goToSlide(1); //ve form confirmKey
-            }else{
-              //neu ho nhap so dien thoai nhieu lan sai so spam thi ??
-              throw 'So dien thoai '+isdn+' khong hop le';
-            } */
+            .then(function (token) {
+            _this.token = token;
+            _this.auth.saveToken(token); //luu tru tren xac thuc va xuong dia
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__tabs_tabs__["a" /* TabsPage */]);
         })
             .catch(function (err) {
-            _this.presentAlert(JSON.stringify(err));
+            _this.presentAlert('Mã OTP của bạn không đúng vui lòng kiểm tra lại trên số điện thoại của bạn <br>');
+            _this.goToSlide(0); //ve form isdn
         });
     };
     LoginIsdnPage.prototype.goToSlide = function (i) {
@@ -393,12 +414,12 @@ var LoginIsdnPage = /** @class */ (function () {
     ], LoginIsdnPage.prototype, "slides", void 0);
     LoginIsdnPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login-isdn',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/login-isdn/login-isdn.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-slides (ionSlideDidChange)="slideChanged()">\n    <!-- #id=0 -->\n    <ion-slide>\n\n      <form [formGroup]="isdnFormGroup">\n        <ion-item>\n          <ion-label floating>Nhập số điện thoại</ion-label>\n          <ion-input type="text" formControlName="isdn"></ion-input>\n        </ion-item>\n        <p *ngIf="isdnFormGroup.controls.isdn.invalid && isdnFormGroup.controls.isdn.touched">\n          <span class="error">Vui lòng nhập số điện thoại di động gồm 10 chữ số gồm số 0 ở đầu</span>\n        </p>\n        <ion-buttons start>\n          <button ion-button type="button" icon-end round [disabled]="isdnFormGroup.invalid" (click)="onSubmit()">\n            OK\n            <ion-icon name="share-alt"></ion-icon>\n          </button>\n        </ion-buttons>\n      </form>\n\n    </ion-slide>\n\n    <!-- #id=1 -->\n    <ion-slide>\n        <form [formGroup]="keyFormGroup">\n            <ion-item>\n              <ion-label floating>Nhập mã OTP</ion-label>\n              <ion-input type="text" formControlName="key"></ion-input>\n            </ion-item>\n            <p *ngIf="keyFormGroup.controls.key.invalid && keyFormGroup.controls.key.touched">\n              <span class="error">Vui lòng nhập mã OTP có 6 chữ cái và số không có số 0</span>\n            </p>\n            <ion-buttons start>\n              <button ion-button type="button" icon-end round [disabled]="keyFormGroup.invalid" (click)="onSubmitKey()">\n                OK\n                <ion-icon name="share-alt"></ion-icon>\n              </button>\n            </ion-buttons>\n          </form>\n    </ion-slide>\n  </ion-slides>\n</ion-content>'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/login-isdn/login-isdn.html"*/
+            selector: 'page-login-isdn',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/login-isdn/login-isdn.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-slides (ionSlideDidChange)="slideChanged()">\n    <!-- #id=0 -->\n    <ion-slide>\n\n      <form [formGroup]="isdnFormGroup">\n        <ion-item>\n          <ion-label floating>Nhập số điện thoại</ion-label>\n          <ion-input type="text" formControlName="isdn"></ion-input>\n        </ion-item>\n        <p *ngIf="isdnFormGroup.controls.isdn.invalid && isdnFormGroup.controls.isdn.touched">\n          <span class="error">Vui lòng nhập số điện thoại di động gồm 10 chữ số gồm số 0 ở đầu</span>\n        </p>\n        <ion-buttons start *ngIf="isdnFormGroup.controls.isdn.valid">\n          <button ion-button type="button" icon-end round (click)="onSubmit()">\n            Yêu cầu xác thực\n            <ion-icon name="share-alt"></ion-icon>\n          </button>\n        </ion-buttons>\n      </form>\n\n    </ion-slide>\n\n    <!-- #id=1 -->\n    <ion-slide>\n        <form [formGroup]="keyFormGroup">\n            <ion-item>\n              <ion-label floating>Nhập mã OTP gửi đến điện thoại</ion-label>\n              <ion-input type="text" formControlName="key"></ion-input>\n            </ion-item>\n            <p *ngIf="keyFormGroup.controls.key.invalid && keyFormGroup.controls.key.touched">\n              <span class="error">Vui lòng nhập mã OTP có 6 chữ cái và số không có số 0</span>\n            </p>\n            <ion-buttons start *ngIf="keyFormGroup.controls.key.valid">\n              <button ion-button type="button" icon-end round (click)="onSubmitKey()">\n                Xác thực OTP\n                <ion-icon name="share-alt"></ion-icon>\n              </button>\n            </ion-buttons>\n          </form>\n    </ion-slide>\n  </ion-slides>\n</ion-content>'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/login-isdn/login-isdn.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__["a" /* ApiAuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__["a" /* ApiAuthService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _e || Object])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__["a" /* ApiAuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__["a" /* ApiAuthService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__services_apiStorageService__["a" /* ApiStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_apiStorageService__["a" /* ApiStorageService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _f || Object])
     ], LoginIsdnPage);
     return LoginIsdnPage;
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 function phoneNumberValidator(formControl) {
@@ -1339,9 +1360,11 @@ var ParametersPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__ = __webpack_require__(85);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__parameters_parameters__ = __webpack_require__(301);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__config_config__ = __webpack_require__(300);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_apiStorageService__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_apiHttpPublicServices__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__parameters_parameters__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__config_config__ = __webpack_require__(300);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1357,10 +1380,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var CustomerPage = /** @class */ (function () {
-    function CustomerPage(navCtrl, formBuilder, http, loadingCtrl) {
+    function CustomerPage(navCtrl, formBuilder, auth, apiStorageService, http, loadingCtrl) {
         this.navCtrl = navCtrl;
         this.formBuilder = formBuilder;
+        this.auth = auth;
+        this.apiStorageService = apiStorageService;
         this.http = http;
         this.loadingCtrl = loadingCtrl;
         this.slideIndex = 0;
@@ -1371,9 +1398,11 @@ var CustomerPage = /** @class */ (function () {
         this.maxCurrentId = 0;
     }
     CustomerPage.prototype.ngOnInit = function () {
-        this.getCustomers(); //cai nay lay tu load trang dau luon
         //khong cho quet bang tay
         this.slides.lockSwipes(true);
+        this.userInfo = this.auth.getUserInfo();
+        console.log('Login page ready authorize', this.userInfo);
+        this.getCustomers(); //cai nay lay tu load trang dau luon
         this.myFromGroup = this.formBuilder.group({
             full_name: '',
             address: '',
@@ -1411,7 +1440,7 @@ var CustomerPage = /** @class */ (function () {
         var _this = this;
         this.customers = this.customersOrigin.filter(function (x) { return (x.full_name.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0
             ||
-                x.cus_id.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0
+                x.cust_id.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0
             ||
                 x.area.toLowerCase().indexOf(_this.searchString.toLowerCase()) >= 0
             ||
@@ -1466,25 +1495,26 @@ var CustomerPage = /** @class */ (function () {
         this.goToSlide(0);
     };
     CustomerPage.prototype.goParameters = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__parameters_parameters__["a" /* ParametersPage */]);
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__parameters_parameters__["a" /* ParametersPage */]);
+    };
+    CustomerPage.prototype.userAction = function () {
+        //popup menu logout
     };
     CustomerPage.prototype.newCustomter = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__config_config__["a" /* ConfigPage */]);
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_7__config_config__["a" /* ConfigPage */]);
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Slides */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Slides */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Slides */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Slides */]) === "function" && _a || Object)
     ], CustomerPage.prototype, "slides", void 0);
     CustomerPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-customer',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/customer/customer.html"*/'<ion-header>\n  <ion-navbar>\n\n    <ion-buttons *ngIf="!isSearch" start>\n      <button ion-button icon-only color="royal" (click)="goSearch()">\n        <ion-icon name="search"></ion-icon>\n      </button>\n\n      <button ion-button icon-only (click)="newCustomter()">\n        <ion-icon name="contact"></ion-icon>\n      </button>\n\n    </ion-buttons>\n\n    <ion-buttons end>\n      <button ion-button icon-only color="secondary" (click)="goParameters()">\n        <ion-icon name="more"></ion-icon>\n      </button>\n    </ion-buttons>\n    \n    <ion-searchbar *ngIf="isSearch" placeholder="Tìm theo mã/tên khách hàng/khu vực/người quản lý hoặc số điện thoại"\n      [(ngModel)]="searchString"\n      [showCancelButton]="shouldShowCancel"\n      (ionInput)="onInput($event)"\n      (keyup.enter)="searchEnter()"\n      (keyup.esc)="searchEnter()"\n      start>\n    </ion-searchbar>\n    \n    <ion-title *ngIf="!isSearch">CUSTOMER</ion-title>\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-slides (ionSlideDidChange)="slideChanged()">\n      <!-- #id=0 -->\n      <ion-slide>\n          <ion-list>\n              <button ion-item *ngFor="let customer of customers" (click)="gotoSlideEdit(customer)">\n                <ion-avatar item-start>\n                  <img src={{customer.image}}>\n                </ion-avatar>\n                <h2>{{customer.cust_id}} - {{customer.full_name}}</h2>\n                <p>{{customer.area}} ({{customer.staff}})</p>\n                <ion-note>{{customer.cust_type}} {{customer.charge}} </ion-note>\n              </button>\n          </ion-list>\n      </ion-slide>\n      \n      <!-- #id=1 -->\n      <ion-slide>\n          <form [formGroup]="myFromGroup" (ngSubmit)="onSubmit()">\n\n              <ion-item>\n                <ion-label floating>Họ và Tên</ion-label>\n                <ion-input formControlName="full_name" type="text"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Địa chỉ</ion-label>\n                <ion-input formControlName="address" type="address"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Điện thoại</ion-label>\n                <ion-input formControlName="phone" type="phone"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Email</ion-label>\n                <ion-input formControlName="email" type="email"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Khu vực quản lý</ion-label>\n                <ion-input formControlName="area" type="text"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Loại khách hàng</ion-label>\n                <ion-input formControlName="type" type="text"></ion-input>\n              </ion-item>\n              \n              <ion-row>\n                <ion-col text-center col-12 col-xl-3 col-lg-4 col-sm-6>\n                  <button ion-button block color="secondary" type="button" (click)="goBack()">\n                    Trở về\n                  </button>\n                </ion-col>\n                <ion-col text-center col-12 offset-xl-6 col-xl-3 offset-lg-4 col-lg-4 col-sm-6>\n                  <button ion-button block color="secondary" type="submit">\n                    Thay đổi\n                  </button>\n                </ion-col>\n              </ion-row>\n              \n            </form>\n      </ion-slide>\n  \n      <!-- #id=2 -->\n      <!-- #id=4 -->\n      <!-- #id=5 -->\n      <!-- #id=6 -->\n    </ion-slides>\n</ion-content>\n'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/customer/customer.html"*/
+            selector: 'page-customer',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/customer/customer.html"*/'<ion-header>\n  <ion-navbar>\n\n    <ion-buttons *ngIf="!isSearch" start>\n      <button ion-button icon-only color="royal" (click)="goSearch()">\n        <ion-icon name="search"></ion-icon>\n      </button>\n\n      <button ion-button icon-only color="primary" (click)="userAction()" [disabled]="userInfo?false:true">\n        <ion-icon name="contact"></ion-icon>\n      </button>\n\n    </ion-buttons>\n\n    <ion-buttons end>\n      <button ion-button icon-only color="secondary" (click)="goParameters()">\n        <ion-icon name="more"></ion-icon>\n      </button>\n    </ion-buttons>\n    \n    <ion-searchbar *ngIf="isSearch" placeholder="Tìm theo mã/tên khách hàng/khu vực/người quản lý hoặc số điện thoại"\n      [(ngModel)]="searchString"\n      [showCancelButton]="shouldShowCancel"\n      (ionInput)="onInput($event)"\n      (keyup.enter)="searchEnter()"\n      (keyup.esc)="searchEnter()"\n      start>\n    </ion-searchbar>\n    \n    <ion-title *ngIf="!isSearch">CUSTOMER</ion-title>\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-slides (ionSlideDidChange)="slideChanged()">\n      <!-- #id=0 -->\n      <ion-slide>\n          <ion-list>\n              <button ion-item *ngFor="let customer of customers" (click)="gotoSlideEdit(customer)">\n                <ion-avatar item-start>\n                  <img src={{customer.image}}>\n                </ion-avatar>\n                <h2>{{customer.cust_id}} - {{customer.full_name}}</h2>\n                <p>{{customer.area}} ({{customer.staff}})</p>\n                <ion-note>{{customer.cust_type}} {{customer.charge}} </ion-note>\n              </button>\n          </ion-list>\n      </ion-slide>\n      \n      <!-- #id=1 -->\n      <ion-slide>\n          <form [formGroup]="myFromGroup" (ngSubmit)="onSubmit()">\n\n              <ion-item>\n                <ion-label floating>Họ và Tên</ion-label>\n                <ion-input formControlName="full_name" type="text"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Địa chỉ</ion-label>\n                <ion-input formControlName="address" type="address"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Điện thoại</ion-label>\n                <ion-input formControlName="phone" type="phone"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Email</ion-label>\n                <ion-input formControlName="email" type="email"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Khu vực quản lý</ion-label>\n                <ion-input formControlName="area" type="text"></ion-input>\n              </ion-item>\n              \n              <ion-item>\n                <ion-label floating>Loại khách hàng</ion-label>\n                <ion-input formControlName="type" type="text"></ion-input>\n              </ion-item>\n              \n              <ion-row>\n                <ion-col text-center col-12 col-xl-3 col-lg-4 col-sm-6>\n                  <button ion-button block color="secondary" type="button" (click)="goBack()">\n                    Trở về\n                  </button>\n                </ion-col>\n                <ion-col text-center col-12 offset-xl-6 col-xl-3 offset-lg-4 col-lg-4 col-sm-6>\n                  <button ion-button block color="secondary" type="submit">\n                    Thay đổi\n                  </button>\n                </ion-col>\n              </ion-row>\n              \n            </form>\n      </ion-slide>\n  \n      <!-- #id=2 -->\n      <!-- #id=4 -->\n      <!-- #id=5 -->\n      <!-- #id=6 -->\n    </ion-slides>\n</ion-content>\n'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/customer/customer.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__["a" /* ApiHttpPublicService */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__["a" /* ApiAuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_apiAuthService__["a" /* ApiAuthService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__services_apiStorageService__["a" /* ApiStorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_apiStorageService__["a" /* ApiStorageService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__services_apiHttpPublicServices__["a" /* ApiHttpPublicService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_apiHttpPublicServices__["a" /* ApiHttpPublicService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]) === "function" && _g || Object])
     ], CustomerPage);
     return CustomerPage;
+    var _a, _b, _c, _d, _e, _f, _g;
 }());
 
 //# sourceMappingURL=customer.js.map
@@ -2696,6 +2726,10 @@ var ApiAuthService = /** @class */ (function () {
         //key nay de test thu noi bo
         this.midleKey.importKey(this.clientKey.exportKey('public'));
     }
+    /**
+     * ham nay phai lay sau khi xac thuc token OTP bang dien thoai
+     * tranh viec hacker ma hoa du lieu lung tung gui len server
+     */
     ApiAuthService.prototype.getServerPublicRSAKey = function () {
         var _this = this;
         //console.log('get Public key');
@@ -2872,6 +2906,24 @@ var ApiAuthService = /** @class */ (function () {
         this.userToken={token:token};
     } */
     /**
+     * Ham nay luu lai token cho phien lam viec sau do
+     * dong thoi luu xuong dia token da login thanh cong
+     * @param token
+     */
+    ApiAuthService.prototype.saveToken = function (token) {
+        this.apiStorageService.saveToken(token);
+        this.userToken = { token: token };
+    };
+    /**
+     * truong hop logout hoac
+     * token da het hieu luc,
+     * ta se xoa khoi de khong tu dong login duoc nua
+     */
+    ApiAuthService.prototype.deleteToken = function () {
+        this.apiStorageService.deleteToken();
+        this.userToken = null;
+    };
+    /**
      * Gui len server kiem tra token co verify thi tra ve token, khong thi khong ghi
      * @param token
      */
@@ -2881,13 +2933,9 @@ var ApiAuthService = /** @class */ (function () {
         return this.httpClient.get(this.authenticationServer + '/authorize')
             .toPromise()
             .then(function (data) {
-            //console.log(data);                
+            //console.log('/authorize',data);                
             _this.userToken = { token: token };
             return true;
-        })
-            .catch(function (err) {
-            //console.log(err);
-            return false;
         });
     };
     //send sms
@@ -2910,11 +2958,20 @@ var ApiAuthService = /** @class */ (function () {
         });
     };
     ApiAuthService.prototype.confirmKey = function (jsonString) {
+        var _this = this;
         //chuyen di bang form co ma hoa
         return this.httpClient.post(this.authenticationServer + '/confirm-key', jsonString)
             .toPromise()
             .then(function (data) {
-            return data;
+            _this.userToken = data;
+            if (_this.userToken && _this.userToken.token) {
+                _this.reqInterceptor.setRequestToken(_this.userToken.token); //login nguoi khac
+                return _this.userToken.token;
+            }
+            else {
+                //neu ho nhap so dien thoai nhieu lan sai so spam thi ??
+                throw 'Không đúng máy chủ<br>';
+            }
         });
     };
     ApiAuthService = __decorate([

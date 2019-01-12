@@ -6,7 +6,7 @@
         <ion-icon name="search"></ion-icon>
       </button>
 
-      <button ion-button icon-only (click)="newCustomter()">
+      <button ion-button icon-only color="primary" (click)="userAction()" [disabled]="userInfo?false:true">
         <ion-icon name="contact"></ion-icon>
       </button>
 

@@ -17,9 +17,9 @@
         <p *ngIf="isdnFormGroup.controls.isdn.invalid && isdnFormGroup.controls.isdn.touched">
           <span class="error">Vui lòng nhập số điện thoại di động gồm 10 chữ số gồm số 0 ở đầu</span>
         </p>
-        <ion-buttons start>
-          <button ion-button type="button" icon-end round [disabled]="isdnFormGroup.invalid" (click)="onSubmit()">
-            OK
+        <ion-buttons start *ngIf="isdnFormGroup.controls.isdn.valid">
+          <button ion-button type="button" icon-end round (click)="onSubmit()">
+            Yêu cầu xác thực
             <ion-icon name="share-alt"></ion-icon>
           </button>
         </ion-buttons>
@@ -31,15 +31,15 @@
     <ion-slide>
         <form [formGroup]="keyFormGroup">
             <ion-item>
-              <ion-label floating>Nhập mã OTP</ion-label>
+              <ion-label floating>Nhập mã OTP gửi đến điện thoại</ion-label>
               <ion-input type="text" formControlName="key"></ion-input>
             </ion-item>
             <p *ngIf="keyFormGroup.controls.key.invalid && keyFormGroup.controls.key.touched">
               <span class="error">Vui lòng nhập mã OTP có 6 chữ cái và số không có số 0</span>
             </p>
-            <ion-buttons start>
-              <button ion-button type="button" icon-end round [disabled]="keyFormGroup.invalid" (click)="onSubmitKey()">
-                OK
+            <ion-buttons start *ngIf="keyFormGroup.controls.key.valid">
+              <button ion-button type="button" icon-end round (click)="onSubmitKey()">
+                Xác thực OTP
                 <ion-icon name="share-alt"></ion-icon>
               </button>
             </ion-buttons>
