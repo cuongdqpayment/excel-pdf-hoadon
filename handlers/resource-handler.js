@@ -438,25 +438,11 @@ class ResourceHandler {
         // console.log('path: ',path);
         // console.log('cust_id: ',cust_id);
         let sql='select \
-                    a.stt\
-                    ,a.full_name\
+                    a.full_name\
                     ,a.tax_id\
                     ,a.address\
-                    ,a.email\
-                    ,a.phone\
-                    ,a.cust_id\
-                    ,a.last_name \
-                    ,a.first_name \
-                    ,a.type_id\
-                    ,b.description as cust_type\
                     ,b.value as charge\
-                    ,a.price_id\
-                    ,a.area_id\
                     ,c.description as area\
-                    ,a.staff_id\
-                    ,d.description as staff\
-                    ,a.start_date\
-                    ,a.end_date\
                     ,a.change_date\
                     ,a.status\
                 from customers a\
