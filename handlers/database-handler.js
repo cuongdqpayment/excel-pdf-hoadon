@@ -100,6 +100,7 @@ var selectInvoicesJson = (bill_cycle, cust_id) => {
     let custSelect = cust_id ? 'and customers.cust_id = \'' + cust_id + '\' ' : '';
     let custSelectBill = cust_id ? 'and bills.cust_id = \'' + cust_id + '\' ' : '';
 
+    //console.log(custSelect,custSelectBill);
     return (new Promise((resolve, reject) => {
         var invoices;
         var saler;
@@ -189,7 +190,8 @@ var selectInvoicesJson = (bill_cycle, cust_id) => {
                 let invoicesPrint = []
                 invoices.forEach(el => {
 
-                    el.bill_date = billDatePrints(el.bill_date);
+                    //su dung trong chuyen doi kieu du lieu dong bo luon
+                    //el.bill_date = billDatePrints(el.bill_date);
 
                     el.bill_details = bill_details.filter(x => x.cust_id == el.cust_id);
                     el.bill_sum_charge_spell = utils.StringVietnamDong(el.sum_charge);
@@ -221,9 +223,17 @@ var selectInvoicesJson = (bill_cycle, cust_id) => {
 var selectInvoicesMatrix = (bill_cycle, cust_id) => {
     return selectInvoicesJson(bill_cycle, cust_id)
         .then(invoices => {
-            console.log(invoices);
+            var old = JSON.stringify(invoices
+                            ,(key, value) => {
+                                if (key=='start_date') return new Date(value + timeZoneOffset*60*60*1000).toISOString().replace(/T/, ' ').replace(/\..+/, '') 
+                                if (typeof value == 'number') return ''+value; //chuyen doi thanh chuoi (format dau . hoac dau trong)
+                                if (key=='bill_date') return [value.slice(6, 8), value.slice(4, 6), value.slice(0, 4)]
+                                return value;
+                            }
+            ); //convert to JSON string
+            const invoicesPrintString = JSON.parse(old); //convert back to array
             let printMatrixs = [];
-            invoicesPrint.forEach(el => {
+            invoicesPrintString.forEach(el => {
                 printMatrixs.push(utils.GetMatrix(billPrintMatrix, el, { col: 0, row: 0 }));
             });
             return printMatrixs;
@@ -349,6 +359,43 @@ var createInvoices = (bill_cycle, bill_date, invoice_no, cust_id) => {
     }));
 }
 
+var createPdfInvoices = (invoices,outputFilename,background)=>{
+    //hoa don lien 2 giao cho khach
+    const offset = 422;
+
+    //bat dau tao pdf
+    var doc = new PDFDocument({
+                            size: 'A4',
+                            margin: 0
+    });
+    var defaultColor = 'blue';
+    var stream = doc.pipe(fs.createWriteStream(outputFilename));
+
+    doc.info['Title'] = 'Mẫu in hóa đơn A4 1 trang';
+    doc.info['Author'] = 'Đoàn Quốc Cường';
+    
+    doc.registerFont('Time-new-roman-utf8', './fonts/times.ttf');
+    doc.font('Time-new-roman-utf8');
+
+    //trang luu
+    invoices.forEach((invoice,idx)=>{
+        if (idx>0) doc.addPage(); //in hoa don moi
+        if (background) doc.image(background, -5, -3, {width: 610, height: 845});
+        doc.fontSize(12);
+        doc.fillColor(defaultColor);
+        invoice.forEach(el => {
+            if (el.color) doc.fillColor(el.color);
+            if (el.value&&el.value.length){
+               doc.text(el.value, el.col, el.row,{width: el.width, align: el.align});
+               doc.text(el.value, el.col, el.row + offset, {width: el.width, align: el.align});
+            }
+            doc.fillColor(defaultColor);
+        });
+    })
+    doc.end();
+
+    return stream;
+}
 
 class ResourceHandler {
     /**
@@ -404,11 +451,76 @@ class ResourceHandler {
             });
     }
 
+    /**
+     * Lay danh sach hoa don theo ky va theo khach hang
+     * 
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     getInvoices(req, res, next){
+        let path = decodeURIComponent(url.parse(req.url, true, false).pathname);
+        let params = path.substring('/json-invoices/'.length);
+        let bill_cycle = params.slice(0,6);
+        let cust_id = params.slice(7, 17);
+        selectInvoicesJson(bill_cycle,cust_id)
+        .then(invoices=>{
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify(invoices
+                ,(key, value) => {
+                if (value === null) {
+                    //chuyen doi null khong xuat hien
+                    return undefined;
+                }
+                if (key=='start_date'){
+                    //chuyen doi thoi gian milisecond thanh string ngay gio
+                    return new Date(value + timeZoneOffset*60*60*1000).toISOString().replace(/T/, ' ').replace(/\..+/, '') 
+                }
+                return value;
+                }
+                ));
+            })
+            .catch(err=>{
+                    res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                    res.end(JSON.stringify(err));
+            });
 
     }
 
     getPdfInvoices(req, res, next){
+        let req_url = url.parse(req.url, true, false);
+        let path = decodeURIComponent(req_url.pathname);
+        let params = path.substring('/pdf-invoices/'.length);
+        let bill_cycle = params.slice(0,6);
+        let cust_id = params.slice(7, 17);
+        let bg = req_url.query.background;
+        
+        console.log('background:', bg);
+
+        selectInvoicesMatrix(bill_cycle,cust_id)
+        .then(invoicesMatrix=>{
+
+            let outputFilename = './pdf/hoadon_1.pdf';
+            let background = './pdf/mau_hoa_don.png';
+
+            let stream = createPdfInvoices(invoicesMatrix,outputFilename,bg?background:undefined);
+              
+              stream.on('finish', () =>{
+                    fs.readFile(outputFilename, { flag: 'r' }, (err, bufferPdf)=>{
+                        if (err) {
+                            res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                            res.end(JSON.stringify(err));
+                        }
+                        res.writeHead(200, { 'Content-Type': 'application/pdf; charset=utf-8' });
+                        res.end(bufferPdf);
+                    });
+                });
+        })
+        .catch(err=>{
+            res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+            res.end(JSON.stringify(err));
+        });
+
 
     }
 
@@ -419,7 +531,7 @@ class ResourceHandler {
     getExcelInvoices(req, res, next){
         
     }
-    
+
 }
 
 module.exports = {
