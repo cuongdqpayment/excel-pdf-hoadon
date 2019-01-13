@@ -20,7 +20,7 @@ function main(isHttp, isHttps) {
   const userAuth = require('./routes/user-auth');
   app.use('/auth', userAuth); 
 
-  const resource = require('./routes/resource-excel');
+  const resource = require('./routes/resource-sqlite');
   app.use('/db', resource); 
 
   //ham tra loi cac dia chi khong co

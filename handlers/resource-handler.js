@@ -12,7 +12,7 @@ const url = require('url');
 
 const vnd = require('../utils/converter-2-vietnamese');
 
-const db = require('../db/sqlite3/sqlite-hoadon-service.js');
+const db = require('../db/sqlite3/sqlite-hoadon-service');
 
 setTimeout(()=>{
   db.handler.init();

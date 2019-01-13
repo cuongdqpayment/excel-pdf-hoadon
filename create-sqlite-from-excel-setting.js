@@ -1,7 +1,7 @@
 //doc excel ra cac sheet va dong 1
 const excelToJson = require('convert-excel-to-json');
 const utils = require('./utils/converter-2-vietnamese');
-
+const fs = require('fs');
 
 
 var billPrintMatrix = {
@@ -43,10 +43,10 @@ var billPrintMatrix = {
 
 
 //buoc 1, doc file excel setting  
-var selectTable = () => {
+var selectTable = (filename) => {
 
     const results = excelToJson({
-        sourceFile: './db/admin-setting.xlsx'
+        sourceFile: filename
     });
     //in ra cac sheet va cac cot dau tien
     //copy ra bang table va tao cac loai du lieu tuong ung
@@ -65,23 +65,30 @@ var selectTable = () => {
 
 
 
-var createDatabase = () => {
+var createDatabase = (excelFilename,dbFilename) => {
     //neu ton tai file thi delete
     //sau do tao lai database
-
-
     const db = require('./db/sqlite3/sqlite-hoadon-service.js');
-
+    
+    if (dbFilename&&fs.existsSync(dbFilename)) {
+        fs.unlink(dbFilename, (err) => {
+            if (err) throw err;
+            console.log(dbFilename + ' was deleted');
+          });
+    }
     setTimeout(() => {
-        db.handler.init();
+        db.handler.createDatabase(excelFilename,dbFilename);
     }, 1000); //doi 3 giay de oracle ket noi
 
 }
 
 
-var selectCustomer = () => {
+var selectCustomers = (cust_id) => {
     const db = require('./db/sqlite3/sqlite-hoadon-service.js');
 
+    //db.handler.init();
+
+    let custSelect = cust_id?'and a.cust_id = \''+ cust_id + '\' ':'';
     setTimeout(() => {
         db.db.getRsts('select \
                           a.id\
@@ -112,7 +119,9 @@ var selectCustomer = () => {
                        ,prices b\
                        ,(select code, description from parameters where type = 6) c\
                        ,(select code, description from parameters where type = 4) d\
-                        where a.price_id = b.id\
+                        where 1=1 \
+                        '+ custSelect + ' \
+                        and a.price_id = b.id\
                         and a.area_id = c.code\
                         and a.staff_id = d.code\
                         ')
@@ -126,7 +135,7 @@ var selectCustomer = () => {
 }
 
 
-var selectInvoice = (cust_id, cycle_id) => {
+var selectInvoice = (cycle_id, cust_id) => {
     const db = require('./db/sqlite3/sqlite-hoadon-service.js');
 
     setTimeout(() => {
@@ -215,27 +224,21 @@ var selectInvoice = (cust_id, cycle_id) => {
     }, 1000);
 }
 
-//doc du lieu tu cac sheet ra json va insert vao cac bang
-//selectTable(); //chay in ra ten bang va ten cot de lay lam bang tao trong sqlite 
-//hoac tao select cac truong du lieu nhanh
 
 
-//tao bang sqlite ban dau tu excel-setting (su dung cach nay de tao bang cho mobile)
-//createDatabase(); //khoi tao database ban dau nhu file excel 
-//
-
-//select bang du lieu khach hang
-//selectCustomer();
-
-//select hoa don de in
-//selectInvoice('R000000001',201901);
+var billDatePrints = (bill_date)=>{
+    return [bill_date.slice(6,8), bill_date.slice(4,6), bill_date.slice(0,4)]
+};
 
 
 
+var selectInvoices = (bill_cycle,cust_id) => {
 
+    let custSelect = cust_id?'and customers.cust_id = \''+ cust_id + '\' ':'';
 
-var selectInvoices = (bill_cycle) => {
     const db = require('./db/sqlite3/sqlite-hoadon-service.js');
+
+
 
     var invoices;
     db.db.getRsts(
@@ -257,6 +260,7 @@ var selectInvoices = (bill_cycle) => {
                 customers           \
                 ,invoices           \
                 where invoices.bill_cycle = \''+ bill_cycle + '\' \
+                ' + custSelect + ' \
                 and customers.cust_id = invoices.cust_id  \
                 and customers.cust_id = invoices.cust_id \
                 ')
@@ -321,6 +325,9 @@ var selectInvoices = (bill_cycle) => {
 
             let invoicesPrint = []
             invoices.forEach(el => {
+
+                el.bill_date = billDatePrints(el.bill_date);
+
                 el.bill_details = bill_details.filter(x => x.cust_id == el.cust_id);
                 el.bill_sum_charge_spell = utils.StringVietnamDong(el.sum_charge);
                 el.bill_sum = {
@@ -357,8 +364,6 @@ var selectInvoices = (bill_cycle) => {
 
     }, 3000);
 }
-
-//selectInvoices(201901);
 
 
 //viet ham tao hoa don,
@@ -483,6 +488,26 @@ var createInvoices = (bill_cycle,bill_date,invoice_no)=>{
 }
 
 
+
+//1. doc du lieu tu cac sheet ra json va insert vao cac bang
+//selectTable('./db/admin-setting.xlsx'); //chay in ra ten bang va ten cot de lay lam bang tao trong sqlite 
+//hoac tao select cac truong du lieu nhanh
+
+
+//2. tao bang sqlite ban dau tu excel-setting (su dung cach nay de tao bang cho mobile)
+//createDatabase('./db/admin-setting.xlsx', './db/hoadon-database.db'); //khoi tao database ban dau nhu file excel 
+
+
+//3. select bang du lieu khach hang
+
+//selectCustomers('R000000001');
+
+//4. tao hoa don
 let invoice_no = 1;
- invoice_no = createInvoices(201901,20190120,invoice_no);
-// console.log(invoice_no);
+ //createInvoices('201901','20190120',invoice_no);
+
+//5. xem hoa don
+selectInvoice('201901','R000000001');
+
+//6. tao ma tran hoa don
+selectInvoices('201901','R000000001');

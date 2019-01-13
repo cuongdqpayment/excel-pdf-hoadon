@@ -5,33 +5,53 @@ const SQLiteDAO = require('./sqlite-dao');
 const dirDB = 'db';
 
 const xlsxtojson1st = require("xlsx-to-json-lc");
-const databaseSetting = './db/admin-setting.xlsx';
 const excelToJsonAll = require('convert-excel-to-json');
-const dbFileName = './' + dirDB + '/hoadon-database.db';
+const databaseSetting = './' + dirDB + '/admin-setting.xlsx';
+const dbFile = './' + dirDB + '/hoadon-database.db';
 
 if (!fs.existsSync(dirDB)) {
     fs.mkdirSync(dirDB);
 }
-
-const db = new SQLiteDAO(dbFileName);
+var db = new SQLiteDAO(dbFile); //mat dinh la khoi tao db moi nay
 
 class HandleDatabase {
 
-    init(){
-        if (fs.existsSync(databaseSetting)) {
-            this.initTable();
-        }else if (fs.existsSync(dbFileName)){
-            console.log('Database '+ dbFileName + ' ready!');
-        }else{
-            throw 'No Database Setting xlsx and Database Sqlite'
-        }
+    init(dbFileInput){
+        let databaseFile = dbFileInput?dbFileInput:dbFile;
+        db = new SQLiteDAO(databaseFile); //khoi tao database session file moi
+        console.log('db',db);
     }
+
+    /**
+     * su dung de tao lai database ban dau
+     * @param {*} excelFileInput 
+     * @param {*} dbFileInput 
+     */
+    createDatabase(excelFileInput,dbFileInput){
+
+        let settingFile = excelFileInput?excelFileInput:databaseSetting;
+        let databaseFile = dbFileInput?dbFileInput:dbFile;
+        
+        this.init(databaseFile);
+
+        setTimeout(() => {
+            if (fs.existsSync(settingFile)&&fs.existsSync(databaseFile)) {
+                this.initTable(settingFile);
+                console.log('Database '+ databaseFile + ' ready!');
+            }else{
+                throw 'No Database Setting xlsx and Database Sqlite'
+            }
+        }, 1000); //doi 1 giay de ket noi database roi moi tao bang
+    }
+
+    
     //khoi tao cac bang luu so lieu
-    initTable(){
+    initTable(excelFileInput){
         //doc excel
         try {
+            let settingFile = excelFileInput?excelFileInput:databaseSetting;
             xlsxtojson1st({
-                input: databaseSetting,
+                input: settingFile,
                 output: null, //since we don't need output.json
                 lowerCaseHeaders:true
             }, (err,results)=>{
@@ -74,7 +94,7 @@ class HandleDatabase {
                 //cho tao bang xong moi doc du lieu
                 setTimeout(()=>{
                     console.log('table created: ',distinct_table_name)
-                    this.initData(distinct_table_name);
+                    this.initData(distinct_table_name, settingFile);
                 },1000);
 
             });
@@ -83,10 +103,11 @@ class HandleDatabase {
         }
     } 
     
-    initData(tables){
+    initData(tables,excelFileInput){
         try{
+            let settingFile = excelFileInput?excelFileInput:databaseSetting;
             let results = excelToJsonAll({
-                sourceFile: databaseSetting
+                sourceFile: settingFile
             });
 
             tables.forEach(tablename=>{
