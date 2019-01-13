@@ -367,12 +367,17 @@ var selectInvoices = (bill_cycle) => {
 //so luong, don gia
 //khach hang chon 1 san pham, so luong la 1, loai gia 1 (co don gia, nhan ra, thoi gian mua hang)
 //ghep: customers (trang thai hien tai, khai gia, )
+const json2SqliteSQLUpdateCustomerId = (tablename, json) => {
+    let jsonInsert = { name: tablename, cols: [], wheres:[] }
+    for (let key in json) {
+        jsonInsert.cols.push( { name: key, value: json[key]});
+        if (key=='cust_id') jsonInsert.wheres.push({ name: key, value: json[key] })
+    }
+    return jsonInsert;
+}
 const json2SqliteSQLInsert = (tablename, json) => {
     let jsonInsert = { name: tablename, cols: [] }
-    for (let key in json) {
-        let col = { name: key, value: json[key] };
-        jsonInsert.cols.push(col);
-    }
+    for (let key in json) jsonInsert.cols.push( { name: key, value: json[key]});
     return jsonInsert;
 }
 
@@ -381,7 +386,7 @@ var createInvoices = (bill_cycle,bill_date,invoice_no)=>{
     const db = require('./db/sqlite3/sqlite-hoadon-service.js');
 
     var customers;
-    db.db.getRst('select customer_id, price_id, area_id, staff_id from customers where status=1 and id=1')
+    db.db.getRsts('select cust_id, price_id, area_id, staff_id from customers where status=1')
         .then(results => {
             customers = results;
         })
@@ -390,7 +395,7 @@ var createInvoices = (bill_cycle,bill_date,invoice_no)=>{
         });
     
     var prices;
-    db.db.getRst('select id	,product_id, unit, not_vat ,vat, charge from prices where status = 1')
+    db.db.getRsts('select id	,product_id, unit, not_vat ,vat, charge from prices where status = 1')
             .then(results => {
                 prices = results;
             })
@@ -416,7 +421,7 @@ var createInvoices = (bill_cycle,bill_date,invoice_no)=>{
                     total_vat       : price.vat * product_count
                 };
 
-                let sqlBill = json2SqliteSQLInsert('bills', bill_detail);
+                let sqlBill = json2SqliteSQLUpdateCustomerId('bills', bill_detail);
 
                 db.db.insert(sqlBill)
                     .then(data => {
@@ -425,7 +430,15 @@ var createInvoices = (bill_cycle,bill_date,invoice_no)=>{
                     .catch(err => {
                         console.log(err);
                         //contraint thi update
+                        db.db.update(sqlBill)
+                        .then(data=>{
+                            console.log(data);
+                            
+                        })
+                        .catch(err=>{
+                            console.log(err);
 
+                        })
                     })
 
                     let bill_sum={};
@@ -443,7 +456,7 @@ var createInvoices = (bill_cycle,bill_date,invoice_no)=>{
                         , sum_charge    : bill_sum.sum_charge
                     };
 
-                    let sqlInvoice = json2SqliteSQLInsert('invoices', invoice);
+                    let sqlInvoice = json2SqliteSQLUpdateCustomerId('invoices', invoice);
 
                     db.db.insert(sqlInvoice)
                         .then(data => {
@@ -453,7 +466,15 @@ var createInvoices = (bill_cycle,bill_date,invoice_no)=>{
                         .catch(err => {
                             console.log(err);
                             //contraint thi update
-
+                            db.db.update(sqlInvoice)
+                            .then(data=>{
+                                console.log(data);
+                                
+                            })
+                            .catch(err=>{
+                                console.log(err);
+    
+                            })
                         })
                 
             })
@@ -463,7 +484,5 @@ var createInvoices = (bill_cycle,bill_date,invoice_no)=>{
 
 
 let invoice_no = 1;
-
-invoice_no = createInvoices(201901,20190120,invoice_no);
-
-console.log(invoice_no);
+ invoice_no = createInvoices(201901,20190120,invoice_no);
+// console.log(invoice_no);
