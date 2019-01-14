@@ -90,12 +90,6 @@ var selectCustomers = (cust_id) => {
 }
 
 
-
-var billDatePrints = (bill_date) => {
-    return [bill_date.slice(6, 8), bill_date.slice(4, 6), bill_date.slice(0, 4)]
-};
-
-
 var selectInvoicesJson = (bill_cycle, cust_id) => {
     let custSelect = cust_id ? 'and customers.cust_id = \'' + cust_id + '\' ' : '';
     let custSelectBill = cust_id ? 'and bills.cust_id = \'' + cust_id + '\' ' : '';
@@ -547,11 +541,18 @@ class ResourceHandler {
 
     //lay cau hinh ve de thay doi cau hinh in an
     getPrintMask(req, res, next){
-        
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify(billPrintMatrix
+            ,(key, value) => {
+                if (value === null) {return undefined;}
+                return value;
+                }
+        ));
     }
     //tra ket qua in tu client config
     postPrintMask(req, res, next){
-        
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify(req.json_data));
     }
     //tra cau truc json cho client khai bao lai: {print-config:{background:'url/base64',size:'A4',margin:0}, print_mask:[object-print-mask], print_data:[[object-print-data-page]]} 
     getPrintAny(req, res, next){

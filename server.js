@@ -16,9 +16,9 @@ function main(isHttp, isHttps) {
   const cors = require('./handlers/cors-handler');
   app.use(cors.CorsHandler.cors);
 
-  //su dung auth user
-  const userAuth = require('./routes/user-auth');
-  app.use('/auth', userAuth); 
+  //su dung auth user -- xac thuc bang server mobifone
+  //const userAuth = require('./routes/user-auth');
+  //app.use('/auth', userAuth); 
 
   const resource = require('./routes/resource-sqlite');
   app.use('/db', resource); 

@@ -25,28 +25,44 @@ const jwt = require('jsonwebtoken');
 
 var tokenSign = (req) => {
   let signTime = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-  //console.log('Sign secret:');
-  //console.log(jwtConfig.secret + req.clientIp + req.headers["user-agent"] + signTime);
-  if (req.user && req.user.USERNAME) {
+  let secret = (jwtConfig.secret + req.clientIp + req.headers["user-agent"] + signTime)
+  if (req.user && (req.user.USERNAME||req.user.username)) {
+    console.log('Sign secret 1:', secret);
     return jwt.sign({
-      username: req.user.USERNAME,
+      username: req.user.USERNAME?req.user.USERNAME:req.user.username,
       nickname: (req.user.DISPLAY_NAME) ? req.user.DISPLAY_NAME : '',
       image: (req.user.URL_IMAGE) ? req.user.URL_IMAGE : '',//, //thong tin anh cua nguoi su dung
       req_time: signTime
     },
-      (jwtConfig.secret + req.clientIp + req.headers["user-agent"] + signTime)
+    secret
+    , {
+      expiresIn: '24h' // expires in 24 hours
+    }
+    );
+  } else if (req.jsonData&&req.jsonData.isdn&&req.jsonData.key) {
+    secret = (jwtConfig.secret + req.clientIp + req.headers["user-agent"] + signTime + req.jsonData.key)
+    console.log('Sign secret 2:', secret);
+    return jwt.sign({
+      username: req.jsonData.isdn,
+      req_device: req.headers["user-agent"],
+      req_time: signTime
+    },
+    secret
       , {
-        expiresIn: '24h' // expires in 24 hours
+        expiresIn: '1h' // expires in 1 hours
       }
     );
-  } else {
+  } else 
+  {
+    secret = (jwtConfig.secret + req.clientIp + req.headers["user-agent"] + signTime);
+    console.log('Sign secret 3:', secret);
     return jwt.sign({
       req_device: req.headers["user-agent"],
       req_time: signTime
     },
-      (jwtConfig.secret + req.clientIp + req.headers["user-agent"] + signTime)
+    secret
       , {
-        expiresIn: '24h' // expires in 24 hours
+        expiresIn: '1h' // expires in 1 hours
       }
     );
   }
@@ -54,23 +70,24 @@ var tokenSign = (req) => {
 
 var tokenVerify = (req) => {
   if (req.token) {
-    var token = req.token;
+    let token = req.token;
     if (token.startsWith('Bearer ')) {
       token = token.slice(7, token.length);
     }
-    var tokenObj = jwt.decode(token);
-    //console.log('Verify secret:');
-    //console.log(jwtConfig.secret + req.clientIp + req.headers["user-agent"] + (tokenObj?tokenObj.req_time:''));
+    let tokenObj = jwt.decode(token);
+
+    let secret = jwtConfig.secret + req.clientIp + req.headers["user-agent"] + (tokenObj?tokenObj.req_time:'') + (req.keyOTP?req.keyOTP:'') 
+    console.log('Verify secret:',secret);
     return jwt.verify(token
-      , (jwtConfig.secret + req.clientIp + req.headers["user-agent"] + (tokenObj ? tokenObj.req_time : ''))
-      , (err, decoded) => {
-        if (err) {
-          return false;
-        } else {
-          req.user = decoded;
-          return true
-        }
-      });
+        , secret
+        , (err, decoded) => {
+          if (err) {
+            return false;
+          } else {
+            req.user = decoded;
+            return true
+          }
+        })
   } else {
     return false;
   }
@@ -99,15 +116,17 @@ class AuthHandler {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(PUBLIC_KEY));
     } else {
-      throw 'No PUBLIC_KEY init on server!'
+      res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(JSON.stringify({code:403, message:'No PUBLIC_KEY init on server!'}));
     }
   }
 
   //check token if ok go next(), else throw error
   /**
-   * Co 2 phuong phap lay token
+   * Co 3 phuong phap lay token
    * 1. Lay tu header authorization
    * 2. lay tu token trong url param (su dung get image)
+   * 3. lay tu token trong json post gan truc tiep req.token
    * return req.user
    * @param {*} req 
    * @param {*} res 
@@ -116,11 +135,12 @@ class AuthHandler {
   tokenCheck(req, res, next) {
     let token = req.headers['x-access-token'] || req.headers['authorization'];
     if (!token) token = url.parse(req.url, true, false).query.token;
-    req.token = token;
+    req.token = req.token?req.token:token; // uu tien token truyen trong json gan truoc do
     if (tokenVerify(req)) {
       next();
     } else {
-      throw {code:403, message:'Auth token is not supplied or you are unauthorized!'};
+      res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(JSON.stringify({code:403, message:'Auth token is not supplied or you are unauthorized!'}));
     }
   }
 
@@ -136,7 +156,8 @@ class AuthHandler {
     form.parse(req, function (err, fields, files) {
       let formData = {};
       if (err) {
-        throw 'Parse Formdata Error: ' + err;
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(JSON.stringify({code:403, message:'Parse Formdata Error', error: err}));
       } else {
         for (let key in fields) {
           //gan them thuoc tinh dynamic
@@ -168,6 +189,36 @@ class AuthHandler {
     });
   }
 
+
+  /**
+   * Lay json chuyen thanh req.jsonData
+   * @param {*} req 
+   * @param {*} res 
+   * @param {*} next 
+   */
+  jsonProcess(req, res, next){
+
+    let postDataString = '';
+    req.on('data', (chunk) => {
+        postDataString += chunk;
+    });
+    req.on('end', () => {
+      var postDataObject;
+      try{
+        
+        console.log('postDataString',postDataString);
+
+        postDataObject = JSON.parse(postDataString);
+        req.jsonData = postDataObject;
+
+        next();
+      }catch(err){
+        res.writeHead(403, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(JSON.stringify({code:403,message:"No JSON parse Data",error:err}));
+      }
+    })
+  }
+
   //dang ky user
   register(req, res, next) {
     const form = new formidable.IncomingForm();
@@ -178,7 +229,8 @@ class AuthHandler {
       let password = '';
 
       if (err) {
-        throw 'Error on parse form : ' + err
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(JSON.stringify({code:403, message:'Parse Formdata Error', error: err}));
       } else {
         for (let key in fields) {
           if (key = 'username') username = fields[key];
@@ -219,10 +271,12 @@ class AuthHandler {
             }));
           })
           .catch(err => {
-            throw 'Đăng ký không thành công đâu nhé! error: ' + err
+            res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+            res.end(JSON.stringify({code:403, message:'Đăng ký không thành công đâu nhé!', error: err}));
           });
       } else {
-        throw 'Lỗi truyền số liệu không đúng'
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(JSON.stringify({code:403, message:'Lỗi truyền số liệu không đúng'}));
       }
     });
 
@@ -290,7 +344,8 @@ class AuthHandler {
           });
 
       } else {
-        throw 'Lỗi truyền số liệu không đúng!'
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(JSON.stringify({code:403, message:'Lỗi truyền số liệu không đúng'}));
       }
     })
   }
@@ -367,12 +422,99 @@ class AuthHandler {
       message: 'Edit Avatar successfull!'
     })
   }
+
+
   editBackground(req, res, next) {
     throw JSON.stringify({
       success: true,
       message: 'Edit Bacground successfull!'
     })
   }
+
+
+  /**
+   * Lay req.jsonData lam du lieu dau vao de nhan tin
+   * @param {*} req 
+   * @param {*} res 
+   * @param {*} next 
+   */
+  sendSMS(req, res, next){
+    if (req.jsonData&&req.jsonData.isdn&&req.jsonData.sms){
+      db.handler.sendSMS(req)
+      .then(data=>{
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(JSON.stringify(data));
+      })
+      .catch(err=>{
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(JSON.stringify({code:403, message:'Oracle Error', error: err}));
+      })
+      ;
+    }else{
+      res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(JSON.stringify({code:403, message:'No jsonData for Send SMS!'}));
+    }
+  }
+
+  /**
+   * khoi tao key random
+   * sign
+   * @param {*} req 
+   * @param {*} res 
+   * @param {*} next 
+   */
+  requestIsdn(req,res,next){
+    if (req.jsonData&&req.jsonData.isdn){
+        let keyOTP =  Math.random().toString(36).substring(2,8).toUpperCase();
+        req.jsonData.key = keyOTP;
+        req.jsonData.sms = 'Mat khau OTP cua ban la: ' + keyOTP
+        db.handler.sendSMS(req)
+        .then(data=>{
+          data.token = tokenSign(req);
+          res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+          res.end(JSON.stringify(data));
+        })
+        .catch(err=>{
+          res.writeHead(403, { 'Content-Type': 'text/html; charset=utf-8' });
+          res.end(JSON.stringify({code:403, message:'Oracle Error', error: err}));
+        });
+    }else{
+      res.writeHead(403, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(JSON.stringify({code:403, message:'No jsonData for Request ISDN!'}));
+    }
+  }
+
+  confirmKey(req,res,next){
+    if (req.jsonData&&req.jsonData.key&&req.jsonData.token){
+        console.log(req.jsonData);
+        req.keyOTP = req.jsonData.key; //user nhap vao khi nhan duoc sms
+        req.token = req.jsonData.token; //phien truoc da gui va luu lai
+        
+        if (tokenVerify(req)) { //sau khi 
+          
+          console.log(req.user); //sau khi verify no decode thanh user chua isdn
+
+          let tokenConfirmed = tokenSign(req); //ghi nhan token moi 24h
+
+          res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+          res.end(JSON.stringify({
+            token:tokenConfirmed,
+            status:1,
+            message:'You are verified!'
+          }))
+
+        }else{
+          res.writeHead(403, { 'Content-Type': 'text/html; charset=utf-8' });
+          res.end(JSON.stringify({code:403, message:'your key/token invalid!'}));
+        }
+        
+      
+    }else{
+      res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(JSON.stringify({code:403, message:'No jsonData for confirm!'}));
+    }
+  }
+
 
 }
 
