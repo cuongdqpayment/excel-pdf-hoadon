@@ -197,7 +197,7 @@ var CreateTree = (arrIn,option,level)=>{
 }
 
 
-const isEquikeylent= (a, b, isSameKey, isSameValue) =>{ //la giong nhau cau truc hoan toan isSame
+const isEquikeylent= (a,b, isSameKey, isSameValue) =>{ //la giong nhau cau truc hoan toan isSame
     let aProps = Object.getOwnPropertyNames(a);
     let bProps = Object.getOwnPropertyNames(b);
     if ((isSameKey||isSameValue)&&aProps.length !== bProps.length)  return false;
@@ -206,14 +206,14 @@ const isEquikeylent= (a, b, isSameKey, isSameValue) =>{ //la giong nhau cau truc
     return true;
 }
 
-//const colxrow = {col:0,row:0,width: 0, align: '', color:''}; //co the thay doi mat na toa do diem nay them thuoc tinh
+//const colxrow = {col:0,row:0,width:100,align:'right',color:'red'}; //co the thay doi mat na toa do diem nay them thuoc tinh
 const GetMatrix = (maskMatrix, data, point)=>{
     var matrix = [];
     var PrintMatrix = (objPrintMatrix, dataObject)=>{
         for (let key of Object.keys(objPrintMatrix)){
             if (Array.isArray(objPrintMatrix[key])){
                 objPrintMatrix[key].forEach((x,idx)=>{
-                    if (isEquikeylent(x,point)){
+                    if (isEquikeylent(point,x)){
                         x.value = dataObject[key][idx];
                         if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push({col: x.col,row: x.row, value: x.value, width: x.width, align: x.align, color:x.color});
                     }else{
@@ -225,7 +225,7 @@ const GetMatrix = (maskMatrix, data, point)=>{
                     }
                 })
             }else{
-                if (isEquikeylent(objPrintMatrix[key],point)){
+                if (isEquikeylent(point,objPrintMatrix[key])){
                     let x = objPrintMatrix[key];
                     x.value = dataObject[key];
                     if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push({col: x.col,row: x.row, value: x.value, width: x.width, align: x.align, color:x.color});
