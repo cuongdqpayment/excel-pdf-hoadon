@@ -1,6 +1,7 @@
 
 const timeZoneOffset = +7;
-const utils = require('../utils/converter-2-vietnamese');
+const vietnamese = require('../utils/vietnamese-handler');
+const arrayMatrix = require('../utils/array-matrix');
 const db = require('../db/sqlite3/sqlite-hoadon-service');
 
 const PDFDocument = require('pdfkit');
@@ -188,7 +189,7 @@ var selectInvoicesJson = (bill_cycle, cust_id) => {
                     //el.bill_date = billDatePrints(el.bill_date);
 
                     el.bill_details = bill_details.filter(x => x.cust_id == el.cust_id);
-                    el.bill_sum_charge_spell = utils.StringVietnamDong(el.sum_charge);
+                    el.bill_sum_charge_spell = vietnamese.StringVietnamDong(el.sum_charge);
                     el.bill_sum = {
                         sum_not_vat: el.sum_not_vat,
                         sum_vat: el.sum_vat,
@@ -228,7 +229,7 @@ var selectInvoicesMatrix = (bill_cycle, cust_id) => {
             const invoicesPrintString = JSON.parse(old); //convert back to array
             let printMatrixs = [];
             invoicesPrintString.forEach(el => {
-                printMatrixs.push(utils.GetMatrix(billPrintMatrix, el, {col:0,row:0})); //cac cot gia tri nhieu nhat cau hinh in
+                printMatrixs.push(arrayMatrix.getMatrix(billPrintMatrix, el, {col:0,row:0})); //cac cot gia tri nhieu nhat cau hinh in
             });
             return printMatrixs;
         })
