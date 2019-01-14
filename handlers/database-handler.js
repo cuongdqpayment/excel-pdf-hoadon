@@ -1,7 +1,8 @@
 
 const timeZoneOffset = +7;
 const vietnamese = require('../utils/vietnamese-handler');
-const arrayMatrix = require('../utils/array-matrix');
+const arrayObject = require('../utils/array-object');
+
 const db = require('../db/sqlite3/sqlite-hoadon-service');
 
 const PDFDocument = require('pdfkit');
@@ -229,7 +230,7 @@ var selectInvoicesMatrix = (bill_cycle, cust_id) => {
             const invoicesPrintString = JSON.parse(old); //convert back to array
             let printMatrixs = [];
             invoicesPrintString.forEach(el => {
-                printMatrixs.push(arrayMatrix.getMatrix(billPrintMatrix, el, {col:0,row:0})); //cac cot gia tri nhieu nhat cau hinh in
+                printMatrixs.push(arrayObject.getMatrix(billPrintMatrix, el, {col:0,row:0})); //cac cot gia tri nhieu nhat cau hinh in
             });
             return printMatrixs;
         })

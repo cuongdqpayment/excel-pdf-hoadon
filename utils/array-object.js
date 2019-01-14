@@ -37,6 +37,15 @@ var createTree = (arrIn,option,level)=>{
     }
 }
 
+const clone =(obj) => {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
+}
+
 
 const isEquikeylent= (a,b, isSameKey, isSameValue) =>{ //la giong nhau cau truc hoan toan isSame
     let aProps = Object.getOwnPropertyNames(a);
@@ -57,7 +66,7 @@ const getMatrix = (maskMatrix, data, point)=>{
                 objPrintMatrix[key].forEach((x,idx)=>{
                     if (isEquikeylent(colxrow,x)){
                         x.value = dataObject[key][idx];
-                        if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push(x.slice());
+                        if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push(clone(x));
                     }else{
                         if (Array.isArray(x)){
                             console.log('ARRAY KHONG XU LY: ', key , idx , x);
@@ -70,7 +79,7 @@ const getMatrix = (maskMatrix, data, point)=>{
                 if (isEquikeylent(colxrow,objPrintMatrix[key])){
                     let x = objPrintMatrix[key];
                     x.value = dataObject[key];
-                    if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push(x.slice());
+                    if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push(clone(x));
                         
                 }else{
                     if (dataObject[key]) PrintMatrix(objPrintMatrix[key],dataObject[key]);
@@ -84,6 +93,7 @@ const getMatrix = (maskMatrix, data, point)=>{
 }
 
 module.exports = {
+    clone: clone,
     getMatrix : getMatrix, //tao ma tran in
     compare2Objects:isEquikeylent, //so sanh 2 object
     createTree: createTree,  //tao tree -->children
