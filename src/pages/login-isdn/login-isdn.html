@@ -45,5 +45,89 @@
             </ion-buttons>
           </form>
     </ion-slide>
+
+    <!-- #id=2 dang ky user, pass, ho ten, dia chi, email,  -->
+    <ion-slide>
+        <form (ngSubmit)="onSubmit()" [formGroup]="userFromGroup">
+            <ion-card col-12 col-xl-4 col-lg-6 col-sm-12>
+              <ion-item>
+                <ion-label floating>Password - Mật khẩu(*)</ion-label>
+                <ion-input type="password" formControlName="password"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>Nick Name - Tên hiển thị(*)</ion-label>
+                <ion-input type="nickname" formControlName="nickname"></ion-input>
+              </ion-item>
+              <ion-item>
+                  <ion-label floating>Full Name - Họ và tên đầy đủ(*)</ion-label>
+                  <ion-input type="name" formControlName="name"></ion-input>
+              </ion-item>
+              <ion-item>
+                  <ion-label floating>Email - Hộp thư điện tử</ion-label>
+                  <ion-input type="email" formControlName="email"></ion-input>
+              </ion-item>
+              <ion-item>
+                  <!-- (địa chỉ tự động sinh ra theo location) -->
+                  <ion-label floating>Address - Địa chỉ đầy đủ</ion-label>
+                  <ion-input type="address" formControlName="address"></ion-input>
+              </ion-item>
+              <ion-row no-padding>
+                <ion-col text-center col-12 col-xl-3 col-lg-4 col-sm-6>
+                    <ion-buttons start>
+                        <button ion-button block color="secondary" type="button" (click)="goBack()">
+                            Trở về
+                          <ion-icon name="share-alt"></ion-icon>
+                        </button>
+                    </ion-buttons>
+                  </ion-col>
+                  <ion-col text-center col-12 offset-xl-6 col-xl-3 offset-lg-4 col-lg-4 col-sm-6>
+                    <ion-buttons end>
+                        <button ion-button type="submit" icon-end round>
+                          Cập nhập
+                          <ion-icon name="share-alt"></ion-icon>
+                        </button>
+                    </ion-buttons>
+                  </ion-col>
+              </ion-row>
+        
+            </ion-card>
+          </form>
+    </ion-slide>
+    
+    <!-- #id=3 dang ky anh dai dien  -->
+    <ion-slide>
+        <form (ngSubmit)="onSubmit()" [formGroup]="imageFromGroup">
+                
+              <ion-item>  
+                <ion-buttons start>
+                    <button ion-button type="button" icon-end round>
+                        <input type="file" expandable accept="image/*" formControlName="image" (change)="fileChange($event)">
+                        Avantar - Chọn ảnh đại diện
+                        <ion-icon name="images"></ion-icon>
+                    </button>
+                </ion-buttons>
+              </ion-item>
+              
+              <ion-row no-padding>
+                <ion-col text-center col-12 col-xl-3 col-lg-4 col-sm-6>
+                    <ion-buttons start>
+                        <button ion-button block color="secondary" type="button" (click)="goBack()">
+                            Trở về
+                          <ion-icon name="share-alt"></ion-icon>
+                        </button>
+                    </ion-buttons>
+                  </ion-col>
+                  <ion-col text-center col-12 offset-xl-6 col-xl-3 offset-lg-4 col-lg-4 col-sm-6>
+                    <ion-buttons end>
+                        <button ion-button type="submit" icon-end round>
+                          Cập nhập
+                          <ion-icon name="share-alt"></ion-icon>
+                        </button>
+                    </ion-buttons>
+                  </ion-col>
+              </ion-row>
+          </form>
+    </ion-slide>
+
   </ion-slides>
 </ion-content>

@@ -452,8 +452,7 @@ class ResourceHandler {
     }
 
     /**
-     * Lay danh sach hoa don theo ky va theo khach hang
-     * 
+     * Lay hoa don excel theo ky,khach le?backgroud=yes/no
      * @param {*} req 
      * @param {*} res 
      * @param {*} next 
@@ -463,19 +462,14 @@ class ResourceHandler {
         let params = path.substring('/json-invoices/'.length);
         let bill_cycle = params.slice(0,6);
         let cust_id = params.slice(7, 17);
+
         selectInvoicesJson(bill_cycle,cust_id)
         .then(invoices=>{
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify(invoices
                 ,(key, value) => {
-                if (value === null) {
-                    //chuyen doi null khong xuat hien
-                    return undefined;
-                }
-                if (key=='start_date'){
-                    //chuyen doi thoi gian milisecond thanh string ngay gio
-                    return new Date(value + timeZoneOffset*60*60*1000).toISOString().replace(/T/, ' ').replace(/\..+/, '') 
-                }
+                if (value === null)  return undefined
+                if (key=='start_date') return new Date(value + timeZoneOffset*60*60*1000).toISOString().replace(/T/, ' ').replace(/\..+/, '') 
                 return value;
                 }
                 ));
@@ -487,6 +481,12 @@ class ResourceHandler {
 
     }
 
+    /**
+     * Lay hoa don pdf theo ky,khach le?backgroud=yes/no
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     getPdfInvoices(req, res, next){
         let req_url = url.parse(req.url, true, false);
         let path = decodeURIComponent(req_url.pathname);
@@ -524,11 +524,41 @@ class ResourceHandler {
 
     }
 
+    /**
+     * tra ds khack hang bang excel
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     getExcelCustomers(req, res, next){
         
     }
 
+    /**
+     * tra ds hoa don bang excel 
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     getExcelInvoices(req, res, next){
+        
+    }
+
+
+    //lay cau hinh ve de thay doi cau hinh in an
+    getPrintMask(req, res, next){
+        
+    }
+    //tra ket qua in tu client config
+    postPrintMask(req, res, next){
+        
+    }
+    //tra cau truc json cho client khai bao lai: {print-config:{background:'url/base64',size:'A4',margin:0}, print_mask:[object-print-mask], print_data:[[object-print-data-page]]} 
+    getPrintAny(req, res, next){
+        
+    }
+    //tra ket qua in tu client json gom: {print-config:{background:'url/base64',size:'A4',margin:0}, print_mask:[object-print-mask], print_data:[[object-print-data-page]]} 
+    postPrintAny(req, res, next){
         
     }
 

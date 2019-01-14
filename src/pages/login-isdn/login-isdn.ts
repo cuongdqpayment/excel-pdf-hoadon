@@ -16,6 +16,8 @@ export class LoginIsdnPage {
 
   isdnFormGroup: FormGroup;
   keyFormGroup: FormGroup;
+  userFromGroup: FormGroup;
+  imageFormGroup: FormGroup;
   
 
   constructor( private formBuilder: FormBuilder,
@@ -50,30 +52,61 @@ export class LoginIsdnPage {
     })
 
 
+    this.userFromGroup = this.formBuilder.group({
+      password: ['',
+        [
+          Validators.required,
+          Validators.minLength(3)
+        ]
+      ],
+      nickname: ['',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(30)
+        ]
+      ],
+      name: ['',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(50)
+        ]
+      ],
+      email: '',
+      address: ''
+    })
+
+
+    this.imageFormGroup = this.formBuilder.group({
+      image: ['', //base64
+        [
+          Validators.required
+        ]
+      ],
+    })
+
     if (this.apiStorageService.getToken()){
       this.auth.authorize(this.apiStorageService.getToken())
       .then(status=>{
         //get public key de truyen ma hoa mat khau
         //chi khi nao token duoc xac thuc moi cho public key
         //ktra public key phai ycau token key bang dien thoai
-        this.auth.getServerPublicRSAKey()
-        .then(pk => {
-          
-          console.log('Public key ok');
-          this.navCtrl.setRoot(TabsPage);
-        })
-        .catch(err=>{
-          console.log('Public key err', err);
-        });
+          this.auth.getServerPublicRSAKey()
+          .then(pk => {
+            
+            console.log('Public key ok');
+            this.navCtrl.setRoot(TabsPage);
+          })
+          .catch(err=>{
+            console.log('Public key err', err);
+          });
       })
       .catch(err=>{
         console.log('Token invalid: ', err);
         this.auth.deleteToken();
       });
     }
-
-    
-
 
   }
 
@@ -88,10 +121,14 @@ export class LoginIsdnPage {
       let b = JSON.parse(a.v_out);
       console.log('token',a.token); 
       console.log('status',b); //hack
-      this.token = a.token;
-      this.goToSlide(1); //ve form confirmKey
       if (b.status==1&&a.token){
-      }else{
+        this.token = a.token;
+        this.goToSlide(1); //ve form confirmKey
+      }else if (isdn==='123456789') {
+        this.presentAlert('Số điện thoại '+isdn+' chỉ dùng để debug.<br> vui lòng nhập key OTP debug thử là:  để tiếp tục' );
+        this.token = a.token;
+        this.goToSlide(1); //ve form confirmKey
+      }else {
         //neu ho nhap so dien thoai nhieu lan sai so spam thi ??
         this.presentAlert('Số điện thoại '+isdn+' không hợp lệ.<br> Vui lòng liên hệ Quản trị hệ thống');
       }
@@ -114,7 +151,20 @@ export class LoginIsdnPage {
         this.token = token;
         this.auth.saveToken(token); //luu tru tren xac thuc va xuong dia
         
-        this.navCtrl.setRoot(TabsPage);
+        //yeu cau cung cap anh dai dien
+        //mat khau luu tru
+        this.auth.getServerPublicRSAKey()
+        .then(pk => {
+          
+          console.log('Public key ok khoi tao user, mat khau ');
+          //kiem tra login bang pass, neu co user thi 
+          this.goToSlide(2);
+          //neu chua co user thi den 
+        })
+        .catch(err=>{
+          console.log('Public key err', err);
+        });
+
     })
     .catch(err=>{
       this.presentAlert('Mã OTP của bạn không đúng vui lòng kiểm tra lại trên số điện thoại của bạn <br>'
@@ -122,6 +172,19 @@ export class LoginIsdnPage {
       this.goToSlide(0); //ve form isdn
     })
   }
+
+
+  onSubmitUserInfo(){
+
+    this.goToSlide(3);
+  }
+
+  onSubmitImage(){
+    
+    this.navCtrl.setRoot(TabsPage);
+  }
+
+
 
   goToSlide(i) {
     this.slides.lockSwipes(false);
@@ -145,9 +208,30 @@ export class LoginIsdnPage {
     }).present();
   }
 
+  fileChange(event) {
+    if (event.target && event.target.files) {
+      const files: { [key: string]: File } = event.target.files;
+      for (let key in files) { //index, length, item
+        if (!isNaN(parseInt(key))) {
+          this.apiImageService.resizeImage(files[key].name,files[key],300)
+          .then(data=>{
+            this.resourceImages.push(data);
+            this.isImageViewer = true;
+          })
+          .catch(err=>{
+            console.log(err);
+          })
+        }
+      }//
+    }
+  }
 
 
-  
+  deleteImage(evt) {
+    /* this.resourceImages = this.resourceImages.filter((value, index, arr) => {
+      return value != evt;
+    }); */
+  }
 }
 function phoneNumberValidator(formControl: FormControl) {
   if (formControl.value.charAt(0) != "0") return null;
