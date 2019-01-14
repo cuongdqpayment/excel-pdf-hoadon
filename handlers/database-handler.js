@@ -234,7 +234,7 @@ var selectInvoicesMatrix = (bill_cycle, cust_id) => {
             const invoicesPrintString = JSON.parse(old); //convert back to array
             let printMatrixs = [];
             invoicesPrintString.forEach(el => {
-                printMatrixs.push(utils.GetMatrix(billPrintMatrix, el, { col: 0, row: 0 }));
+                printMatrixs.push(utils.GetMatrix(billPrintMatrix, el, {col:0,row:0,width: 0, align: '', color:''})); //cac cot gia tri nhieu nhat cau hinh in
             });
             return printMatrixs;
         })

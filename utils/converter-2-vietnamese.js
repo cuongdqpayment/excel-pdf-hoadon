@@ -1,6 +1,4 @@
 
-
-
 /**
  * object nay se doc so thanh tien vnd
  * viet hoa chu cai dau tung word trong string
@@ -208,16 +206,16 @@ const isEquikeylent= (a, b, isSameKey, isSameValue) =>{ //la giong nhau cau truc
     return true;
 }
 
-//const colxrow = {col:0,row:0}; //co the thay doi mat na toa do diem nay them thuoc tinh
+//const colxrow = {col:0,row:0,width: 0, align: '', color:''}; //co the thay doi mat na toa do diem nay them thuoc tinh
 const GetMatrix = (maskMatrix, data, point)=>{
     var matrix = [];
     var PrintMatrix = (objPrintMatrix, dataObject)=>{
         for (let key of Object.keys(objPrintMatrix)){
             if (Array.isArray(objPrintMatrix[key])){
                 objPrintMatrix[key].forEach((x,idx)=>{
-                    if (isEquikeylent(point,x)){
+                    if (isEquikeylent(x,point)){
                         x.value = dataObject[key][idx];
-                        if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push({col: x.col,row: x.row, value: x.value});
+                        if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push({col: x.col,row: x.row, value: x.value, width: x.width, align: x.align, color:x.color});
                     }else{
                         if (Array.isArray(x)){
                             console.log('ARRAY KHONG XU LY: ', key , idx , x);
@@ -227,10 +225,10 @@ const GetMatrix = (maskMatrix, data, point)=>{
                     }
                 })
             }else{
-                if (isEquikeylent(point,objPrintMatrix[key])){
+                if (isEquikeylent(objPrintMatrix[key],point)){
                     let x = objPrintMatrix[key];
                     x.value = dataObject[key];
-                    if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push({col: x.col,row: x.row, value: x.value});
+                    if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push({col: x.col,row: x.row, value: x.value, width: x.width, align: x.align, color:x.color});
                 }else{
                     if (dataObject[key]) PrintMatrix(objPrintMatrix[key],dataObject[key]);
                 }
