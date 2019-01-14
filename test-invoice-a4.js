@@ -21,7 +21,9 @@ const GetMatrix = (maskMatrix, data, point)=>{
                         //day la toa do
                         console.log('point X', key, idx , x , dataObject[key][idx]);
                         x.value = dataObject[key][idx];
-                        if (x.value!==undefined&&x.value!==null&&x.value!=='') matrix.push(x);
+                        
+                        if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push({col: x.col,row: x.row, value: x.value});
+                        
                     }else{
                         //day la doi tuong hoac mang con
                         if (Array.isArray(x)){
@@ -41,7 +43,7 @@ const GetMatrix = (maskMatrix, data, point)=>{
                     let x = objPrintMatrix[key];
                     console.log('point X', key , 0 , x , dataObject[key])
                     x.value = dataObject[key];
-                    if (x.value!==undefined&&x.value!==null&&x.value!=='') matrix.push(x);
+                    if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push({col: x.col,row: x.row, value: x.value});
                 }else{
                     //day la doi tuong con xu ly de quy
                     //console.log('data next', dataObject[key])

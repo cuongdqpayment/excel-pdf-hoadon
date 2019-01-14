@@ -70707,11 +70707,6 @@ page-config .login-sliding-demo .ion-logo-instagram {
   color: #235D8D;
 }
 
-page-confirm-key .error {
-  color: red;
-  font-style: italic;
-}
-
 page-login input[type="file"] {
   position: absolute;
   top: 0;

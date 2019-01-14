@@ -3,7 +3,9 @@ import { NavController, AlertController, Slides } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ApiAuthService } from '../../services/apiAuthService';
 import { ApiStorageService } from '../../services/apiStorageService';
+import { ApiImageService } from '../../services/apiImageService';
 import { TabsPage } from '../tabs/tabs';
+
 
 @Component({
   selector: 'page-login-isdn',
@@ -18,12 +20,18 @@ export class LoginIsdnPage {
   keyFormGroup: FormGroup;
   userFromGroup: FormGroup;
   imageFormGroup: FormGroup;
+
+
+  isImageViewer: boolean = false;
+  resourceImages=[]//: { imageViewer: any, file: any, name: string }[] = [];
+
   
 
   constructor( private formBuilder: FormBuilder,
                private auth : ApiAuthService,
                private alertCtrl: AlertController,
                private apiStorageService: ApiStorageService,
+               private apiImageService: ApiImageService,
                private navCtrl: NavController) {}
 
 
@@ -95,7 +103,10 @@ export class LoginIsdnPage {
           this.auth.getServerPublicRSAKey()
           .then(pk => {
             
-            console.log('Public key ok');
+            let userInfo = this.auth.getUserInfo();
+            console.log('Save token user', userInfo);
+            //kiem tra token chua khai nickname, va image thi phai nhay vao slide khai thong tin
+            if (userInfo.image&&userInfo.nickname)
             this.navCtrl.setRoot(TabsPage);
           })
           .catch(err=>{
@@ -125,7 +136,7 @@ export class LoginIsdnPage {
         this.token = a.token;
         this.goToSlide(1); //ve form confirmKey
       }else if (isdn==='123456789') {
-        this.presentAlert('Số điện thoại '+isdn+' chỉ dùng để debug.<br> vui lòng nhập key OTP debug thử là:  để tiếp tục' );
+        this.presentAlert('Số điện thoại '+isdn+' chỉ dùng để debug.<br> vui lòng nhập key OTP debug : '+ b.message +' để tiếp tục' );
         this.token = a.token;
         this.goToSlide(1); //ve form confirmKey
       }else {

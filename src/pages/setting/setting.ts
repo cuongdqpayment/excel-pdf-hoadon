@@ -3,7 +3,7 @@ import { NavController, ToastController, LoadingController } from 'ionic-angular
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { LoginPage } from '../login/login';
 import { ApiAuthService } from '../../services/apiAuthService';
-import { ApiImageService } from '../../services/apiImageService'
+import { ApiImageService } from '../../services/apiImageService';
 
 
 @Component({

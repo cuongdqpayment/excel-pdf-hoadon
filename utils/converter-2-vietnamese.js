@@ -202,7 +202,7 @@ var CreateTree = (arrIn,option,level)=>{
 const isEquikeylent= (a, b, isSameKey, isSameValue) =>{ //la giong nhau cau truc hoan toan isSame
     let aProps = Object.getOwnPropertyNames(a);
     let bProps = Object.getOwnPropertyNames(b);
-    if (isSameKey&&isSameValue&&aProps.length !== bProps.length)  return false;
+    if ((isSameKey||isSameValue)&&aProps.length !== bProps.length)  return false;
     for (let i = 0; i < aProps.length; i++) if (isSameValue&&a[aProps[i]] !== b[aProps[i]]) return false;
     for (let i = 0; i < aProps.length; i++) if (bProps.find(x=>x===aProps[i]) === undefined) return false;
     return true;
@@ -217,7 +217,7 @@ const GetMatrix = (maskMatrix, data, point)=>{
                 objPrintMatrix[key].forEach((x,idx)=>{
                     if (isEquikeylent(point,x)){
                         x.value = dataObject[key][idx];
-                        if (x.value!==undefined&&x.value!==null&&x.value!=='') matrix.push(x);
+                        if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push({col: x.col,row: x.row, value: x.value});
                     }else{
                         if (Array.isArray(x)){
                             console.log('ARRAY KHONG XU LY: ', key , idx , x);
@@ -230,7 +230,7 @@ const GetMatrix = (maskMatrix, data, point)=>{
                 if (isEquikeylent(point,objPrintMatrix[key])){
                     let x = objPrintMatrix[key];
                     x.value = dataObject[key];
-                    if (x.value!==undefined&&x.value!==null&&x.value!=='') matrix.push(x);
+                    if (x.value!==undefined&&x.value!==null&&x.value!=='')matrix.push({col: x.col,row: x.row, value: x.value});
                 }else{
                     if (dataObject[key]) PrintMatrix(objPrintMatrix[key],dataObject[key]);
                 }
