@@ -1,3 +1,5 @@
+"use strict"
+
 /**
  * Tao cay quan ly nhu oracle
  * No se tu dong tao ra mang

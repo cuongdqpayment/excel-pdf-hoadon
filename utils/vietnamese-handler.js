@@ -1,3 +1,4 @@
+"use strict"
 
 /**
  * object nay se doc so thanh tien vnd

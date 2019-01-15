@@ -8,7 +8,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
-import { LoginIsdnPage } from '../pages/login-isdn/login-isdn';
+
+import { LoginPhonePage } from '../pages/login-phone/login-phone';
+
 import { RegisterPage } from '../pages/register/register';
 import { SettingPage } from '../pages/setting/setting';
 import { SampleIconsPage } from '../pages/sample-icons/sample-icons';
@@ -37,7 +39,8 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
 @NgModule({
   declarations: [
     MyApp,
-    LoginIsdnPage,
+    LoginPhonePage,
+    
     ParametersPage,
     CustomerPage,
     InvoicePage,
@@ -63,7 +66,8 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    LoginIsdnPage,
+    LoginPhonePage,
+
     ParametersPage,
     CustomerPage,
     InvoicePage,

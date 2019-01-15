@@ -1,3 +1,5 @@
+"use strict"
+
 const fs = require('fs');
 const dirUpload = 'upload_files';
 const systempath = require('path');
@@ -5,7 +7,7 @@ const formidable = require('formidable');
 
 if (!fs.existsSync(dirUpload)) fs.mkdirSync(dirUpload);
   /**
-   * return req.formData
+   * body formdata => req.form_data (file save in dirUpload ) 
    * @param {*} req 
    * @param {*} res 
    * @param {*} next 
@@ -42,7 +44,7 @@ var formProcess = (req, res, next) => {
             enumerable: true //cho phep gan thanh thuoc tinh truy van sau khi hoan thanh
           });
         }
-        req.formData = formData;
+        req.form_data = formData;
         next();
       }
     });
@@ -50,7 +52,7 @@ var formProcess = (req, res, next) => {
 
 
   /**
-   * Lay json chuyen thanh req.json_data
+   * body json => req.json_data
    * @param {*} req 
    * @param {*} res 
    * @param {*} next 
@@ -63,7 +65,6 @@ var formProcess = (req, res, next) => {
     });
     req.on('end', () => {
       try{
-        //console.log('postDataString',postDataString);        
         req.json_data = JSON.parse(postDataString);
         next();
       }catch(err){
@@ -74,6 +75,6 @@ var formProcess = (req, res, next) => {
   }
 
   module.exports = {
-    PostJsonProcess: jsonProcess,
-    PostFormProcess: formProcess
+    jsonProcess: jsonProcess,
+    formProcess: formProcess
   };
