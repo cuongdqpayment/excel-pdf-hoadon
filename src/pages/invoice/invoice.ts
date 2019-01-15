@@ -10,8 +10,9 @@ import { ApiStorageService } from '../../services/apiStorageService';
 })
 export class InvoicePage {
   pdfLink:any;
-  public resourceServer = ApiStorageService.apiServer;
+  public resourceServer = ApiStorageService.resourceServer;
   constructor(private navCtrl: NavController,
+              private apiStorageService: ApiStorageService,
               private sanitizer: DomSanitizer) {
   }
 
@@ -20,6 +21,6 @@ export class InvoicePage {
   }
 
   getInvoices(){
-    this.pdfLink = this.sanitizer.bypassSecurityTrustResourceUrl(this.resourceServer + "/db/pdf-invoices");
+    this.pdfLink = this.sanitizer.bypassSecurityTrustResourceUrl(this.resourceServer + "/db/pdf-invoices/201901?background=yes&&token="+this.apiStorageService.getToken());
   }
 }

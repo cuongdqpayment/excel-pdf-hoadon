@@ -2,7 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, AlertController, Slides } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ApiAuthService } from '../../services/apiAuthService';
+
 import { ApiResourceService } from '../../services/apiResourceServices';
+
 import { ApiStorageService } from '../../services/apiStorageService';
 import { ApiImageService } from '../../services/apiImageService';
 import { TabsPage } from '../tabs/tabs';
@@ -107,7 +109,7 @@ export class LoginPhonePage {
             let userInfo = this.auth.getUserInfo();
             console.log('Save token user', userInfo);
             //kiem tra token chua khai nickname, va image thi phai nhay vao slide khai thong tin
-            if (userInfo.image&&userInfo.nickname)
+            if (userInfo&&userInfo.image&&userInfo.nickname)
             this.navCtrl.setRoot(TabsPage);
           })
           .catch(err=>{

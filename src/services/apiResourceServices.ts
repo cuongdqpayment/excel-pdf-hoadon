@@ -7,7 +7,7 @@ import { RequestInterceptor } from '../interceptors/requestInterceptor';
 @Injectable()
 export class ApiResourceService {
 
-    resourceServer = ApiStorageService.apiServer;
+    resourceServer = ApiStorageService.resourceServer;
     token:any;
 
     constructor(private httpClient: HttpClient,
