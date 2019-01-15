@@ -36,4 +36,16 @@ router.post('/edit-avatar', handlers.tokenCheck , handlers.editAvatar);
 //load anh nen
 router.post('/edit-background', handlers.tokenCheck , handlers.editBackground);
 
+//send-sms - thuc hien xac thuc cho phep gui sms qua 9235 (gui sms hay smses)
+//curl -X POST -H 'Content-Type: application/json' -d '{ “isdn”: “903500888”, “sms”: “test gui tin nhan qua api” }' https://c3.mobifone.vn/api/auth/send-sms
+router.post('/send-sms', handlers.jsonProcess, handlers.sendSMS);
+
+//gui len so thue bao --> tra ve token temp -> key --> 1h 
+router.post('/request-isdn', handlers.jsonProcess, handlers.requestIsdn);
+
+//gui len token temp, key xac thuc -- tra ve token 24h
+router.post('/confirm-key', handlers.jsonProcess, handlers.confirmKey);
+
+
+
 module.exports = router;

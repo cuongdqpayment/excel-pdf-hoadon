@@ -17,11 +17,11 @@ function main(isHttp, isHttps) {
   app.use(cors.CorsHandler.cors);
 
   //su dung auth user -- xac thuc bang server mobifone
-  //const userAuth = require('./routes/user-auth');
-  //app.use('/auth', userAuth); 
+  const proxyAuth = require('./routes/auth-proxy');
+  app.use('/auth', proxyAuth); 
 
   const resource = require('./routes/resource-sqlite');
-  app.use('/db', resource); 
+  //app.use('/db', resource); 
 
   //ham tra loi cac dia chi khong co
   //The 404 Route (ALWAYS Keep this as the last route)
@@ -75,7 +75,7 @@ function main(isHttp, isHttps) {
 }
 
 //=false or port number >1000
-const isHttp = 9235;
+const isHttp = 8080; //cho web server // 9235 cho auth server
 const isHttps = false //8443; 
 
 main(isHttp, isHttps);

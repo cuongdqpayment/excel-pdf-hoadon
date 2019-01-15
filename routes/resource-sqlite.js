@@ -1,7 +1,9 @@
+
 const router = require('express').Router();
 
 const postHandler = require('../utils/post-handler');
 const resourceHandler = require('../handlers/database-handler');
+
 let handlers = resourceHandler.ResourceHandler;
 //kiem tra token dung cho phep lay tai nguyen nay
 router.get('/json-parameters', handlers.getParameters); //ok

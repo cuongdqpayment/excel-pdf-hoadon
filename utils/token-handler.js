@@ -1,3 +1,5 @@
+"use strict"
+
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../jwt/jwt-config');
 const url = require('url');
