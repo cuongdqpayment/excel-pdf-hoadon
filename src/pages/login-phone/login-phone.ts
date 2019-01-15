@@ -97,8 +97,7 @@ export class LoginPhonePage {
     })
 
     if (this.apiStorageService.getToken()){
-      //this.auth.authorize
-      this.resources.authorizeFromResource
+      this.auth.authorize
       (this.apiStorageService.getToken())
       .then(status=>{
 
