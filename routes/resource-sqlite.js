@@ -32,14 +32,14 @@ router.post('/json-print-any', handlers.postPrintAny);
  */
 //tra ket qua in hoa don in don le, in nhom, in het, co/khong backgroud kieu json
 router.get('/json-invoices/*'
-                            , tokenHandler.getToken
-                            , proxyHandler.verifyProxyToken
+                            //, tokenHandler.getToken
+                            //, proxyHandler.verifyProxyToken
                             , handlers.getInvoices
                             );   //OK
 //tra ket qua in hoa don in don le, in nhom, in het, co/khong background kieu pdf
 router.get('/pdf-invoices/*'
-                            , tokenHandler.getToken
-                            , proxyHandler.verifyProxyToken
+                            //, tokenHandler.getToken
+                            //, proxyHandler.verifyProxyToken
                             , handlers.getPdfInvoices); //OK
 
 module.exports = router;
