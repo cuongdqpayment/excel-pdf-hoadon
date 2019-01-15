@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, AlertController, Slides } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ApiAuthService } from '../../services/apiAuthService';
+import { ApiResourceService } from '../../services/apiResourceServices';
 import { ApiStorageService } from '../../services/apiStorageService';
 import { ApiImageService } from '../../services/apiImageService';
 import { TabsPage } from '../tabs/tabs';
@@ -29,6 +30,7 @@ export class LoginPhonePage {
 
   constructor( private formBuilder: FormBuilder,
                private auth : ApiAuthService,
+               private resources : ApiResourceService,
                private alertCtrl: AlertController,
                private apiStorageService: ApiStorageService,
                private apiImageService: ApiImageService,
@@ -95,11 +97,11 @@ export class LoginPhonePage {
     })
 
     if (this.apiStorageService.getToken()){
-      this.auth.authorize(this.apiStorageService.getToken())
+      //this.auth.authorize
+      this.resources.authorizeFromResource
+      (this.apiStorageService.getToken())
       .then(status=>{
-        //get public key de truyen ma hoa mat khau
-        //chi khi nao token duoc xac thuc moi cho public key
-        //ktra public key phai ycau token key bang dien thoai
+
           this.auth.getServerPublicRSAKey()
           .then(pk => {
             
@@ -187,12 +189,37 @@ export class LoginPhonePage {
 
   onSubmitUserInfo(){
     
-    this.goToSlide(3);
-  }
-
-  onSubmitImage(){
+    //gui thong tin len may chu de dang ky user
+    this.auth.sendUserInfo(JSON.stringify({}));
     
-    this.navCtrl.setRoot(TabsPage);
+    this.goToSlide(3);
+    
+  }
+  
+  onSubmitImage(){
+    this.auth.sendImageBase64(JSON.stringify({}));
+    //may chu cho phep se cap mot token server proxy
+    //console.log('token proxy',this.token);
+    //gui token nay len server resource chung thuc
+    this.resources.authorizeFromResource(this.token)
+    .then(data=>{
+      //console.log('data from resource',data);
+      let login;
+      login = data;
+      if (login.status&&login.user_info&&login.token){
+        this.apiStorageService.saveToken(this.token);
+        this.navCtrl.setRoot(TabsPage);
+      }else{
+        this.presentAlert('Dữ liệu xác thực không đúng <br>' + JSON.stringify(data))
+        this.goToSlide(0);
+      }
+    })
+    .catch(err=>{
+      //console.log('err',err);
+      this.presentAlert('Lỗi xác thực - authorizeFromResource')
+      this.goToSlide(0);
+    });
+
   }
 
 

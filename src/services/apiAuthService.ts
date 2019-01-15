@@ -240,10 +240,9 @@ export class ApiAuthService {
      */
     authorize(token){
         this.reqInterceptor.setRequestToken(token); //login nguoi khac
-        return this.httpClient.get(this.authenticationServer + '/authorize')
+        return this.httpClient.get(this.authenticationServer + '/authorize-token')
             .toPromise()
             .then(data => {
-                //console.log('/authorize',data);                
                 this.userToken={token:token};
                 return true; 
             })
@@ -262,6 +261,10 @@ export class ApiAuthService {
             });
     }
 
+    /**
+     * yeu cau mot OTP tu phone
+     * @param jsonString 
+     */
     requestIsdn(jsonString){
         //chuyen len bang form co ma hoa
         return this.httpClient.post(this.authenticationServer + '/request-isdn', jsonString)
@@ -271,6 +274,11 @@ export class ApiAuthService {
              });
      }
 
+
+     /**
+      * confirm OTP key
+      * @param jsonString 
+      */
     confirmKey(jsonString){
          //chuyen di bang form co ma hoa
         return this.httpClient.post(this.authenticationServer + '/confirm-key', jsonString)
@@ -278,7 +286,7 @@ export class ApiAuthService {
              .then(data => {
                  this.userToken = data;
                  if (this.userToken&&this.userToken.token){
-                    this.reqInterceptor.setRequestToken(this.userToken.token); //login nguoi khac
+                    this.reqInterceptor.setRequestToken(this.userToken.token); //gan token ap dung cho cac phien tiep theo
                     return this.userToken.token;
                 }else{
                     //neu ho nhap so dien thoai nhieu lan sai so spam thi ??
@@ -287,4 +295,15 @@ export class ApiAuthService {
              });
      }
 
+     sendUserInfo(jsonString){
+         //gui token + userInfo (pass encrypted) --ghi vao csdl
+         //tra ket qua cho user
+         return true;
+     }
+
+     sendImageBase64(jsonString){
+         //gui token + userInfo (pass encrypted) --ghi vao csdl
+         //tra ket qua cho user
+         return true;
+     }
 }

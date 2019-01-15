@@ -21,7 +21,7 @@ function main(isHttp, isHttps) {
   app.use('/auth', proxyAuth); 
 
   const resource = require('./routes/resource-sqlite');
-  //app.use('/db', resource); 
+  app.use('/db', resource); 
 
   //ham tra loi cac dia chi khong co
   //The 404 Route (ALWAYS Keep this as the last route)

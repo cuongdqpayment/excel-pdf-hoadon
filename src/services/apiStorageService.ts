@@ -9,8 +9,8 @@ export class ApiStorageService {
  
     public static token;
     //public static apiServer = ''; 
-    public static apiServer = 'https://qld-invoices.herokuapp.com'; 
-    //public static apiServer = 'http://localhost:9235'; 
+    //public static apiServer = 'https://qld-invoices.herokuapp.com'; 
+    public static apiServer = 'http://localhost:8080'; 
     //public static apiServer = 'https://c3.mobifone.vn';
     public static authenticationServer = 'https://c3.mobifone.vn/api/ext-auth';
 

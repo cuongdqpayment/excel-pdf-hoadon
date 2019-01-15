@@ -7,10 +7,11 @@ import { RequestInterceptor } from '../interceptors/requestInterceptor';
 @Injectable()
 export class ApiHttpPublicService {
 
-    public resourceServer = ApiStorageService.apiServer;
+    resourceServer = ApiStorageService.apiServer;
 
     constructor(private httpClient: HttpClient,
-                private reqInterceptor: RequestInterceptor) {}
+                private reqInterceptor: RequestInterceptor //muon thay doi token gui kem thi ghi token moi
+                ) {}
 
     /**
      * Lay danh sach cac quoc gia ve Ma so dien thoai, co, ten, ngon ngu, tien...
@@ -64,5 +65,17 @@ export class ApiHttpPublicService {
     }
 
 
+    /**
+     * truyen len {token:'...'}
+     * @param jsonString 
+     */
+    authorizeFromResource(token){
+        this.reqInterceptor.setRequestToken(token); 
+        return this.httpClient.post(this.resourceServer + '/auth/authorize-token', JSON.stringify({token: token}))
+            .toPromise()
+            .then(data => {
+                return data; 
+            });
+    }
 
 }

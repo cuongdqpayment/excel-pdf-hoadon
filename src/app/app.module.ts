@@ -30,6 +30,7 @@ import { ApiAuthService } from '../services/apiAuthService';
 import { ApiImageService } from '../services/apiImageService';
 
 import { ApiHttpPublicService } from '../services/apiHttpPublicServices'
+import { ApiResourceService } from '../services/apiResourceServices';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptor } from '../interceptors/requestInterceptor';
@@ -88,6 +89,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
     ApiAuthService,
     ApiImageService,
     ApiStorageService,
+    ApiResourceService,
     ApiHttpPublicService,
     RequestInterceptor,
     {
