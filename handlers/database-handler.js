@@ -13,7 +13,7 @@ const url = require('url');
 //neu khong can in truong nao thi rao lai khong khai bao
 var billPrintMatrix = {
     bill_date: [{ col: 285, row: 65 }, { col: 340, row: 65 }, { col: 375, row: 65 }],
-    invoice_no: { col: 480, row: 55 },
+    invoice_no: { col: 480, row: 55, color: 'red'},
     full_name: { col: 160, row: 90 },
     organization_name: { col: 120, row: 105 },
     tax_no: { col: 120, row: 120 },
