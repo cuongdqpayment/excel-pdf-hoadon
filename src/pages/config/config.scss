@@ -1,12 +1,60 @@
 page-config {
-     /* TODO: spinner is dropping classes so we have to use ids: https://github.com/ionic-team/ionic/issues/7087 */
+  
+ion-row:nth-of-type(odd) { //dòng lẻ
+    ion-col:nth-of-type(odd) { //cột lẻ
+        margin:0.5em;    //Khoảng cách đường biên cột so với lề đối tượng trước
+        padding:0.5em;    //Khoảng cách từ biên đến nội dung ghi trong đó (px điểm ảnh em số dòng)
+        padding-top:3em;    //Khoảng cách từ biên đến nội dung ghi trong đó (px điểm ảnh em số dòng)
+        opacity: 0.7;  //làm mờ các thành phần mà nó chứa (đô trong suốt) //giá trị từ 0-1
+        background: #71ddee;
+        color:#202020;
+        text-align:center;
+        font-family:"Roboto",sans-serif;
+    }
+    ion-col:nth-of-type(even) { //cột chẵn
+        background: #b5d8dd;
+        color:#202020;
+        //body 
+        text-align:center;
+        font-family:"Roboto",sans-serif;
+        //test
+        margin-left:5em;    //Cách lề trái
+        margin-right:2em;   //Cách lề phải
+        margin-top:3em;     //Cách lề trên
+        margin-bottom:3em;  //Cách lề dưới
+    }
+}
+ion-row:nth-of-type(even) { //dòng chẵn
+    ion-col:nth-of-type(odd) { //cột lẻ
+        margin:1em;    //Khoảng cách đường biên cột so với lề đối tượng trước cách đều 4 góc
+        padding:1em;    //Khoảng cách từ biên đến nội dung ghi trong đó (px điểm ảnh em số dòng)
+        background: #71eea9;
+        color:#202020;
+        text-align:left;
+        font-family:"Roboto",sans-serif;
+    }
+    ion-col:nth-of-type(even) { //cột chẵn
+
+        background: #9181ca;
+        color:#ce1d1d;
+        //body 
+        text-align:right;
+        font-family:"Roboto",sans-serif;
+        //test
+        margin-left:1em;    //Cách lề trái
+        margin-right:0.5em;   //Cách lề phải
+        margin-top:1em;     //Cách lề trên
+        margin-bottom:1em;  //Cách lề dưới
+    }
+}
+
+
   #archive-spinner,
   #download-spinner,
   .archiving .expand-hide,
   .downloading .expand-hide {
     display: none;
   }
-  /* TODO: spinner doesn't have a good way to do this yet: https://github.com/ionic-team/ionic/issues/7087 */
   #archive-spinner.spinner-ios line,
   #archive-spinner.spinner-crescent circle {
     stroke: #fff;
