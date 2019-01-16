@@ -6,80 +6,28 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content class="login-form-background">
+  <ion-slides (ionSlideDidChange)="slideChanged()">
+    <!-- #id=0 -->
+    <ion-slide>
+      <div class="wrapper">
+        <form class="login-form">
 
-    <div id="wrapper">
-        <form class="login-form" >
-          <div class="header">
-            day la gi
-          </div>
-          <div class="content">
-              <p id="username-field">
-              <label for="username">Username:</label>
-              <input type="text" class="input username validate[required]" name="username" id="username" value=""/>
-            </p>
-            <p id="password-field">
-              <label for="password">Password:</label>
-                <input type="password" class="input password validate[required]" name="password" id="password" />
-              </p>
-            </div>
-            <div class="footer">
-              <input type="submit" id="signin" class="button" value="Sign in" />
-            </div>
-        
-    </form>		
-  
-  </div>
+          <ion-item class="border-round">
+            <ion-label floating>Nhập số điện thoại</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
 
-	
+          <ion-buttons start>
+            <button ion-button type="button" icon-end round>
+              Yêu cầu xác thực
+              <ion-icon name="share-alt"></ion-icon>
+            </button>
+          </ion-buttons>
+        </form>
+      </div>
 
+    </ion-slide>
 
-
-  <!-- <div class="parent">
-    <form class="form_login">
-
-      <ion-row > 
-        <ion-col class="login-form">
-            <ion-item>
-              <ion-label floating>Nhập số điện thoại</ion-label>
-              <ion-input type="text"></ion-input>
-            </ion-item>
-        </ion-col>
-        <ion-col >
-            <ion-item>
-              <ion-label floating>Nhập số điện thoại</ion-label>
-              <ion-input type="text"></ion-input>
-            </ion-item>
-        </ion-col>
-      </ion-row>
-
-      <ion-buttons start>
-        <button ion-button type="button" icon-end round>
-          Yêu cầu xác thực
-          <ion-icon name="share-alt"></ion-icon>
-        </button>
-      </ion-buttons>
-    </form>
-  </div> -->
-
-
-  <!-- <ion-row class="login-form">
-    <ion-col>
-      <form>
-        <ion-item>
-          <ion-label floating>Nhập số điện thoại</ion-label>
-          <ion-input type="text"></ion-input>
-        </ion-item>
-
-        <ion-buttons start>
-          <button ion-button type="button" icon-end round>
-            Yêu cầu xác thực
-            <ion-icon name="share-alt"></ion-icon>
-          </button>
-        </ion-buttons>
-      </form>
-
-    </ion-col>
-  </ion-row> -->
-
+  </ion-slides>
 </ion-content>
