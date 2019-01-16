@@ -13,7 +13,17 @@
       <div class="wrapper">
         <form class="login-form">
 
-          <ion-item class="border-round">
+            <ion-item>
+                <ion-buttons start>
+                    <button ion-button type="button" icon-end round>
+                        <input type="file" accept="image/*" (change)="fileChange($event)">
+                        Avantar - Ảnh đại diện
+                        <ion-icon name="images"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-item>
+
+          <ion-item>
             <ion-label floating>Nhập số điện thoại</ion-label>
             <ion-input type="text"></ion-input>
           </ion-item>

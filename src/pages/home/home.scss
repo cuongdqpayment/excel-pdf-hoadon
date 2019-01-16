@@ -1,5 +1,17 @@
 page-home {
     
+
+    input[type="file"]{
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
     .login-form-background {
         background: #4a47ff;
         border-radius: 0.5em;
@@ -17,12 +29,12 @@ page-home {
         margin-top: -160px;
     }
 
-    .border-round{
+    .wrapper .login-form ion-item{
         border-radius: 0.5em;
         opacity: 0.7;
     }
   
-    .login-form {
+    .wrapper .login-form {
         border: 1px solid #FFFFFF;
         margin: 0 auto;
         position: relative;
@@ -31,5 +43,6 @@ page-home {
         text-align:center;
     }
   
+
     
 }

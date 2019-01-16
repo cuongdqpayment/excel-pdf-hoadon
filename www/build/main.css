@@ -70744,6 +70744,17 @@ page-config .login-sliding-demo .ion-logo-instagram {
   color: #235D8D;
 }
 
+page-home input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
 page-home .login-form-background {
   background: #4a47ff;
   border-radius: 0.5em;
@@ -70761,12 +70772,12 @@ page-home .wrapper {
   margin-top: -160px;
 }
 
-page-home .border-round {
+page-home .wrapper .login-form ion-item {
   border-radius: 0.5em;
   opacity: 0.7;
 }
 
-page-home .login-form {
+page-home .wrapper .login-form {
   border: 1px solid #FFFFFF;
   margin: 0 auto;
   position: relative;
@@ -70797,6 +70808,17 @@ page-login .card-background-page .card-subtitle {
   top: 52%;
   width: 100%;
   color: #fff;
+}
+
+page-login-phone input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
 }
 
 page-login-phone .error {

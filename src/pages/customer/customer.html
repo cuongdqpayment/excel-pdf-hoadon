@@ -38,9 +38,16 @@
       <ion-slide>
           <ion-list>
               <button ion-item *ngFor="let customer of customers" (click)="gotoSlideEdit(customer)">
+                
                 <ion-avatar item-start>
-                  <img src={{customer.image}}>
+                  <img src={{customer.image}} *ngIf="customer.image">
+                  
+                  <button ion-button icon-only color="secondary" round *ngIf="!customer.image">
+                      <ion-icon name="contact"></ion-icon>
+                  </button>
+
                 </ion-avatar>
+                
                 <h2>{{customer.cust_id}} - {{customer.full_name}}</h2>
                 <p>{{customer.area}} ({{customer.staff}})</p>
                 <ion-note>{{customer.cust_type}} {{customer.charge}} </ion-note>

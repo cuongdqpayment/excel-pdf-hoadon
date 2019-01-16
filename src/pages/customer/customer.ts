@@ -152,7 +152,6 @@ export class CustomerPage {
     this.currentCustomer.change_date = new Date().getTime();
 
     
-
     this.goToSlide(0);
   }
 
@@ -167,7 +166,5 @@ export class CustomerPage {
   newCustomter(){
     this.navCtrl.push(ConfigPage)
   }
-
-
 
 }

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, AlertController, Slides } from 'ionic-angular';
+import { NavController, AlertController, LoadingController, Slides } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ApiAuthService } from '../../services/apiAuthService';
 
@@ -28,14 +28,13 @@ export class LoginPhonePage {
   isImageViewer: boolean = false;
   resourceImages=[]//: { imageViewer: any, file: any, name: string }[] = [];
 
-  
-
   constructor( private formBuilder: FormBuilder,
                private auth : ApiAuthService,
                private resources : ApiResourceService,
                private alertCtrl: AlertController,
                private apiStorageService: ApiStorageService,
                private apiImageService: ApiImageService,
+               private loadingCtrl: LoadingController,
                private navCtrl: NavController) {}
 
 
@@ -198,6 +197,12 @@ export class LoginPhonePage {
   }
   
   onSubmitImage(){
+
+    let loading = this.loadingCtrl.create({
+      content: 'Đang cập nhập ảnh...'
+    });
+    loading.present();
+
     this.auth.sendImageBase64(JSON.stringify({}));
     //may chu cho phep se cap mot token server proxy
     //console.log('token proxy',this.token);
@@ -214,11 +219,15 @@ export class LoginPhonePage {
         this.presentAlert('Dữ liệu xác thực không đúng <br>' + JSON.stringify(data))
         this.goToSlide(0);
       }
+      loading.dismiss();
+
     })
     .catch(err=>{
       //console.log('err',err);
       this.presentAlert('Lỗi xác thực - authorizeFromResource')
       this.goToSlide(0);
+      loading.dismiss();
+
     });
 
   }
@@ -265,11 +274,8 @@ export class LoginPhonePage {
     }
   }
 
-
   deleteImage(evt) {
-    /* this.resourceImages = this.resourceImages.filter((value, index, arr) => {
-      return value != evt;
-    }); */
+    this.resourceImages = this.resourceImages.filter((value, index, arr) => { return value != evt;});
   }
 }
 function phoneNumberValidator(formControl: FormControl) {
