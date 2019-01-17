@@ -131,14 +131,14 @@ export class LoginPhonePage {
     .then(data=>{
       let a;
       a = data;
-      let b = JSON.parse(a.v_out);
-      console.log('token',a.token); 
-      console.log('status',b); //hack
-      if (b.status==1&&a.token){
+      console.log('server response:', a); 
+      console.log('token', a.token);      
+      console.log('data.database_out', a.database_out); //hack
+      if (a.database_out.status==1&&a.token){
         this.token = a.token;
         this.goToSlide(1); //ve form confirmKey
       }else if (phone==='123456789') {
-        this.presentAlert('Số điện thoại '+phone+' chỉ dùng để debug.<br> vui lòng nhập key OTP debug : '+ b.message +' để tiếp tục' );
+        this.presentAlert('Số điện thoại '+phone+' chỉ dùng để debug.<br> vui lòng nhập key OTP debug : '+ a.database_out.message +' để tiếp tục' );
         this.token = a.token;
         this.goToSlide(1); //ve form confirmKey
       }else {

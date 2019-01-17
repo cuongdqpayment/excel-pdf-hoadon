@@ -4,6 +4,20 @@ const jwt = require('jsonwebtoken');
 const jwtConfig = require('../jwt/jwt-config');
 const url = require('url');
 
+
+/**
+ * input: token
+ * output: user_info
+ * @param {*} token 
+ */
+var getInfoFromToken = (token)=>{
+  let userInfo;
+  try{
+    userInfo = jwt.decode(token);
+  }catch(e){}
+  return userInfo; 
+}
+
 /**
  * input:  GET/POST
  * return: req.token
@@ -17,6 +31,7 @@ var getToken = (req, res, next)=> {
     if (!token) token = req.json_data?req.json_data.token:''; //lay them tu json_data post
     req.token = req.token?req.token:token; // uu tien token truyen trong json gan truoc do
     if (req.token) {
+      req.token = req.token.startsWith('Bearer ')?req.token.slice(7):req.token;      
       next();
     } else {
       res.writeHead(403, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -112,10 +127,7 @@ var tokenVerify = (req) => {
 
   if (req.token) {
     let token = req.token;
-    if (token.startsWith('Bearer ')) {
-      token = token.slice(7);
-    }
-    let userInfo = jwt.decode(token);
+    let userInfo = getInfoFromToken(token);
     //console.log(userInfo);
     let localTime =  userInfo?userInfo.local_time:'';
     let otpKey = req.keyOTP?req.keyOTP:'';
@@ -147,6 +159,7 @@ var tokenVerify = (req) => {
 };
 
 module.exports = {
+  getInfoFromToken: getInfoFromToken,
   getToken: getToken,
   tokenSign: tokenSign,
   tokenVerify: tokenVerify

@@ -239,8 +239,9 @@ export class ApiAuthService {
      * @param token 
      */
     authorize(token){
-        this.reqInterceptor.setRequestToken(token); //login nguoi khac
-        return this.httpClient.get(this.authenticationServer + '/authorize-token')
+        return this.httpClient.post(this.authenticationServer + '/authorize-token',JSON.stringify({
+            token: token
+        }))
             .toPromise()
             .then(data => {
                 this.userToken={token:token};

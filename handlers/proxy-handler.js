@@ -1,4 +1,12 @@
 "use strict"
+
+/**
+ * proxy-handler:
+ *  
+ * verifyProxyToken: verifyProxyToken,
+    authorizeToken: authorizeToken,
+ */
+
 const jwt = require('jsonwebtoken');
 const proxy = require('request'); //doi tuong yeu cau proxy truy van POST/GET
 const authServer = 'https://c3.mobifone.vn/api'
@@ -25,7 +33,7 @@ const verifyProxyToken = (req, res, next)=>{
     if (req.token){
         new Promise((resolve, reject) => {
 
-            let aliveToken = tokenSession.find(x=>x.token=req.token)
+            let aliveToken = tokenSession.find(x=>x.token===req.token)
 
             if (aliveToken&&verifyExpire(aliveToken.token)){
                 //neu token da xac thuc thi tra ve luon khong can xac thuc nua
