@@ -6,8 +6,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
+
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
+import { PrinterPage } from '../pages/printer/printer';
 
 import { LoginPhonePage } from '../pages/login-phone/login-phone';
 
@@ -16,6 +18,7 @@ import { SettingPage } from '../pages/setting/setting';
 import { SampleIconsPage } from '../pages/sample-icons/sample-icons';
 import { ConfigPage } from '../pages/config/config';
 import { PdfPage } from '../pages/pdf/pdf';
+
 
 import { ParametersPage } from '../pages/parameters/parameters';
 import { CustomerPage } from '../pages/customer/customer';
@@ -48,6 +51,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
     ReportPage,
     TabsPage,
 
+    PrinterPage,
     HomePage,
     RegisterPage,
     LoginPage,
@@ -75,6 +79,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
     ReportPage,
     TabsPage,
 
+    PrinterPage,
     HomePage,
     RegisterPage,
     LoginPage,
