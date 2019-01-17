@@ -9,6 +9,7 @@ var tokenSession = []; //luu lai session lam viec
 const verifyExpire = (token)=>{
     let userInfo = jwt.decode(token);
     console.log(new Date().getTime(),userInfo);
+    //neu thong tin user_info trung voi user_info thi ok
 
     return true;
 }
@@ -26,10 +27,12 @@ const verifyProxyToken = (req, res, next)=>{
 
             let aliveToken = tokenSession.find(x=>x.token=req.token)
 
-            if (aliveToken&&verifyExpire(aliveToken)){
+            if (aliveToken&&verifyExpire(aliveToken.token)){
                 //neu token da xac thuc thi tra ve luon khong can xac thuc nua
                 //can kiem tra thoi gian hieu luc nua
-                resolve(aliveToken);
+                console.log('user_info',aliveToken.user_info);
+
+                resolve(aliveToken.user_info);
 
             }else{
                 //neu chua xac thuc server
@@ -40,10 +43,11 @@ const verifyProxyToken = (req, res, next)=>{
                         }
                         if (res.statusCode == 200) {
             
-                            console.log('body',body);
+                            console.log('user_info',body);
                             //chuyen doi body --> luu lai
                             /* tokenSession.push({
-                                
+                                token: req.token,
+                                user_info: body
                             }) */
                             resolve(body);
                         } else {
