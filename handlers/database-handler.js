@@ -1,9 +1,21 @@
+"use strict"
 
 const timeZoneOffset = +7;
 const vietnamese = require('../utils/vietnamese-handler');
 const arrayObject = require('../utils/array-object');
 
-const db = require('../db/sqlite3/sqlite-hoadon-service');
+const db_service = require('../db/sqlite3/excel-sqlite-service');
+const dbFilename = './db/qld-vinhhung-hoadon-rac.db';
+//const excelFilename = './db/admin-setting.xlsx';
+
+setTimeout(() => {
+    db_service.handler.init(dbFilename); //ket noi db moi
+}, 1000); //doi 1s ket noi db
+
+//du lieu ban dau duoc tao tu manual bang lenh
+/* setTimeout(() => {
+    db_service.handler.createDatabase(excelFilename,dbFilename); //ket noi db moi
+}, 3000); //doi 1s ket noi db */
 
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
@@ -13,7 +25,7 @@ const url = require('url');
 //neu khong can in truong nao thi rao lai khong khai bao
 var billPrintMatrix = {
     bill_date: [{ col: 285, row: 65 }, { col: 340, row: 65 }, { col: 375, row: 65 }],
-    invoice_no: { col: 480, row: 55, color: 'red'},
+    //invoice_no: { col: 480, row: 55, color: 'red'},
     full_name: { col: 160, row: 90 },
     organization_name: { col: 120, row: 105 },
     tax_no: { col: 120, row: 120 },
@@ -51,44 +63,46 @@ var billPrintMatrix = {
 
 var selectCustomers = (cust_id) => {
     let custSelect = cust_id ? 'and a.cust_id = \'' + cust_id + '\' ' : '';
-    return db.db.getRsts('select \
-                        a.id\
-                        ,a.full_name\
-                        ,a.tax_no\
-                        ,a.address\
-                        ,a.email\
-                        ,a.phone\
-                        ,a.cust_id\
-                        ,a.last_name \
-                        ,a.first_name \
-                        ,a.type_id\
-                        ,b.name as cust_type\
-                        ,a.price_id\
-                        ,b.unit\
-                        ,b.not_vat\
-                        ,b.vat\
-                        ,b.charge\
-                        ,a.area_id\
-                        ,c.description as area\
-                        ,a.staff_id\
-                        ,d.description as staff\
-                        ,a.start_date\
-                        ,a.end_date\
-                        ,a.change_time\
-                        ,a.status\
-                        from customers a\
-                        ,prices b\
-                        ,(select code, description from parameters where type = 6) c\
-                        ,(select code, description from parameters where type = 4) d\
-                        where 1=1 \
-                        '+ custSelect + ' \
-                        and a.price_id = b.id\
-                        and a.area_id = c.code\
-                        and a.staff_id = d.code\
-                        ')
-            .then(results => {
-                return results;
-            });
+    let sql = 'select \
+                    a.id\
+                    ,a.full_name\
+                    ,a.tax_no\
+                    ,a.address\
+                    ,a.email\
+                    ,a.phone\
+                    ,a.cust_id\
+                    ,a.last_name \
+                    ,a.first_name \
+                    ,a.type_id\
+                    ,b.name as cust_type\
+                    ,a.price_id\
+                    ,b.unit\
+                    ,b.not_vat\
+                    ,b.vat\
+                    ,b.charge\
+                    ,a.area_id\
+                    ,c.description as area\
+                    ,a.staff_id\
+                    ,d.description as staff\
+                    ,a.start_date\
+                    ,a.end_date\
+                    ,a.change_time\
+                    ,a.status\
+                    from customers a\
+                    ,prices b\
+                    ,(select code, description from parameters where type = 6) c\
+                    ,(select code, description from parameters where type = 4) d\
+                    where 1=1 \
+                    '+ custSelect + ' \
+                    and a.price_id = b.id\
+                    and a.area_id = c.code\
+                    and a.staff_id = d.code\
+                    ';
+
+    return db_service.db.getRsts(sql)
+        .then(results => {
+            return results;
+        });
 }
 
 
@@ -103,7 +117,7 @@ var selectInvoicesJson = (bill_cycle, cust_id) => {
         var manager;
         var bill_details;
 
-        db.db.getRsts(
+        db_service.db.getRsts(
             'select                         \
             customers.cust_id            \
             ,invoices.bill_date          \
@@ -135,7 +149,7 @@ var selectInvoicesJson = (bill_cycle, cust_id) => {
             });
 
 
-        db.db.getRst('select description as full_name, signature from parameters where id = 33')
+        db_service.db.getRst('select description as full_name, signature from parameters where id = 33')
             .then(results => {
                 saler = results;
             })
@@ -144,7 +158,7 @@ var selectInvoicesJson = (bill_cycle, cust_id) => {
                 reject(err);
             });
 
-        db.db.getRst('select description as full_name, signature from parameters where id = 32')
+        db_service.db.getRst('select description as full_name, signature from parameters where id = 32')
             .then(results => {
                 manager = results;
             })
@@ -153,7 +167,7 @@ var selectInvoicesJson = (bill_cycle, cust_id) => {
                 reject(err);
             });
 
-        db.db.getRsts(
+        db_service.db.getRsts(
             '\
                 select              \
                 bills.cust_id             \
@@ -220,17 +234,17 @@ var selectInvoicesMatrix = (bill_cycle, cust_id) => {
     return selectInvoicesJson(bill_cycle, cust_id)
         .then(invoices => {
             var old = JSON.stringify(invoices
-                            ,(key, value) => {
-                                if (key=='start_date') return new Date(value + timeZoneOffset*60*60*1000).toISOString().replace(/T/, ' ').replace(/\..+/, '') 
-                                if (typeof value == 'number') return ''+value; //chuyen doi thanh chuoi (format dau . hoac dau trong)
-                                if (key=='bill_date') return [value.slice(6, 8), value.slice(4, 6), value.slice(0, 4)]
-                                return value;
-                            }
+                , (key, value) => {
+                    if (key == 'start_date') return new Date(value + timeZoneOffset * 60 * 60 * 1000).toISOString().replace(/T/, ' ').replace(/\..+/, '')
+                    if (typeof value == 'number') return '' + value; //chuyen doi thanh chuoi (format dau . hoac dau trong)
+                    if (key == 'bill_date') return [value.slice(6, 8), value.slice(4, 6), value.slice(0, 4)]
+                    return value;
+                }
             ); //convert to JSON string
             const invoicesPrintString = JSON.parse(old); //convert back to array
             let printMatrixs = [];
             invoicesPrintString.forEach(el => {
-                printMatrixs.push(arrayObject.getMatrix(billPrintMatrix, el, {col:0,row:0})); //cac cot gia tri nhieu nhat cau hinh in
+                printMatrixs.push(arrayObject.getMatrix(billPrintMatrix, el, { col: 0, row: 0 })); //cac cot gia tri nhieu nhat cau hinh in
             });
             return printMatrixs;
         })
@@ -246,18 +260,18 @@ var json2SqliteSQLUpdateCustomerId = (tablename, json, idFields) => {
     let whereFields = idFields ? idFields : ['cust_id'];
     for (let key in json) {
         jsonInsert.cols.push({ name: key, value: json[key] });
-        if (whereFields.find(x=>x=key)) jsonInsert.wheres.push({ name: key, value: json[key] })
+        if (whereFields.find(x => x = key)) jsonInsert.wheres.push({ name: key, value: json[key] })
     }
     return jsonInsert;
 }
 
-var createInvoices = (bill_cycle, bill_date, invoice_no, cust_id) => {
+var createCycleInvoices = (bill_cycle, bill_date, invoice_no, cust_id) => {
     return (new Promise((resolve, reject) => {
         var customers;
         var prices;
         let custSelect = cust_id ? 'and customers.cust_id = \'' + cust_id + '\' ' : '';
-    
-        db.db.getRsts('select cust_id, price_id, area_id, staff_id from customers where status = 1 ' + custSelect)
+
+        db_service.db.getRsts('select cust_id, price_id, area_id, staff_id from customers where status = 1 ' + custSelect)
             .then(results => {
                 customers = results;
             })
@@ -265,8 +279,8 @@ var createInvoices = (bill_cycle, bill_date, invoice_no, cust_id) => {
                 //console.log(err);
                 reject(err);
             });
-    
-        db.db.getRsts('select id ,product_id, unit, not_vat ,vat, charge from prices where status = 1')
+
+        db_service.db.getRsts('select id ,product_id, unit, not_vat ,vat, charge from prices where status = 1')
             .then(results => {
                 prices = results;
             })
@@ -274,16 +288,16 @@ var createInvoices = (bill_cycle, bill_date, invoice_no, cust_id) => {
                 //console.log(err);
                 reject(err);
             });
-    
+
         setTimeout(() => {
-    
+
             if (customers && prices) {
                 console.log('doc xong du lieu tao', customers.length, prices.length);
                 customers.forEach(el => {
-    
+
                     let product_count = 1; //so luong
                     let price = prices.find(x => x.id = el.price_id);
-    
+
                     let bill_detail = {
                         cust_id: el.cust_id,          //khach mua
                         bill_cycle: bill_cycle,    //ky mua
@@ -293,16 +307,16 @@ var createInvoices = (bill_cycle, bill_date, invoice_no, cust_id) => {
                         total_not_vat: price.not_vat * product_count,
                         total_vat: price.vat * product_count
                     };
-    
-                    let sqlBill = json2SqliteSQLUpdateCustomerId('bills', bill_detail,['cust_id','bill_cycle']);
-    
-                    db.db.insert(sqlBill)
+
+                    let sqlBill = json2SqliteSQLUpdateCustomerId('bills', bill_detail, ['cust_id', 'bill_cycle']);
+
+                    db_service.db.insert(sqlBill)
                         .then(data => {
                             //console.log(data);
                         })
                         .catch(err => {
                             //contraint thi update
-                            db.db.update(sqlBill)
+                            db_service.db.update(sqlBill)
                                 .then(data => {
                                     //console.log(data);
                                 })
@@ -311,12 +325,12 @@ var createInvoices = (bill_cycle, bill_date, invoice_no, cust_id) => {
                                     reject(err);
                                 })
                         })
-    
+
                     let bill_sum = {};
                     bill_sum.sum_not_vat = price.not_vat * product_count;
                     bill_sum.sum_vat = price.vat * product_count;
                     bill_sum.sum_charge = price.charge * product_count
-    
+
                     let invoice = {
                         cust_id: el.cust_id
                         , bill_cycle: bill_cycle
@@ -326,11 +340,11 @@ var createInvoices = (bill_cycle, bill_date, invoice_no, cust_id) => {
                         , sum_vat: bill_sum.sum_vat
                         , sum_charge: bill_sum.sum_charge
                     };
-    
+
                     let sqlInvoice = json2SqliteSQLUpdateCustomerId('invoices', invoice, ['cust_id']);
-    
+
                     //tao hoa don thanh cong thi tra ve then
-                    db.db.insert(sqlInvoice)
+                    db_service.db.insert(sqlInvoice)
                         .then(data => {
                             //console.log(data);
                             resolve(data);
@@ -338,7 +352,7 @@ var createInvoices = (bill_cycle, bill_date, invoice_no, cust_id) => {
                         .catch(err => {
                             //console.log(err);
                             //contraint thi update
-                            db.db.update(sqlInvoice)
+                            db_service.db.update(sqlInvoice)
                                 .then(data => {
                                     //console.log(data);
                                     resolve(data);
@@ -348,42 +362,43 @@ var createInvoices = (bill_cycle, bill_date, invoice_no, cust_id) => {
                                     reject(err);
                                 })
                         })
-    
+
                 })
             }
         }, 1000);
     }));
 }
 
-var createPdfInvoices = (invoices,outputFilename,background)=>{
-    //hoa don lien 2 giao cho khach
-    const offset = 422;
+var createPdfInvoices = (invoices, outputFilename, background) => {
+
+    const offset_1 = 0 - 5; //hoa don lien 2 giao cho khach
+    const offset_2 = 422 + 17; //hoa don lien 2 giao cho khach
 
     //bat dau tao pdf
     var doc = new PDFDocument({
-                            size: 'A4',
-                            margin: 0
+        size: 'A4',
+        margin: 0
     });
     var defaultColor = 'blue';
     var stream = doc.pipe(fs.createWriteStream(outputFilename));
 
     doc.info['Title'] = 'Mẫu in hóa đơn A4 1 trang';
     doc.info['Author'] = 'Đoàn Quốc Cường';
-    
+
     doc.registerFont('Time-new-roman-utf8', './fonts/times.ttf');
     doc.font('Time-new-roman-utf8');
 
     //trang luu
-    invoices.forEach((invoice,idx)=>{
-        if (idx>0) doc.addPage(); //in hoa don moi
-        if (background) doc.image(background, -5, -3, {width: 610, height: 845});
+    invoices.forEach((invoice, idx) => {
+        if (idx > 0) doc.addPage(); //in hoa don moi
+        if (background) doc.image(background, -5, -10, { width: 610, height: 860 });
         doc.fontSize(12);
         doc.fillColor(defaultColor);
         invoice.forEach(el => {
             if (el.color) doc.fillColor(el.color);
-            if (el.value&&el.value.length){
-               doc.text(el.value, el.col, el.row,{width: el.width, align: el.align});
-               doc.text(el.value, el.col, el.row + offset, {width: el.width, align: el.align});
+            if (el.value && el.value.length) {
+                doc.text(el.value, el.col, el.row + offset_1, { width: el.width, align: el.align });
+                doc.text(el.value, el.col, el.row + offset_2, { width: el.width, align: el.align });
             }
             doc.fillColor(defaultColor);
         });
@@ -394,6 +409,31 @@ var createPdfInvoices = (invoices,outputFilename,background)=>{
 }
 
 class ResourceHandler {
+
+    createInvoices(req, res, next) {
+        if (req.json_data && req.json_data.bill_cycle) {
+            createCycleInvoices(req.json_data.bill_cycle
+                , req.json_data.bill_data
+                , req.json_data.invoice_no
+                , req.json_data.cust_id)
+            .then(data=>{
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({status: true, message: "Created invoice successfull!", data: data }));
+            })
+            .catch(err=>{
+                res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                res.end(JSON.stringify({ message: "Can not create Invoice cycle!", error: err }));
+            });
+
+
+        } else {
+            res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+            res.end(JSON.stringify({ message: "No json_data post" }));
+        }
+    }
+
+
+
     /**
      * Lay tham so he thong ve mang tham so
      * @param {*} req 
@@ -401,17 +441,17 @@ class ResourceHandler {
      * @param {*} next 
      */
     getParameters(req, res, next) {
-        db.db.getRsts('select * from parameters')
-            .then(results=>{
+        db_service.db.getRsts('select * from parameters')
+            .then(results => {
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(JSON.stringify(results
-                    ,(key, value) => {
-                        if (value === null) {return undefined;}
+                    , (key, value) => {
+                        if (value === null) { return undefined; }
                         return value;
-                        }
+                    }
                 ));
             })
-            .catch(err=>{
+            .catch(err => {
                 res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
                 res.end(JSON.stringify(err));
             });
@@ -424,26 +464,28 @@ class ResourceHandler {
      * @param {*} next 
      */
     getCustomers(req, res, next) {
+
         selectCustomers()
-            .then(customers=>{
+            .then(customers => {
+                //console.log('customers',customers)
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-                    res.end(JSON.stringify(customers
-                        ,(key, value) => {
+                res.end(JSON.stringify(customers
+                    , (key, value) => {
                         if (value === null) {
                             //chuyen doi null khong xuat hien
                             return undefined;
                         }
-                        if (key=='start_date'){
+                        if (key === 'start_date') {
                             //chuyen doi thoi gian milisecond thanh string ngay gio
-                            return new Date(value + timeZoneOffset*60*60*1000).toISOString().replace(/T/, ' ').replace(/\..+/, '') 
+                            return new Date(value + timeZoneOffset * 60 * 60 * 1000).toISOString().replace(/T/, ' ').replace(/\..+/, '')
                         }
                         return value;
-                        }
-                        ));
+                    }
+                ));
             })
-            .catch(err=>{
-                    res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-                    res.end(JSON.stringify(err));
+            .catch(err => {
+                res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                res.end(JSON.stringify(err));
             });
     }
 
@@ -453,26 +495,26 @@ class ResourceHandler {
      * @param {*} res 
      * @param {*} next 
      */
-    getInvoices(req, res, next){
+    getInvoices(req, res, next) {
         let path = decodeURIComponent(url.parse(req.url, true, false).pathname);
         let params = path.substring('/json-invoices/'.length);
-        let bill_cycle = params.slice(0,6);
+        let bill_cycle = params.slice(0, 6);
         let cust_id = params.slice(7, 17);
 
-        selectInvoicesJson(bill_cycle,cust_id)
-        .then(invoices=>{
-            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify(invoices
-                ,(key, value) => {
-                if (value === null)  return undefined
-                if (key=='start_date') return new Date(value + timeZoneOffset*60*60*1000).toISOString().replace(/T/, ' ').replace(/\..+/, '') 
-                return value;
-                }
+        selectInvoicesJson(bill_cycle, cust_id)
+            .then(invoices => {
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify(invoices
+                    , (key, value) => {
+                        if (value === null) return undefined
+                        if (key == 'start_date') return new Date(value + timeZoneOffset * 60 * 60 * 1000).toISOString().replace(/T/, ' ').replace(/\..+/, '')
+                        return value;
+                    }
                 ));
             })
-            .catch(err=>{
-                    res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-                    res.end(JSON.stringify(err));
+            .catch(err => {
+                res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                res.end(JSON.stringify(err));
             });
 
     }
@@ -483,26 +525,26 @@ class ResourceHandler {
      * @param {*} res 
      * @param {*} next 
      */
-    getPdfInvoices(req, res, next){
+    getPdfInvoices(req, res, next) {
         let req_url = url.parse(req.url, true, false);
         let path = decodeURIComponent(req_url.pathname);
         let params = path.substring('/pdf-invoices/'.length);
-        let bill_cycle = params.slice(0,6);
+        let bill_cycle = params.slice(0, 6);
         let cust_id = params.slice(7, 17);
         let bg = req_url.query.background;
-        
+
         console.log('background:', bg);
 
-        selectInvoicesMatrix(bill_cycle,cust_id)
-        .then(invoicesMatrix=>{
+        selectInvoicesMatrix(bill_cycle, cust_id)
+            .then(invoicesMatrix => {
 
-            let outputFilename = './pdf/hoadon_1.pdf';
-            let background = './pdf/mau_hoa_don.png';
+                let outputFilename = './pdf/hoadon_1.pdf';
+                let background = './pdf/mau_hoa_don.png';
 
-            let stream = createPdfInvoices(invoicesMatrix,outputFilename,bg?background:undefined);
-              
-              stream.on('finish', () =>{
-                    fs.readFile(outputFilename, { flag: 'r' }, (err, bufferPdf)=>{
+                let stream = createPdfInvoices(invoicesMatrix, outputFilename, bg ? background : undefined);
+
+                stream.on('finish', () => {
+                    fs.readFile(outputFilename, { flag: 'r' }, (err, bufferPdf) => {
                         if (err) {
                             res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
                             res.end(JSON.stringify(err));
@@ -511,11 +553,11 @@ class ResourceHandler {
                         res.end(bufferPdf);
                     });
                 });
-        })
-        .catch(err=>{
-            res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-            res.end(JSON.stringify(err));
-        });
+            })
+            .catch(err => {
+                res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                res.end(JSON.stringify(err));
+            });
 
 
     }
@@ -526,8 +568,8 @@ class ResourceHandler {
      * @param {*} res 
      * @param {*} next 
      */
-    getExcelCustomers(req, res, next){
-        
+    getExcelCustomers(req, res, next) {
+
     }
 
     /**
@@ -536,42 +578,38 @@ class ResourceHandler {
      * @param {*} res 
      * @param {*} next 
      */
-    getExcelInvoices(req, res, next){
-        
+    getExcelInvoices(req, res, next) {
+
     }
 
 
     //lay cau hinh ve de thay doi cau hinh in an
-    getPrintMask(req, res, next){
+    getPrintMask(req, res, next) {
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify(billPrintMatrix
-            ,(key, value) => {
-                if (value === null) {return undefined;}
+            , (key, value) => {
+                if (value === null) { return undefined; }
                 return value;
-                }
+            }
         ));
     }
     //tra ket qua in tu client config
-    postPrintMask(req, res, next){
+    postPrintMask(req, res, next) {
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify(req.json_data));
     }
     //tra cau truc json cho client khai bao lai: {print-config:{background:'url/base64',size:'A4',margin:0}, print_mask:[object-print-mask], print_data:[[object-print-data-page]]} 
-    getPrintAny(req, res, next){
-        
+    getPrintAny(req, res, next) {
+
     }
     //tra ket qua in tu client json gom: {print-config:{background:'url/base64',size:'A4',margin:0}, print_mask:[object-print-mask], print_data:[[object-print-data-page]]} 
-    postPrintAny(req, res, next){
-        
+    postPrintAny(req, res, next) {
+
     }
 
 }
 
 module.exports = {
-    SelectCustomers         :       selectCustomers,
-    CreateInvoices          :       createInvoices,
-    SelectInvoicesJson      :       selectInvoicesJson,
-    SelectInvoicesMatrix    :       selectInvoicesMatrix,
-    ResourceHandler         :       new ResourceHandler()
+    ResourceHandler: new ResourceHandler()
 
 };

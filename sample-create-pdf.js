@@ -5,22 +5,22 @@ const pdfUtil = require('./utils/pdf-util');
 var pdfConfig = {
     config: {
         matrix_point: {
-            max_row: 20, //so luong dong
-            max_col: 10, // so luong cot
+            max_row: 42, //so luong dong A5=20, A4=42
+            max_col: 10, // so luong cot A5=10, A4=10
             zipper_row: 20, //khoang cach giua 2 dong
             zipper_col: 60, //khoang cach giua 2 cot
         },
-        background: {
+        /* background: {
             image: './pdf/Backgroud-Giay-moi-2019.jpg',
             left: 0,
             top: 0,
-            width: 610,
-            height: 422
-        },
+            width: 610, //A5=A4
+            height: 422 //A5=422; A4=845
+        }, */
         page_config: {
-            size: 'A5',
+            size: 'A4',   //A4= portrait
             margin: 0,
-            layout: 'landscape'
+            //layout: 'landscape'  //A5=landscape
         },
         text_config: {
             size : 12,
@@ -32,7 +32,7 @@ var pdfConfig = {
     }
 }
 
-var sampleFileName = './pdf/giaymoi_A5_sample.pdf';
+var sampleFileName = './pdf/matrix_A4_test.pdf';
 
 pdfUtil.createPdfPoint(pdfConfig, sampleFileName);
 
@@ -91,5 +91,5 @@ var printPdf = {
 }
 
 var outputFilename = './pdf/giaymoi_A5.pdf';
-pdfUtil.createPdf(printPdf, outputFilename);
+//pdfUtil.createPdf(printPdf, outputFilename);
 //ket qua la tap giay moi pdf cho nhieu khach hang

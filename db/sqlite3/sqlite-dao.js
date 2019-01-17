@@ -179,13 +179,15 @@ class SQLiteDAO {
     }
     sql = 'SELECT '+sqlNames+' FROM ' + selectTable.name;
     i = 0;
-    for (let col of selectTable.wheres) {
-      if (col.value!=undefined&&col.value!=null){
-        params.push(col.value);
-        if (i++ == 0) {
-          sql += ' WHERE ' + col.name + '= ?';
-        } else {
-          sql += ' AND ' + col.name + '= ?';
+    if (selectTable.wheres){
+      for (let col of selectTable.wheres) {
+        if (col.value!=undefined&&col.value!=null){
+          params.push(col.value);
+          if (i++ == 0) {
+            sql += ' WHERE ' + col.name + '= ?';
+          } else {
+            sql += ' AND ' + col.name + '= ?';
+          }
         }
       }
     }

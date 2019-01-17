@@ -11,15 +11,18 @@ const jwt = require('jsonwebtoken');
 const proxy = require('request'); //doi tuong yeu cau proxy truy van POST/GET
 const authServer = 'https://c3.mobifone.vn/api'
 
+const tokenHandler = require('../utils/token-handler')
+
 var tokenSession = []; //luu lai session lam viec
 //chi verify --> auth 1 lan --> co thoi gian hieu luc va het hieu luc
 //khi do chi can verify expires la duoc
-const verifyExpire = (token)=>{
-    let userInfo = jwt.decode(token);
-    console.log(new Date().getTime(),userInfo);
-    //neu thong tin user_info trung voi user_info thi ok
-
-    return true;
+const verifyExpire = (req)=>{
+    let userInfo = tokenHandler.getInfoFromToken(req.token);
+    if (userInfo){
+        req.user_info = userInfo;
+        if (req.user_info.exp>(new Date().getTime()/1000)) return true;
+    }
+    return false;
 }
 
 /**
@@ -35,12 +38,18 @@ const verifyProxyToken = (req, res, next)=>{
 
             let aliveToken = tokenSession.find(x=>x.token===req.token)
 
-            if (aliveToken&&verifyExpire(aliveToken.token)){
-                //neu token da xac thuc thi tra ve luon khong can xac thuc nua
-                //can kiem tra thoi gian hieu luc nua
-                console.log('user_info',aliveToken.user_info);
+            //console.log('aliveToken',aliveToken)
 
-                resolve(aliveToken.user_info);
+            if (aliveToken && verifyExpire(req)){
+
+                console.log('user_info verifyExpire true: ',req.user_info);
+                aliveToken.last_time = new Date().getTime();
+                aliveToken.status = true;
+
+                resolve({
+                    status: true,
+                    user_info:req.user_info
+                });
 
             }else{
                 //neu chua xac thuc server
@@ -50,13 +59,12 @@ const verifyProxyToken = (req, res, next)=>{
                             reject(error);
                         }
                         if (res.statusCode == 200) {
-            
-                            console.log('user_info',body);
+                            console.log('user_info',body); //tra ve user_info va trang thai =1
                             //chuyen doi body --> luu lai
-                            /* tokenSession.push({
-                                token: req.token,
-                                user_info: body
-                            }) */
+                            tokenSession.push({
+                                create_time: new Date().getTime(),
+                                token: req.token
+                            })
                             resolve(body);
                         } else {
                             reject(body);

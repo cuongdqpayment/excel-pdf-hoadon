@@ -21,7 +21,7 @@ var createPdfPoint = (inputConfig, fileName) => {
             zipper_col: (inputConfig.config && inputConfig.config.matrix_point && inputConfig.config.matrix_point.zipper_col) ? inputConfig.config.matrix_point.zipper_col : 60, //khoang cach giua 2 cot
         },
         background: {
-            image: (inputConfig.config && inputConfig.config.background && inputConfig.config.background.image) ? inputConfig.config.background.image : './pdf/Backgroud-Giay-moi-2019.jpg',
+            image: (inputConfig.config && inputConfig.config.background && inputConfig.config.background.image) ? inputConfig.config.background.image : '',
             left: (inputConfig.config && inputConfig.config.background && inputConfig.config.background.left) ? inputConfig.config.background.left : -5,
             top: (inputConfig.config && inputConfig.config.background && inputConfig.config.background.top) ? inputConfig.config.background.top : -3,
             width: (inputConfig.config && inputConfig.config.background && inputConfig.config.background.width) ? inputConfig.config.background.width : 610,
@@ -107,7 +107,6 @@ var createPdf = (inputConfig, fileName) => {
 
     };
 
-
     var pagesPrint = [];
     inputConfig.list_data.forEach(kh => {
         pagesPrint.push(arrObject.getMatrix(inputConfig.mask, kh, { col: 0, row: 0 }));
@@ -127,8 +126,7 @@ var createPdf = (inputConfig, fileName) => {
     doc.registerFont('Time-new-roman-utf8', './fonts/times.ttf');
     doc.font('Time-new-roman-utf8');
 
-    
-    
+
     pagesPrint.forEach((page, idx) => {
         
         if (idx > 0) doc.addPage();
@@ -146,6 +144,8 @@ var createPdf = (inputConfig, fileName) => {
 
     })
     doc.end();
+
+    return stream; //tra ve WriteStream --> xu ly bien nay
 }
 
 module.exports = {
