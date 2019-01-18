@@ -26,9 +26,12 @@ const url = require('url');
 //ma tran in hoa don
 const offset_1 = 0 - 5; //hoa don lien 2 giao cho khach
 const offset_2 = 422 + 17; //hoa don lien 2 giao cho khach
+
+const image_size = {left:-5, top:-18, width: 610, height: 890 };
+
 //neu khong can in truong nao thi rao lai khong khai bao
 var billPrintMatrix = {
-    bill_date: [{ col: 285, row: 58 }, { col: 340, row: 58 }, { col: 385, row: 58 }],
+    bill_date: [{ col: 285, row: 58 }, { col: 340, row: 58 }, { col: 387, row: 58 }],
     //invoice_no: { col: 480, row: 55, color: 'red'},
     full_name: { col: 160, row: 90 },
     organization_name: { col: 120, row: 105 },
@@ -45,11 +48,11 @@ var billPrintMatrix = {
         }
     ],
     bill_sum: {
-        sum_not_vat: { col: 450, row: 215, width: 100, align: 'right', color: 'red' },
-        sum_vat: { col: 450, row: 233, width: 100, align: 'right', color: 'red' },
-        sum_charge: { col: 450, row: 255, width: 100, align: 'right', color: 'red' }
+        sum_not_vat: { col: 450, row: 219, width: 100, align: 'right', color: 'red' },
+        sum_vat: { col: 450, row: 238, width: 100, align: 'right', color: 'red' },
+        sum_charge: { col: 450, row: 257, width: 100, align: 'right', color: 'red' }
     },
-    bill_sum_charge_spell: { col: 155, row: 275, color: 'red' },
+    bill_sum_charge_spell: { col: 155, row: 278, color: 'red' },
     sign_customer: {
         signature: { col: 120, row: 330 },
         full_name: { col: 105, row: 380 }
@@ -430,7 +433,7 @@ var createPdfInvoices = (invoices, outputFilename, background) => {
     //trang luu
     invoices.forEach((invoice, idx) => {
         if (idx > 0) doc.addPage(); //in hoa don moi
-        if (background) doc.image(background, -5, -10, { width: 610, height: 860 });
+        if (background) doc.image(background, image_size.left, image_size.top, { width: image_size.width, height: image_size.height });
         doc.fontSize(12);
         doc.fillColor(defaultColor);
         invoice.forEach(el => {
