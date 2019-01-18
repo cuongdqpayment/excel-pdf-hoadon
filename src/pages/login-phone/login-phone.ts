@@ -108,7 +108,11 @@ export class LoginPhonePage {
             let userInfo = this.auth.getUserInfo();
             console.log('Save token user', userInfo);
             //kiem tra token chua khai nickname, va image thi phai nhay vao slide khai thong tin
-            if (userInfo&&userInfo.image&&userInfo.nickname)
+            if (
+              userInfo
+              // &&userInfo.image
+              // &&userInfo.nickname
+              )
             this.navCtrl.setRoot(TabsPage);
           })
           .catch(err=>{
@@ -148,7 +152,7 @@ export class LoginPhonePage {
     })
     .catch(err=>{
 
-      this.presentAlert('Lỗi xác thực <br>' + JSON.stringify(err));
+      this.presentAlert('Lỗi xác thực <br>' + JSON.stringify(err?err.error:'Unknow!'));
     })
   }
 
@@ -212,7 +216,10 @@ export class LoginPhonePage {
       //console.log('data from resource',data);
       let login;
       login = data;
-      if (login.status&&login.user_info&&login.token){
+      if (login.status
+        &&login.user_info
+        &&login.token
+        ){
         this.apiStorageService.saveToken(this.token);
         this.navCtrl.setRoot(TabsPage);
       }else{
