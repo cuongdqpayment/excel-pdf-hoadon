@@ -267,7 +267,7 @@ var json2SqliteSQLUpdateCustomerId = (tablename, json, idFields) => {
     let whereFields = idFields ? idFields : ['cust_id'];
     for (let key in json) {
         jsonInsert.cols.push({ name: key, value: json[key] });
-        if (whereFields.find(x => x = key)) jsonInsert.wheres.push({ name: key, value: json[key] })
+        if (whereFields.find(x => x === key)) jsonInsert.wheres.push({ name: key, value: json[key] })
     }
     return jsonInsert;
 }
@@ -326,7 +326,7 @@ var createInvoicesCycle = (bill_cycle_in,bill_date_in,invoice_no_in, cust_id)=>{
                         total_vat       : price.vat * product_count
                     };
     
-                    let sqlBill = json2SqliteSQLUpdateCustomerId('bills', bill_detail);
+                    let sqlBill = json2SqliteSQLUpdateCustomerId('bills', bill_detail, ['cust_id','bill_cycle', 'price_id']) ;
     
                     var billDetailPromise = new Promise((resolveBill,rejectBill)=>{
                         db_service.db.insert(sqlBill)
@@ -360,7 +360,9 @@ var createInvoicesCycle = (bill_cycle_in,bill_date_in,invoice_no_in, cust_id)=>{
                             , sum_charge    : bill_sum.sum_charge
                         };
     
-                        let sqlInvoice = json2SqliteSQLUpdateCustomerId('invoices', invoice);
+                        let sqlInvoice = json2SqliteSQLUpdateCustomerId('invoices', invoice,  ['cust_id','bill_cycle']);
+
+                        console.log('sqlInvoice', sqlInvoice);
 
                         var invoicePromise = new Promise((resolveInvoice,rejectInvoice)=>{
                             db_service.db.insert(sqlInvoice)
