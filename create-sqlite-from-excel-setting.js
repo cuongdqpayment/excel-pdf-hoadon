@@ -409,7 +409,7 @@ var createInvoices = (bill_cycle,bill_date,invoice_no)=>{
             customers.forEach(el=>{
                 
                 let product_count = 1; //so luong
-                let price = prices.find(x => x.id = el.price_id);
+                let price = prices.find(x => x.id === el.price_id);
 
                 let bill_detail = {
                     cust_id         : el.cust_id,          //khach mua
