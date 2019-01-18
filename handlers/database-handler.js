@@ -6,17 +6,19 @@ const arrayObject = require('../utils/array-object');
 
 const db_service = require('../db/sqlite3/excel-sqlite-service');
 const dbFilename = './db/qld-vinhhung-hoadon-rac.db';
-//const excelFilename = './db/admin-setting.xlsx';
+const excelFilename = './db/admin-setting.xlsx';
 
+/* 
 setTimeout(() => {
-    db_service.handler.init(dbFilename); //ket noi db moi
+    db_service.handler.init(dbFilename); //ket noi db moi neu khac default trong excel-sqlite-service
 }, 1000); //doi 1s ket noi db
 
-//du lieu ban dau duoc tao tu manual bang lenh
-/* setTimeout(() => {
-    db_service.handler.createDatabase(excelFilename,dbFilename); //ket noi db moi
-}, 3000); //doi 1s ket noi db */
 
+//du lieu ban dau duoc tao tu manual bang lenh
+setTimeout(() => {
+    db_service.handler.createDatabase(excelFilename,dbFilename); //ket noi db moi
+}, 3000); //doi 1s ket noi db
+ */
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const url = require('url');
@@ -237,7 +239,7 @@ var selectInvoicesMatrix = (bill_cycle, cust_id) => {
                 , (key, value) => {
                     if (key == 'start_date') return new Date(value + timeZoneOffset * 60 * 60 * 1000).toISOString().replace(/T/, ' ').replace(/\..+/, '')
                     if (typeof value == 'number') return '' + value; //chuyen doi thanh chuoi (format dau . hoac dau trong)
-                    if (key == 'bill_date') return [value.slice(6, 8), value.slice(4, 6), value.slice(0, 4)]
+                    if (key == 'bill_date'&&value) return [value.slice(6, 8), value.slice(4, 6), value.slice(0, 4)]
                     return value;
                 }
             ); //convert to JSON string
@@ -265,7 +267,8 @@ var json2SqliteSQLUpdateCustomerId = (tablename, json, idFields) => {
     return jsonInsert;
 }
 
-var createCycleInvoices = (bill_cycle, bill_date, invoice_no, cust_id) => {
+var createCycleInvoices_old = (bill_cycle, bill_date, invoice_no, cust_id) => {
+
     return (new Promise((resolve, reject) => {
         var customers;
         var prices;
@@ -292,7 +295,7 @@ var createCycleInvoices = (bill_cycle, bill_date, invoice_no, cust_id) => {
         setTimeout(() => {
 
             if (customers && prices) {
-                console.log('doc xong du lieu tao', customers.length, prices.length);
+                console.log('Đọc xong số bảng ghi khách hàng là:', customers.length, prices.length);
                 customers.forEach(el => {
 
                     let product_count = 1; //so luong
@@ -367,7 +370,150 @@ var createCycleInvoices = (bill_cycle, bill_date, invoice_no, cust_id) => {
             }
         }, 1000);
     }));
+
 }
+
+var createInvoicesCycle = (bill_cycle_in,bill_date_in,invoice_no_in, cust_id)=>{
+   
+    let bill_cycle = bill_cycle_in?bill_cycle_in: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').slice(0,6);
+    let bill_date = bill_date_in?bill_date_in: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').slice(0,8);
+    let invoice_no = invoice_no_in?invoice_no_in:1; //so hoa don bat dau tu 1 (so hoa don truoc do)
+    
+    let custSelect = cust_id ? 'and customers.cust_id = \'' + cust_id + '\' ' : '';
+
+    var customerPromise = new Promise((resolveCustomers,rejectCustomers)=>{
+        db_service.db.getRsts('select cust_id, price_id, area_id, staff_id from customers where status=1 ' + custSelect)
+            .then(results => {
+                resolveCustomers(results);
+            })
+            .catch(err => {
+                rejectCustomers(err);
+            })
+    })
+
+    var pricesPromise =  new Promise((resolvePrices,rejectPrices)=>{
+        db_service.db.getRsts('select id ,product_id, unit, not_vat ,vat, charge from prices where status = 1')
+            .then(results => {
+                resolvePrices(results);
+            })
+            .catch(err => {
+                rejectPrices(err);
+            })
+    })
+
+    //tra ve no mot Promise
+    return pricesPromise
+    .then(prices=>{
+        return customerPromise.then(customers=>{
+
+            console.log('doc xong du lieu tao', customers.length, prices.length);
+
+            var count = 0;
+
+            var customerInvoicePromise = new Promise((resolve,reject)=>{
+                //duyet Mang khach hang muon tao hoa don
+                customers.forEach((el,idx)=>{
+
+                    let product_count = 1; //so luong
+                    let price = prices.find(x => x.id = el.price_id);
+    
+                    let bill_detail = {
+                        cust_id         : el.cust_id,          //khach mua
+                        bill_cycle      : bill_cycle,    //ky mua
+                        product_count   : product_count, //so luong
+                        price_id        : el.price_id,        //gia
+                        price_not_vat   : price.not_vat,
+                        total_not_vat   : price.not_vat * product_count,
+                        total_vat       : price.vat * product_count
+                    };
+    
+                    let sqlBill = json2SqliteSQLUpdateCustomerId('bills', bill_detail);
+    
+                    var billDetailPromise = new Promise((resolveBill,rejectBill)=>{
+                        db_service.db.insert(sqlBill)
+                            .then(data => {
+                                resolveBill(data);
+                            })
+                            .catch(err => {
+                                db_service.db.update(sqlBill)
+                                .then(data=>{
+                                    resolveBill(data);
+                                })
+                                .catch(err=>{
+                                    rejectBill(err);
+                                })
+                            })
+                    })
+                    
+    
+                        let bill_sum={};
+                        bill_sum.sum_not_vat    = price.not_vat * product_count;
+                        bill_sum.sum_vat        = price.vat * product_count;
+                        bill_sum.sum_charge     = price.charge * product_count
+    
+                        let invoice = {
+                            cust_id         : el.cust_id
+                            , bill_cycle    : bill_cycle
+                            , bill_date     : bill_date
+                            , invoice_no    : invoice_no++
+                            , sum_not_vat   : bill_sum.sum_not_vat
+                            , sum_vat       : bill_sum.sum_vat
+                            , sum_charge    : bill_sum.sum_charge
+                        };
+    
+                        let sqlInvoice = json2SqliteSQLUpdateCustomerId('invoices', invoice);
+
+                        var invoicePromise = new Promise((resolveInvoice,rejectInvoice)=>{
+                            db_service.db.insert(sqlInvoice)
+                                .then(data => {
+                                    resolveInvoice(invoice_no);
+                                })
+                                .catch(err => {
+                                    db_service.db.update(sqlInvoice)
+                                    .then(data=>{
+                                        resolveInvoice(invoice_no);
+                                    })
+                                    .catch(err=>{
+                                        rejectInvoice(err);            
+                                    })
+                                })
+                        })
+                        
+                        billDetailPromise
+                            .then(billResult=>{
+                                invoicePromise.then(invoiceResult=>{
+                                    count++; //xong 1 bang ghi
+                                    if (count>=customers.length){
+                                        console.log('Tao xong hoa don ky', count , bill_cycle, bill_date);
+                                        resolve(
+                                            {
+                                                status: true
+                                                , message:'Tao xong hoa don ky'
+                                                , count: count 
+                                                , bill_cycle: bill_cycle
+                                                , bill_date: bill_date
+                                                , invoice_no: invoice_no
+                                            }
+                                        );
+                                    }
+                                })
+                                .catch(err=>{reject(
+                                    {message:'Level 1:',error:err}
+                                )})
+                            })
+                            .catch(err=>{reject(
+                                {message:'Level 2:',error:err}
+                            )})
+            })
+            });
+
+            return customerInvoicePromise; //tra ve promise
+
+        })
+        .catch(err=>{throw {message:'Level 3:',error:err}});
+    })
+    .catch(err=>{throw {message:'ALL:',error:err}});
+};
 
 var createPdfInvoices = (invoices, outputFilename, background) => {
 
@@ -410,12 +556,22 @@ var createPdfInvoices = (invoices, outputFilename, background) => {
 
 class ResourceHandler {
 
+    /**
+     * tạo hóa đơn theo req.json_data = {bill_cycle,bill_date,invoice_no,cust_id}
+     * ket qủa cho biêt tạo được bao nhiêu hoá đơn, chu kỳ, ngày hóa đơn và số hóa đơn cho phiên sau
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     createInvoices(req, res, next) {
-        if (req.json_data && req.json_data.bill_cycle) {
-            createCycleInvoices(req.json_data.bill_cycle
-                , req.json_data.bill_data
+        if (req.json_data && req.json_data.bill_cycle && req.json_data.bill_date) {
+
+            createInvoicesCycle(
+                req.json_data.bill_cycle
+                , req.json_data.bill_date
                 , req.json_data.invoice_no
-                , req.json_data.cust_id)
+                , req.json_data.cust_id
+                )
             .then(data=>{
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(JSON.stringify({status: true, message: "Created invoice successfull!", data: data }));
@@ -432,7 +588,22 @@ class ResourceHandler {
         }
     }
 
-
+    getBillCycles(req, res, next) {
+        db_service.db.getRsts("select bill_cycle, count(cust_id) as count_customer from invoices group by bill_cycle")
+        .then(billCycles=>{
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify(billCycles
+                    , (key, value) => {
+                        if (value === null) { return undefined; }
+                        return value;
+                    }
+                ));
+            })
+            .catch(err => {
+                res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                res.end(JSON.stringify(err));
+            });
+    }
 
     /**
      * Lay tham so he thong ve mang tham so
@@ -529,8 +700,11 @@ class ResourceHandler {
         let req_url = url.parse(req.url, true, false);
         let path = decodeURIComponent(req_url.pathname);
         let params = path.substring('/pdf-invoices/'.length);
+        console.log('params:', params);
+
         let bill_cycle = params.slice(0, 6);
         let cust_id = params.slice(7, 17);
+
         let bg = req_url.query.background;
 
         console.log('background:', bg);
@@ -556,7 +730,7 @@ class ResourceHandler {
             })
             .catch(err => {
                 res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-                res.end(JSON.stringify(err));
+                res.end(JSON.stringify({message:'Lỗi đọc file pdf', error:err}));
             });
 
 

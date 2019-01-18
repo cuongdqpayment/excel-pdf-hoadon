@@ -10,16 +10,24 @@ const pdfHandler = require('../handlers/pdf-handler');
 const resourceHandler = require('../handlers/database-handler');
 
 let handlers = resourceHandler.ResourceHandler;
+
 //kiem tra token dung cho phep lay tai nguyen nay
 router.get('/json-parameters'
     , tokenHandler.getToken
     , proxyHandler.verifyProxyToken
     , handlers.getParameters
 ); //ok
+
 router.get('/json-customers'
     , tokenHandler.getToken
     , proxyHandler.verifyProxyToken
     , handlers.getCustomers
+);   //ok
+
+router.get('/json-bill-cycles'
+    //, tokenHandler.getToken
+    //, proxyHandler.verifyProxyToken
+    , handlers.getBillCycles
 );   //ok
 
 //tao ky hoa don {bill_cycle, bill_date, invoice_no, cust_id}

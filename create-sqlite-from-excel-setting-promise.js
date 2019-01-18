@@ -5,7 +5,7 @@ const utils = require('./utils/array-object');
 const fs = require('fs');
 
 
-const db = require('./db/sqlite3/excel-sqlite-service');
+const db_service = require('./db/sqlite3/excel-sqlite-service');
 
 var billPrintMatrix = {
     bill_date: [{ col: 285, row: 65 }, { col: 340, row: 65 }, { col: 375, row: 65 }],
@@ -80,7 +80,7 @@ var createDatabase = (excelFilename,dbFilename) => {
           });
     }
     setTimeout(() => {
-        db.handler.createDatabase(excelFilename,dbFilename);
+        db_service.handler.createDatabase(excelFilename,dbFilename);
     }, 1000); //doi 3 giay de oracle ket noi
 
 }
@@ -92,7 +92,7 @@ var selectCustomers = (cust_id) => {
 
     let custSelect = cust_id?'and a.cust_id = \''+ cust_id + '\' ':'';
     setTimeout(() => {
-        db.db.getRsts('select \
+        db_service.db.getRsts('select \
                           a.id\
                           ,a.full_name\
                           ,a.tax_no\
@@ -141,7 +141,7 @@ var selectInvoices = (cycle_id, cust_id) => {
     
     setTimeout(() => {
         var bill_array;
-        db.db.getRsts(
+        db_service.db.getRsts(
             'select                     \
             customers.cust_id           \
             ,invoices.bill_date          \
@@ -174,7 +174,7 @@ var selectInvoices = (cycle_id, cust_id) => {
 
 
         var saler;
-        db.db.getRst(
+        db_service.db.getRst(
             '\
                     select description as full_name, signature from parameters where id = 33\
                     ')
@@ -187,7 +187,7 @@ var selectInvoices = (cycle_id, cust_id) => {
             });
 
         var manager;
-        db.db.getRst(
+        db_service.db.getRst(
             '\
                         select description as full_name, signature from parameters where id = 32\
                         ')
@@ -201,7 +201,7 @@ var selectInvoices = (cycle_id, cust_id) => {
 
         var bill_details;
 
-        db.db.getRsts(
+        db_service.db.getRsts(
             '\
                             select              \
                             bills.cust_id             \
@@ -237,7 +237,7 @@ var selectInvoicesPdf = (bill_cycle,cust_id) => {
 
     let custSelect = cust_id?'and customers.cust_id = \''+ cust_id + '\' ':'';
     var invoices;
-    db.db.getRsts(
+    db_service.db.getRsts(
         'select                     \
             customers.cust_id           \
             ,invoices.bill_date          \
@@ -269,7 +269,7 @@ var selectInvoicesPdf = (bill_cycle,cust_id) => {
 
 
     var saler;
-    db.db.getRst('select description as full_name, signature from parameters where id = 33')
+    db_service.db.getRst('select description as full_name, signature from parameters where id = 33')
         .then(results => {
             saler = results;
         })
@@ -278,7 +278,7 @@ var selectInvoicesPdf = (bill_cycle,cust_id) => {
         });
 
     var manager;
-    db.db.getRst('select description as full_name, signature from parameters where id = 32')
+    db_service.db.getRst('select description as full_name, signature from parameters where id = 32')
         .then(results => {
             manager = results;
         })
@@ -288,7 +288,7 @@ var selectInvoicesPdf = (bill_cycle,cust_id) => {
 
     var bill_details;
 
-    db.db.getRsts(
+    db_service.db.getRsts(
         '\
                     select              \
                     bills.cust_id             \
@@ -383,103 +383,145 @@ const json2SqliteSQLInsert = (tablename, json) => {
 }
 
 
-var createInvoices = (bill_cycle,bill_date,invoice_no)=>{
+var createInvoices = (bill_cycle_in,bill_date_in,invoice_no_in)=>{
    
-    var customers;
-    db.db.getRsts('select cust_id, price_id, area_id, staff_id from customers where status=1')
-        .then(results => {
-            customers = results;
-        })
-        .catch(err => {
-            console.log(err);
-        });
+    let bill_cycle = bill_cycle_in?bill_cycle_in: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').slice(0,6);
+    let bill_date = bill_date_in?bill_date_in: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').slice(0,8);
+    let invoice_no = invoice_no_in?invoice_no_in:1; //so hoa don bat dau tu 1 (so hoa don truoc do)
     
-    var prices;
-    db.db.getRsts('select id ,product_id, unit, not_vat ,vat, charge from prices where status = 1')
+    
+    var customerPromise = new Promise((resolveCustomers,rejectCustomers)=>{
+        db_service.db.getRsts('select cust_id, price_id, area_id, staff_id from customers where status=1')
             .then(results => {
-                prices = results;
+                resolveCustomers(results);
             })
             .catch(err => {
-                console.log(err);
+                rejectCustomers(err);
+            })
+    })
+
+    var pricesPromise =  new Promise((resolvePrices,rejectPrices)=>{
+        db_service.db.getRsts('select id ,product_id, unit, not_vat ,vat, charge from prices where status = 1')
+            .then(results => {
+                resolvePrices(results);
+            })
+            .catch(err => {
+                rejectPrices(err);
+            })
+    })
+
+    //tra ve no mot Promise
+    return pricesPromise
+    .then(prices=>{
+        return customerPromise.then(customers=>{
+
+            console.log('doc xong du lieu tao', customers.length, prices.length);
+
+            var count = 0;
+
+            var customerInvoicePromise = new Promise((resolve,reject)=>{
+                //duyet Mang khach hang muon tao hoa don
+                customers.forEach((el,idx)=>{
+
+                    let product_count = 1; //so luong
+                    let price = prices.find(x => x.id = el.price_id);
+    
+                    let bill_detail = {
+                        cust_id         : el.cust_id,          //khach mua
+                        bill_cycle      : bill_cycle,    //ky mua
+                        product_count   : product_count, //so luong
+                        price_id        : el.price_id,        //gia
+                        price_not_vat   : price.not_vat,
+                        total_not_vat   : price.not_vat * product_count,
+                        total_vat       : price.vat * product_count
+                    };
+    
+                    let sqlBill = json2SqliteSQLUpdateCustomerId('bills', bill_detail);
+    
+                    var billDetailPromise = new Promise((resolveBill,rejectBill)=>{
+                        db_service.db.insert(sqlBill)
+                            .then(data => {
+                                resolveBill(data);
+                            })
+                            .catch(err => {
+                                db_service.db.update(sqlBill)
+                                .then(data=>{
+                                    resolveBill(data);
+                                })
+                                .catch(err=>{
+                                    rejectBill(err);
+                                })
+                            })
+                    })
+                    
+    
+                        let bill_sum={};
+                        bill_sum.sum_not_vat    = price.not_vat * product_count;
+                        bill_sum.sum_vat        = price.vat * product_count;
+                        bill_sum.sum_charge     = price.charge * product_count
+    
+                        let invoice = {
+                            cust_id         : el.cust_id
+                            , bill_cycle    : bill_cycle
+                            , bill_date     : bill_date
+                            , invoice_no    : invoice_no++
+                            , sum_not_vat   : bill_sum.sum_not_vat
+                            , sum_vat       : bill_sum.sum_vat
+                            , sum_charge    : bill_sum.sum_charge
+                        };
+    
+                        let sqlInvoice = json2SqliteSQLUpdateCustomerId('invoices', invoice);
+
+                        var invoicePromise = new Promise((resolveInvoice,rejectInvoice)=>{
+                            db_service.db.insert(sqlInvoice)
+                                .then(data => {
+                                    resolveInvoice(invoice_no);
+                                })
+                                .catch(err => {
+                                    db_service.db.update(sqlInvoice)
+                                    .then(data=>{
+                                        resolveInvoice(invoice_no);
+                                    })
+                                    .catch(err=>{
+                                        rejectInvoice(err);            
+                                    })
+                                })
+                        })
+                        
+                        billDetailPromise
+                            .then(billResult=>{
+                                invoicePromise.then(invoiceResult=>{
+                                    count++; //xong 1 bang ghi
+                                    if (count>=customers.length){
+                                        console.log('Tao xong hoa don ky', count , bill_cycle, bill_date);
+                                        resolve(
+                                            {
+                                                status: true
+                                                , message:'Tao xong hoa don ky'
+                                                , count: count 
+                                                , bill_cycle: bill_cycle
+                                                , bill_date: bill_date
+                                                , invoice_no: invoice_no
+                                            }
+                                        );
+                                    }
+                                })
+                                .catch(err=>{reject(
+                                    {message:'Level 1:',error:err}
+                                )})
+                            })
+                            .catch(err=>{reject(
+                                {message:'Level 2:',error:err}
+                            )})
+            })
             });
 
-    setTimeout(()=>{
-        if (customers&&prices){
-            console.log('doc xong du lieu tao', customers.length, prices.length);
-            customers.forEach(el=>{
-                
-                let product_count = 1; //so luong
-                let price = prices.find(x => x.id = el.price_id);
+            return customerInvoicePromise; //tra ve promise
 
-                let bill_detail = {
-                    cust_id         : el.cust_id,          //khach mua
-                    bill_cycle      : bill_cycle,    //ky mua
-                    product_count   : product_count, //so luong
-                    price_id        : el.price_id,        //gia
-                    price_not_vat   : price.not_vat,
-                    total_not_vat   : price.not_vat * product_count,
-                    total_vat       : price.vat * product_count
-                };
-
-                let sqlBill = json2SqliteSQLUpdateCustomerId('bills', bill_detail);
-
-                db.db.insert(sqlBill)
-                    .then(data => {
-                        console.log(data);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        //contraint thi update
-                        db.db.update(sqlBill)
-                        .then(data=>{
-                            console.log(data);
-                            
-                        })
-                        .catch(err=>{
-                            console.log(err);
-
-                        })
-                    })
-
-                    let bill_sum={};
-                    bill_sum.sum_not_vat    = price.not_vat * product_count;
-                    bill_sum.sum_vat        = price.vat * product_count;
-                    bill_sum.sum_charge     = price.charge * product_count
-
-                    let invoice = {
-                        cust_id         : el.cust_id
-                        , bill_cycle    : bill_cycle
-                        , bill_date     : bill_date
-                        , invoice_no    : invoice_no++
-                        , sum_not_vat   : bill_sum.sum_not_vat
-                        , sum_vat       : bill_sum.sum_vat
-                        , sum_charge    : bill_sum.sum_charge
-                    };
-
-                    let sqlInvoice = json2SqliteSQLUpdateCustomerId('invoices', invoice);
-
-                    db.db.insert(sqlInvoice)
-                        .then(data => {
-                            console.log(data);
-                            return invoice_no;
-                        })
-                        .catch(err => {
-                            console.log(err);
-                            //contraint thi update
-                            db.db.update(sqlInvoice)
-                            .then(data=>{
-                                console.log(data);
-                                
-                            })
-                            .catch(err=>{
-                                console.log(err);
-    
-                            })
-                        })
-                
-            })
-        }
-    },1000);
+        })
+        .catch(err=>{throw {message:'Level 3:',error:err}});
+    })
+    .catch(err=>{throw {message:'ALL:',error:err}});
 }
 
 
@@ -499,10 +541,24 @@ var createInvoices = (bill_cycle,bill_date,invoice_no)=>{
 
 //4. tao hoa don
 let invoice_no = 1;
- createInvoices('201901','20190119',invoice_no);
+ /* createInvoices('201901','20190119',invoice_no)
+ .then(data=>{
+     console.log('data: ', data);
+ })
+ .catch(err=>{
+     console.log('err: ', err);
+ }); */
 
 //5. xem hoa don
 //selectInvoice('201901','R000000001');
 
 //6. tao ma tran hoa don
 //selectInvoicesPdf('201901','R000000001');
+
+db_service.db.getRsts("select bill_cycle, count(cust_id) as count_customer from invoices group by bill_cycle")
+.then(data=>{
+    console.log('data: ', data);
+})
+.catch(err=>{
+    console.log('err: ', err);
+});
