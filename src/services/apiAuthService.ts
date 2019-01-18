@@ -307,4 +307,9 @@ export class ApiAuthService {
          //tra ket qua cho user
          return true;
      }
+
+
+     injectToken(){
+        this.reqInterceptor.setRequestToken(this.userToken.token);
+     }
 }

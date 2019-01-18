@@ -113,6 +113,9 @@ export class LoginPhonePage {
               // &&userInfo.image
               // &&userInfo.nickname
               )
+            //cho phep truy cap thi gui token kem theo
+            this.auth.injectToken(); //Tiêm token cho các phiên làm việc lấy số liệu cần xác thực
+
             this.navCtrl.setRoot(TabsPage);
           })
           .catch(err=>{
