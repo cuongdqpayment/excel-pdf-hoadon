@@ -24,9 +24,11 @@ const fs = require('fs');
 const url = require('url');
 
 //ma tran in hoa don
+const offset_1 = 0 - 5; //hoa don lien 2 giao cho khach
+const offset_2 = 422 + 17; //hoa don lien 2 giao cho khach
 //neu khong can in truong nao thi rao lai khong khai bao
 var billPrintMatrix = {
-    bill_date: [{ col: 285, row: 65 }, { col: 340, row: 65 }, { col: 375, row: 65 }],
+    bill_date: [{ col: 285, row: 58 }, { col: 340, row: 58 }, { col: 385, row: 58 }],
     //invoice_no: { col: 480, row: 55, color: 'red'},
     full_name: { col: 160, row: 90 },
     organization_name: { col: 120, row: 105 },
@@ -43,22 +45,22 @@ var billPrintMatrix = {
         }
     ],
     bill_sum: {
-        sum_not_vat: { col: 450, row: 218, width: 100, align: 'right', color: 'red' },
-        sum_vat: { col: 450, row: 236, width: 100, align: 'right', color: 'red' },
-        sum_charge: { col: 450, row: 253, width: 100, align: 'right', color: 'red' }
+        sum_not_vat: { col: 450, row: 215, width: 100, align: 'right', color: 'red' },
+        sum_vat: { col: 450, row: 233, width: 100, align: 'right', color: 'red' },
+        sum_charge: { col: 450, row: 255, width: 100, align: 'right', color: 'red' }
     },
-    bill_sum_charge_spell: { col: 155, row: 273, color: 'red' },
+    bill_sum_charge_spell: { col: 155, row: 275, color: 'red' },
     sign_customer: {
         signature: { col: 120, row: 330 },
-        full_name: { col: 110, row: 375 }
+        full_name: { col: 105, row: 380 }
     },
     sign_saler: {
         signature: { col: 290, row: 330 },
-        full_name: { col: 280, row: 375 }
+        full_name: { col: 280, row: 380 }
     },
     sign_manager: {
         signature: { col: 470, row: 330 },
-        full_name: { col: 450, row: 375 }
+        full_name: { col: 450, row: 380 }
     }
 };
 
@@ -239,7 +241,7 @@ var selectInvoicesMatrix = (bill_cycle, cust_id) => {
                 , (key, value) => {
                     if (key == 'start_date') return new Date(value + timeZoneOffset * 60 * 60 * 1000).toISOString().replace(/T/, ' ').replace(/\..+/, '')
                     if (typeof value == 'number') return '' + value; //chuyen doi thanh chuoi (format dau . hoac dau trong)
-                    if (key == 'bill_date'&&value) return [value.slice(6, 8), value.slice(4, 6), value.slice(0, 4)]
+                    if (key == 'bill_date'&&value) return [value.slice(6, 8), value.slice(4, 6), value.slice(2, 4)]
                     return value;
                 }
             ); //convert to JSON string
@@ -265,112 +267,6 @@ var json2SqliteSQLUpdateCustomerId = (tablename, json, idFields) => {
         if (whereFields.find(x => x = key)) jsonInsert.wheres.push({ name: key, value: json[key] })
     }
     return jsonInsert;
-}
-
-var createCycleInvoices_old = (bill_cycle, bill_date, invoice_no, cust_id) => {
-
-    return (new Promise((resolve, reject) => {
-        var customers;
-        var prices;
-        let custSelect = cust_id ? 'and customers.cust_id = \'' + cust_id + '\' ' : '';
-
-        db_service.db.getRsts('select cust_id, price_id, area_id, staff_id from customers where status = 1 ' + custSelect)
-            .then(results => {
-                customers = results;
-            })
-            .catch(err => {
-                //console.log(err);
-                reject(err);
-            });
-
-        db_service.db.getRsts('select id ,product_id, unit, not_vat ,vat, charge from prices where status = 1')
-            .then(results => {
-                prices = results;
-            })
-            .catch(err => {
-                //console.log(err);
-                reject(err);
-            });
-
-        setTimeout(() => {
-
-            if (customers && prices) {
-                console.log('Đọc xong số bảng ghi khách hàng là:', customers.length, prices.length);
-                customers.forEach(el => {
-
-                    let product_count = 1; //so luong
-                    let price = prices.find(x => x.id = el.price_id);
-
-                    let bill_detail = {
-                        cust_id: el.cust_id,          //khach mua
-                        bill_cycle: bill_cycle,    //ky mua
-                        product_count: product_count, //so luong
-                        price_id: el.price_id,        //gia
-                        price_not_vat: price.not_vat,
-                        total_not_vat: price.not_vat * product_count,
-                        total_vat: price.vat * product_count
-                    };
-
-                    let sqlBill = json2SqliteSQLUpdateCustomerId('bills', bill_detail, ['cust_id', 'bill_cycle']);
-
-                    db_service.db.insert(sqlBill)
-                        .then(data => {
-                            //console.log(data);
-                        })
-                        .catch(err => {
-                            //contraint thi update
-                            db_service.db.update(sqlBill)
-                                .then(data => {
-                                    //console.log(data);
-                                })
-                                .catch(err => {
-                                    //console.log(err);
-                                    reject(err);
-                                })
-                        })
-
-                    let bill_sum = {};
-                    bill_sum.sum_not_vat = price.not_vat * product_count;
-                    bill_sum.sum_vat = price.vat * product_count;
-                    bill_sum.sum_charge = price.charge * product_count
-
-                    let invoice = {
-                        cust_id: el.cust_id
-                        , bill_cycle: bill_cycle
-                        , bill_date: bill_date
-                        , invoice_no: invoice_no++
-                        , sum_not_vat: bill_sum.sum_not_vat
-                        , sum_vat: bill_sum.sum_vat
-                        , sum_charge: bill_sum.sum_charge
-                    };
-
-                    let sqlInvoice = json2SqliteSQLUpdateCustomerId('invoices', invoice, ['cust_id']);
-
-                    //tao hoa don thanh cong thi tra ve then
-                    db_service.db.insert(sqlInvoice)
-                        .then(data => {
-                            //console.log(data);
-                            resolve(data);
-                        })
-                        .catch(err => {
-                            //console.log(err);
-                            //contraint thi update
-                            db_service.db.update(sqlInvoice)
-                                .then(data => {
-                                    //console.log(data);
-                                    resolve(data);
-                                })
-                                .catch(err => {
-                                    //console.log(err);
-                                    reject(err);
-                                })
-                        })
-
-                })
-            }
-        }, 1000);
-    }));
-
 }
 
 var createInvoicesCycle = (bill_cycle_in,bill_date_in,invoice_no_in, cust_id)=>{
@@ -516,9 +412,6 @@ var createInvoicesCycle = (bill_cycle_in,bill_date_in,invoice_no_in, cust_id)=>{
 };
 
 var createPdfInvoices = (invoices, outputFilename, background) => {
-
-    const offset_1 = 0 - 5; //hoa don lien 2 giao cho khach
-    const offset_2 = 422 + 17; //hoa don lien 2 giao cho khach
 
     //bat dau tao pdf
     var doc = new PDFDocument({
