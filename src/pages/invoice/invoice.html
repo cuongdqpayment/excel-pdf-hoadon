@@ -12,23 +12,52 @@
     <!-- #id=0 -->
     <ion-slide>
 
-        <ion-buttons start>
-            <button ion-button type="button" icon-end round (click)="readInvoices()">
-                Đọc hóa đơn
-                <ion-icon name="share-alt"></ion-icon>
+         <ion-list>
+            <button ion-item *ngFor="let billCycle of billCycles" (click)="gotoSlideInvoices(billCycle)">
+              <h2>Kỳ cước tháng: {{billCycle.bill_cycle}}</h2>
+              <ion-note>Số lượng khách hàng {{billCycle.count_customer}}</ion-note>
             </button>
-        </ion-buttons>
+        </ion-list>
+
+        <ion-row>
+            <ion-col text-center col-12 offset-xl-6 col-xl-3 offset-lg-4 col-lg-4 col-sm-6>
+              <button ion-button block color="primary" type="button" (click)="createInvoices()">
+                Tạo kỳ cước mới
+              </button>
+            </ion-col>
+          </ion-row>
 
     </ion-slide>
 
     <!-- #id=1 -->
+
+    <ion-slide>
+
+        <ion-list>
+           <button ion-item *ngFor="let invoice of jsonInvoices" (click)="gotoSlideInvoicesDetail(invoice)">
+             <h2>{{invoice.full_name}}</h2>
+             <p>{{invoice.address}}</p>
+             <ion-note>{{invoice.sum_charge}} - {{invoice.bill_date}}</ion-note>
+           </button>
+       </ion-list>
+
+       <ion-row>
+           <ion-col text-center col-12 offset-xl-6 col-xl-3 offset-lg-4 col-lg-4 col-sm-6>
+             <button ion-button block color="primary" type="button" (click)="createPdfInvoices()">
+               Tạo file pdf
+             </button>
+           </ion-col>
+         </ion-row>
+
+   </ion-slide>
+
+    <!-- #id=2 -->
     <ion-slide>
 
       <iframe *ngIf="pdfLink" [src]="pdfLink" width="100%" height="100%" frameborder="0"></iframe>
 
     </ion-slide>
 
-    <!-- #id=2 -->
     <!-- #id=4 -->
     <!-- #id=5 -->
     <!-- #id=6 -->

@@ -5,8 +5,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { ApiAuthService } from '../../services/apiAuthService';
 import { ApiStorageService } from '../../services/apiStorageService';
+import { ApiResourceService } from '../../services/apiResourceServices'
 
-import { ApiHttpPublicService } from '../../services/apiHttpPublicServices'
 import { ParametersPage } from '../parameters/parameters';
 import { ConfigPage } from '../config/config';
 
@@ -34,8 +34,8 @@ export class CustomerPage {
               private navCtrl: NavController,
               private formBuilder: FormBuilder,
               private auth : ApiAuthService,
-              private apiStorageService: ApiStorageService,
-              private http: ApiHttpPublicService,
+              private storage: ApiStorageService, 
+              private resource: ApiResourceService,
               private loadingCtrl: LoadingController
               ) {
 
@@ -67,7 +67,7 @@ export class CustomerPage {
     });
     loading.present();
 
-    this.http.getAllCutomers()
+    this.resource.getAllCutomers()
     .then(customers=>{
       this.customersOrigin = customers;
       this.customers = this.customersOrigin;

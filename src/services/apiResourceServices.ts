@@ -15,6 +15,55 @@ export class ApiResourceService {
                 ) {}
 
 
+    /**
+     * billCycle = 
+     * {
+     * bill_cycle:
+     * bill_date:
+     * invoice_no: 
+     * cust_id: 
+     * }
+     */
+    createInvoices(billCycle){
+        return this.httpClient.post(this.resourceServer+'/db/json-invoices',JSON.stringify({
+            bill_cycle: billCycle.bill_cycle,
+            bill_date: billCycle.bill_date,
+            invoice_no: billCycle.invoice_no,
+            cust_id: billCycle.cust_id
+        }))
+        .toPromise()
+    }
+
+    /**
+     * billCycle = 201901 hoac 201901/R000000001
+     */
+    getInvoices(billCycle){
+        return this.httpClient.get(this.resourceServer+'/db/json-invoices/'+billCycle)
+        .toPromise()
+        .then(results=>{
+            if (results) {
+                return results;
+            }else{
+                throw [];
+            }
+        })
+    }
+
+    /**
+     * lay ky cuoc da tao trong csdl
+     */
+    getBillCycle(){
+        return this.httpClient.get(this.resourceServer+'/db/json-bill-cycles')
+        .toPromise()
+        .then(results=>{
+            if (results) {
+                return results;
+            }else{
+                throw [];
+            }
+        })
+    }
+
     getAllCutomers(){
         return this.httpClient.get(this.resourceServer+'/db/json-customers')
         .toPromise()
@@ -22,11 +71,8 @@ export class ApiResourceService {
             if (results) {
                 return results;
             }else{
-                throw 'No customer!';
+                throw [];
             }
-        })
-        .catch(err=>{
-            throw err;
         })
     }
 
@@ -37,11 +83,8 @@ export class ApiResourceService {
             if (results) {
                 return results;
             }else{
-                throw 'No paramter!';
+                throw [];
             }
-        })
-        .catch(err=>{
-            throw err;
         })
     }
 
