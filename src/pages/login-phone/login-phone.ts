@@ -289,7 +289,7 @@ export class LoginPhonePage {
   }
 }
 function phoneNumberValidator(formControl: FormControl) {
-  if (formControl.value.charAt(0) != "0") return null;
-  else return { phoneNumber: true };
+  if (formControl.value.charAt(0) != "0") return { valid: false, invalid: true };
+  else return { valid: true, invalid: false };
 }
 

@@ -25,7 +25,8 @@ export class ApiResourceService {
      * }
      */
     createInvoices(billCycle){
-        return this.httpClient.post(this.resourceServer+'/db/json-invoices',JSON.stringify({
+        return this.httpClient.post(this.resourceServer+'/db/create-invoices'
+        ,JSON.stringify({
             bill_cycle: billCycle.bill_cycle,
             bill_date: billCycle.bill_date,
             invoice_no: billCycle.invoice_no,
