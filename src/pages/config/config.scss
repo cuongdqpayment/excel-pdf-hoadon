@@ -1,5 +1,6 @@
 page-config {
   
+//Định dạng bảng thiết lập màu nền, chữ, kích cỡ theo ô Chẵn/lẻ dòng/cột/cell
 ion-row:nth-of-type(odd) { //dòng lẻ
     ion-col:nth-of-type(odd) { //cột lẻ
         margin:0.5em;    //Khoảng cách đường biên cột so với lề đối tượng trước
@@ -48,6 +49,10 @@ ion-row:nth-of-type(even) { //dòng chẵn
     }
 }
 
+
+//Cấu hình css cho sliding -- kéo qua, về để ra lệnh
+//truòng hợp màn hình lớn, nó không quẹt được
+//chế độ mobile nó mới quẹt được
 
   #archive-spinner,
   #download-spinner,

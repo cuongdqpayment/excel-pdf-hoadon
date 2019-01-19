@@ -67,7 +67,7 @@
 <ion-content>
 
     <ion-slides (ionSlideDidChange)="slideChanged()">
-        <!-- #id=0 Select Options-->
+        <!-- #id=0 style chẵn lẻ và bảng (dùng boostrap và css ion-row:nth-of-type-->
         <ion-slide>
           <ion-row>
             <ion-col>
@@ -86,7 +86,7 @@
             </ion-col>
           </ion-row>
         </ion-slide>
-        <!-- #id=0 Select Options-->
+        <!-- #id=1 Select Options - chọn 1 hoặc chọn nhiều-->
         <ion-slide>
 
             <ion-item>
@@ -217,9 +217,9 @@
       
         </ion-slide>
         
-        <!-- #id=1 Toolbar navbar-->
+        <!-- #id=2 Toolbar navbar -- Thanh công cụ có nút kèm theo - nhiều nút - tập nhóm nút - tìm kiếm-->
         <ion-slide>
-            <ion-toolbar>
+              <ion-toolbar>
                 <ion-title>This is the title that never ends. It just goes on and on my friend.</ion-title>
               </ion-toolbar>
             
@@ -427,7 +427,7 @@
               </ion-toolbar>
         </ion-slide>
 
-        <!-- #id=2 card header card footer-->
+        <!-- #id=3 card header card footer - Các thẻ có ảnh, đính ảnh, hiển thị ảnh -->
         <ion-slide>
             <ion-card color="secondary">
                 <ion-card-header>
@@ -493,8 +493,9 @@
               </ion-list>
         </ion-slide>
 
-        <!-- #id=3 -->
+        <!-- #id=4 Form nhập liệu -->
         <ion-slide>
+            <form>
             <ion-item>
                 <ion-label>Username</ion-label>
                 <ion-input></ion-input>
@@ -524,13 +525,24 @@
                 <ion-label>Checkbox</ion-label>
                 <ion-checkbox></ion-checkbox>
               </ion-item>
+
+              <ion-buttons start>
+                  <button ion-button type="submit" icon-end round>
+                      SUBMIT
+                      <ion-icon name="share-alt"></ion-icon>
+                  </button>
+              </ion-buttons>
+
+            </form>
         </ion-slide>
 
-        <!-- #id=4 -->
+        <!-- #id=5 - nút cài đặt - nhóm tiêu đề-->
         <ion-slide>
-          <ion-list>
-            <ion-list-header>
-              Settings
+
+          
+        <ion-list>
+            <ion-list-header color="secondary">
+              Các thiết lập mẫu - Settings
               <button ion-button icon-only item-end clear>
                 <ion-icon name="cog"></ion-icon>
               </button>
@@ -571,53 +583,54 @@
               <ion-label>Personal Hotspot</ion-label>
               <ion-note item-end>Off</ion-note>
             </button>
-          </ion-list>
+        </ion-list>
         
-          <ion-list radio-group>
-            <ion-list-header>
-              <ion-icon item-start name="phone-portrait"></ion-icon>
-              Silence Phone
-            </ion-list-header>
-        
-            <ion-item>
-              <ion-label color="dark">Always</ion-label>
-              <ion-radio value="always" checked></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label color="dark">Only while phone is locked</ion-label>
-              <ion-radio value="locked"></ion-radio>
-            </ion-item>
-          </ion-list>
-        
-          <ion-list>
-            <ion-list-header>
-              Apps Installed
-            </ion-list-header>
-        
-            <ion-item>
-              <ion-icon name="ionic" item-start color="primary"></ion-icon>
-              <ion-label>Ionic View</ion-label>
-              <button ion-button outline item-end>Uninstall</button>
-            </ion-item>
-            <ion-item>
-              <ion-icon name="brush" item-start color="primary"></ion-icon>
-              <ion-label>Ionic Creator</ion-label>
-              <button ion-button outline item-end>Uninstall</button>
-            </ion-item>
-            <ion-item>
-              <ion-icon name="logo-octocat" item-start color="dark"></ion-icon>
-              <ion-label>Hubstruck</ion-label>
-              <button ion-button outline item-end>Uninstall</button>
-            </ion-item>
-            <ion-item>
-              <ion-icon name="paw" item-start color="danger"></ion-icon>
-              <ion-label>Barkpark</ion-label>
-              <button ion-button outline item-end>Uninstall</button>
-            </ion-item>
-          </ion-list>
+        <ion-list radio-group>
+          <ion-list-header>
+            <ion-icon item-start name="phone-portrait"></ion-icon>
+            Silence Phone
+          </ion-list-header>
+      
+          <ion-item>
+            <ion-label color="dark">Always</ion-label>
+            <ion-radio value="always" checked></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label color="dark">Only while phone is locked</ion-label>
+            <ion-radio value="locked"></ion-radio>
+          </ion-item>
+        </ion-list>
+      
+        <ion-list>
+          <ion-list-header>
+            Apps Installed
+          </ion-list-header>
+      
+          <ion-item>
+            <ion-icon name="ionic" item-start color="primary"></ion-icon>
+            <ion-label>Ionic View</ion-label>
+            <button ion-button outline item-end>Uninstall</button>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="brush" item-start color="primary"></ion-icon>
+            <ion-label>Ionic Creator</ion-label>
+            <button ion-button outline item-end>Uninstall</button>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="logo-octocat" item-start color="dark"></ion-icon>
+            <ion-label>Hubstruck</ion-label>
+            <button ion-button outline item-end>Uninstall</button>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="paw" item-start color="danger"></ion-icon>
+            <ion-label>Barkpark</ion-label>
+            <button ion-button outline item-end>Uninstall</button>
+          </ion-item>
+        </ion-list>    
+
         </ion-slide>
 
-        <!-- #id=5 -->
+        <!-- #id=6 Sắp xếp lại trật tự của mảng bằng cách kéo thả từng dòng-->
         <ion-slide>
           <ion-list class="chat-sliding-demo">
             <ion-list-header>
@@ -633,8 +646,9 @@
           </ion-list>
         </ion-slide>
 
-        <!-- #id=6 -->
+        <!-- #id=7 Slide quẹt qua/về để thao tác trên từng dòng có nhiều nút đính kèm-->
         <ion-slide>
+          
           <ion-list class="chat-sliding-demo">
             <ion-list-header>
               Chats
@@ -710,37 +724,24 @@
           
         </ion-slide>
 
-        <!-- #id=7 -->
+        <!-- #id=8 Nút chứa nhiều icon, và nút outline phù hợp từng dòng lệnh-->
         <ion-slide>
-
+            <ion-list>
+                <ion-item-divider color="primary">
+                    CÁC KỲ HÓA ĐƠN ĐÃ PHÁT HÀNH
+                  <button *ngIf="billCycles.length>0" ion-button item-end outline color="danger" (click)="editInvoices()">PHÁT HÀNH LẠI</button>
+                  <button ion-button item-end outline color="light">PHÁT HÀNH MỚI</button>
+                </ion-item-divider>
+                <button ion-item>
+                    <ion-icon name="calculator" item-start color="danger"></ion-icon>
+                    <h2>Kỳ tháng:</h2>
+                    <p>Ngày phát hành </p>
+                    <ion-note>Số lượng khách hàng </ion-note>
+                    <ion-icon name="print" item-end color="primary"></ion-icon>
+                </button>
+          </ion-list>
         </ion-slide>
 
     </ion-slides>
  
 </ion-content>
-
-<!-- 
-<ion-header>
-    <ion-navbar >
-  
-      <ion-buttons start>
-        <button ion-button icon-only>
-          <ion-icon name="contact"></ion-icon>
-        </button>
-        <button ion-button icon-only>
-          <ion-icon name="search"></ion-icon>
-        </button>
-      </ion-buttons>
-      <ion-buttons end>
-        <button ion-button icon-only color="secondary">
-          <ion-icon name="more"></ion-icon>
-        </button>
-      </ion-buttons>
-      <ion-title>Subheader</ion-title>
-    </ion-navbar>
-  </ion-header>
-  
-  <ion-content fullscreen="true">
-    
-  
-  -->

@@ -98,6 +98,10 @@ logins: any[];
               }
 
   ngOnInit() {    
+
+    // khong cho keo slide bang tay
+    this.slides.lockSwipes(true);
+
     //REORDER ARRAY:
     this.songs = [
       {
