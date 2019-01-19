@@ -47,7 +47,6 @@ export class LoginPhonePage {
         [
           Validators.required,
           Validators.pattern("^[0-9]*$"),
-          phoneNumberValidator,
           Validators.minLength(9),
           Validators.maxLength(9)]]
     })
@@ -288,8 +287,5 @@ export class LoginPhonePage {
     this.resourceImages = this.resourceImages.filter((value, index, arr) => { return value != evt;});
   }
 }
-function phoneNumberValidator(formControl: FormControl) {
-  if (formControl.value.charAt(0) != "0") return { valid: false, invalid: true };
-  else return { valid: true, invalid: false };
-}
+
 
