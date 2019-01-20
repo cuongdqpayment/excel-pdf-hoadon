@@ -348,8 +348,16 @@ export class InvoicePage {
         ok_text:'OK'
       })
 
-      const browser = this.inAppBrowser.create(fileURL);
+      // if (this.isMobile){
+        const browser1 = this.inAppBrowser.create(fileURL,'_blank', 'hideurlbar=no,location=no,toolbarposition=top');
+      // }else{
+        const browser2 = this.inAppBrowser.create(fileURL,'_system');
+      // }
       
+      
+      // this.pdfLink = this.sanitizer.bypassSecurityTrustResourceUrl(fileURL);
+      // this.goToSlide(slidePage.load_pdf);
+
       loading.dismiss();
     })
     .catch(err=>{
