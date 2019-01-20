@@ -596,11 +596,49 @@ class ResourceHandler {
     }
 
     /**
-     * Lay hoa don pdf theo ky,khach le?backgroud=yes/no
+     * tao ban in file pdf luu tren server ten file theo 
+     * bill_cycle
+     * 
      * @param {*} req 
      * @param {*} res 
      * @param {*} next 
      */
+    postPdfInvoices(req, res, next) {
+        
+        let bill_cycle = req.json_data.bill_cycle;
+        let cust_id = req.json_data.cust_id?req.json_data.cust_id:'all';
+        let bg = req.json_data.background;
+
+        console.log('background:', bg);
+
+        selectInvoicesMatrix(bill_cycle, cust_id)
+            .then(invoicesMatrix => {
+
+                let outputFilename = './pdf/'+bill_cycle+'_'+cust_id+'_invoices.pdf';
+                
+                let background = './pdf/mau_hoa_don.png';
+
+                let stream = createPdfInvoices(invoicesMatrix, outputFilename, bg ? background : undefined);
+
+                stream.on('finish', () => {
+                    fs.readFile(outputFilename, { flag: 'r' }, (err, bufferPdf) => {
+                        if (err) {
+                            res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                            res.end(JSON.stringify(err));
+                        }
+                        res.writeHead(200, { 'Content-Type': 'application/pdf; charset=utf-8' });
+                        res.end(bufferPdf);
+                    });
+                });
+            })
+            .catch(err => {
+                res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                res.end(JSON.stringify({message:'Lỗi đọc file pdf', error:err}));
+            });
+
+
+    }
+
     getPdfInvoices(req, res, next) {
         let req_url = url.parse(req.url, true, false);
         let path = decodeURIComponent(req_url.pathname);

@@ -12,18 +12,27 @@ const resourceHandler = require('../handlers/database-handler');
 let handlers = resourceHandler.ResourceHandler;
 
 //kiem tra token dung cho phep lay tai nguyen nay
+/**
+ * lay tham so
+ */
 router.get('/json-parameters'
     , tokenHandler.getToken
     , proxyHandler.verifyProxyToken
     , handlers.getParameters
 ); //ok
 
+/**
+ * lay ds kh
+ */
 router.get('/json-customers'
     , tokenHandler.getToken
     , proxyHandler.verifyProxyToken
     , handlers.getCustomers
 );   //ok
 
+/**
+ * lay cac ky cuoc
+ */
 router.get('/json-bill-cycles'
     //, tokenHandler.getToken
     //, proxyHandler.verifyProxyToken
@@ -59,10 +68,33 @@ router.get('/json-invoices/*'
     //, proxyHandler.verifyProxyToken
     , handlers.getInvoices
 );   //OK
+
 //tra ket qua in hoa don in don le, in nhom, in het, co/khong background kieu pdf
+/**
+ * Tao ban in pdf hoa don
+ */
 router.get('/pdf-invoices/*'
     //, tokenHandler.getToken
     //, proxyHandler.verifyProxyToken
     , handlers.getPdfInvoices); //OK
+
+/**
+ * doc file tren server, tra ve array filename
+ * hoac doc trong csdl, file da tao pdf, tra ve client
+ * 
+ */
+router.get('/pdf-invoices-list'
+    //, tokenHandler.getToken
+    //, proxyHandler.verifyProxyToken
+    , handlers.getPdfInvoices); //OK
+
+/**
+ * Tao ban in post
+ */
+router.post('/pdf-invoices'
+    //, tokenHandler.getToken
+    //, proxyHandler.verifyProxyToken
+    , postHandler.jsonProcess //lay json_data
+    , handlers.postPdfInvoices); //OK
 
 module.exports = router;
