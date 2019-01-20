@@ -341,7 +341,7 @@ export class InvoicePage {
 
       //new la web thi mo file kieu nay,
       //neu la mobile app thi ????
-      window.open(fileURL); //mo cua so moi lay file pdf ve
+      window.open(fileURL,'_system','location=yes'); //mo cua so moi lay file pdf ve
 
       loading.dismiss();
     })
