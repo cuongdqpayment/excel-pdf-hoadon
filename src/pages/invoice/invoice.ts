@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, Slides, ItemSliding, LoadingController, Item, AlertController, Platform } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 import { DomSanitizer} from '@angular/platform-browser';
 
 import { ApiStorageService } from '../../services/apiStorageService';
@@ -54,6 +56,7 @@ export class InvoicePage {
   constructor(private navCtrl: NavController,
               private formBuilder: FormBuilder,
               private platform: Platform,
+              private inAppBrowser: InAppBrowser,
               private storage: ApiStorageService, 
               private resource: ApiResourceService,
               private alertCtrl: AlertController,
@@ -339,13 +342,14 @@ export class InvoicePage {
       let file = new Blob([bufferPdf], { type: 'application/pdf' });            
       var fileURL = URL.createObjectURL(file);
 
-      //new la web thi mo file kieu nay,
-      //neu la mobile app thi ????
-      //window.open(fileURL,'_system','location=yes'); //mo cua so moi lay file pdf ve IOS web -- all
-      //window.open(fileURL,'_blank','location=yes'); //cua so moi, co thanh dia chi
-      window.open(fileURL,'_blank','location=no'); //mo cua so moi lay file pdf ve
-      //window.open(fileURL,'_self','location=yes'); //mo cua so moi lay file pdf ve
+      this.presentAlert({
+        title:'Tạo bản in thành công',
+        message:'Mở trình duyệt hệ thống để xem file pdf bản in',
+        ok_text:'OK'
+      })
 
+      const browser = this.inAppBrowser.create(fileURL);
+      
       loading.dismiss();
     })
     .catch(err=>{

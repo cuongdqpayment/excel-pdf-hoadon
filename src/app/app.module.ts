@@ -28,6 +28,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StorageServiceModule } from 'angular-webstorage-service';
 import { ApiStorageService } from '../services/apiStorageService';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { ApiAuthService } from '../services/apiAuthService';
 import { ApiImageService } from '../services/apiImageService';
@@ -91,6 +92,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
   providers: [
     StatusBar,
     SplashScreen,
+    InAppBrowser,
     ApiAuthService,
     ApiImageService,
     ApiStorageService,
