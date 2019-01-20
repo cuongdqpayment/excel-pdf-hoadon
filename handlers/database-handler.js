@@ -8,7 +8,7 @@ const db_service = require('../db/sqlite3/excel-sqlite-service');
 const dbFilename = './db/qld-vinhhung-hoadon-rac.db';
 const excelFilename = './db/admin-setting.xlsx';
 
-
+/* 
 setTimeout(() => {
     db_service.handler.init(dbFilename); //ket noi db moi neu khac default trong excel-sqlite-service
 }, 1000); //doi 1s ket noi db
@@ -18,6 +18,7 @@ setTimeout(() => {
 setTimeout(() => {
     db_service.handler.createDatabase(excelFilename,dbFilename); //ket noi db moi
 }, 3000); //doi 1s ket noi db
+ */
 
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
@@ -489,7 +490,9 @@ class ResourceHandler {
     getBillCycles(req, res, next) {
         db_service.db.getRsts("select bill_cycle\
             ,count(cust_id) as count_customer\
+            ,min(bill_date) as bill_date_min\
             ,max(bill_date) as bill_date\
+            ,min(invoice_no) as invoice_no_min\
             ,max(invoice_no) as invoice_no\
             from invoices group by bill_cycle")
         .then(billCycles=>{

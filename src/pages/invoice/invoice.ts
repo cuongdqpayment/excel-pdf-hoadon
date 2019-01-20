@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Slides, ItemSliding, LoadingController, Item, AlertController } from 'ionic-angular';
+import { NavController, Slides, ItemSliding, LoadingController, Item, AlertController, Platform } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { DomSanitizer} from '@angular/platform-browser';
@@ -24,6 +24,7 @@ export class InvoicePage {
   @ViewChild(Slides) slides: Slides;
   slideIndex = 0;
   isSlidingItemOpen: boolean = false;
+  isMobile: boolean = false;
 
   cycleFormGroup: FormGroup;
 
@@ -42,6 +43,7 @@ export class InvoicePage {
   public resourceServer = ApiStorageService.resourceServer;
   constructor(private navCtrl: NavController,
               private formBuilder: FormBuilder,
+              private platform: Platform,
               private storage: ApiStorageService, 
               private resource: ApiResourceService,
               private alertCtrl: AlertController,
@@ -55,6 +57,8 @@ export class InvoicePage {
     //let control = new FormControl('01/12/2019',Validators.pattern(/^([0-3]{1})([0-9]{1})\/([0-1]{1})([0-9]{1})\/([2]{1})([0]{1})([0-9]{2})/));
     //console.log(control);
 
+    this.isMobile = (this.platform.platforms()[0]==='mobile');
+    //console.log('Platform is Mobile: ', this.platform.platforms())
 
     this.slides.lockSwipes(true);
 
@@ -109,6 +113,10 @@ export class InvoicePage {
    * Phat hanh hoa don moi
    */
   createInvoices(){
+
+    //lay thang hien tai max, add 1
+
+
     this.cycleFormGroup = this.formBuilder.group({
       bill_cycle: [new Date().toLocaleString("en-GB").slice(3,10),
             [ 
@@ -150,13 +158,13 @@ export class InvoicePage {
               Validators.pattern(/^([0-9]{2})\/([0-9]{4})/),
             ]]
       ,
-      bill_date: [new Date().toLocaleString("en-GB").slice(0,10),
+      bill_date: [billCycle.bill_date_vn,
             [
               Validators.required,
               Validators.pattern(/^([0-9]{2})\/([0-9]{2})\/([0-9]{4})/),
             ]]
       ,
-      invoice_no: ['1',
+      invoice_no: [billCycle.invoice_no+1-billCycle.count_customer,
             [
               Validators.required,
               Validators.pattern("^[0-9]*$"),
@@ -189,7 +197,7 @@ export class InvoicePage {
       title:'Xác nhận phát hành hóa đơn',
       message:'Tháng: ' + this.cycleFormGroup.value.bill_cycle + '<br>'
               + 'Ngày phát hành: ' + this.cycleFormGroup.value.bill_date + '<br>'
-              + 'Với số hóa đơn bắt đầu từ: ' + this.cycleFormGroup.value.invoice_no,
+              + 'Với hóa đơn bắt đầu từ số: ' + this.cycleFormGroup.value.invoice_no,
       ok:(isOK)=>{
         if (isOK){
           this.callCreateInvoices(billCycle);
@@ -205,7 +213,7 @@ export class InvoicePage {
       content: 'Đang phát hành hóa đơn tháng: ' 
       + this.cycleFormGroup.value.bill_cycle + '<br>'
       + ' với ngày phát hành: ' +  this.cycleFormGroup.value.bill_date + '<br>'
-      + ' từ số hóa đơn: ' +  this.cycleFormGroup.value.invoice_no
+      + ' từ hóa đơn số: ' +  this.cycleFormGroup.value.invoice_no
     });
 
     loading.present();
@@ -215,13 +223,13 @@ export class InvoicePage {
       let tmpResult;
       tmpResult = result;
       if (tmpResult&&tmpResult.status&&tmpResult.data){
-        console.log('data',tmpResult.data);
+        //console.log('data',tmpResult.data);
         this.presentAlert({
           cancel_text:'Bỏ qua',
           ok_text: 'Xong',
           title:'ĐÃ PHÁT HÀNH XONG',
-          message:'Tháng: ' + tmpResult.data.bill_cycle?tmpResult.data.bill_cycle.slice(4,6)+'/'+tmpResult.data.bill_cycle.slice(0,4):'' + '<br>'
-                  + 'Ngày phát hành: ' + tmpResult.data.bill_date?tmpResult.data.bill_date.slice(6,8)+'/'+tmpResult.data.bill_date.slice(4,6)+'/'+tmpResult.data.bill_date.slice(0,4):'' + '<br>'
+          message:'Tháng: ' + (tmpResult.data.bill_cycle?tmpResult.data.bill_cycle.slice(4,6)+'/'+tmpResult.data.bill_cycle.slice(0,4):'') + '<br>'
+                  + 'Ngày phát hành: ' + (tmpResult.data.bill_date?tmpResult.data.bill_date.slice(6,8)+'/'+tmpResult.data.bill_date.slice(4,6)+'/'+tmpResult.data.bill_date.slice(0,4):'') + '<br>'
                   + 'Số lượng phát hành: ' + tmpResult.data.count + '<br>'
                   + 'Số hóa đơn lần tiếp theo: ' + tmpResult.data.invoice_no,
         });

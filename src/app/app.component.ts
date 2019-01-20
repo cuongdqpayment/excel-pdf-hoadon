@@ -14,12 +14,17 @@ import { ConfigPage } from '../pages/config/config';
 })
 export class MyApp {
   rootPage:any = LoginPhonePage;
-
+  isWeb:boolean = false;
+  
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
-      
       statusBar.styleDefault();
       splashScreen.hide();
+      if (  platform.is('mobileweb') 
+         || platform.platforms()[0] == 'core'){
+        //version web
+        this.isWeb = true;
+      }
     });
   }
 }

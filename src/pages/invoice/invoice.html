@@ -38,18 +38,18 @@
         <ion-list>
 
             <ion-toolbar color="primary">
-                <ion-buttons start>
+                <ion-buttons end>
                   <button ion-button icon-start outline color="light" class="activated" (click)="createInvoices()">
                     <ion-icon name="contact"></ion-icon>
                     PHÁT HÀNH MỚI
                   </button>
                 </ion-buttons>
-                <ion-title>CÁC KỲ HÓA ĐƠN ĐÃ PHÁT HÀNH</ion-title>
+                <ion-title start>CÁC KỲ HÓA ĐƠN ĐÃ PHÁT HÀNH</ion-title>
             </ion-toolbar>
 
             <ion-item-sliding #slidingItem *ngFor="let billCycle of billCycles">
               <ion-item #item>
-                  <ion-avatar item-start>
+                  <ion-avatar item-start *ngIf="!isMobile">
                     <button ion-item item-start>
                         <ion-icon name="calculator" item-start color="danger"></ion-icon>
                     </button>
@@ -58,13 +58,14 @@
                   <h2>Ngày phát hành: {{billCycle.bill_date_vn}}</h2>
                   <p>Số lượng khách hàng: {{billCycle.count_customer}}</p>
                   <ion-note>Số hóa đơn cuối: {{billCycle.invoice_no}}</ion-note>
-                  <ion-avatar item-end *ngIf="!isSlidingItemOpen">
+                 
+                  <ion-avatar item-end *ngIf="!isSlidingItemOpen&&!isMobile">
                       <button ion-item item-end (click)="openSwipeOptions(slidingItem,item)">
                           <ion-icon name="arrow-dropleft-circle" item-end color="secondary"></ion-icon>
                       </button>
                   </ion-avatar>
                   
-                  <ion-buttons item-end *ngIf="isSlidingItemOpen">
+                  <ion-buttons item-end *ngIf="isSlidingItemOpen&&!isMobile">
                       <button icon-only color="primary" (click)="closeSwipeOptions(slidingItem)">
                           <ion-icon name="arrow-dropright-circle" color="primary"></ion-icon> 
                       </button>
