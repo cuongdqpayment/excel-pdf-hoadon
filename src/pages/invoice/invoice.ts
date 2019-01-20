@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, Slides, ItemSliding, LoadingController, Item, AlertController } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { DomSanitizer} from '@angular/platform-browser';
 
@@ -51,6 +51,11 @@ export class InvoicePage {
 
   ngOnInit(){
     
+    //dang dd/mm/20yy = 
+    //let control = new FormControl('01/12/2019',Validators.pattern(/^([0-3]{1})([0-9]{1})\/([0-1]{1})([0-9]{1})\/([2]{1})([0]{1})([0-9]{2})/));
+    //console.log(control);
+
+
     this.slides.lockSwipes(true);
 
     this.cycleFormGroup = this.formBuilder.group({
@@ -90,6 +95,7 @@ export class InvoicePage {
       this.billCycles = data;
       this.billCycles.forEach(el => {
         el.bill_cycle_vn = el.bill_cycle.slice(4,6)+"/"+el.bill_cycle.slice(0,4)
+        el.bill_date_vn = el.bill_date.slice(6,8)+"/"+el.bill_date.slice(4,6)+"/"+el.bill_date.slice(0,4)
       });
       loading.dismiss();
     })
@@ -113,7 +119,7 @@ export class InvoicePage {
       bill_date: [new Date().toLocaleString("en-GB").slice(0,10),
             [
               Validators.required,
-              Validators.pattern(/^([0-9]{2})\/([0-9]{2})\/([0-9]{4})/),
+              Validators.pattern(/^([0-3]{1})([0-9]{1})\/([0-1]{1})([0-9]{1})\/([2]{1})([0]{1})([0-9]{2})/),
             ]]
       ,
       invoice_no: ['1',

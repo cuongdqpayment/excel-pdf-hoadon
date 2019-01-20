@@ -487,7 +487,11 @@ class ResourceHandler {
     }
 
     getBillCycles(req, res, next) {
-        db_service.db.getRsts("select bill_cycle, count(cust_id) as count_customer, max(bill_date) as bill_date from invoices group by bill_cycle")
+        db_service.db.getRsts("select bill_cycle\
+            ,count(cust_id) as count_customer\
+            ,max(bill_date) as bill_date\
+            ,max(invoice_no) as invoice_no\
+            from invoices group by bill_cycle")
         .then(billCycles=>{
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(JSON.stringify(billCycles

@@ -54,10 +54,10 @@
                         <ion-icon name="calculator" item-start color="danger"></ion-icon>
                     </button>
                   </ion-avatar>
-                  <h2>Kỳ tháng: {{billCycle.bill_cycle_vn}}</h2>
-                  <p>Ngày phát hành: {{billCycle.bill_date_vn}}</p>
-                  <ion-note>Số lượng khách hàng: {{billCycle.count_customer}}</ion-note>
-                 
+                  <h1>Kỳ tháng: {{billCycle.bill_cycle_vn}}</h1>
+                  <h2>Ngày phát hành: {{billCycle.bill_date_vn}}</h2>
+                  <p>Số lượng khách hàng: {{billCycle.count_customer}}</p>
+                  <ion-note>Số hóa đơn cuối: {{billCycle.invoice_no}}</ion-note>
                   <ion-avatar item-end *ngIf="!isSlidingItemOpen">
                       <button ion-item item-end (click)="openSwipeOptions(slidingItem,item)">
                           <ion-icon name="arrow-dropleft-circle" item-end color="secondary"></ion-icon>
