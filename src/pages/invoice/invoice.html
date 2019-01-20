@@ -57,7 +57,7 @@
                   <h1>Kỳ tháng: {{billCycle.bill_cycle_vn}}</h1>
                   <h2>Ngày phát hành: {{billCycle.bill_date_vn}}</h2>
                   <p>Số lượng khách hàng: {{billCycle.count_customer}}</p>
-                  <ion-note>Số hóa đơn cuối: {{billCycle.invoice_no}}</ion-note>
+                  <ion-note>Số hóa đơn cuối: {{billCycle.invoice_no_min}} - {{billCycle.invoice_no}}</ion-note>
                  
                   <ion-avatar item-end *ngIf="!isSlidingItemOpen&&!isMobile">
                       <button ion-item item-end (click)="openSwipeOptions(slidingItem,item)">
@@ -100,7 +100,7 @@
             <form class="login-form" (ngSubmit)="onSubmitCreateInvoices()" [formGroup]="cycleFormGroup">
                 <ion-item>
                     <ion-label floating>Tháng - MM/YYYY(*)</ion-label>
-                    <ion-input type="text" formControlName="bill_cycle"></ion-input>
+                    <ion-input  [disabled]="true" type="text" formControlName="bill_cycle"></ion-input>
                     <ion-label *ngIf="cycleFormGroup.controls.bill_cycle.invalid && cycleFormGroup.controls.bill_cycle.touched">
                         <span class="error">Vui lòng nhập kỳ phát hành dạng MM/YYYY</span>
                     </ion-label>

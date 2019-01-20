@@ -12,9 +12,18 @@ import { ApiResourceService } from '../../services/apiResourceServices'
 var slidePage = {
   home: 0,
   create_invoice: 1,
-  list_invoice: 2
+  list_invoice: 2,
+  load_pdf: 3,
 }
 
+/**
+ * tra ve thang ke tiep
+ * neu thang 12, quay ve 1 va tang nam len 1
+ * @param yyyymm 
+ */
+var getNextMonth = (yyyymm=>{
+  return Number(yyyymm)?((Number(yyyymm)+1).toString().slice(4,6)!=='13')?(Number(yyyymm)+1).toString():(Number(yyyymm.slice(0,4))+1).toString()+'01':yyyymm
+});
 
 @Component({
   selector: 'page-invoice',
@@ -28,6 +37,7 @@ export class InvoicePage {
 
   cycleFormGroup: FormGroup;
 
+  lastBillCycle:any;
   billCycles:any = [];
   jsonInvoices: any = [];
   current_cycle:any;
@@ -98,9 +108,14 @@ export class InvoicePage {
     .then(data=>{
       this.billCycles = data;
       this.billCycles.forEach(el => {
+        //console.log('typeof el.bill_cycle', typeof el.bill_cycle);
         el.bill_cycle_vn = el.bill_cycle.slice(4,6)+"/"+el.bill_cycle.slice(0,4)
         el.bill_date_vn = el.bill_date.slice(6,8)+"/"+el.bill_date.slice(4,6)+"/"+el.bill_date.slice(0,4)
       });
+
+      let maxBillCycle = Math.max.apply(Math, this.billCycles.map((o)=>{ return o['bill_cycle']}));
+      if (typeof maxBillCycle == 'number') this.lastBillCycle = this.billCycles.find(x=>x.bill_cycle===maxBillCycle.toString()); 
+      //console.log('lastBillCycle', this.lastBillCycle ); 
       loading.dismiss();
     })
     .catch(err=>{
@@ -115,22 +130,38 @@ export class InvoicePage {
   createInvoices(){
 
     //lay thang hien tai max, add 1
+    let newBillCycle;
+    if (this.lastBillCycle){
+      
+      let nextBillCycle = getNextMonth(this.lastBillCycle.bill_cycle);
 
+      newBillCycle={
+                  bill_cycle_vn: nextBillCycle.slice(4,6)+"/"+nextBillCycle.slice(0,4),
+                  bill_date_vn: new Date().toLocaleString("en-GB").slice(0,10),
+                  invoice_no: this.lastBillCycle.invoice_no + 1
+                }
+    }else{
+      newBillCycle={
+                  bill_cycle_vn: new Date().toLocaleString("en-GB").slice(3,10),
+                  bill_date_vn: new Date().toLocaleString("en-GB").slice(0,10),
+                  invoice_no: 1
+                }
+    }
 
     this.cycleFormGroup = this.formBuilder.group({
-      bill_cycle: [new Date().toLocaleString("en-GB").slice(3,10),
+      bill_cycle: [newBillCycle.bill_cycle_vn,
             [ 
               Validators.required,
               Validators.pattern(/^([0-9]{2})\/([0-9]{4})/),
             ]]
       ,
-      bill_date: [new Date().toLocaleString("en-GB").slice(0,10),
+      bill_date: [newBillCycle.bill_date_vn,
             [
               Validators.required,
               Validators.pattern(/^([0-3]{1})([0-9]{1})\/([0-1]{1})([0-9]{1})\/([2]{1})([0]{1})([0-9]{2})/),
             ]]
       ,
-      invoice_no: ['1',
+      invoice_no: [newBillCycle.invoice_no,
             [
               Validators.required,
               Validators.pattern("^[0-9]*$"),
@@ -149,8 +180,6 @@ export class InvoicePage {
     */
   editInvoices(item: ItemSliding, billCycle:any){
     
-    //this.current_cycle = billCycle.bill_cycle_vn;
-
     this.cycleFormGroup = this.formBuilder.group({
       bill_cycle: [billCycle.bill_cycle_vn,
             [ 
@@ -207,6 +236,10 @@ export class InvoicePage {
     
   }
 
+  /**
+   * Goi API de phat hanh hoa don theo thang
+   * @param billCycle 
+   */
   callCreateInvoices(billCycle){
     
     let loading = this.loadingCtrl.create({
@@ -225,7 +258,6 @@ export class InvoicePage {
       if (tmpResult&&tmpResult.status&&tmpResult.data){
         //console.log('data',tmpResult.data);
         this.presentAlert({
-          cancel_text:'Bỏ qua',
           ok_text: 'Xong',
           title:'ĐÃ PHÁT HÀNH XONG',
           message:'Tháng: ' + (tmpResult.data.bill_cycle?tmpResult.data.bill_cycle.slice(4,6)+'/'+tmpResult.data.bill_cycle.slice(0,4):'') + '<br>'
@@ -253,11 +285,79 @@ export class InvoicePage {
    */
   createPdfInvoices(item: ItemSliding, billCycle:any){
     
-    this.goToSlide(slidePage.create_invoice); 
+    //console.log('billCycle', billCycle);
+
+    /* let loading = this.loadingCtrl.create({
+      content: 'Đang tạo bản in tháng : ' + billCycle.bill_cycle_vn
+    });
+    loading.present();
+
+    this.resource.createPdfInvoices({
+
+    })
+    .then(data=>{
+
+      console.log('pdf data',data);
+      let jsonFileList;
+      jsonFileList = data;
+
+      this.goToSlide(slidePage.load_pdf); 
+
+      loading.dismiss();
+    })
+    .catch(err=>{
+      this.presentAlert({
+        title:'Lỗi trong lúc tạo bản in',
+        message:'Err' + JSON.stringify(err),
+        ok_text:'Quay về'
+      })
+      //this.goToSlide(slidePage.home); 
+      loading.dismiss();
+    }) */
+
+    this.getPdfInvoices(billCycle);
+    
     this.closeSwipeOptions(item);
 
   }
   
+  getPdfInvoices(billCycle:any){
+    
+    //console.log('billCycle', billCycle);
+
+    let loading = this.loadingCtrl.create({
+      content: 'Đang lấy bản in tháng : ' + billCycle.bill_cycle_vn
+    });
+    loading.present();
+
+    this.resource.getPdfInvoices(billCycle.bill_cycle) // + '/R000000009?background=yes')
+    .then(data=>{
+
+      let bufferPdf;
+      bufferPdf = data;
+
+      let file = new Blob([bufferPdf], { type: 'application/pdf' });            
+      var fileURL = URL.createObjectURL(file);
+
+      //new la web thi mo file kieu nay,
+      //neu la mobile app thi ????
+      window.open(fileURL); //mo cua so moi lay file pdf ve
+
+      loading.dismiss();
+    })
+    .catch(err=>{
+      this.presentAlert({
+        title:'Lỗi trong lúc lấy bản in',
+        message:'Err' + JSON.stringify(err),
+        ok_text:'Quay về'
+      })
+
+      loading.dismiss();
+    })
+
+  }
+  
+
   /**
    * Lấy danh sách hóa đơn từ máy chủ
    * cho phép xem từng hóa đơn, tìm kiếm hóa đơn để kiểm tra
@@ -331,9 +431,7 @@ export class InvoicePage {
     }) */
 
   }
-  //this.pdfLink = this.sanitizer.bypassSecurityTrustResourceUrl(this.resourceServer + "/db/pdf-invoices/201901?background=yes&&token="+this.apiStorageService.getToken());
   
-
   // Su dung slide Pages
   //--------------------------
   /**
@@ -400,7 +498,7 @@ export class InvoicePage {
 
 
   //----------------
-  presentConfirm(jsonConfirm) {
+  presentConfirm(jsonConfirm:{title:string,message:string,cancel_text:string,ok_text:string,ok:any}) {
     let alert = this.alertCtrl.create({
       title: jsonConfirm.title, //'Xác nhận phát hành',
       message: jsonConfirm.message, //'Bạn muốn ',
@@ -423,7 +521,7 @@ export class InvoicePage {
     alert.present();
   }
 
-  presentAlert(jsonConfirm) {
+  presentAlert(jsonConfirm:{title:string,message:string,ok_text:string}) {
     let alert = this.alertCtrl.create({
       title: jsonConfirm.title, //'Xác nhận phát hành',
       message: jsonConfirm.message, //'Bạn muốn ',

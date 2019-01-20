@@ -15,6 +15,37 @@ export class ApiResourceService {
                 ) {}
 
 
+
+
+    /**
+     * Tao file pdf de in an
+     * trả về danh mục các file hóa đơn đã tạo trên máy chủ
+     * [{201901_print_all.pdf}]
+     * @param billCycle 
+     */    
+    createPdfInvoices(billCycle){
+        return this.httpClient.post(this.resourceServer+'/db/pdf-invoices'
+                                    ,JSON.stringify({
+                                        bill_cycle: billCycle.bill_cycle,
+                                        cust_id: billCycle.cust_id,
+                                        background:billCycle.background
+                                    }))
+        .toPromise()
+    }
+
+    /**
+     * get hoa don (phai tao truoc, neu khong se không có file)
+     * @param yyyymm_cust_id 
+     */
+    getPdfInvoices(yyyymm_cust_id){
+        const httpOptions = {
+            'responseType'  : 'arraybuffer' as 'json'
+             //'responseType'  : 'blob' as 'json'        //This also worked
+          };
+        return this.httpClient.get(this.resourceServer+'/db/pdf-invoices/'+yyyymm_cust_id,httpOptions)
+        .toPromise()
+    }
+
     /**
      * billCycle = 
      * {
@@ -36,10 +67,10 @@ export class ApiResourceService {
     }
 
     /**
-     * billCycle = 201901 hoac 201901/R000000001
+     * yyyymm_custId = 201901 hoac 201901/R000000001
      */
-    getInvoices(billCycle){
-        return this.httpClient.get(this.resourceServer+'/db/json-invoices/'+billCycle)
+    getInvoices(yyyymm_custId){
+        return this.httpClient.get(this.resourceServer+'/db/json-invoices/'+yyyymm_custId)
         .toPromise()
         .then(results=>{
             if (results) {

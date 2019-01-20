@@ -1,5 +1,8 @@
 "use strict"
 
+
+
+
 /**
  * Tao cay quan ly nhu oracle
  * No se tu dong tao ra mang
@@ -8,7 +11,7 @@
  * @param {*} option 
  * @param {*} level 
  */
-var createTree = (arrIn,option,level)=>{
+const createTree = (arrIn,option,level)=>{
     var myLevl = level?level:0;
     var myOption = option?option:{id:'id',parentId:'parentId',startWith:null}
 
@@ -94,8 +97,14 @@ const getMatrix = (maskMatrix, data, point)=>{
     return matrix;
 }
 
+
+const getMaxObject = (arrObjSources, key)=>{
+    return Math.max.apply(Math, arrObjSources.map((o)=>{ return o[key]}))
+}
+
 module.exports = {
     clone: clone,
+    getMaxObject: getMaxObject,
     getMatrix : getMatrix, //tao ma tran in
     compare2Objects:isEquikeylent, //so sanh 2 object
     createTree: createTree,  //tao tree -->children
