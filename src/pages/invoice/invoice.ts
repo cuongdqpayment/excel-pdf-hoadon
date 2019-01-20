@@ -341,7 +341,10 @@ export class InvoicePage {
 
       //new la web thi mo file kieu nay,
       //neu la mobile app thi ????
-      window.open(fileURL,'_system','location=yes'); //mo cua so moi lay file pdf ve
+      //window.open(fileURL,'_system','location=yes'); //mo cua so moi lay file pdf ve IOS web -- all
+      //window.open(fileURL,'_blank','location=yes'); //cua so moi, co thanh dia chi
+      window.open(fileURL,'_blank','location=no'); //mo cua so moi lay file pdf ve
+      //window.open(fileURL,'_self','location=yes'); //mo cua so moi lay file pdf ve
 
       loading.dismiss();
     })
