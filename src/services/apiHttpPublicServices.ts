@@ -18,7 +18,7 @@ export class ApiHttpPublicService {
      */
     getAllCoutries(){
         return this.httpClient.get('https://restcountries.eu/rest/v2/all')
-        .toPromise()
+        .toPromise()                 //kieu chuyen ve promise
         .then(countries=>{
             return countries;
         })
@@ -30,9 +30,12 @@ export class ApiHttpPublicService {
     /**
      * Lay danh sach user demo phuc vu so lieu demo
      */
-    getRandomUser(){
-
+    getRandomUser(nRecord: number){
+        return this.httpClient.get('https://randomuser.me/api/?results=' + nRecord)
+            .map(res => res['results']) //kieu chuyen ve observable
     }
+
+    
 
     getAllCutomers(){
         return this.httpClient.get(this.resourceServer+'/db/json-customers')
