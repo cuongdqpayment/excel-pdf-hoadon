@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 import { Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPhonePage } from '../pages/login-phone/login-phone';
-import { HomePage } from '../pages/home/home';
-import { ConfigPage } from '../pages/config/config';
+import { DynamicPage } from '../pages/dynamic/dynamic';
 
 
 
@@ -13,7 +11,9 @@ import { ConfigPage } from '../pages/config/config';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = LoginPhonePage;
+  
+  rootPage:any;
+
   platforms = ['android', 'cordova', 'core', 'ios', 'ipad', 'iphone', 'mobile', 'mobileweb', 'phablet', 'tablet', 'windows', 'electron'];
   isWeb:boolean = false;        //platform.is('core');
   isWebMobile:boolean = false;  //platform.is('mobile');
@@ -25,27 +25,45 @@ export class MyApp {
   constructor(private platform: Platform,
               private statusBar: StatusBar,
               private alertCtrl: AlertController,
-              private splashScreen: SplashScreen) {
-    platform.ready().then(() => {
-      statusBar.styleDefault();
-      splashScreen.hide();
-      if (platform.platforms()[0] === 'core'){
-        this.isWeb = true;
-      }
+              private splashScreen: SplashScreen) {}
+
+  ngOnInit() {
+
+    this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+
+      //form web = true, form mobile = false
+      if (this.platform.platforms()[0] === 'core') this.isWeb = true; 
       
       let currentPlatform = [];
 
       this.platforms.forEach(e=>{
-        if (platform.is(e)) currentPlatform.push(e); 
+        if (this.platform.is(e)) currentPlatform.push(e); 
       })
 
-      this.presentAlert({
+      /* this.presentAlert({
         title:"PLATFORM is",
-        message: 'Platform is ' + JSON.stringify(currentPlatform) + '<br> platform.platforms(): ' +JSON.stringify(platform.platforms()),
+        message: 'Platform is ' + JSON.stringify(currentPlatform) 
+        + '<br> platform.platforms(): ' +JSON.stringify(this.platform.platforms()),
         ok_text:'OK'
-      })
+      }); */
+
+
+      this.viewDidLoad();
 
     });
+  }
+
+
+  viewDidLoad() {
+
+    if (this.isWeb){
+      this.rootPage  = LoginPhonePage;
+    } else{
+      this.rootPage  = DynamicPage;
+    }
+    
   }
 
   presentAlert(jsonConfirm:{title:string,message:string,ok_text:string}) {
