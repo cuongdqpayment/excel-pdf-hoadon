@@ -12,6 +12,7 @@ import { LoginPage } from '../pages/login/login';
 import { PrinterPage } from '../pages/printer/printer';
 
 import { LoginPhonePage } from '../pages/login-phone/login-phone';
+import { DynamicPage } from '../pages/dynamic/dynamic'
 
 import { RegisterPage } from '../pages/register/register';
 import { SettingPage } from '../pages/setting/setting';
@@ -45,6 +46,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
   declarations: [
     MyApp,
     LoginPhonePage,
+    DynamicPage,
     
     ParametersPage,
     CustomerPage,
@@ -73,6 +75,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
   entryComponents: [
     MyApp,
     LoginPhonePage,
+    DynamicPage,
 
     ParametersPage,
     CustomerPage,

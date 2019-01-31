@@ -1,0 +1,99 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>{{dynamicForm.title}}</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding class="background-blue gradient">
+
+	<ion-list *ngFor="let it of dynamicForm.items">
+
+		<ion-item class="background-blue" *ngIf="it.type == itemType.title">
+			<ion-label class="title-item">{{it.name}}</ion-label>
+		</ion-item>
+
+		<ion-item class="background-blue" *ngIf="it.type == itemType.avatar">
+			<ion-avatar item-start><img [src]="it.url"></ion-avatar>
+			<h1 item-start class="title-item">{{it.name}}</h1>
+		</ion-item>
+
+		<ion-grid *ngIf="it.type == itemType.image">
+			<ion-row>
+				<ion-col style="text-align: center;">
+					<img *ngIf="!it.width||!it.height" [src]="it.url">
+					<img *ngIf="it.width&&it.height" [width]="it.width" [height]="it.height" [src]="it.url">
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+
+		<ion-item class="input-item" *ngIf="it.type == itemType.text">
+			<ion-label>
+				<ion-icon name="{{it.icon}}"></ion-icon>
+			</ion-label>
+			<ion-input type="{{it.input_type}}" placeholder={{it.hint}} [(ngModel)]="it.value"></ion-input>
+		</ion-item>
+
+		<ion-item class="input-item" *ngIf="it.type == itemType.password">
+			<ion-label>
+				<ion-icon name="{{it.icon}}"></ion-icon>
+			</ion-label>
+			<ion-input [type]="password_type" placeholder={{it.hint}} [(ngModel)]="it.value"></ion-input>
+			<button ion-button clear color="dark" type="button" item-right (click)="togglePasswordMode()">
+				<ion-icon name="{{eye}}"> </ion-icon>
+			</button>
+		</ion-item>
+
+		<ion-item class="input-item" *ngIf="it.type == itemType.check">
+			<ion-label>{{it.name}}</ion-label>
+			<ion-checkbox color="primary" [(ngModel)]="it.value"></ion-checkbox>
+		</ion-item>
+
+		<ion-list *ngIf="it.type == itemType.radio" radio-group [(ngModel)]="it.value">
+			<ion-list-header>
+				<ion-label>{{it.name}}</ion-label>
+			</ion-list-header>
+			<ion-item *ngFor="let myRad of it.options">
+				<ion-label>{{myRad.name}}</ion-label>
+				<ion-radio value="{{myRad.value}}"></ion-radio>
+			</ion-item>
+		</ion-list>
+
+		<ion-item class="input-item" *ngIf="it.type == itemType.select">
+			<ion-label>{{it.name}}</ion-label>
+			<ion-select [(ngModel)]="it.value">
+				<ion-option *ngFor="let mySet of it.options" value="{{mySet.value}}">{{mySet.name}}</ion-option>
+			</ion-select>
+		</ion-item>
+
+		<ion-item class="input-item" *ngIf="it.type == itemType.select_multiple">
+			<ion-label>{{it.name}}</ion-label>
+			<ion-select [(ngModel)]="it.value" multiple="true">
+				<ion-option *ngFor="let mySet of it.options" value="{{mySet.value}}">{{mySet.name}}</ion-option>
+			</ion-select>
+		</ion-item>
+
+		<ion-item class="input-item" *ngIf="it.type == itemType.toggle">
+			<ion-label>{{it.name}}</ion-label>
+			<ion-toggle [(ngModel)]="it.value"></ion-toggle>
+		</ion-item>
+
+		<ion-item class="input-item" *ngIf="it.type == itemType.range">
+			<ion-range min="{{it.min}}" max="{{it.max}}" pin="true" [(ngModel)]="it.value" color="primary">
+				<ion-icon range-left small name="contrast"></ion-icon>
+				<ion-icon range-right name="contrast"></ion-icon>
+			</ion-range>
+		</ion-item>
+
+		<ion-grid *ngIf="it.type == itemType.button">
+			<ion-row>
+				<ion-col *ngFor="let myBtn of it.options" style="text-align: center;">
+					<button class="button-item" [(ngStyle)]="pageContent" ion-button round (click)="onClick(myBtn.id)">
+						{{myBtn.name}}
+					</button>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+
+	</ion-list>
+
+</ion-content>
