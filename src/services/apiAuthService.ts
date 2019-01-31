@@ -53,7 +53,7 @@ export class ApiAuthService {
             .toPromise()
             .then(jsonData => {
                 this.publicKey = jsonData;
-                    //console.log('co tra ve');
+                    console.log('Public key: ', jsonData);
                     if (this.publicKey && this.publicKey.PUBLIC_KEY) {
                         try {
                             this.serverKey.importKey(this.publicKey.PUBLIC_KEY);

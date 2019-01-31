@@ -38,7 +38,7 @@ class SQLiteDAO {
    */
   convertSqlFromJson(tablename, json, idFields){
     let jsonInsert = { name: tablename, cols: [], wheres: [] }
-    let whereFields = idFields ? idFields : ['cust_id'];
+    let whereFields = idFields ? idFields : ['id'];
     for (let key in json) {
         jsonInsert.cols.push({ name: key, value: json[key] });
         if (whereFields.find(x => x === key)) jsonInsert.wheres.push({ name: key, value: json[key] })
