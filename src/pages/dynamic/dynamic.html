@@ -31,27 +31,19 @@
 
 		<!-- input text -->
 		<ion-item class="input-item" *ngIf="it.type == itemType.text">
-			<ion-label>
-				<ion-icon name="{{it.icon}}"></ion-icon>
-			</ion-label>
+			<ion-label floating color="danger" *ngIf="it.invalid">{{it.hint}}(*)</ion-label>
+			<ion-icon item-left name="{{it.icon}}"></ion-icon>
 			<ion-input type="{{it.input_type}}" placeholder={{it.name?it.name:it.hint}} [(ngModel)]="it.value"></ion-input>
-			<ion-label color="danger" *ngIf="it.invalid">
-				<span>{{it.hint}}</span>
-			</ion-label>
 		</ion-item>
 
 		<!-- input password -->
 		<ion-item class="input-item" *ngIf="it.type == itemType.password">
-			<ion-label>
-				<ion-icon name="{{it.icon}}"></ion-icon>
-			</ion-label>
+			<ion-label floating color="danger" *ngIf="it.invalid">{{it.hint}}</ion-label>
+			<ion-icon item-left name="{{it.icon}}"></ion-icon>
 			<ion-input [type]="password_type" placeholder={{it.name?it.name:it.hint}} [(ngModel)]="it.value"></ion-input>
 			<button ion-button clear color="dark" type="button" item-right (click)="togglePasswordMode()">
 				<ion-icon name="{{eye}}"> </ion-icon>
 			</button>
-			<ion-label color="danger" *ngIf="it.invalid">
-				<span>{{it.hint}}</span>
-			</ion-label>
 		</ion-item>
 
 		<!-- check box -->

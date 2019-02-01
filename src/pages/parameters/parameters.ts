@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, LoadingController, Events, ToastController, reorderArray, ItemSliding } from 'ionic-angular';
 
 import { ApiStorageService } from '../../services/apiStorageService';
-import { ApiHttpPublicService } from '../../services/apiHttpPublicServices';
+import { ApiResourceService } from '../../services/apiResourceServices';
 
 @Component({
   selector: 'page-parameters',
@@ -25,7 +25,7 @@ export class ParametersPage {
 
   constructor(private navCtrl: NavController, 
               private apiStorageService: ApiStorageService,
-              private http: ApiHttpPublicService,
+              private http: ApiResourceService,
               private events: Events,
               private loadingCtrl: LoadingController,
               private toastCtrl: ToastController) {}
