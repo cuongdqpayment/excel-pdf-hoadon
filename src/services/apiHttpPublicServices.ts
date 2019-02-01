@@ -18,6 +18,7 @@ export class ApiHttpPublicService {
         radio: 6,               //output 
         select: 61,             //output
         select_multiple: 62,    //output
+        datetime: 7,                //output 
         button: 9,              //action post this form to api server, exit, reset
       };
 
@@ -38,6 +39,9 @@ export class ApiHttpPublicService {
         , { id: 10, name: "Họ và tên", type: this.itemType.text, input_type: "text", icon: "person" }
         , { id: 11, name: "Điện thoại", hint: "Yêu cầu định dạng số điện thoại nhé", type: this.itemType.text, input_type: "tel", icon: "call", validators: [{ pattern: "^[0-9]*$" }]}
         , { id: 12, name: "email", hint: "Yêu cầu định dạng email nhé", type: this.itemType.text, input_type: "email", icon: "mail", validators: [{ pattern: "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" }]}
+        , { id: 13, name: "Ngày bắt đầu", hint: "Chọn ngày", type: this.itemType.datetime, display:"DD/MM/YYYY", picker:"DD MM YYYY"}
+        , { id: 14, name: "Thời gian bắt đầu", hint: "Chọn thời gian", type: this.itemType.datetime, display:"HH:mm:ss", picker:"HH:mm:ss"}
+        , { id: 15, name: "Nội dung nhập", hint: "Nhập nhiều dòng", type: this.itemType.text_area}
         , {
           name: "BUTTON GROUP", type: this.itemType.button
           , options: [
