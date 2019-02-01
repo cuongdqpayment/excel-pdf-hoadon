@@ -4,8 +4,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPhonePage } from '../pages/login-phone/login-phone';
 import { DynamicPage } from '../pages/dynamic/dynamic';
-import { ConfigPage } from '../pages/config/config';
-
 
 
 @Component({
@@ -60,7 +58,7 @@ export class MyApp {
   viewDidLoad() {
 
     if (this.isWeb){
-      this.rootPage  = ConfigPage;
+      this.rootPage  = LoginPhonePage;
     } else{
       this.rootPage  = DynamicPage;
     }
