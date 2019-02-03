@@ -1,48 +1,48 @@
 page-home {
-    
+    .background-page {
+		background-color: #2d96de;
+	}
 
-    input[type="file"]{
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 2;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        cursor: pointer;
-    }
+	.background-page ion-icon{
+		color: #2d96de;
+	}
 
-    .login-form-background {
-        background: #4a47ff;
-        border-radius: 0.5em;
-        opacity: 0.9;
-        text-align:center;
-    }
+    .background-card {
+		background-color: #f3f3f3;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+	}
 
-    .wrapper {
-        position: absolute;
-        height: 400px;
-        width: 320px;
-        left: 50%;
-        top: 50%;
-        margin-left: -160px;
-        margin-top: -160px;
-    }
+	.background-card ion-icon{
+		color: #2d96de;
+	}
 
-    .wrapper .login-form ion-item{
-        border-radius: 0.5em;
-        opacity: 0.7;
-    }
-  
-    .wrapper .login-form {
-        border: 1px solid #FFFFFF;
-        margin: 0 auto;
-        position: relative;
-        border-radius: 0.5em !important;
-        background: #0e6f7e;
-        text-align:center;
-    }
-  
+	.gradient {
+        background-image: url("../../assets/imgs/gradient.png");
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-position: center;
+	}
+	
+	.grid-border{
+		border-radius: 0.5em;
+		border: solid 0.1em #FFFFFF;
 
-    
+	}
+
+    .input-item {
+		border-radius: 1.5em;
+		opacity: 0.9;
+		font-size: 1em;
+	}
+
+	.title-item {
+		color: white;
+		text-align: center;
+		font-size: 1.4em;
+	}
+
+	.button-item{
+		border: solid 0.1em;
+		width: 100%;
+	}    
 }

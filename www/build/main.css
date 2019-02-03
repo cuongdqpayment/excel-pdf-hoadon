@@ -76206,11 +76206,11 @@ page-config .login-sliding-demo .ion-logo-instagram {
   color: #235D8D;
 }
 
-page-dynamic .background-blue {
+page-dynamic .background-page {
   background-color: #2d96de;
 }
 
-page-dynamic .background-blue ion-icon {
+page-dynamic .background-page ion-icon {
   color: #2d96de;
 }
 
@@ -76238,46 +76238,98 @@ page-dynamic .button-item {
   width: 100%;
 }
 
-page-home input[type="file"] {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
+page-dynamic-reponsive .background-page {
+  background-color: #2d96de;
 }
 
-page-home .login-form-background {
-  background: #4a47ff;
+page-dynamic-reponsive .background-page ion-icon {
+  color: #2d96de;
+}
+
+page-dynamic-reponsive .background-card {
+  background-color: #f3f3f3;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+page-dynamic-reponsive .background-card ion-icon {
+  color: #2d96de;
+}
+
+page-dynamic-reponsive .gradient {
+  background-image: url("../../assets/imgs/gradient.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+page-dynamic-reponsive .grid-border {
   border-radius: 0.5em;
+  border: solid 0.1em #FFFFFF;
+}
+
+page-dynamic-reponsive .input-item {
+  border-radius: 1.5em;
   opacity: 0.9;
+  font-size: 1em;
+}
+
+page-dynamic-reponsive .title-item {
+  color: rgba(38, 43, 80, 0.932);
   text-align: center;
+  font-size: 1.4em;
 }
 
-page-home .wrapper {
-  position: absolute;
-  height: 400px;
-  width: 320px;
-  left: 50%;
-  top: 50%;
-  margin-left: -160px;
-  margin-top: -160px;
+page-dynamic-reponsive .button-item {
+  border: solid 0.1em;
+  width: 100%;
 }
 
-page-home .wrapper .login-form ion-item {
+page-home .background-page {
+  background-color: #2d96de;
+}
+
+page-home .background-page ion-icon {
+  color: #2d96de;
+}
+
+page-home .background-card {
+  background-color: #f3f3f3;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+page-home .background-card ion-icon {
+  color: #2d96de;
+}
+
+page-home .gradient {
+  background-image: url("../../assets/imgs/gradient.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+page-home .grid-border {
   border-radius: 0.5em;
-  opacity: 0.7;
+  border: solid 0.1em #FFFFFF;
 }
 
-page-home .wrapper .login-form {
-  border: 1px solid #FFFFFF;
-  margin: 0 auto;
-  position: relative;
-  border-radius: 0.5em !important;
-  background: #0e6f7e;
+page-home .input-item {
+  border-radius: 1.5em;
+  opacity: 0.9;
+  font-size: 1em;
+}
+
+page-home .title-item {
+  color: white;
   text-align: center;
+  font-size: 1.4em;
+}
+
+page-home .button-item {
+  border: solid 0.1em;
+  width: 100%;
 }
 
 page-invoice .left {

@@ -1,6 +1,6 @@
 import { Component, } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Platform } from 'ionic-angular';
+import { Platform, NavParams, ViewController, NavController, LoadingController } from 'ionic-angular';
 import { ApiHttpPublicService } from '../../services/apiHttpPublicServices';
 import { ApiAuthService } from '../../services/apiAuthService';
 
@@ -10,24 +10,53 @@ import { ApiAuthService } from '../../services/apiAuthService';
 })
 export class DynamicPage {
 
-
-  itemType: any;
-
   dynamicForm: any;
+  initValues = [];
+  callback: any; // ham goi lai khai bao o trang root gui (neu co)
+  step: any;     // buoc thuc hien xuat phat trang root goi (neu co)
 
   password_type: string = 'password';
   eye: string = "eye";
 
-
-  constructor(
-              private platform: Platform
-              , private authService: ApiAuthService
-              , private pubService: ApiHttpPublicService
-              ) { }
+  constructor(private platform: Platform
+    , private authService: ApiAuthService
+    , private pubService: ApiHttpPublicService
+    , private viewCtrl: ViewController
+    , private navCtrl: NavController
+    , private loadingCtrl: LoadingController
+    , private navParams: NavParams
+  ) { }
 
   ngOnInit() {
-    this.itemType = this.pubService.getItemType();
-    this.dynamicForm = this.pubService.getDemoForm();
+
+    this.dynamicForm = this.navParams.get("form") ? this.navParams.get("form") : this.pubService.getDemoForm();
+
+    if (this.dynamicForm.items) {
+      this.dynamicForm.items.forEach((el, idx) => {
+        this.initValues.push({
+          idx: idx,
+          value: el.value
+        })
+      })
+    }
+
+    this.callback = this.navParams.get("callback");
+    this.step = this.navParams.get("step");
+
+  }
+
+  resetForm() {
+    if (this.dynamicForm.items) {
+      this.dynamicForm.items.forEach((el, idx) => {
+        if (el.value !== undefined) {
+          if (this.initValues.find(x => x.idx == idx).value === undefined) {
+            el.value = '';
+          } else {
+            el.value = this.initValues.find(x => x.idx == idx).value;
+          }
+        }
+      })
+    }
   }
 
   // btn ẩn hiện mật khẩu
@@ -39,16 +68,14 @@ export class DynamicPage {
   // Xử lý sự kiện click button theo id
   onClick(btn) {
 
-    console.log('command', btn.url, btn.command);
-    if (btn.url == 'EXIT') {
-      this.platform.exitApp();
-    } else if (btn.url == 'RESET') {
-      //gan gia tri default parse 
-    } else if (btn.url) {
+    //console.log('command', btn.url, btn.command);
+    if (btn.url) {
       //co link de post
       //kiem tra validator
       let valid = false;
-      let results = [];
+      let results = []; //id,value
+      let keyResults = {}; //{key:value}
+
       //neu valid thi post len server
       //neu khong thi bat invalid 
       this.dynamicForm.items.some(el => {
@@ -64,43 +91,93 @@ export class DynamicPage {
         let control = new FormControl(el.value, validatorFns);
         el.invalid = control.invalid;
         valid = !el.invalid;
+
         if (valid
+          && el.key
+          && el.value
+        ) {
+          Object.defineProperty(keyResults, el.key, { value: el.value, writable: false, enumerable: true });
+        } else if (valid
           && el.id
           && el.value
-          && el.type !== this.itemType.title
-          && el.type !== this.itemType.image
-          && el.type !== this.itemType.avatar
-          && el.type !== this.itemType.button
+          && el.type !== "title"
+          && el.type !== "image"
+          && el.type !== "avatar"
+          && el.type !== "button"
         ) {
           results.push({
             id: el.id,
             value: el.value
           })
         }
-
         //console.log(el.name, el.id, el.value, 'control:', control.invalid, control.valid);
         return el.invalid;
       });
 
       if (valid) {
-        console.log('Form ok: ', btn.url, btn.command, results);
+        //console.log('Form ok: ', btn.url, btn.command, keyResults, results);
+
 
         if (btn.token) {
 
-          this.authService.postDynamicForm(btn.url,
-            {
-              command: btn.command,
-              results: results
-            }
-          )
+          let loading = this.loadingCtrl.create({
+            content: 'Đang xử lý dữ liệu từ máy chủ ....'
+          });
+          loading.present();
+
+          this.authService.postDynamicForm(btn.url, keyResults, btn.token)
             .then(data => {
-              console.log('data', data);
+              //console.log('data --> next', data, btn.next);
+              btn.next_data = {
+                step: this.step,
+                data: data
+              }
+              this.next(btn);
+              loading.dismiss();
             })
             .catch(err => {
-              console.log('err', err);
+              //console.log('err', err);
+              btn.next_data = {
+                step: this.step,
+                error: err
+              }
+              this.next(btn);
+              loading.dismiss();
+            });
+
+        } else if (keyResults) {
+
+          let loading = this.loadingCtrl.create({
+            content: 'Đang xử lý dữ liệu từ máy chủ ....'
+          });
+          loading.present();
+
+          this.pubService.postDynamicForm(btn.url, keyResults)
+            .then(data => {
+              //console.log('data --> next', data, btn.next);
+              btn.next_data = {
+                step: this.step,
+                data: data
+              }
+              this.next(btn);
+              loading.dismiss();
+            })
+            .catch(err => {
+              //console.log('err', err);
+              btn.next_data = {
+                step: this.step,
+                error: err
+              }
+              this.next(btn);
+              loading.dismiss();
             });
 
         } else {
+
+          let loading = this.loadingCtrl.create({
+            content: 'Đang xử lý dữ liệu từ máy chủ ....'
+          });
+          loading.present();
 
           this.pubService.postDynamicForm(btn.url,
             {
@@ -109,20 +186,49 @@ export class DynamicPage {
             }
           )
             .then(data => {
-              console.log('data', data);
+              //console.log('data --> next', data, btn.next);
+              btn.next_data = data;
+              this.next(btn);
+              loading.dismiss();
             })
             .catch(err => {
               console.log('err', err);
+              loading.dismiss();
             });
-
         }
 
-      } else {
 
+
+      } else {
         console.log('Form Invalid!');
       }
+    } else {
+      this.next(btn);
+    }
+  }
 
+  next(btn) {
 
+    if (btn) {
+      if (btn.next == 'EXIT') {
+        this.platform.exitApp();
+      } else if (btn.next == 'RESET') {
+        this.resetForm();
+      } else if (btn.next == 'CLOSE') {
+        if (this.navCtrl.length() > 1) this.viewCtrl.dismiss(); //close modal
+      } else if (btn.next == 'BACK') {
+        if (this.navCtrl.length() > 1) this.navCtrl.pop();      //goback 1 step
+      } else if (btn.next == 'CALLBACK') {
+        if (this.callback) {
+          this.callback(btn.next_data)
+            .then(nextStep => this.next(nextStep));
+        } else {
+          if (this.navCtrl.length() > 1) this.navCtrl.pop();      //goback 1 step
+        }
+      } else if (btn.next == 'CONTINUE' && btn.next_data && btn.next_data.data) {
+        btn.next_data.form = btn.next_data.data; //gan du lieu tra ve tu server
+        this.navCtrl.push(DynamicPage, btn.next_data);
+      }
     }
 
   }

@@ -40,6 +40,7 @@ import { ApiResourceService } from '../services/apiResourceServices';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptor } from '../interceptors/requestInterceptor';
 import { ResponseInterceptor } from '../interceptors/responseInterceptor';
+import { DynamicReponsivePage } from '../pages/dynamic-reponsive/dynamic-reponsive';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
     MyApp,
     LoginPhonePage,
     DynamicPage,
+    DynamicReponsivePage,
     
     ParametersPage,
     CustomerPage,
@@ -76,6 +78,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
     MyApp,
     LoginPhonePage,
     DynamicPage,
+    DynamicReponsivePage,
 
     ParametersPage,
     CustomerPage,

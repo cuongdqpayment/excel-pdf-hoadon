@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 import { Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { LoginPhonePage } from '../pages/login-phone/login-phone';
 import { DynamicPage } from '../pages/dynamic/dynamic';
+import { HomePage } from '../pages/home/home';
 
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  
+
   rootPage:any;
 
   platforms = ['android', 'cordova', 'core', 'ios', 'ipad', 'iphone', 'mobile', 'mobileweb', 'phablet', 'tablet', 'windows', 'electron'];
@@ -57,12 +57,8 @@ export class MyApp {
 
   viewDidLoad() {
 
-    if (this.isWeb){
-      this.rootPage  = LoginPhonePage;
-    } else{
-      this.rootPage  = DynamicPage;
-    }
-    
+    this.rootPage  = HomePage;
+        
   }
 
   presentAlert(jsonConfirm:{title:string,message:string,ok_text:string}) {
