@@ -88,12 +88,12 @@ export class HomePage {
             data: //new form 
                   {
                     items: [
-                      { name: "Nhập số điện thoại",type: "title"}
-                      , { key: "key", name: "Key", hint: "Nhập mã OTP gửi đến điện thoại (*)",type: "text", input_type: "text", validators: [{ required: true, min: 6, max: 6, pattern: "^[0-9A-Z]*$" }]}
+                      { name: "Nhập mã OTP",type: "title"}
+                      , { key: "key", name: "Mã OTP", hint: "Nhập mã OTP gửi đến điện thoại",type: "text", input_type: "text", validators: [{ required: true, min: 6, max: 6, pattern: "^[0-9A-Z]*$" }]}
                       , { type: "button"
                         , options: [
-                            { name: "Back", next: "BACK"}
-                            , { name: "Callback", next: "CALLBACK", url: "https://c3.mobifone.vn/api/ext-auth/confirm-key", token: res.data.token}
+                            { name: "Trở về", next: "BACK"}
+                            , { name: "Xác nhận OTP", next: "CALLBACK", url: "https://c3.mobifone.vn/api/ext-auth/confirm-key", token: res.data.token}
                         ]
                       }]
                 }

@@ -5,13 +5,7 @@
        , {
         "name": "BUTTON GROUP","type": "button"
         ,"options": [
-            { "name": "Reset", "next": "RESET" }
-            , { "name": "Exit", "next": "EXIT" }
-            , { "name": "Close", "next": "CLOSE" }
-            , { "name": "Back", "next": "BACK"}
-            , { "name": "Continue", "next": "CONTINUE"}
-            , { "name": "Callback", "next": "CALLBACK", "url": "https://c3.mobifone.vn/api/ext-auth/request-isdn", "command": "REQUEST-ISDN"}
-            , { "name": "tiep tuc URL", "next": "CONTINUE", "url": "https://c3.mobifone.vn/api/ext-auth/request-isdn", "command": "REQUEST-ISDN"}
+            { "name": "Xác thực", "next": "CALLBACK", "url": "https://c3.mobifone.vn/api/ext-auth/request-isdn"}
         ]
       }]
 }
