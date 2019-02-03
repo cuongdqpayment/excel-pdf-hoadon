@@ -36,11 +36,11 @@ export class ApiAuthService {
      */
     getServerPublicRSAKey() {
         //console.log('get Public key');
-        if (this.publicKey && this.publicKey.PUBLIC_KEY) {
+        if (this.publicKey && this.publicKey.public_key) {
             //console.log('Public key from in session');
             return (new Promise((resolve, reject) => {
                 try {
-                    this.serverKey.importKey(this.publicKey.PUBLIC_KEY);
+                    this.serverKey.importKey(this.publicKey.public_key);
                 } catch (err) {
                     reject(err); //bao loi khong import key duoc
                 }
@@ -54,15 +54,15 @@ export class ApiAuthService {
             .then(jsonData => {
                 this.publicKey = jsonData;
                     console.log('Public key: ', jsonData);
-                    if (this.publicKey && this.publicKey.PUBLIC_KEY) {
+                    if (this.publicKey && this.publicKey.public_key) {
                         try {
-                            this.serverKey.importKey(this.publicKey.PUBLIC_KEY);
+                            this.serverKey.importKey(this.publicKey.public_key);
                         } catch (err) {
                             throw err;
                         }
                         return this.serverKey;
                     } else {
-                        throw new Error('No PUBLIC_KEY exists!');
+                        throw new Error('No public_key exists!');
                     }
                 })
             ;

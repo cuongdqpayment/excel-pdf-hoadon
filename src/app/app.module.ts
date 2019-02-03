@@ -13,6 +13,8 @@ import { PrinterPage } from '../pages/printer/printer';
 
 import { LoginPhonePage } from '../pages/login-phone/login-phone';
 import { DynamicPage } from '../pages/dynamic/dynamic'
+import { DynamicReponsivePage } from '../pages/dynamic-reponsive/dynamic-reponsive';
+import { DynamicListPage } from '../pages/dynamic-list/dynamic-list';
 
 import { RegisterPage } from '../pages/register/register';
 import { SettingPage } from '../pages/setting/setting';
@@ -40,7 +42,6 @@ import { ApiResourceService } from '../services/apiResourceServices';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptor } from '../interceptors/requestInterceptor';
 import { ResponseInterceptor } from '../interceptors/responseInterceptor';
-import { DynamicReponsivePage } from '../pages/dynamic-reponsive/dynamic-reponsive';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { DynamicReponsivePage } from '../pages/dynamic-reponsive/dynamic-reponsi
     LoginPhonePage,
     DynamicPage,
     DynamicReponsivePage,
+    DynamicListPage,
     
     ParametersPage,
     CustomerPage,
@@ -79,7 +81,8 @@ import { DynamicReponsivePage } from '../pages/dynamic-reponsive/dynamic-reponsi
     LoginPhonePage,
     DynamicPage,
     DynamicReponsivePage,
-
+    DynamicListPage,
+    
     ParametersPage,
     CustomerPage,
     InvoicePage,

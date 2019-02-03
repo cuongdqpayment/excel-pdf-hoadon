@@ -7,6 +7,7 @@ import { DynamicReponsivePage } from '../dynamic-reponsive/dynamic-reponsive';
 import { TabsPage } from '../tabs/tabs';
 import { ApiStorageService } from '../../services/apiStorageService';
 import { ApiResourceService } from '../../services/apiResourceServices';
+import { ApiAuthService } from '../../services/apiAuthService';
 
 @Component({
   selector: 'page-home',
@@ -16,6 +17,7 @@ export class HomePage {
 
   constructor(private navCtrl: NavController
             , private pubService: ApiHttpPublicService
+            , private auth : ApiAuthService
             , private resources : ApiResourceService
             , private apiStorageService: ApiStorageService
             , private platform: Platform
@@ -29,6 +31,50 @@ export class HomePage {
     console.log('2. ngOnInit');
     //hien thi kieu popup info -- dissmiss
     //this.openModal(data);
+
+    if (this.apiStorageService.getToken()){
+
+      let loading = this.loadingCtrl.create({
+        content: 'Đang kiểm tra xác thực ....'
+      });
+      loading.present();
+
+      this.auth.authorize
+      (this.apiStorageService.getToken())
+      .then(status=>{
+
+        loading.dismiss();
+
+          this.auth.getServerPublicRSAKey()
+          .then(pk => {
+            
+            let userInfo = this.auth.getUserInfo();
+            
+            console.log('Save token user', userInfo);
+            
+            //kiem tra token chua khai nickname, va image thi phai nhay vao slide khai thong tin
+            if (
+              userInfo
+              // &&userInfo.image
+              // &&userInfo.nickname
+              )
+            //cho phep truy cap thi gui token kem theo
+            this.auth.injectToken(); //Tiêm token cho các phiên làm việc lấy số liệu cần xác thực
+
+            this.navCtrl.setRoot(TabsPage);
+
+          })
+          .catch(err=>{
+            console.log('Public key err', err);
+          });
+
+      })
+      .catch(err=>{
+        loading.dismiss();
+        //console.log('Token invalid: ', err);
+        this.auth.deleteToken();
+      });
+    }
 
   }
 
