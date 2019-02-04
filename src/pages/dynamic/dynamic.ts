@@ -69,15 +69,16 @@ export class DynamicPage {
   onClick(btn) {
 
     //console.log('command', btn.url, btn.command);
-    if (btn.url) {
-      //co link de post
-      //kiem tra validator
-      let valid = false;
-      let results = []; //id,value
-      let keyResults = {}; //{key:value}
 
-      //neu valid thi post len server
-      //neu khong thi bat invalid 
+    let valid = false;
+    let results = []; //id,value
+    let keyResults = {}; //{key:value}
+
+    //chi nhung action xu ly du lieu form moi check
+    if (
+      btn.next === 'CALLBACK'
+      || btn.next === 'NEXT'
+    ) {
       this.dynamicForm.items.some(el => {
         let validatorFns = [];
         if (el.validators) {
@@ -113,12 +114,16 @@ export class DynamicPage {
         //console.log(el.name, el.id, el.value, 'control:', control.invalid, control.valid);
         return el.invalid;
       });
+    }else{
+      this.next(btn);
+      return;
+    }
 
-      if (valid) {
-        //console.log('Form ok: ', btn.url, btn.command, keyResults, results);
+    if (valid) {
 
+      if (btn.url) {
 
-        if (btn.token) {
+        if (btn.token && keyResults) {
 
           let loading = this.loadingCtrl.create({
             content: 'Đang xử lý dữ liệu từ máy chủ ....'
@@ -172,39 +177,21 @@ export class DynamicPage {
               loading.dismiss();
             });
 
-        } else {
-
-          let loading = this.loadingCtrl.create({
-            content: 'Đang xử lý dữ liệu từ máy chủ ....'
-          });
-          loading.present();
-
-          this.pubService.postDynamicForm(btn.url,
-            {
-              command: btn.command,
-              results: results
-            }
-          )
-            .then(data => {
-              //console.log('data --> next', data, btn.next);
-              btn.next_data = data;
-              this.next(btn);
-              loading.dismiss();
-            })
-            .catch(err => {
-              console.log('err', err);
-              loading.dismiss();
-            });
         }
 
-
-
       } else {
-        console.log('Form Invalid!');
+
+        btn.next_data = {
+          step: this.step,
+          data: keyResults
+        }
+        this.next(btn);
+
       }
     } else {
-      this.next(btn);
+      //console.log('Form Invalid!');
     }
+
   }
 
   next(btn) {
@@ -215,9 +202,9 @@ export class DynamicPage {
       } else if (btn.next == 'RESET') {
         this.resetForm();
       } else if (btn.next == 'CLOSE') {
-        if (this.navCtrl.length() > 1) this.viewCtrl.dismiss(); //close modal
+        try { this.viewCtrl.dismiss(btn.next_data) } catch (e) { }
       } else if (btn.next == 'BACK') {
-        if (this.navCtrl.length() > 1) this.navCtrl.pop();      //goback 1 step
+        try { this.navCtrl.pop() } catch (e) { }
       } else if (btn.next == 'CALLBACK') {
         if (this.callback) {
           this.callback(btn.next_data)
@@ -225,7 +212,7 @@ export class DynamicPage {
         } else {
           if (this.navCtrl.length() > 1) this.navCtrl.pop();      //goback 1 step
         }
-      } else if (btn.next == 'CONTINUE' && btn.next_data && btn.next_data.data) {
+      } else if (btn.next == 'NEXT' && btn.next_data && btn.next_data.data) {
         btn.next_data.form = btn.next_data.data; //gan du lieu tra ve tu server
         this.navCtrl.push(DynamicPage, btn.next_data);
       }

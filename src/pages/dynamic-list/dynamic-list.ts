@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, ItemSliding, Item, Platform } from 'ionic-angular';
+import { NavController, ItemSliding, Item, Platform, NavParams, ViewController, LoadingController } from 'ionic-angular';
+import { ApiAuthService } from '../../services/apiAuthService';
+import { ApiHttpPublicService } from '../../services/apiHttpPublicServices';
 
 @Component({
   selector: 'page-dynamic-list',
@@ -7,33 +9,10 @@ import { NavController, ItemSliding, Item, Platform } from 'ionic-angular';
 })
 export class DynamicListPage {
 
-  dynamicList: any = {
-    title:"CÁC KỲ HÓA ĐƠN ĐÃ PHÁT HÀNH"
-    , search_bar:{hint:"Tìm kiếm cái gì thích"}
-    , buttons: [
-        { next: "NEW", url: "https://qld-invoices.herokuapp.com/db/json-parameters", color:"primary", icon:"add"}
-      , { next: "CALLBACK", url: "https://qld-invoices.herokuapp.com/db/json-parameters", color:"primary", icon:"more"}
-    ]
-    , items: [
-      {icon: "calculator"
-      , color: "danger"
-      , h1: "Tiêu đề H1"
-      , h2: "Chương h2"
-      , p: "Đoạn văn bản gggjkh k hhjk jkh jhlhhh jhjhjhjhjh hjh hj hjhj hjh jh jhjhjh jhjh jhj hj jhjh j h g hgf kkk cuong da"
-      , note: "ghi chú chỉ thị nho nhỏ"
-      , options: [
-        {name:"Phát hành lại", icon:"calculator", color: "danger"}
-        , {name:"Tạo bản in", icon:"print", color: "primary"}
-        , {name:"Xem danh sách", icon:"list-box", color: "secondary"}
-      ]}
-      ,{icon: "calculator", color: "danger", h1: "Dòng số 2", h2: "Chương h2", p: "Đoạn văn bản", note: "ghi chú chỉ thị nho nhỏ"
-      , options: [
-        {name:"Phát hành lại", icon:"calculator", color: "danger"}
-        , {name:"Tạo bản in", icon:"print", color: "primary"}
-        , {name:"Xem danh sách", icon:"list-box", color: "secondary"}
-      ]}
-    ]
-  }
+  dynamicList: any; 
+  dynamicListOrigin: any;
+  callback: any; 
+  step: any;  
   
   isSearch: boolean = false;
   searchString: string = '';
@@ -41,14 +20,36 @@ export class DynamicListPage {
 
   isMobile: boolean = false;
 
-  constructor(  private navCtrl: NavController
-              , private platform: Platform
+  constructor(  private platform: Platform
+              , private authService: ApiAuthService
+              , private pubService: ApiHttpPublicService
+              , private viewCtrl: ViewController
+              , private navCtrl: NavController
+              , private loadingCtrl: LoadingController
+              , private navParams: NavParams
              ) {}
 
   ngOnInit(){
-    this.isMobile = (this.platform.platforms()[0]==='mobile');
+    this.dynamicListOrigin = this.navParams.get("list") ? this.navParams.get("list") : {};
+    this.refresh();
+    
+    this.callback = this.navParams.get("callback");
+    this.step = this.navParams.get("step");
+    let call_waiting_data = this.navParams.get("call_waiting_data");
+    
+    if (call_waiting_data){
+      call_waiting_data()
+      .then(list=>{
+        this.refresh(list);
+      })
+    }
   }
 
+  refresh(newList?:any){
+    if (newList) this.dynamicListOrigin = newList;
+    this.isMobile = (this.platform.platforms()[0]==='mobile');
+    this.dynamicList = this.dynamicListOrigin;
+  }
 
 // Su dung slide Pages
   //--------------------------
@@ -94,11 +95,76 @@ export class DynamicListPage {
   }
 
   onClick(btn){
-
+    //console.log(btn);
+    this.processCommand(btn); 
   }
 
-  onClickDetails(item: ItemSliding,btn: any, it: any){
+  onClickDetails(item: ItemSliding, btn: any, it: any){
     this.closeSwipeOptions(item, it);
+    btn.item = it;
+    console.log(btn);
+    this.processCommand(btn);
+  }
+
+  processCommand(btn){
+
+    if (btn.url){
+      if (btn.method==='GET'){
+        let loading = this.loadingCtrl.create({
+          content: 'Đang xử lý dữ liệu từ máy chủ ....'
+        });
+        loading.present();
+
+        this.pubService.getDynamicForm(btn.url)
+        .then(data=>{
+          //console.log(data);
+          loading.dismiss();
+
+          btn.next_data = {
+            step: this.step,
+            data: data,
+            next: btn.next,
+            item: btn.item
+          }
+          this.next(btn);
+
+        })
+        .catch(err=>{
+          console.log('err getDynamicForm',err);
+          loading.dismiss();
+        })
+      }
+
+    }
+  }
+
+  next(btn) {
+
+    if (btn) {
+      if (btn.next == 'EXIT') {
+        this.platform.exitApp();
+      } else if (btn.next == 'REFRESH') {
+        this.refresh(btn.next_data);
+      } else if (btn.next == 'CLOSE') {
+        try { this.viewCtrl.dismiss(btn.next_data) } catch (e) { }
+      } else if (btn.next == 'BACK') {
+        try { this.navCtrl.pop() } catch (e) { }
+      } else if (btn.next == 'ADD') {
+        if (this.callback) {
+          this.callback(btn.next_data)
+            .then(nextStep => this.next(nextStep));
+        }
+      } else if (btn.next == 'EDIT') {
+        if (this.callback) {
+          this.callback(btn.next_data)
+            .then(nextStep => this.next(nextStep));
+        }
+      } else if (btn.next == 'NEXT' && btn.next_data && btn.next_data.data) {
+        btn.next_data.form = btn.next_data.data; //gan du lieu tra ve tu server
+        this.navCtrl.push(DynamicListPage, btn.next_data);
+      }
+    }
+
   }
 
 }

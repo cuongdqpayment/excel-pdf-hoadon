@@ -94,13 +94,24 @@ export class ApiHttpPublicService {
         return this.sampleFormDynamic;
     }
 
-    postDynamicForm(url,json_data){
+    postDynamicForm(url:string,json_data:any){
         return this.httpClient.post(url,JSON.stringify(json_data))
                 .toPromise()
                 .then(data => {
-                    return data;
+                    let rtn:any;
+                    rtn = data;
+                    return rtn;
                 });
     }
-    
+
+    getDynamicForm(url:string){
+        return this.httpClient.get(url)
+               .toPromise()
+               .then(data => {
+                    let rtn:any;
+                    rtn = data;
+                    return rtn;
+                });
+    }
 
 }

@@ -31,6 +31,11 @@ export class ApiResourceService {
                                         background:billCycle.background
                                     }))
         .toPromise()
+        .then(data => {
+            let rtn:any;
+            rtn = data;
+            return rtn;
+        });
     }
 
     /**
@@ -44,6 +49,11 @@ export class ApiResourceService {
           };
         return this.httpClient.get(this.resourceServer+'/db/pdf-invoices/'+yyyymm_cust_id,httpOptions)
         .toPromise()
+        .then(data => {
+            let rtn:any;
+            rtn = data;
+            return rtn;
+        });
     }
 
     /**
@@ -64,6 +74,11 @@ export class ApiResourceService {
             cust_id: billCycle.cust_id
         }))
         .toPromise()
+        .then(data => {
+            let rtn:any;
+            rtn = data;
+            return rtn;
+        });
     }
 
     /**
@@ -72,12 +87,10 @@ export class ApiResourceService {
     getInvoices(yyyymm_custId){
         return this.httpClient.get(this.resourceServer+'/db/json-invoices/'+yyyymm_custId)
         .toPromise()
-        .then(results=>{
-            if (results) {
-                return results;
-            }else{
-                throw [];
-            }
+        .then(data => {
+            let rtn:any;
+            rtn = data;
+            return rtn;
         })
     }
 
@@ -87,36 +100,30 @@ export class ApiResourceService {
     getBillCycle(){
         return this.httpClient.get(this.resourceServer+'/db/json-bill-cycles')
         .toPromise()
-        .then(results=>{
-            if (results) {
-                return results;
-            }else{
-                throw [];
-            }
+        .then(data => {
+            let rtn:any;
+            rtn = data;
+            return rtn;
         })
     }
 
     getAllCutomers(){
         return this.httpClient.get(this.resourceServer+'/db/json-customers')
         .toPromise()
-        .then(results=>{
-            if (results) {
-                return results;
-            }else{
-                throw [];
-            }
+        .then(data => {
+            let rtn:any;
+            rtn = data;
+            return rtn;
         })
     }
 
     getParamters(){
         return this.httpClient.get(this.resourceServer+'/db/json-parameters')
         .toPromise()
-        .then(results=>{
-            if (results) {
-                return results;
-            }else{
-                throw [];
-            }
+        .then(data => {
+            let rtn:any;
+            rtn = data;
+            return rtn;
         })
     }
 
@@ -130,8 +137,10 @@ export class ApiResourceService {
         return this.httpClient.post(this.resourceServer + '/auth/authorize-token', JSON.stringify({check: true}))
             .toPromise()
             .then(data => {
+                let rtn:any;
+                rtn = data;
                 this.token = token;
-                return data; 
+                return rtn;
             })
             .catch(err=>{
                 this.token = null;

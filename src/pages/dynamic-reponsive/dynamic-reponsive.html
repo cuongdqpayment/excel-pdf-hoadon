@@ -50,7 +50,7 @@
 
 					<!-- input password -->
 					<ion-item class="input-item" *ngIf="it.type == 'password'">
-						<ion-label floating color="danger" *ngIf="it.invalid">{{it.hint}}</ion-label>
+						<ion-label floating color="danger" *ngIf="it.invalid">{{it.hint}}(*)</ion-label>
 						<ion-icon item-left name="{{it.icon}}" *ngIf="it.icon"></ion-icon>
 						<ion-input [type]="password_type" placeholder={{it.name?it.name:it.hint}} [(ngModel)]="it.value"></ion-input>
 						<button ion-button clear color="dark" type="button" item-right (click)="togglePasswordMode()">
@@ -109,7 +109,8 @@
 
 					<!-- date time-->
 					<ion-item class="input-item" *ngIf="it.type == 'datetime'">
-						<ion-label>{{it.name}}</ion-label>
+						<ion-label color="danger" *ngIf="it.invalid">{{it.hint}}(*)</ion-label>
+						<ion-label *ngIf="!it.invalid">{{it.name}}</ion-label>
 						<ion-datetime displayFormat="{{it.display}}" pickerFormat="{{it.picker}}" [(ngModel)]="it.value"></ion-datetime>
 					</ion-item>
 

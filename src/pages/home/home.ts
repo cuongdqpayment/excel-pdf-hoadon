@@ -28,7 +28,7 @@ export class HomePage {
 
   ngOnInit(){
     
-    console.log('2. ngOnInit');
+    //console.log('2. ngOnInit Home');
     //hien thi kieu popup info -- dissmiss
     //this.openModal(data);
 
@@ -79,7 +79,7 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    console.log('3. ionViewDidLoad');
+    //console.log('3. ionViewDidLoad Home');
 
     this.pubService.getDataForm('form-phone.json')
       .then(data=>{
@@ -111,7 +111,7 @@ export class HomePage {
   /**
    * ham goi lai gui ket qua new button next
    */
-  callbackFunction = (res?:{step?:string,callback?:any,data?:any,error?:any}) => {
+  callbackFunction = (res?:{step?:string,data?:any,error?:any}) => {
     return new Promise((resolve, reject) => {
       
       //console.log('callback data:', res);
@@ -127,7 +127,7 @@ export class HomePage {
         }
         //gui nhu mot button forward
         resolve({
-          next:"CONTINUE" //mo form tiep theo
+          next:"NEXT" //mo form tiep theo
           , next_data:{
             callback: this.callbackFunction,
             step: 'form-key',
@@ -156,10 +156,8 @@ export class HomePage {
         loading.present();
 
         this.resources.authorizeFromResource(res.data.token)
-        .then(data=>{
-          //console.log('data',data);
-          let login;
-          login = data;
+        .then(login=>{
+          //console.log('data',login);
           if (login.status
             &&login.user_info
             &&login.token
@@ -167,7 +165,7 @@ export class HomePage {
               this.apiStorageService.saveToken(res.data.token);
               this.navCtrl.setRoot(TabsPage);
           }else{
-            this.presentAlert('Dữ liệu xác thực không đúng <br>' + JSON.stringify(data))
+            this.presentAlert('Dữ liệu xác thực không đúng <br>' + JSON.stringify(login))
           }
           loading.dismiss();
           resolve();

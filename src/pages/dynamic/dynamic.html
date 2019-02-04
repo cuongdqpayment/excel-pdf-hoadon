@@ -104,7 +104,8 @@
 
 		<!-- date time-->
 		<ion-item class="input-item" *ngIf="it.type == 'datetime'">
-			<ion-label>{{it.name}}</ion-label>
+			<ion-label color="danger" *ngIf="it.invalid">{{it.hint}}(*)</ion-label>
+			<ion-label *ngIf="!it.invalid">{{it.name}}</ion-label>
 			<ion-datetime displayFormat="{{it.display}}" pickerFormat="{{it.picker}}" [(ngModel)]="it.value"></ion-datetime>
 		</ion-item>
 

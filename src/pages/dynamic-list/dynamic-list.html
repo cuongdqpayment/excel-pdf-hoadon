@@ -1,24 +1,24 @@
 <ion-header>
     <ion-navbar>
 
-        <ion-buttons *ngIf="!isSearch && dynamicList.search_bar" start>
+        <ion-buttons *ngIf="!isSearch && dynamicList?.search_bar" start>
             <button ion-button icon-only color="royal" (click)="goSearch()">
                 <ion-icon name="search"></ion-icon>
             </button>
         </ion-buttons>
 
-        <ion-buttons end *ngFor="let btn of dynamicList.buttons">
+        <ion-buttons end *ngFor="let btn of dynamicList?.buttons">
             <button ion-button icon-only color="{{btn.color}}" (click)="onClick(btn)">
                 <ion-icon name="{{btn.icon}}"></ion-icon>
             </button>
         </ion-buttons>
 
-        <ion-searchbar *ngIf="isSearch && dynamicList.search_bar" placeholder="{{dynamicList.search_bar.hint}}" [(ngModel)]="searchString"
+        <ion-searchbar *ngIf="isSearch && dynamicList?.search_bar" placeholder="{{dynamicList?.search_bar.hint}}" [(ngModel)]="searchString"
             [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (keyup.enter)="searchEnter()"
             (keyup.esc)="searchEnter()" start>
         </ion-searchbar>
 
-        <ion-title *ngIf="!isSearch">{{dynamicList.title}}</ion-title>
+        <ion-title *ngIf="!isSearch">{{dynamicList?.title}}</ion-title>
 
     </ion-navbar>
 </ion-header>
@@ -27,7 +27,7 @@
 
     <ion-list>
 
-        <ion-item-sliding #slidingItem *ngFor="let it of dynamicList.items">
+        <ion-item-sliding #slidingItem *ngFor="let it of dynamicList?.items">
             <ion-item #item class="background-page">
                 <ion-icon item-start *ngIf="!isMobile&&it.icon" name="{{it.icon}}" color="{{it.color}}"></ion-icon>
                 <ion-avatar item-start *ngIf="!isMobile&&it.image">
@@ -42,10 +42,6 @@
                 <button item-end *ngIf="!it.isSlidingItemOpen&&!isMobile" ion-button icon-only round color="secondary" (click)="openSwipeOptions(slidingItem, item, it)">
                     <ion-icon name="arrow-dropleft-circle"></ion-icon>
                 </button>
-
-                <!-- <button item-end *ngIf="it.isSlidingItemOpen&&!isMobile" ion-button icon-only round color="primary" (click)="closeSwipeOptions(slidingItem, it)">
-                    <ion-icon name="arrow-dropright-circle"></ion-icon>
-                </button> -->
 
             </ion-item>
 
