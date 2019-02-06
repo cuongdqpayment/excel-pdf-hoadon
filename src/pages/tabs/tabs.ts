@@ -4,9 +4,10 @@ import { InvoicePage } from '../invoice/invoice';
 import { ReportPage } from '../report/report';
 import { DynamicListPage } from '../dynamic-list/dynamic-list';
 import { NavController, ModalController, Platform, AlertController, LoadingController } from 'ionic-angular';
-import { DynamicPage } from '../dynamic/dynamic';
-import { DynamicReponsivePage } from '../dynamic-reponsive/dynamic-reponsive';
+import { DynamicFormMobilePage } from '../dynamic-form-mobile/dynamic-form-mobile';
+import { DynamicFormWebPage } from '../dynamic-form-web/dynamic-form-web';
 import { ApiResourceService } from '../../services/apiResourceServices';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -41,6 +42,7 @@ export class TabsPage {
 
   constructor(private navCtrl: NavController
             , private modalCtrl: ModalController
+            , private inAppBrowser: InAppBrowser
             , private platform: Platform
             , private alertCtrl: AlertController
             , private loadingCtrl: LoadingController
@@ -81,33 +83,68 @@ export class TabsPage {
       })
   }
 
+
+  //xu ly list cua invoice
+  callbackListInvoice  = (res?:{step?:string,data?:any, next?:string, item?:any, error?:any}) => {
+  
+  }
+
+  /**
+   * Ham goi lai khi cac lenh yeu cau xu ly ben ngoai
+   * ADD, EDIT, PDF, ...
+   */
   callbackList = (res?:{step?:string,data?:any, next?:string, item?:any, error?:any}) => {
     return new Promise((resolve, reject) => {
       console.log('callback tabs', res);
 
-      for (let key in res.item){
-        let editItemValue = res.data.items.find(x=>x.key==key);
-        if (editItemValue){
-          //console.log('editItemValue', key, res.item[key] , editItemValue);
-          editItemValue.value = res.item[key];
+      
+      if (res.next == 'ADD' || res.next == 'EDIT'){
+        
+        //neu co item de gan du lieu ban dau thi gan lai EDIT
+        for (let key in res.item){
+          let editItemValue = res.data.items.find(x=>x.key==key);
+          if (editItemValue){
+            //console.log('editItemValue', key, res.item[key] , editItemValue);
+            editItemValue.value = res.item[key];
+          }
         }
+
+        //xu ly xong thi dismiss
+        this.openModal({
+          callback: this.callbackForm
+          , step:'add-bill-cycle'
+          , form: res.data
+        })
+        .then(data=>{
+          console.log('modal dismiss()', data);
+          //giai quyet xong form modal, tra ve form dynamic-list -- refresh lay lai ds sau khi them, sua
+          resolve({
+            next: 'REFRESH'
+            , next_data: data //tra du lieu ve cho form, du lieu nay la danh sach moi can view
+          }); 
+        })
+        .catch(err=>reject(err));
+
+      } else if (res.next == 'PDF' && res.data) {
+        
+        console.log ('Mo file');
+
+        let file = new Blob([res.data], { type: 'application/pdf' });            
+        var fileURL = URL.createObjectURL(file);
+        const browser1 = this.inAppBrowser.create(fileURL,'_blank', 'hideurlbar=no,location=no,toolbarposition=top');
+      
+      } else if (res.next == 'LIST' && res.data) {
+        
+        console.log ('new list : ', this.convertResult2DynamicListDetails(res.data));
+
+        this.navCtrl.push(DynamicListPage,{
+          step:'invoice-list',
+          callback: this.callbackListInvoice,
+          list : this.convertResult2DynamicListDetails(res.data)
+        })
+
       }
 
-      //xu ly xong thi dismiss
-      this.openModal({
-        callback: this.callbackForm
-        , step:'add-bill-cycle'
-        , form: res.data
-      })
-      .then(data=>{
-        console.log('modal dismiss()', data);
-        //giai quyet xong form modal, tra ve form dynamic-list -- refresh lay lai ds sau khi them, sua
-        resolve({
-          next: 'REFRESH'
-          , next_data: data //tra du lieu ve cho form, du lieu nay la danh sach moi can view
-        }); 
-      })
-      .catch(err=>reject(err));
       
     });
   }
@@ -165,9 +202,9 @@ export class TabsPage {
       let formPopup:any;
      
       if (this.platform.is('core')){
-        formPopup = DynamicReponsivePage;
+        formPopup = DynamicFormWebPage;
       }else{
-        formPopup = DynamicPage;
+        formPopup = DynamicFormMobilePage;
       }
 
       let modal = this.modalCtrl.create(formPopup, data);
@@ -302,8 +339,8 @@ export class TabsPage {
         , note: "ngày " + el.bill_date_vn
         , options: [
           { name:"Phát hành lại", icon:"calculator", color: "danger", next: "EDIT", url: "assets/data/form-add-billcycle.json", method:"GET"}
-          , {name:"Tạo bản in", icon:"print", color: "primary"}
-          , {name:"Xem danh sách", icon:"list-box", color: "secondary"}
+          , {name:"Tạo bản in", icon:"print", color: "primary", next: "PDF", url: "https://qld-invoices.herokuapp.com/db/pdf-invoices/"+el.bill_cycle, method:"GET"}
+          , {name:"Xem danh sách", icon:"list-box", color: "secondary", next: "LIST", url: "https://qld-invoices.herokuapp.com/db/json-invoices/"+el.bill_cycle, method:"GET"}
         ]
       })
     })
@@ -311,6 +348,34 @@ export class TabsPage {
       title:"CÁC KỲ HÓA ĐƠN ĐÃ PHÁT HÀNH"
       , buttons: [
           { next: "ADD", url: "assets/data/form-add-billcycle.json", method:"GET", color:"primary", icon:"add"}
+      ]
+      , items: items
+    }
+  }
+
+  convertResult2DynamicListDetails(results){
+    let items = [];
+    results.forEach(el=>{
+      items.push({
+         cust_id: el.cust_id
+         , bill_date: el.bill_date
+         , invoice_no: el.invoice_no
+        , icon: "contact"
+        , color: "secondary"
+        , h1: "Tên khách hàng: " + el.full_name
+        , h2: "Địa chỉ: " + el.address
+        , p: "Số tiền: " + el.sum_charge + " (" + el.bill_sum_charge_spell+")"
+        , note: el.invoice_no + " " + el.bill_date.slice(6,8) + '/' + el.bill_date.slice(4,6) + '/' + el.bill_date.slice(0,4)  
+        , options: [
+          { name:"Phát hành lại", icon:"calculator", color: "danger", }
+          , {name:"In đơn lẻ", icon:"print", color: "primary", next: "PDF", url: "https://qld-invoices.herokuapp.com/db/pdf-invoices/"+el.bill_cycle + "/"+ el.cust_id , method:"GET"}
+        ]
+      })
+    })
+    return {
+      title:"Danh sách hóa đơn đã phát hành"
+      , buttons: [
+          { next: "BACK", color:"primary", icon:"arrow-round-back"}
       ]
       , items: items
     }

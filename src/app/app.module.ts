@@ -12,8 +12,8 @@ import { LoginPage } from '../pages/login/login';
 import { PrinterPage } from '../pages/printer/printer';
 
 import { LoginPhonePage } from '../pages/login-phone/login-phone';
-import { DynamicPage } from '../pages/dynamic/dynamic'
-import { DynamicReponsivePage } from '../pages/dynamic-reponsive/dynamic-reponsive';
+import { DynamicFormMobilePage } from '../pages/dynamic-form-mobile/dynamic-form-mobile'
+import { DynamicFormWebPage } from '../pages/dynamic-form-web/dynamic-form-web';
 import { DynamicListPage } from '../pages/dynamic-list/dynamic-list';
 
 import { RegisterPage } from '../pages/register/register';
@@ -48,8 +48,8 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
   declarations: [
     MyApp,
     LoginPhonePage,
-    DynamicPage,
-    DynamicReponsivePage,
+    DynamicFormMobilePage,
+    DynamicFormWebPage,
     DynamicListPage,
     
     ParametersPage,
@@ -79,8 +79,8 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
   entryComponents: [
     MyApp,
     LoginPhonePage,
-    DynamicPage,
-    DynamicReponsivePage,
+    DynamicFormMobilePage,
+    DynamicFormWebPage,
     DynamicListPage,
     
     ParametersPage,

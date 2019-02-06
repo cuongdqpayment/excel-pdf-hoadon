@@ -129,6 +129,7 @@ var selectInvoicesJson = (bill_cycle, cust_id) => {
             'select                         \
             customers.cust_id            \
             ,invoices.bill_date          \
+            ,invoices.bill_cycle          \
             ,invoices.invoice_no         \
             ,customers.full_name         \
             ,customers.organization_name \

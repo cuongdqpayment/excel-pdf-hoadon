@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { DynamicPage } from '../pages/dynamic/dynamic';
 import { HomePage } from '../pages/home/home';
 
 

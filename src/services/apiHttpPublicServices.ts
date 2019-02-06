@@ -104,8 +104,18 @@ export class ApiHttpPublicService {
                 });
     }
 
-    getDynamicForm(url:string){
-        return this.httpClient.get(url)
+    getDynamicForm(url:string, httpOptions?:any){
+        return this.httpClient.get(url,httpOptions)
+               .toPromise()
+               .then(data => {
+                    let rtn:any;
+                    rtn = data;
+                    return rtn;
+                });
+    }
+
+    getDynamicFile(url:string){
+        return this.httpClient.get(url,{'responseType'  : 'blob' as 'json'})
                .toPromise()
                .then(data => {
                     let rtn:any;

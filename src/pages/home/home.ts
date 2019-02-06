@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController, Platform, LoadingController, AlertController } from 'ionic-angular';
 
-import { DynamicPage } from '../dynamic/dynamic';
+import { DynamicFormMobilePage } from '../dynamic-form-mobile/dynamic-form-mobile';
 import { ApiHttpPublicService } from '../../services/apiHttpPublicServices';
-import { DynamicReponsivePage } from '../dynamic-reponsive/dynamic-reponsive';
+import { DynamicFormWebPage } from '../dynamic-form-web/dynamic-form-web';
 import { TabsPage } from '../tabs/tabs';
 import { ApiStorageService } from '../../services/apiStorageService';
 import { ApiResourceService } from '../../services/apiResourceServices';
@@ -86,7 +86,7 @@ export class HomePage {
     if (this.platform.platforms()[0] === 'core'){
       
           setTimeout(()=>{
-            this.navCtrl.push(DynamicReponsivePage
+            this.navCtrl.push(DynamicFormWebPage
               ,{
               callback: this.callbackFunction,
               step: 'form-phone',
@@ -96,7 +96,7 @@ export class HomePage {
       
     }else{
 
-          this.navCtrl.push(DynamicPage
+          this.navCtrl.push(DynamicFormMobilePage
             ,{
             callback: this.callbackFunction,
             step: 'form-phone',
@@ -184,7 +184,7 @@ export class HomePage {
   }
 
   openModal(data) {
-    let modal = this.modalCtrl.create(DynamicPage, data);
+    let modal = this.modalCtrl.create(DynamicFormMobilePage, data);
     modal.present();
   }
 

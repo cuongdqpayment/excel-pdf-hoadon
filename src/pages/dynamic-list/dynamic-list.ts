@@ -115,7 +115,9 @@ export class DynamicListPage {
         });
         loading.present();
 
-        this.pubService.getDynamicForm(btn.url)
+        let httpOptions;
+        if (btn.next === 'PDF') httpOptions = {'responseType'  : 'blob' as 'json'}
+        this.pubService.getDynamicForm(btn.url,httpOptions)
         .then(data=>{
           //console.log(data);
           loading.dismiss();
@@ -133,8 +135,12 @@ export class DynamicListPage {
           console.log('err getDynamicForm',err);
           loading.dismiss();
         })
+      } else {
+        this.next(btn);
       }
 
+    } else {
+      this.next(btn);
     }
   }
 
@@ -149,12 +155,7 @@ export class DynamicListPage {
         try { this.viewCtrl.dismiss(btn.next_data) } catch (e) { }
       } else if (btn.next == 'BACK') {
         try { this.navCtrl.pop() } catch (e) { }
-      } else if (btn.next == 'ADD') {
-        if (this.callback) {
-          this.callback(btn.next_data)
-            .then(nextStep => this.next(nextStep));
-        }
-      } else if (btn.next == 'EDIT') {
+      } else if (btn.next == 'ADD' || btn.next == 'EDIT' || btn.next == 'PDF' || btn.next == 'LIST' ) {
         if (this.callback) {
           this.callback(btn.next_data)
             .then(nextStep => this.next(nextStep));
