@@ -68,8 +68,8 @@ export class DynamicCardSocialPage {
     console.log(this.searchString);
   }
 
-  onClick(btn){
-    //console.log(btn);
+  onClickHeader(btn){
+    console.log(btn);
     //this.processCommand(btn); 
   }
   
@@ -77,7 +77,7 @@ export class DynamicCardSocialPage {
     console.log(btn, item);
 
   }
-  
+
   onClickActions(btn,item){
     console.log(btn, item);
 

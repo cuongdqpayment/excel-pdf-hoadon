@@ -14,7 +14,7 @@
         <ion-title *ngIf="!isSearch">{{dynamicCards?.title}}</ion-title>
 
         <ion-buttons end *ngFor="let btn of dynamicCards?.buttons">
-            <button ion-button icon-only color="{{btn.color}}" (click)="onClick(btn)">
+            <button ion-button icon-only color="{{btn.color}}" (click)="onClickHeader(btn)">
                 <ion-icon name="{{btn.icon}}"></ion-icon>
             </button>
         </ion-buttons>
