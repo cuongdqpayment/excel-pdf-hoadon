@@ -111,7 +111,7 @@ export class HomePage {
   /**
    * ham goi lai gui ket qua new button next
    */
-  callbackFunction = (res?:{step?:string,data?:any,error?:any}) => {
+  callbackFunction(res?:{step?:string,data?:any,error?:any}){
     return new Promise((resolve, reject) => {
       
       //console.log('callback data:', res);

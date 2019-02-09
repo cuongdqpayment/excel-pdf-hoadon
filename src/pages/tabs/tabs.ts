@@ -8,6 +8,7 @@ import { DynamicFormMobilePage } from '../dynamic-form-mobile/dynamic-form-mobil
 import { DynamicFormWebPage } from '../dynamic-form-web/dynamic-form-web';
 import { ApiResourceService } from '../../services/apiResourceServices';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { DynamicCardPage } from '../dynamic-card/dynamic-card';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -16,20 +17,19 @@ export class TabsPage {
 
   tabs: any = [
     {
+      root: DynamicCardPage,
+      title: 'Chi tiết',
+      icon: 'apps'
+    },
+    {
       root: DynamicListPage,
-      title: 'Dynamic',
-      icon: 'contacts'
+      title: 'Hóa đơn',
+      icon: 'list-box'
     },
     {
       root: CustomerPage,
       title: 'Khách hàng',
       icon: 'contacts',
-      params:{}
-    },
-    {
-      root: InvoicePage,
-      title: 'Hóa đơn',
-      icon: 'list-box',
       params:{}
     },
     {
@@ -54,7 +54,7 @@ export class TabsPage {
   ngOnInit(){
     //console.log('2. ngOnInit tabs')
 
-    this.tabs[0].params = {
+    this.tabs[1].params = {
       step:'bill-cycle',
       callback: this.callbackList,
       call_waiting_data: this.callWaiting
@@ -73,7 +73,7 @@ export class TabsPage {
   /**
    * ham lay du lieu dynamic-list asyn delay
    */
-  callWaiting = ()=>{
+  callWaiting(){
     return new Promise((resolve, reject) => {
       this.getBillCycles()
       .then(result=>{
@@ -84,19 +84,15 @@ export class TabsPage {
   }
 
 
-  //xu ly list cua invoice
-  callbackListInvoice  = (res?:{step?:string,data?:any, next?:string, item?:any, error?:any}) => {
   
-  }
-
   /**
    * Ham goi lai khi cac lenh yeu cau xu ly ben ngoai
    * ADD, EDIT, PDF, ...
    */
-  callbackList = (res?:{step?:string,data?:any, next?:string, item?:any, error?:any}) => {
+  callbackList(res?:{step?:string,data?:any, next?:string, item?:any, error?:any}){
+    
     return new Promise((resolve, reject) => {
       console.log('callback tabs', res);
-
       
       if (res.next == 'ADD' || res.next == 'EDIT'){
         
@@ -147,6 +143,29 @@ export class TabsPage {
 
       
     });
+  }
+
+  //xu ly list cua invoice
+  callbackListInvoice(res?:{step?:string,data?:any, next?:string, item?:any, error?:any}){
+  
+    return new Promise((resolve, reject) => {
+      console.log('callbackListInvoice', res);
+      
+      if (res.next == 'EDIT' && res.item){
+        //phat hanh don le hoa don cho khach hang
+        //cho phep soan lai ngay phat hanh, so hoa don
+ 
+      } else if (res.next == 'PDF' && res.data) {
+        //tao pdf don le tung hoa don
+        
+      } else if (res.next == 'VIEW' && res.item) {
+        //hien thi chi tiet cua mot item
+
+      }
+
+      
+    });
+
   }
 
   callbackForm = (res?:{step?:string,data?:any,error?:any}) => {
@@ -362,13 +381,14 @@ export class TabsPage {
          , invoice_no: el.invoice_no
         , icon: "contact"
         , color: "secondary"
-        , h1: "Tên khách hàng: " + el.full_name
-        , h2: "Địa chỉ: " + el.address
-        , p: "Số tiền: " + el.sum_charge + " (" + el.bill_sum_charge_spell+")"
-        , note: el.invoice_no + " " + el.bill_date.slice(6,8) + '/' + el.bill_date.slice(4,6) + '/' + el.bill_date.slice(0,4)  
+        , h1: (this.platform.is('core')?"Tên khách hàng: ":"") + el.full_name
+        , h2: (this.platform.is('core')?"Địa chỉ: ":"") + el.address
+        , p: (this.platform.is('core')?"Số tiền: ":"") + el.sum_charge + " (" + el.bill_sum_charge_spell+")"
+        , note: el.invoice_no + "<br>" + el.bill_date.slice(6,8) + '/' + el.bill_date.slice(4,6) + '/' + el.bill_date.slice(0,4)  
         , options: [
-          { name:"Phát hành lại", icon:"calculator", color: "danger", }
+          { name:"Phát hành lẻ", icon:"calculator", color: "danger", next: "EDIT", }
           , {name:"In đơn lẻ", icon:"print", color: "primary", next: "PDF", url: "https://qld-invoices.herokuapp.com/db/pdf-invoices/"+el.bill_cycle + "/"+ el.cust_id , method:"GET"}
+          , {name:"Xem chi tiết", icon:"list-box", color: "secondary", next: "VIEW", }
         ]
       })
     })
@@ -380,4 +400,5 @@ export class TabsPage {
       , items: items
     }
   }
+
 }

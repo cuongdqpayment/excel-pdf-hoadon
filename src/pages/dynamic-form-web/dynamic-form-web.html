@@ -18,6 +18,18 @@
 						<ion-label class="title-item">{{it.name}}</ion-label>
 					</ion-item>
 
+					<!-- form chi tiet -->
+					<ion-list class="input-item" *ngIf="it.type == 'details'">
+						<ion-item *ngFor="let dt of it.details">
+							<strong item-start>
+								{{dt.name}}
+							</strong>
+							<ion-label text-wrap item-end>
+									{{dt.value}}
+							</ion-label>
+						</ion-item>
+					</ion-list>
+
 					<!-- title with avatar -->
 					<ion-item class="background-card" *ngIf="it.type == 'avatar'">
 						<ion-avatar item-start><img [src]="it.url"></ion-avatar>

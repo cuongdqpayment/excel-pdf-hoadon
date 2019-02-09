@@ -26,6 +26,26 @@ export class ApiHttpPublicService {
       title: "Đăng ký"
       , items: [
         {          name: "Thông tin cá nhân", type: "title"}
+        , { type:"details",
+            details: [
+                {
+                name:"Mã khách hàng",
+                value: "R012234949883"
+                },
+                {
+                name:"Tên khách hàng",
+                value: "Nguyễn Văn B"
+                },
+                {
+                name:"Địa chỉ",
+                value: "Tổ 1, Đội 1, Thôn 2, xã Vinh Hưng, huyện Phú Lộc, tỉnh Thừa Thiên Huế"
+                },
+                {
+                name:"Hình thức thanh toán",
+                value: "Tiền mặt"
+                },
+            ]
+         }
         , {        name: "Thông tin cá nhân avatar", hint: "Avatar", type: "avatar", url: "https://www.w3schools.com/howto/img_forest.jpg" }
         , { id: 1, name: "Check hay không chọn?", type: "check", value: true }
         , { id: 2, name: "Thanh Trượt", type: "range", value: 50, min: 0, max: 100 }
@@ -54,6 +74,184 @@ export class ApiHttpPublicService {
             , { name: "LOGIN", next: "CONTINUE" , url: "https://chonsoc3.mobifone.vn/ionic/", command: "USER_CHECK_EXISTS", token: true }
           ]
         }]
+  };  
+
+  sampleCardDynamic: any = {
+      title: "Mạng xã hội"
+      , search_bar: {hint: "Tìm cái gì đó"} 
+      , buttons: [
+          {color:"primary", icon:"add"}
+          , {color:"secondary", icon:"more"}
+        ]
+      , items: [
+        {   short_detail:{
+                avatar: "assets/imgs/ca_nau.jpg"
+                ,h1:"Cuong.dq"
+                ,p:"Cần thiết là nội dung chi tiết đây, có thể viết tóm lượt nhiều thông tin cũng được"
+                ,note:"1h ago"
+                ,action: {color:"primary", icon: "more", next:"MORE" }
+            }
+            ,medias: [
+                {image:"assets/imgs/img_forest.jpg"}
+                ,{image:"assets/imgs/anh_vua.png"}
+                ,{image:"assets/imgs/ca_nau.jpg"}
+                ,{image:"assets/imgs/ca_the.jpg"}
+                ,{image:"assets/imgs/img_forest.jpg"}
+                ,{image:"assets/imgs/anh_vua.png"}
+            ]
+            ,content:{
+                title:"Miền quê yêu dấu"
+                ,paragraphs:[
+                    {
+                        h2: "Chốn yên bình"
+                        ,p: "Là nơi bình yên nhất. Bạn có thể dạo bước trên con đường rợp bóng mát thanh bình đến lạ"
+                        ,medias: [
+                            {image:"assets/imgs/img_forest.jpg",title:"Cầu Thê Húc xưa",subtitle:"Đoàn Quốc Cường"}
+                            ,{image:"assets/imgs/anh_vua.png",title:"Cao tốc 34 nghìn tỷ mới khai trương đã hỏng",subtitle:"ảnh Mượn trên mạng "}
+                        ]
+                    }
+                    ,
+                    {
+                        h2: "Chốn bóc mẽ"
+                        ,p: "Đây là nơi bóc mẽ thông tin trên mạng. Một sự kiện mà mọi người không thể biết được bằng những phương tiện truyền thông truyền thống"
+                        ,medias: [
+                            {image:"assets/imgs/anh_vua.png",title:"Cao tốc 34 nghìn tỷ mới khai trương đã hỏng",subtitle:"ảnh Mượn trên mạng "}
+                        ]
+                    }
+                ]
+                ,note:"Đoàn Quốc Cường 2019"
+            }
+            ,results:{ 
+                likes:{
+                    like:["Cuong.dq","abc","xyz"]
+                    ,love:["love"]
+                    ,unlike:["dog"]
+                    ,sad:["cat"]
+                    ,angery:["tiger"]
+                }
+                ,comments:[
+                    {name:"cuong.dq"
+                    ,comment:"day la cai gi vay"
+                    ,time:new Date().getTime()
+                    }
+                    ,
+                    {name:"cu.dq"
+                    ,comment:"la cai nay do nhe"
+                    ,time:new Date().getTime()
+                    }
+                ]
+                ,shares:[
+                    {name:"cuong.dq"
+                    ,comment:"day la cai gi vay"
+                    ,time:new Date().getTime()
+                    }
+                    ,
+                    {name:"cu.dq"
+                    ,comment:"la cai nay do nhe"
+                    ,time:new Date().getTime()
+                    }
+                ]
+                
+            }
+            ,actions:{
+                like: {name:"LIKE", color:"primary", icon: "thumbs-up", next:"LIKE"}
+                ,comment: {name:"COMMENT", color:"primary", icon: "chatbubbles", next:"COMMENT"}
+                ,share: {name:"SHARE", color:"primary", icon: "share-alt", next:"SHARE"}
+            }
+
+        }
+        , { short_details:{
+
+            }
+            ,medias: [
+                {image:"assets/imgs/img_forest.jpg",title:"1 Ảnh",subtitle:"Tác giả Đoàn Quốc Cường"}
+            ]
+            ,results:{ 
+                likes:{
+                    like:["Cuong.dq","abc","xyz"]
+                    ,love:["love"]
+                }
+                ,shares:[
+                    {name:"cu.dq"
+                    ,comment:"la cai nay do nhe"
+                    ,time:new Date().getTime()
+                    }
+                ]
+                
+            }
+            ,actions:{
+                like: {name:"Thích", color:"primary", icon: "thumbs-up", next:"LIKE"}
+                ,comment: {name:"Trò chuyện", color:"primary", icon: "chatbubbles", next:"COMMENT"}
+                ,share: {name:"Chia sẻ", color:"primary", icon: "share-alt", next:"SHARE"}
+            }
+        }
+        , { short_details:{
+
+            }
+            ,medias: [
+                {image:"assets/imgs/ca_nau.jpg",title:"Ảnh 1",subtitle:"Tác giả Đoàn Quốc Cường"}
+                ,{image:"assets/imgs/img_forest.jpg",title:"Ảnh 2",subtitle:"Tác giả Đoàn Quốc Cường"}
+            ]
+            ,results:{ 
+                likes:{
+                    sad:["cat"]
+                }
+                ,comments:[
+                    {name:"cu.dq"
+                    ,comment:"la cai nay do nhe"
+                    ,time:new Date().getTime()
+                    }
+                ]
+            }
+            ,actions:{
+                like: {name:"Thích", color:"primary", icon: "thumbs-up", next:"LIKE"}
+                ,comment: {name:"Trò chuyện", color:"primary", icon: "chatbubbles", next:"COMMENT"}
+                ,share: {name:"Chia sẻ", color:"primary", icon: "share-alt", next:"SHARE"}
+            }
+        }
+        , { short_details:{
+
+            }
+            ,medias: [
+                {image:"assets/imgs/img_forest.jpg",title:"3 Ảnh",subtitle:"Tác giả Đoàn Quốc Cường"}
+                ,{image:"assets/imgs/ca_nau.jpg"}
+                ,{image:"assets/imgs/ca_the.jpg"}
+            ]
+            ,results:{ 
+                likes:{
+                    like:["Cuong.dq","abc","xyz"]
+                }
+            
+            }
+            ,actions:{
+                like: {name:"Thích", color:"primary", icon: "thumbs-up", next:"LIKE"}
+                ,comment: {name:"Trò chuyện", color:"primary", icon: "chatbubbles", next:"COMMENT"}
+                ,share: {name:"Chia sẻ", color:"primary", icon: "share-alt", next:"SHARE"}
+            }
+        }
+        , { short_details:{
+
+            }
+            ,medias: [
+                {image:"assets/imgs/img_forest.jpg",title:"4 Ảnh"}
+                ,{image:"assets/imgs/ca_the.jpg"}
+                ,{image:"assets/imgs/anh_vua.png"}
+                ,{image:"assets/imgs/ca_nau.jpg"}
+            ]
+            ,results:{ 
+                likes:{
+                    like:["Cuong.dq","abc","xyz"]
+                }
+            
+            }
+            ,actions:{
+                like: {name:"Thích", color:"primary", icon: "thumbs-up", next:"LIKE"}
+                ,comment: {name:"Trò chuyện", color:"primary", icon: "chatbubbles", next:"COMMENT"}
+                ,share: {name:"Chia sẻ", color:"primary", icon: "share-alt", next:"SHARE"}
+            }
+        }
+        
+        ]
   };  
 
     constructor(private httpClient: HttpClient) {}
@@ -92,6 +290,10 @@ export class ApiHttpPublicService {
 
     getDemoForm(){
         return this.sampleFormDynamic;
+    }
+
+    getDemoCard(){
+        return this.sampleCardDynamic;
     }
 
     postDynamicForm(url:string,json_data:any){
