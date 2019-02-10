@@ -1613,6 +1613,7 @@ var DynamicCardSocialPage = /** @class */ (function () {
         this.shouldShowCancel = false;
         this.isMobile = false;
     }
+    DynamicCardSocialPage_1 = DynamicCardSocialPage;
     DynamicCardSocialPage.prototype.ngOnInit = function () {
         var _this = this;
         this.dynamicCardsOrigin = this.navParams.get("list") ? this.navParams.get("list") : this.pubService.getDemoCard();
@@ -1645,24 +1646,137 @@ var DynamicCardSocialPage = /** @class */ (function () {
     DynamicCardSocialPage.prototype.onInput = function (e) {
         console.log(this.searchString);
     };
-    DynamicCardSocialPage.prototype.onClick = function (btn) {
-        //console.log(btn);
-        //this.processCommand(btn); 
+    DynamicCardSocialPage.prototype.onClickMedia = function (idx, item) {
+        console.log(idx, item);
+        var viewItems = [];
+        var itemDetail = {
+            short_detail: item.short_detail,
+            results: item.results,
+            actions: item.actions,
+            content: { title: item.title, note: item.note }
+        };
+        var paragraphs = [];
+        item.medias.forEach(function (el) {
+            paragraphs.push({
+                h1: el.h1,
+                h2: el.h2,
+                p: el.p,
+                medias: [el]
+            });
+        });
+        itemDetail.content.paragraphs = paragraphs;
+        viewItems.push(itemDetail);
+        var btn = { next: "NEXT",
+            next_data: {
+                data: {
+                    title: "Tin chi tiết",
+                    buttons: [
+                        { color: "primary", icon: "close", next: "CLOSE" }
+                    ],
+                    items: viewItems
+                }
+            }
+        };
+        this.processCommand(btn);
+    };
+    DynamicCardSocialPage.prototype.onClickHeader = function (btn) {
+        console.log(btn);
+        this.processCommand(btn);
     };
     DynamicCardSocialPage.prototype.onClickShortDetails = function (btn, item) {
         console.log(btn, item);
+        this.processCommand(btn);
     };
     DynamicCardSocialPage.prototype.onClickActions = function (btn, item) {
         console.log(btn, item);
+        this.processCommand(btn);
     };
-    DynamicCardSocialPage = __decorate([
+    DynamicCardSocialPage.prototype.processCommand = function (btn) {
+        var _this = this;
+        if (btn.url) {
+            if (btn.method === 'GET') {
+                var loading_1 = this.loadingCtrl.create({
+                    content: 'Đang xử lý dữ liệu từ máy chủ ....'
+                });
+                loading_1.present();
+                var httpOptions = void 0;
+                if (btn.next === 'FILE')
+                    httpOptions = { 'responseType': 'blob' };
+                this.pubService.getDynamicForm(btn.url, httpOptions)
+                    .then(function (data) {
+                    //console.log(data);
+                    loading_1.dismiss();
+                    btn.next_data = {
+                        step: _this.step,
+                        data: data,
+                        next: btn.next,
+                        item: btn.item
+                    };
+                    _this.next(btn);
+                })
+                    .catch(function (err) {
+                    console.log('err getDynamicForm', err);
+                    loading_1.dismiss();
+                });
+            }
+            else {
+                this.next(btn);
+            }
+        }
+        else {
+            console.log('do nothing', btn);
+            this.next(btn);
+        }
+    };
+    DynamicCardSocialPage.prototype.next = function (btn) {
+        var _this = this;
+        if (btn) {
+            if (btn.next == 'EXIT') {
+                this.platform.exitApp();
+            }
+            else if (btn.next == 'REFRESH') {
+                this.refresh(btn.next_data);
+            }
+            else if (btn.next == 'CLOSE') {
+                try {
+                    this.viewCtrl.dismiss(btn.next_data);
+                }
+                catch (e) { }
+            }
+            else if (btn.next == 'BACK') {
+                try {
+                    this.navCtrl.pop();
+                }
+                catch (e) { }
+            }
+            else if (btn.next == 'ADD'
+                || btn.next == 'SETTINGS'
+                || btn.next == 'FRIENDS'
+                || btn.next == 'NOTIFY'
+                || btn.next == 'LIKE'
+                || btn.next == 'COMMENT'
+                || btn.next == 'SHARE'
+                || btn.next == 'MORE') {
+                if (this.callback) {
+                    this.callback(btn.next_data)
+                        .then(function (nextStep) { return _this.next(nextStep); });
+                }
+            }
+            else if (btn.next == 'NEXT' && btn.next_data && btn.next_data.data) {
+                btn.next_data.list = btn.next_data.data; //gan du lieu tra ve tu server
+                console.log('next', btn);
+                this.navCtrl.push(DynamicCardSocialPage_1, btn.next_data);
+            }
+        }
+    };
+    DynamicCardSocialPage = DynamicCardSocialPage_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-dynamic-card-social',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/dynamic-card-social/dynamic-card-social.html"*/'<ion-header>\n    <ion-navbar>\n            <ion-buttons start *ngIf="!isSearch && dynamicCards?.search_bar">\n                <button ion-button icon-only color="primary" (click)="goSearch()">\n                    <ion-icon name="search"></ion-icon>\n                </button>\n            </ion-buttons>\n\n            <ion-searchbar start *ngIf="isSearch && dynamicCards?.search_bar" placeholder="{{dynamicCards?.search_bar.hint}}" [(ngModel)]="searchString"\n            [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (keyup.enter)="searchEnter()"\n            (keyup.esc)="searchEnter()">\n        </ion-searchbar>\n        \n        <ion-title *ngIf="!isSearch">{{dynamicCards?.title}}</ion-title>\n\n        <ion-buttons end *ngFor="let btn of dynamicCards?.buttons">\n            <button ion-button icon-only color="{{btn.color}}" (click)="onClick(btn)">\n                <ion-icon name="{{btn.icon}}"></ion-icon>\n            </button>\n        </ion-buttons>\n\n    </ion-navbar>\n</ion-header>\n\n<ion-content no-padding class="background-page gradient">\n\n    <ion-grid no-padding>\n        <ion-row>\n            <ion-col col-12 offset-xl-3 col-xl-6 offset-lg-3 col-lg-6 offset-md-2 col-md-8 col-sm-12\n                *ngFor="let it of dynamicCards?.items">\n                <!-- Card mạng xã hội cho một chủ đề liên quan item -->\n                <ion-card class="background-card gradient grid-border">\n                    <!-- Tóm lượt chủ đề theo tác giả -->\n                    <ion-item class="background-card gradient grid-border" *ngIf="it.short_detail">\n                        <ion-icon *ngIf="!it.short_detail?.avatar" item-start name="contact" color="primary"></ion-icon>\n                        <ion-avatar item-start *ngIf="it.short_detail?.avatar"><img [src]="it.short_detail?.avatar"></ion-avatar>\n                        <h1 *ngIf="it.short_detail?.h1">{{it.short_detail?.h1}}</h1>\n                        <h2 *ngIf="it.short_detail?.h2">{{it.short_detail?.h2}}</h2>\n                        <h3 *ngIf="it.short_detail?.h3">{{it.short_detail?.h3}}</h3>\n                        <p *ngIf="it.short_detail?.p" text-wrap>{{it.short_detail?.p}}</p>\n                        <ion-note item-end *ngIf="it.short_detail?.note">{{it.short_detail?.note}}</ion-note>\n                        <button item-end icon-only ion-button clear small *ngIf="it.short_detail?.action" color="{{it.short_detail?.action?.color}}" (click)="onClickShortDetails(it.short_detail?.action, it)">\n                            <ion-icon name="{{it.short_detail?.action?.icon}}"></ion-icon>\n                        </button>\n                    </ion-item>\n\n                    \n                    <!-- 1 pics -->\n                    <div class="one-image card-background-page" *ngIf="it.medias && it.medias.length===1">\n                        <img [src]="it.medias[0].image"/>\n                        <div class="card-title" *ngIf="it.medias[0].title">{{it.medias[0].title}}</div>\n                        <div class="card-subtitle" *ngIf="it.medias[0].subtitle">{{it.medias[0].subtitle}}</div>\n                    </div>\n                    \n                    <!-- 2 pics -->\n                    <ion-row *ngIf="it.medias && it.medias.length===2">\n                        <ion-col no-padding class="padding-col card-background-page" col-6>\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[0].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias[0].title">{{it.medias[0].title}}</div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6>\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[1].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias[1].title">{{it.medias[1].title}}</div>\n                        </ion-col>\n                    </ion-row>\n                    \n                    <!-- 3 pics -->\n                    <ion-row *ngIf="it.medias && it.medias.length===3">\n                        <ion-col no-padding class="padding-col card-background-page" col-12 col-md-4 col-xl-4>\n                            <div class="image-height-1" [style.background-image]="\'url(\'+it.medias[0].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias[0].title">{{it.medias[0].title}}</div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6 col-md-4 col-xl-4>\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[1].image+\')\'"></div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6 col-md-4 col-xl-4>\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[2].image+\')\'"></div>\n                        </ion-col>\n                    </ion-row>\n                    \n                    <!-- 4 pics -->\n                    <ion-row *ngIf="it.medias && it.medias.length===4">\n                        <ion-col no-padding class="padding-col card-background-page" col-6 col-md-6 col-xl-3>\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[0].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias[0].title">{{it.medias[0].title}}</div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6 col-md-6 col-xl-3>\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[1].image+\')\'"></div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6 col-md-6 col-xl-3>\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[2].image+\')\'"></div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6 col-md-6 col-xl-3>\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[3].image+\')\'"></div>\n                        </ion-col>\n                    </ion-row>\n                    \n                    <!-- 5+ pics -->\n                    <ion-row *ngIf="it.medias && it.medias.length>=5">\n                        <ion-col no-padding class="padding-col card-background-page" col-6>\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[0].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias[0].title">{{it.medias[0].title}}</div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6>\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[1].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias[1].title">{{it.medias[1].title}}</div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-4>\n                            <div class="image-height-3" [style.background-image]="\'url(\'+it.medias[2].image+\')\'"></div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-4>\n                            <div class="image-height-3" [style.background-image]="\'url(\'+it.medias[3].image+\')\'"></div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-4>\n                            <div class="image-height-3" [style.background-image]="\'url(\'+it.medias[4].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias.length>5">{{(it.medias.length-5)}}+</div>\n                        </ion-col>\n                    </ion-row>\n                    \n                    <ion-card-content *ngIf="it.content">\n                        <ion-card-title *ngIf="it.content.title">\n                            {{it.content.title}}\n                        </ion-card-title>\n                        <div *ngFor="let ph of it.content.paragraphs">\n                            <h1 *ngIf="ph.h1">{{ph.h1}}</h1>\n                            <h2 *ngIf="ph.h2">{{ph.h2}}</h2>\n                            <h3 *ngIf="ph.h3">{{ph.h3}}</h3>\n                            <p *ngIf="ph.p" style="text-align: justify;">{{ph.p}}</p>\n                            <div *ngFor="let md of ph.medias" class="card-background-page-top">\n                                <img class="one-image" [src]="md.image" />\n                                <div *ngIf="md.title" class="card-title-top">{{md.title}}</div>\n                                <div *ngIf="md.subtitle" class="card-subtitle-top">{{md.subtitle}}</div>\n                            </div>\n                        </div>\n                        <ion-note *ngIf="it.content.note">{{it.content.note}}</ion-note>\n                    </ion-card-content>\n\n                    <ion-row no-padding *ngIf="it.results">\n                        <ion-col align-self-center text-center>\n                            <div *ngIf="it.results.likes">\n                                <ion-icon *ngIf="it.results.likes.like" color="primary" icon-start clear small name="thumbs-up"></ion-icon>\n                                <ion-icon *ngIf="it.results.likes.love" color="danger" icon-start clear small name="heart"></ion-icon>\n                                <ion-icon *ngIf="it.results.likes.unlike" color="dark" icon-start clear small name="thumbs-down"></ion-icon>\n                                <ion-icon *ngIf="it.results.likes.sad" color="royal" icon-start clear small name="sad"></ion-icon>\n                                <ion-icon *ngIf="it.results.likes.angery" color="angery" icon-start clear small name="ios-sad"></ion-icon>\n                                <ion-note>{{(it.results.likes.like?.length\n                                            +it.results.likes.love?.length\n                                            +it.results.likes.unlike?.length\n                                            +it.results.likes.sad?.length\n                                            +it.results.likes.angery?.length\n                                            )}}</ion-note>\n                            </div>\n                        </ion-col>\n                        <ion-col align-self-center text-center>\n                            <ion-note *ngIf="it.results.comments&&it.results.comments.length>0">{{(it.results.comments.length)}} Comments</ion-note>\n                        </ion-col>\n                        <ion-col align-self-center text-center>\n                            <ion-note *ngIf="it.results.shares&&it.results.shares.length>0">{{(it.results.shares.length)}} Shares</ion-note>\n                        </ion-col>\n                    </ion-row>\n                    <ion-row no-padding *ngIf="it.actions">\n                        <ion-col text-center>\n                            <button *ngIf="it.actions.like" ion-button clear small color="{{it.actions.like.color}}" (click)="onClickActions(it.actions.like, it)" icon-start>\n                                <ion-icon name="{{it.actions.like.icon}}"></ion-icon>\n                                {{it.actions.like.name}}\n                            </button>\n                        </ion-col>\n                        <ion-col text-center>\n                            <button *ngIf="it.actions.comment" ion-button clear small color="{{it.actions.comment.color}}" (click)="onClickActions(it.actions.comment, it)" icon-start>\n                                <ion-icon name=\'{{it.actions.comment.icon}}\'></ion-icon>\n                                {{it.actions.comment.name}}\n                            </button>\n                        </ion-col>\n                        <ion-col text-center>\n                            <button *ngIf="it.actions.share" ion-button clear small color="{{it.actions.share.color}}" (click)="onClickActions(it.actions.share, it)" icon-start>\n                                <ion-icon name=\'{{it.actions.share.icon}}\'></ion-icon>\n                                {{it.actions.share.name}}\n                            </button>\n                        </ion-col>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n\n        </ion-row>\n\n    </ion-grid>\n\n</ion-content>'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/dynamic-card-social/dynamic-card-social.html"*/
+            selector: 'page-dynamic-card-social',template:/*ion-inline-start:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/dynamic-card-social/dynamic-card-social.html"*/'<ion-header>\n    <ion-navbar>\n            <ion-buttons start *ngIf="!isSearch && dynamicCards?.search_bar">\n                <button ion-button icon-only color="primary" (click)="goSearch()">\n                    <ion-icon name="search"></ion-icon>\n                </button>\n            </ion-buttons>\n\n            <ion-searchbar start *ngIf="isSearch && dynamicCards?.search_bar" placeholder="{{dynamicCards?.search_bar.hint}}" [(ngModel)]="searchString"\n            [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (keyup.enter)="searchEnter()"\n            (keyup.esc)="searchEnter()">\n        </ion-searchbar>\n        \n        <ion-title *ngIf="!isSearch">{{dynamicCards?.title}}</ion-title>\n\n        <ion-buttons end *ngFor="let btn of dynamicCards?.buttons">\n            <button *ngIf="!isSearch" class="badge-background" ion-button icon-only color="{{btn.color}}" (click)="onClickHeader(btn)">\n                <ion-icon name="{{btn.icon}}"></ion-icon>\n                <ion-badge class="badge-alert" color="danger" *ngIf="btn.alerts">{{ (btn.alerts?.length>99?\'99+\':btn.alerts?.length) }}</ion-badge>\n            </button>\n        </ion-buttons>\n\n    </ion-navbar>\n</ion-header>\n\n<ion-content no-padding class="background-page gradient">\n\n    <ion-grid no-padding>\n        <ion-row>\n            <ion-col col-12 offset-xl-3 col-xl-6 offset-lg-3 col-lg-6 offset-md-2 col-md-8 col-sm-12\n                *ngFor="let it of dynamicCards?.items">\n                <!-- Card mạng xã hội cho một chủ đề liên quan item -->\n                <ion-card class="background-card gradient grid-border">\n                    <!-- Tóm lượt chủ đề theo tác giả -->\n                    <ion-item class="background-card gradient grid-border" *ngIf="it.short_detail">\n                        <ion-icon *ngIf="!it.short_detail?.avatar" item-start name="contact" color="primary"></ion-icon>\n                        <ion-avatar item-start *ngIf="it.short_detail?.avatar"><img [src]="it.short_detail?.avatar"></ion-avatar>\n                        <h1 *ngIf="it.short_detail?.h1">{{it.short_detail?.h1}}</h1>\n                        <h2 *ngIf="it.short_detail?.h2">{{it.short_detail?.h2}}</h2>\n                        <h3 *ngIf="it.short_detail?.h3">{{it.short_detail?.h3}}</h3>\n                        <p *ngIf="it.short_detail?.p" text-wrap>{{it.short_detail?.p}}</p>\n                        <ion-note item-end *ngIf="it.short_detail?.note">{{it.short_detail?.note}}</ion-note>\n                        <button item-end icon-only ion-button clear small *ngIf="it.short_detail?.action" color="{{it.short_detail?.action?.color}}" (click)="onClickShortDetails(it.short_detail?.action, it)">\n                            <ion-icon name="{{it.short_detail?.action?.icon}}"></ion-icon>\n                        </button>\n                    </ion-item>\n\n                    \n                    <!-- 1 pics -->\n                    <div class="one-image card-background-page" *ngIf="it.medias && it.medias.length===1" (click)="onClickMedia(0,it)">\n                        <img [src]="it.medias[0].image"/>\n                        <div class="card-title" *ngIf="it.medias[0].title">{{it.medias[0].title}}</div>\n                        <div class="card-subtitle" *ngIf="it.medias[0].subtitle">{{it.medias[0].subtitle}}</div>\n                    </div>\n                    \n                    <!-- 2 pics -->\n                    <ion-row *ngIf="it.medias && it.medias.length===2">\n                        <ion-col no-padding class="padding-col card-background-page" col-6 (click)="onClickMedia(0,it)">\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[0].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias[0].title">{{it.medias[0].title}}</div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6 (click)="onClickMedia(1,it)">\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[1].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias[1].title">{{it.medias[1].title}}</div>\n                        </ion-col>\n                    </ion-row>\n                    \n                    <!-- 3 pics -->\n                    <ion-row *ngIf="it.medias && it.medias.length===3">\n                        <ion-col no-padding class="padding-col card-background-page" col-12 col-md-4 col-xl-4 (click)="onClickMedia(0,it)">\n                            <div class="image-height-1" [style.background-image]="\'url(\'+it.medias[0].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias[0].title">{{it.medias[0].title}}</div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6 col-md-4 col-xl-4 (click)="onClickMedia(1,it)">\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[1].image+\')\'"></div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6 col-md-4 col-xl-4 (click)="onClickMedia(2,it)">\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[2].image+\')\'"></div>\n                        </ion-col>\n                    </ion-row>\n                    \n                    <!-- 4 pics -->\n                    <ion-row *ngIf="it.medias && it.medias.length===4">\n                        <ion-col no-padding class="padding-col card-background-page" col-6 col-md-6 col-xl-3 (click)="onClickMedia(0,it)">\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[0].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias[0].title">{{it.medias[0].title}}</div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6 col-md-6 col-xl-3 (click)="onClickMedia(1,it)">\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[1].image+\')\'"></div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6 col-md-6 col-xl-3 (click)="onClickMedia(2,it)">\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[2].image+\')\'"></div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6 col-md-6 col-xl-3 (click)="onClickMedia(3,it)">\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[3].image+\')\'"></div>\n                        </ion-col>\n                    </ion-row>\n                    \n                    <!-- 5+ pics -->\n                    <ion-row *ngIf="it.medias && it.medias.length>=5">\n                        <ion-col no-padding class="padding-col card-background-page" col-6 (click)="onClickMedia(0,it)">\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[0].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias[0].title">{{it.medias[0].title}}</div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-6 (click)="onClickMedia(1,it)">\n                            <div class="image-height-2" [style.background-image]="\'url(\'+it.medias[1].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias[1].title">{{it.medias[1].title}}</div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-4 (click)="onClickMedia(2,it)">\n                            <div class="image-height-3" [style.background-image]="\'url(\'+it.medias[2].image+\')\'"></div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-4 (click)="onClickMedia(3,it)">\n                            <div class="image-height-3" [style.background-image]="\'url(\'+it.medias[3].image+\')\'"></div>\n                        </ion-col>\n                        <ion-col no-padding class="padding-col card-background-page" col-4 (click)="onClickMedia(4,it)">\n                            <div class="image-height-3" [style.background-image]="\'url(\'+it.medias[4].image+\')\'"></div>\n                            <div class="card-title" *ngIf="it.medias.length>5">+{{(it.medias.length-5)}}</div>\n                        </ion-col>\n                    </ion-row>\n                    \n                    <ion-card-content *ngIf="it.content">\n                        <ion-card-title *ngIf="it.content.title">\n                            {{it.content.title}}\n                        </ion-card-title>\n                        <div *ngFor="let ph of it.content.paragraphs">\n                            <h1 *ngIf="ph.h1">{{ph.h1}}</h1>\n                            <div *ngFor="let md of ph.medias" class="card-background-page-top">\n                                <img class="one-image" [src]="md.image" />\n                                <div *ngIf="md.title" class="card-title-top">{{md.title}}</div>\n                                <div *ngIf="md.subtitle" class="card-subtitle-top">{{md.subtitle}}</div>\n                            </div>\n                            <h2 *ngIf="ph.h2">{{ph.h2}}</h2>\n                            <h3 *ngIf="ph.h3">{{ph.h3}}</h3>\n                            <p *ngIf="ph.p" style="text-align: justify;">{{ph.p}}</p>\n                        </div>\n                        <ion-note *ngIf="it.content.note">{{it.content.note}}</ion-note>\n                    </ion-card-content>\n\n                    <ion-row no-padding *ngIf="it.results">\n                        <ion-col align-self-center text-center>\n                            <div *ngIf="it.results.likes">\n                                <ion-icon *ngIf="it.results.likes.like" color="primary" icon-start clear small name="thumbs-up"></ion-icon>\n                                <ion-icon *ngIf="it.results.likes.love" color="danger" icon-start clear small name="heart"></ion-icon>\n                                <ion-icon *ngIf="it.results.likes.unlike" color="dark" icon-start clear small name="thumbs-down"></ion-icon>\n                                <ion-icon *ngIf="it.results.likes.sad" color="royal" icon-start clear small name="sad"></ion-icon>\n                                <ion-icon *ngIf="it.results.likes.angery" color="angery" icon-start clear small name="ios-sad"></ion-icon>\n                                <ion-note>{{(it.results.likes.like?.length\n                                            +it.results.likes.love?.length\n                                            +it.results.likes.unlike?.length\n                                            +it.results.likes.sad?.length\n                                            +it.results.likes.angery?.length\n                                            )}}</ion-note>\n                            </div>\n                        </ion-col>\n                        <ion-col align-self-center text-center>\n                            <ion-note *ngIf="it.results.comments&&it.results.comments.length>0">{{(it.results.comments.length)}} Comments</ion-note>\n                        </ion-col>\n                        <ion-col align-self-center text-center>\n                            <ion-note *ngIf="it.results.shares&&it.results.shares.length>0">{{(it.results.shares.length)}} Shares</ion-note>\n                        </ion-col>\n                    </ion-row>\n                    <ion-row no-padding *ngIf="it.actions">\n                        <ion-col text-center>\n                            <button *ngIf="it.actions.like" ion-button clear small color="{{it.actions.like.color}}" (click)="onClickActions(it.actions.like, it)" icon-start>\n                                <ion-icon name="{{it.actions.like.icon}}"></ion-icon>\n                                {{it.actions.like.name}}\n                            </button>\n                        </ion-col>\n                        <ion-col text-center>\n                            <button *ngIf="it.actions.comment" ion-button clear small color="{{it.actions.comment.color}}" (click)="onClickActions(it.actions.comment, it)" icon-start>\n                                <ion-icon name=\'{{it.actions.comment.icon}}\'></ion-icon>\n                                {{it.actions.comment.name}}\n                            </button>\n                        </ion-col>\n                        <ion-col text-center>\n                            <button *ngIf="it.actions.share" ion-button clear small color="{{it.actions.share.color}}" (click)="onClickActions(it.actions.share, it)" icon-start>\n                                <ion-icon name=\'{{it.actions.share.icon}}\'></ion-icon>\n                                {{it.actions.share.name}}\n                            </button>\n                        </ion-col>\n                    </ion-row>\n                </ion-card>\n            </ion-col>\n\n        </ion-row>\n\n    </ion-grid>\n\n</ion-content>'/*ion-inline-end:"/Users/cuongdq/IONIC/excel-pdf-hoadon/src/pages/dynamic-card-social/dynamic-card-social.html"*/
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_apiAuthService__["a" /* ApiAuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_apiAuthService__["a" /* ApiAuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__["a" /* ApiHttpPublicService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_apiHttpPublicServices__["a" /* ApiHttpPublicService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ViewController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _g || Object])
     ], DynamicCardSocialPage);
     return DynamicCardSocialPage;
-    var _a, _b, _c, _d, _e, _f, _g;
+    var DynamicCardSocialPage_1, _a, _b, _c, _d, _e, _f, _g;
 }());
 
 //# sourceMappingURL=dynamic-card-social.js.map
@@ -3679,8 +3793,14 @@ var ApiHttpPublicService = /** @class */ (function () {
             title: "Mạng xã hội",
             search_bar: { hint: "Tìm cái gì đó" },
             buttons: [
-                { color: "primary", icon: "add" },
-                { color: "secondary", icon: "more" }
+                { color: "primary", icon: "add", next: "ADD" },
+                { color: "primary", icon: "contacts", next: "FRIENDS" },
+                { color: "primary", icon: "notifications", next: "NOTIFY",
+                    alerts: [
+                        "cuong.dq"
+                    ]
+                },
+                { color: "royal", icon: "cog", next: "SETTINGS" }
             ],
             items: [
                 { short_detail: {
@@ -3690,13 +3810,26 @@ var ApiHttpPublicService = /** @class */ (function () {
                         note: "1h ago",
                         action: { color: "primary", icon: "more", next: "MORE" }
                     },
+                    title: "Chi tiết các ảnh hiển thị",
+                    note: "Bài viết chi tiết kết thúc",
                     medias: [
+                        { image: "assets/imgs/img_forest.jpg",
+                            title: "Miền quê yêu dấu",
+                            h1: "Chốn yên bình",
+                            p: "Là nơi bình yên nhất. Bạn có thể dạo bước trên con đường rợp bóng mát thanh bình đến lạ" },
+                        { image: "assets/imgs/anh_vua.png",
+                            h1: "Nội dung bài viết vể cao tốc",
+                            p: "Một bài viết về cao tốc đây nhé" },
+                        { image: "assets/imgs/ca_nau.jpg",
+                            h2: "Cá Nâu ở Quê Mỹ lợi",
+                            p: "Cá ngày mồng 3 tết ở quê" },
+                        { image: "assets/imgs/ca_the.jpg",
+                            h1: "Cá Thệ ở Quê Mỹ lợi",
+                            p: "Cá ngày mồng 3 tết ở quê, Cá thệ kho dưa rất tuyệt vời" },
                         { image: "assets/imgs/img_forest.jpg" },
-                        { image: "assets/imgs/anh_vua.png" },
-                        { image: "assets/imgs/ca_nau.jpg" },
-                        { image: "assets/imgs/ca_the.jpg" },
-                        { image: "assets/imgs/img_forest.jpg" },
-                        { image: "assets/imgs/anh_vua.png" }
+                        { image: "assets/imgs/anh_nho.png",
+                            h1: "Mùa trái cây chín đỏ",
+                            p: "Trái cây vựa, miền quê nhiều cá lắm đó" }
                     ],
                     content: {
                         title: "Miền quê yêu dấu",

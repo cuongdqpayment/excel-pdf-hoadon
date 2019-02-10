@@ -80,8 +80,14 @@ export class ApiHttpPublicService {
       title: "Mạng xã hội"
       , search_bar: {hint: "Tìm cái gì đó"} 
       , buttons: [
-          {color:"primary", icon:"add"}
-          , {color:"secondary", icon:"more"}
+          {color:"primary", icon:"add", next:"ADD"}
+          , {color:"primary", icon:"contacts", next:"FRIENDS"}
+          , {color:"primary", icon:"notifications", next:"NOTIFY"
+            , alerts:[
+                "cuong.dq"
+                ]
+            }
+          , {color:"royal", icon:"cog", next:"SETTINGS"}
         ]
       , items: [
         {   short_detail:{
@@ -91,13 +97,26 @@ export class ApiHttpPublicService {
                 ,note:"1h ago"
                 ,action: {color:"primary", icon: "more", next:"MORE" }
             }
+            ,title:"Chi tiết các ảnh hiển thị"
+            ,note:"Bài viết chi tiết kết thúc"
             ,medias: [
-                {image:"assets/imgs/img_forest.jpg"}
-                ,{image:"assets/imgs/anh_vua.png"}
-                ,{image:"assets/imgs/ca_nau.jpg"}
-                ,{image:"assets/imgs/ca_the.jpg"}
+                {image:"assets/imgs/img_forest.jpg"
+                    ,title:"Miền quê yêu dấu"
+                    ,h1: "Chốn yên bình"
+                    ,p: "Là nơi bình yên nhất. Bạn có thể dạo bước trên con đường rợp bóng mát thanh bình đến lạ"}
+                ,{image:"assets/imgs/anh_vua.png"
+                    ,h1: "Nội dung bài viết vể cao tốc"
+                    ,p: "Một bài viết về cao tốc đây nhé"}
+                ,{image:"assets/imgs/ca_nau.jpg"
+                    ,h2: "Cá Nâu ở Quê Mỹ lợi"
+                    ,p: "Cá ngày mồng 3 tết ở quê"}
+                ,{image:"assets/imgs/ca_the.jpg"
+                    ,h1: "Cá Thệ ở Quê Mỹ lợi"
+                    ,p: "Cá ngày mồng 3 tết ở quê, Cá thệ kho dưa rất tuyệt vời"}
                 ,{image:"assets/imgs/img_forest.jpg"}
-                ,{image:"assets/imgs/anh_vua.png"}
+                ,{image:"assets/imgs/anh_nho.png"
+                    ,h1: "Mùa trái cây chín đỏ"
+                    ,p: "Trái cây vựa, miền quê nhiều cá lắm đó"}
             ]
             ,content:{
                 title:"Miền quê yêu dấu"
