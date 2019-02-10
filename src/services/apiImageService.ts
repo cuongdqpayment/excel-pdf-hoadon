@@ -13,11 +13,12 @@ export class ApiImageService {
 
             if (file){
 
-                var allMetaData;
-                exif.getData(file, function() {
-                    //console.log(file);
+                let allMetaData;
+                let originOrientation;
+                exif.getData(file, function () {
                     allMetaData = exif.getAllTags(this);
-                    console.log("get Tags Orientation",allMetaData.Orientation);
+                    originOrientation = allMetaData.Orientation;
+                    //console.log("get Tags Orientation",allMetaData);
                 });
 
 
@@ -34,9 +35,44 @@ export class ApiImageService {
                         let scale = Math.min((maxW / iw), (maxH / ih));
                         let iwScaled = iw * scale;
                         let ihScaled = ih * scale;
-                        canvas.width = iwScaled;
-                        canvas.height = ihScaled;
-                        context.drawImage(img, 0, 0, iwScaled, ihScaled);
+                        
+                        if (originOrientation>2&&originOrientation<=4){
+                            //rotate 180
+                            console.log('rotate 180');
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            context.rotate(180 * Math.PI / 180);
+                            context.drawImage(img, -img.width, -img.height);
+
+                        } else if (originOrientation>4&&originOrientation<=6){
+                            //rotate 90
+                            console.log('rotate 90');
+                            canvas.width = img.height;
+                            canvas.height = img.width;
+                            context.rotate(90 * Math.PI / 180);
+                            context.drawImage(img, 0 , -img.height);
+
+                        } else if (originOrientation>6&&originOrientation<=8){
+                            //rotate 270
+                            canvas.width = img.height;
+                            canvas.height = img.width;
+                            context.rotate(270 * Math.PI / 180);
+                            context.drawImage(img, -img.width, 0);
+
+                        }else{
+                            //rotate 0
+                            console.log('no rotate');
+                            canvas.width = iwScaled;
+                            canvas.height = ihScaled;
+                            context.drawImage(img, 0, 0, iwScaled, ihScaled);
+                            
+                        }
+                        
+
+
+
+                        
+
                         canvas.toBlob((blob) => {
                             let reader = new FileReader();
                             reader.readAsArrayBuffer(blob);
@@ -47,7 +83,7 @@ export class ApiImageService {
                                     file: newFile //formData post
                                     ,title: filename
                                     ,last_modified: file.lastModifiedDate
-                                    ,subtitle: file.lastModifiedDate + "("+ (allMetaData?allMetaData.Orientation:1) +")"
+                                    ,subtitle: file.lastModifiedDate + "("+ originOrientation +")"
                                     ,width: canvas.width //cho biet anh nam doc hay nam ngang
                                     ,height: canvas.height 
                                     ,size_old: file.size
