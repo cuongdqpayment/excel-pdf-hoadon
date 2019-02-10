@@ -1,5 +1,6 @@
 
 import { Injectable } from '@angular/core';
+import * as exif from 'exif-js';
 
 @Injectable()
 export class ApiImageService {
@@ -11,6 +12,15 @@ export class ApiImageService {
         return new Promise((resolve, reject) => {
 
             if (file){
+
+                var allMetaData;
+                exif.getData(file, function() {
+                    //console.log(file);
+                    allMetaData = exif.getAllTags(this);
+                    console.log("get Tags Orientation",allMetaData.Orientation);
+                });
+
+
                 try {
                     let canvas = document.createElement('canvas');
                     let context = canvas.getContext('2d');
@@ -37,7 +47,7 @@ export class ApiImageService {
                                     file: newFile //formData post
                                     ,title: filename
                                     ,last_modified: file.lastModifiedDate
-                                    ,subtitle: file.lastModifiedDate
+                                    ,subtitle: file.lastModifiedDate + "("+ (allMetaData?allMetaData.Orientation:1) +")"
                                     ,width: canvas.width //cho biet anh nam doc hay nam ngang
                                     ,height: canvas.height 
                                     ,size_old: file.size
