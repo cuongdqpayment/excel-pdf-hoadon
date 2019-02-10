@@ -82,8 +82,8 @@ export class ApiImageService {
                                         image: canvas.toDataURL(), //base64 for view and json post
                                         file: newFile //formData post
                                         ,filename: filename
-                                        ,last_modified: file.lastModified?file.lastModified:file.lastModifiedDate
-                                        ,subtitle: file.lastModified?file.lastModified:file.lastModifiedDate + "("+ originOrientation +")"
+                                        ,last_modified: file.lastModified?file.lastModified:file.lastModifiedDate.getTime()
+                                        ,subtitle: (file.lastModified?new Date(file.lastModified).toLocaleDateString():file.lastModifiedDate) + "("+ originOrientation +")"
                                         ,width: canvas.width //cho biet anh nam doc hay nam ngang
                                         ,height: canvas.height 
                                         ,orientation_old: originOrientation
