@@ -257,12 +257,6 @@ export class ApiHttpPublicService {
                 ,{image:"assets/imgs/anh_vua.png"}
                 ,{image:"assets/imgs/ca_nau.jpg"}
             ]
-            ,results:{ 
-                likes:{
-                    like:["Cuong.dq","abc","xyz"]
-                }
-            
-            }
             ,actions:{
                 like: {name:"Thích", color:"primary", icon: "thumbs-up", next:"LIKE"}
                 ,comment: {name:"Trò chuyện", color:"primary", icon: "chatbubbles", next:"COMMENT"}
