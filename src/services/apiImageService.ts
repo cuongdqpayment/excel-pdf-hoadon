@@ -7,7 +7,7 @@ export class ApiImageService {
     
     //dua vao doi tuong file image
     //tra ve doi tuong file image co kich co nho hon
-    resizeImage(filename: string, file: File, newSize: number) {
+    resizeImage(filename: string, file: any, newSize: number) {
         return new Promise((resolve, reject) => {
 
             if (file){
@@ -36,7 +36,8 @@ export class ApiImageService {
                                     image: canvas.toDataURL(), //base64 for view and json post
                                     file: newFile //formData post
                                     ,title: filename
-                                    //,subtitle: new Date(file.lastModified).toISOString()
+                                    ,last_modified: file.lastModifiedDate
+                                    ,subtitle: file.lastModifiedDate
                                     ,width: canvas.width //cho biet anh nam doc hay nam ngang
                                     ,height: canvas.height 
                                     ,size_old: file.size
