@@ -7,6 +7,7 @@ import { DynamicCardPage } from '../pages/dynamic-card/dynamic-card';
 import { DynamicFormMobilePage } from '../pages/dynamic-form-mobile/dynamic-form-mobile';
 import { DynamicFormWebPage } from '../pages/dynamic-form-web/dynamic-form-web';
 import { DynamicCardSocialPage } from '../pages/dynamic-card-social/dynamic-card-social';
+import { DynamicMediasPage } from '../pages/dynamic-medias/dynamic-medias';
 
 
 @Component({
@@ -60,7 +61,7 @@ export class MyApp {
 
   viewDidLoad() {
 
-    this.rootPage  = DynamicCardSocialPage;
+    this.rootPage  = DynamicMediasPage;
         
   }
 

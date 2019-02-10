@@ -1,14 +1,14 @@
 <ion-header>
     <ion-navbar>
-            <ion-buttons start *ngIf="!isSearch && dynamicCards?.search_bar">
-                <button ion-button icon-only color="primary" (click)="goSearch()">
-                    <ion-icon name="search"></ion-icon>
-                </button>
-            </ion-buttons>
+        <ion-buttons start *ngIf="!isSearch && dynamicCards?.search_bar">
+            <button ion-button icon-only color="primary" (click)="goSearch()">
+                <ion-icon name="search"></ion-icon>
+            </button>
+        </ion-buttons>
 
-            <ion-searchbar start *ngIf="isSearch && dynamicCards?.search_bar" placeholder="{{dynamicCards?.search_bar.hint}}" [(ngModel)]="searchString"
-            [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (keyup.enter)="searchEnter()"
-            (keyup.esc)="searchEnter()">
+        <ion-searchbar start *ngIf="isSearch && dynamicCards?.search_bar" placeholder="{{dynamicCards?.search_bar.hint}}" [(ngModel)]="searchString"
+        [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (keyup.enter)="searchEnter()"
+        (keyup.esc)="searchEnter()">
         </ion-searchbar>
         
         <ion-title *ngIf="!isSearch">{{dynamicCards?.title}}</ion-title>

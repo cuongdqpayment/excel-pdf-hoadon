@@ -16,6 +16,7 @@ import { DynamicFormMobilePage } from '../pages/dynamic-form-mobile/dynamic-form
 import { DynamicFormWebPage } from '../pages/dynamic-form-web/dynamic-form-web';
 import { DynamicListPage } from '../pages/dynamic-list/dynamic-list';
 import { DynamicCardSocialPage } from '../pages/dynamic-card-social/dynamic-card-social';
+import { DynamicMediasPage } from '../pages/dynamic-medias/dynamic-medias';
 import { DynamicCardPage } from '../pages/dynamic-card/dynamic-card';
 
 import { RegisterPage } from '../pages/register/register';
@@ -54,6 +55,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
     DynamicFormWebPage,
     DynamicListPage,
     DynamicCardSocialPage,
+    DynamicMediasPage,
     DynamicCardPage,
     
     ParametersPage,
@@ -87,6 +89,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
     DynamicFormWebPage,
     DynamicListPage,
     DynamicCardSocialPage,
+    DynamicMediasPage,
     DynamicCardPage,
     
     ParametersPage,

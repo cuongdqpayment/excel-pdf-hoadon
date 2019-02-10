@@ -4,40 +4,43 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ApiImageService {
     constructor() { }
+    
     //dua vao doi tuong file image
     //tra ve doi tuong file image co kich co nho hon
     resizeImage(filename: string, file: File, newSize: number) {
         return new Promise((resolve, reject) => {
             try {
-                var canvas = document.createElement('canvas');
-                var context = canvas.getContext('2d');
-                var maxW = newSize;
-                var maxH = newSize;
-                var img = document.createElement('img');
+                let canvas = document.createElement('canvas');
+                let context = canvas.getContext('2d');
+                let maxW = newSize;
+                let maxH = newSize;
+                let img = document.createElement('img');
                 img.src = URL.createObjectURL(file);
                 img.onload = () => {
-                    var iw = img.width;
-                    var ih = img.height;
-                    var scale = Math.min((maxW / iw), (maxH / ih));
-                    var iwScaled = iw * scale;
-                    var ihScaled = ih * scale;
+                    let iw = img.width;
+                    let ih = img.height;
+                    let scale = Math.min((maxW / iw), (maxH / ih));
+                    let iwScaled = iw * scale;
+                    let ihScaled = ih * scale;
                     canvas.width = iwScaled;
                     canvas.height = ihScaled;
                     context.drawImage(img, 0, 0, iwScaled, ihScaled);
-                    //image.src=canvas.toDataURL(); //gan canvas cho image viewer
-                    //xu ly chat luong anh qua cac tham so cua ham toDataURL()
-                    //chuyen sang file de ghi xuong dia hoac truyen tren mang
-                    //su dung ham toBlob sau
                     canvas.toBlob((blob) => {
-                        var reader = new FileReader();
-                        reader.readAsArrayBuffer(blob);//ket qua la mot mang Uint8Array 
-                        reader.onload = () => { //hoac tham so ketqua.target.result == reader.result
-                            //console.log(reader.result); //ket qua la mot mang Uint8Array 
-                            //newFile la mot file image da duoc resize roi nhe
+                        let reader = new FileReader();
+                        reader.readAsArrayBuffer(blob);
+                        reader.onload = () => { 
+                            let newFile = new Blob([reader.result], { type: 'image/jpeg' });
                             resolve({
-                                imageViewer: canvas.toDataURL(),//gan cho img.src= this.src 
-                                file: new Blob([reader.result], { type: 'image/png' }),
-                                name: filename
+                                image: canvas.toDataURL(), //base64 for view and json post
+                                file: newFile, //formData post
+                                title: filename,
+                                subtitle: new Date(file.lastModified).toISOString() //+ "(" + file.size + "-" + ">" + newFile.size + ")"
+                                ,width: canvas.width //cho biet anh nam doc hay nam ngang
+                                ,height: canvas.height 
+                                ,size_old: file.size
+                                ,type_old: file.type
+                                ,size: newFile.size
+                                ,type: newFile.type
                             });
                         }
                     });

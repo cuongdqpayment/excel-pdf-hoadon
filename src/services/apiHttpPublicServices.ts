@@ -21,6 +21,28 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ApiHttpPublicService {
 
+    sampleMediasDynamic: any = {
+        //title:"Form medias",
+        medias: [
+            /* {image:"assets/imgs/img_forest.jpg"
+                ,title:"Miền quê yêu dấu"
+                ,h1: "Chốn yên bình"
+                ,p: "Là nơi bình yên nhất. Bạn có thể dạo bước trên con đường rợp bóng mát thanh bình đến lạ"}
+            ,{image:"assets/imgs/anh_vua.png"
+                ,h1: "Nội dung bài viết vể cao tốc"
+                ,p: "Một bài viết về cao tốc đây nhé"}
+            ,{image:"assets/imgs/ca_nau.jpg"
+                ,h2: "Cá Nâu ở Quê Mỹ lợi"
+                ,p: "Cá ngày mồng 3 tết ở quê"}
+            ,{image:"assets/imgs/ca_the.jpg"
+                ,h1: "Cá Thệ ở Quê Mỹ lợi"
+                ,p: "Cá ngày mồng 3 tết ở quê, Cá thệ kho dưa rất tuyệt vời"}
+            ,{image:"assets/imgs/img_forest.jpg"}
+            ,{image:"assets/imgs/anh_nho.png"
+                ,h1: "Mùa trái cây chín đỏ"
+                ,p: "Trái cây vựa, miền quê nhiều cá lắm đó"} */
+        ]
+    }
 
      sampleFormDynamic: any = {
       title: "Đăng ký"
@@ -307,6 +329,10 @@ export class ApiHttpPublicService {
 
     getDemoCard(){
         return this.sampleCardDynamic;
+    }
+
+    getDemoMedias(){
+        return this.sampleMediasDynamic;
     }
 
     postDynamicForm(url:string,json_data:any){
