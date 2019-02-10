@@ -45,7 +45,7 @@ export class ApiImageService {
                         //quay
                         let imageNew = document.createElement('img');
                         imageNew.src = canvas.toDataURL();
-                        
+
                         imageNew.onload = () => {
                             
                             if (originOrientation>2&&originOrientation<=4){
@@ -81,9 +81,9 @@ export class ApiImageService {
                                     resolve({
                                         image: canvas.toDataURL(), //base64 for view and json post
                                         file: newFile //formData post
-                                        ,title: filename
-                                        ,last_modified: file.lastModifiedDate
-                                        ,subtitle: file.lastModifiedDate + "("+ originOrientation +")"
+                                        ,filename: filename
+                                        ,last_modified: file.lastModified?file.lastModified:file.lastModifiedDate
+                                        ,subtitle: file.lastModified?file.lastModified:file.lastModifiedDate + "("+ originOrientation +")"
                                         ,width: canvas.width //cho biet anh nam doc hay nam ngang
                                         ,height: canvas.height 
                                         ,orientation_old: originOrientation
