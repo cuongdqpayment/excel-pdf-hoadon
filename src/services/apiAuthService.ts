@@ -321,7 +321,21 @@ export class ApiAuthService {
         return this.httpClient.post(url,JSON.stringify(json_data))
                 .toPromise()
                 .then(data => {
-                    return data;
+                    let rtn:any;
+                    rtn = data;
+                    return rtn;
+                });
+    }
+
+    postDynamicFormData(url:string, form_data:any, token?:string){
+        //lay token cua phien xac thuc
+        this.reqInterceptor.setRequestToken(token?token:this.userToken?this.userToken.token:'');
+        return this.httpClient.post(url,form_data)
+                .toPromise()
+                .then(data => {
+                    let rtn:any;
+                    rtn = data;
+                    return rtn;
                 });
     }
 

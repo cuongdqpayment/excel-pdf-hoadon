@@ -22,9 +22,13 @@ import { Injectable } from '@angular/core';
 export class ApiHttpPublicService {
 
     sampleMediasDynamic: any = {
-        //title:"Form medias",
-        medias: [
-            /* {image:"assets/imgs/img_forest.jpg"
+        title:"Đa phương tiện"
+        /* ,buttons: [
+            {color:"primary", icon:"arrow-dropdown-circle",  next:"DOWN"}
+            , {color:"primary", icon:"arrow-dropup-circle", next:"UP"}
+          ] */
+        ,medias: [
+            {image:"assets/imgs/img_forest.jpg"
                 ,title:"Miền quê yêu dấu"
                 ,h1: "Chốn yên bình"
                 ,p: "Là nơi bình yên nhất. Bạn có thể dạo bước trên con đường rợp bóng mát thanh bình đến lạ"}
@@ -40,8 +44,18 @@ export class ApiHttpPublicService {
             ,{image:"assets/imgs/img_forest.jpg"}
             ,{image:"assets/imgs/anh_nho.png"
                 ,h1: "Mùa trái cây chín đỏ"
-                ,p: "Trái cây vựa, miền quê nhiều cá lắm đó"} */
+                ,p: "Trái cây vựa, miền quê nhiều cá lắm đó"}
         ]
+        ,actions:{
+            file: {name:"Open file", size: 300, color:"primary", icon: "image", next:"FILE"}
+            // ,
+            //files: {name:"Open files", color:"primary", icon: "images", next:"FILES"}
+            , open: {key: "down", link_key:"up", name:"Expand", color:"primary", icon:"arrow-dropdown",  next:"DOWN"}
+            , close: {key: "up", link_key:"down", name:"Collapse", color:"primary", icon:"arrow-dropup", next:"UP"}
+            , buttons: [
+                 {name:"Save", icon: "share-alt", color:"primary", url:"https://c3.mobifone.vn/api/ext-auth/save-user-avatar", method: "FORM-DATA", token:true , next:"SAVE"}
+            ]
+        }
     }
 
      sampleFormDynamic: any = {
@@ -76,8 +90,8 @@ export class ApiHttpPublicService {
         , { id: 5, name: "Chọn 1 cái nào", type: "select", value: 2, options: [{ name: "Tùy chọn 1", value: 1 }, { name: "Tùy chọn 2", value: 2 }] }
         , { id: 6, name: "Chọn nhiều cái nào", type: "select_multiple", value: 2, options: [{ name: "Tùy chọn 1", value: 1 }, { name: "Tùy chọn 2", value: 2 }] }
         , {        name: "Ảnh cá nhân", hint: "image viewer", type: "image", url: "https://www.w3schools.com/howto/img_forest.jpg" }
-        , { id: 8, name: "username", hint: "Số điện thoại di động 9 số bỏ số 0 ở đầu", type: "text", input_type: "userName", icon: "information-circle", validators: [{ required: true, min: 9, max: 9, pattern: "^[0-9]*$" }]}
-        , { id: 9, name: "password", hint: "Mật khẩu phải có chữ hoa, chữ thường, ký tự đặc biệt, số", type: "password", input_type: "password", icon: "information-circle", validators: [{ required: true, min: 6, max: 20}]}
+        , { id: 8, key: "username", name: "username", hint: "Số điện thoại di động 9 số bỏ số 0 ở đầu", type: "text", input_type: "userName", icon: "information-circle", validators: [{ required: true, min: 9, max: 9, pattern: "^[0-9]*$" }]}
+        , { id: 9, key: "password", name: "password", hint: "Mật khẩu phải có chữ hoa, chữ thường, ký tự đặc biệt, số", type: "password", input_type: "password", icon: "information-circle", validators: [{ required: true, min: 6, max: 20}]}
         , { id: 10, name: "Họ và tên", type: "text", input_type: "text", icon: "person" }
         , { id: 11, name: "Điện thoại", hint: "Yêu cầu định dạng số điện thoại nhé", type: "text", input_type: "tel", icon: "call", validators: [{ pattern: "^[0-9]*$" }]}
         , { id: 12, name: "email", hint: "Yêu cầu định dạng email nhé", type: "text", input_type: "email", icon: "mail", validators: [{ pattern: "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" }]}
@@ -337,6 +351,16 @@ export class ApiHttpPublicService {
 
     postDynamicForm(url:string,json_data:any){
         return this.httpClient.post(url,JSON.stringify(json_data))
+                .toPromise()
+                .then(data => {
+                    let rtn:any;
+                    rtn = data;
+                    return rtn;
+                });
+    }
+
+    postDynamicFormData(url:string, form_data:any){
+        return this.httpClient.post(url,form_data)
                 .toPromise()
                 .then(data => {
                     let rtn:any;

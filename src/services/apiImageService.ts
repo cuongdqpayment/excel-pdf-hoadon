@@ -34,8 +34,8 @@ export class ApiImageService {
                         let iw = img.width;
                         let ih = img.height;
                         let scale = Math.min((maxW / iw), (maxH / ih));
-                        let iwScaled = iw * scale;
-                        let ihScaled = ih * scale;
+                        let iwScaled = scale>1?iw: iw * scale;
+                        let ihScaled = scale>1?ih: ih * scale;
                         
                         //giam kich thuoc
                         canvas.width = iwScaled;
@@ -82,8 +82,18 @@ export class ApiImageService {
                                         image: canvas.toDataURL(), //base64 for view and json post
                                         file: newFile //formData post
                                         ,filename: filename
+                                        ,h1: filename
+                                        ,p: "Kích cỡ cũ: " + file.size 
+                                        + "(" + img.width + "x" + img.height + ")"
+                                        + "; Kiểu file cũ: " + file.type 
+                                         + "; Hướng ảnh chụp: " + (originOrientation?"("+ originOrientation +")":"1")
+                                         + "; ***Kích cỡ mới: " + newFile.size 
+                                         + "(" + canvas.width + "x" + canvas.height + ")("+ canvas.toDataURL().length+")"
+                                         + "; Kiểu file mới: " + newFile.type 
+                                         ,h3:(file.lastModified?new Date(file.lastModified).toISOString():file.lastModifiedDate)
+                                         ,note: JSON.stringify(allMetaData)
                                         ,last_modified: file.lastModified?file.lastModified:file.lastModifiedDate.getTime()
-                                        ,subtitle: (file.lastModified?new Date(file.lastModified).toLocaleDateString():file.lastModifiedDate) + "("+ originOrientation +")"
+                                        ,subtitle: (file.lastModified?new Date(file.lastModified).toLocaleDateString():file.lastModifiedDate) + (originOrientation?"("+ originOrientation +")":"") 
                                         ,width: canvas.width //cho biet anh nam doc hay nam ngang
                                         ,height: canvas.height 
                                         ,orientation_old: originOrientation

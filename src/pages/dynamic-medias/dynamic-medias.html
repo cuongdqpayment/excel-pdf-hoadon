@@ -1,13 +1,14 @@
 <ion-header *ngIf="dynamicMedias.title || dynamicMedias.buttons">
     <ion-navbar>
-        <ion-title *ngIf="!isSearch">{{dynamicMedias?.title}}</ion-title>
+        <ion-title>{{dynamicMedias?.title}}</ion-title>
 
-        <ion-buttons end *ngFor="let btn of dynamicMedias?.buttons">
-            <button *ngIf="!isSearch" class="badge-background" ion-button icon-only color="{{btn.color}}" (click)="onClickHeader(btn)">
+        <ion-buttons end *ngFor="let btn of dynamicMedias.buttons">
+            <button *ngIf="!btn.invisible" class="badge-background" ion-button icon-only color="{{btn.color}}" (click)="onClickHeader(btn)">
                 <ion-icon name="{{btn.icon}}"></ion-icon>
                 <ion-badge class="badge-alert" color="danger" *ngIf="btn.alerts">{{ (btn.alerts?.length>99?'99+':btn.alerts?.length) }}</ion-badge>
             </button>
         </ion-buttons>
+
     </ion-navbar>
 </ion-header>
 
@@ -16,7 +17,7 @@
     <ion-grid no-padding>
         <ion-row>
             <ion-col col-12 offset-xl-3 col-xl-6 offset-lg-3 col-lg-6 offset-md-2 col-md-8 col-sm-12>
-                <ion-card class="background-card gradient grid-border">
+                <ion-card *ngIf="isHide" class="background-card gradient grid-border">
 
                     <!-- 1 pics -->
                     <div class="one-image card-background-page" *ngIf="dynamicMedias.medias && dynamicMedias.medias.length===1" (click)="onClickMedia(0,dynamicMedias)">
@@ -98,27 +99,54 @@
                             <div class="card-title" *ngIf="dynamicMedias.medias.length>5">+{{(dynamicMedias.medias.length-5)}}</div>
                         </ion-col>
                     </ion-row>
-
-                    <ion-row no-padding>
-                        <ion-col text-center>
-                            <button class="file-background" ion-button clear small color="primary" icon-start>
-                                <input class="file-over" type="file" multiple accept="image/*" (change)="fileChange($event)">
-                                <ion-icon name="images"></ion-icon>
-                                Chọn nhiều ảnh
-                            </button>
-                        </ion-col>
-                        <ion-col text-center>
-
-                        </ion-col>
-                        <ion-col text-center>
-                            <button class="file-background" ion-button clear small color="primary" icon-start>
-                                <input class="file-over" type="file" expandable accept="image/*" (change)="fileChange($event)">
-                                <ion-icon name="image"></ion-icon>
-                                Chọn ảnh
-                            </button>
-                        </ion-col>
-                    </ion-row>
                 </ion-card>
+
+                <ion-card *ngIf="!isHide" class="background-card gradient grid-border">
+                    <ion-card-content>
+                        <div *ngFor="let md of dynamicMedias.medias">
+                                <h1 *ngIf="md.h1">{{md.h1}}</h1>
+                                <img class="one-image" [src]="md.image" />
+                                <div *ngIf="md.title">{{md.title}}</div>
+                                <div *ngIf="md.subtitle">{{md.subtitle}}</div>
+                            <h2 *ngIf="md.h2">{{md.h2}}</h2>
+                            <h3 *ngIf="md.h3">{{md.h3}}</h3>
+                            <p *ngIf="md.p" style="text-align: justify;">{{md.p}}</p>
+                            <ion-note *ngIf="md.note">{{md.note}}</ion-note>
+                        </div>
+                    </ion-card-content>
+                </ion-card>
+
+                <ion-row *ngIf="dynamicMedias.actions" no-padding >
+
+                    <ion-col *ngFor="let myBtn of dynamicMedias.actions.buttons" text-center>
+                        <button icon-start class="file-background" ion-button round color="{{myBtn.color}}" (click)="onClickAction(myBtn)">
+                            <ion-icon name="{{myBtn.icon}}"></ion-icon>
+                            {{myBtn.name}}
+                        </button>
+                    </ion-col>
+
+                    <ion-col *ngIf="dynamicMedias.actions.files" text-center>
+                        <button icon-start class="file-background" ion-button round color="{{dynamicMedias.actions.files.color}}">
+                            <input class="file-over" type="file" multiple accept="image/*" (change)="fileChange($event,dynamicMedias.actions.files)">
+                            <ion-icon name="{{dynamicMedias.actions.files.icon}}"></ion-icon>
+                            {{dynamicMedias.actions.files.name}}
+                        </button>
+                    </ion-col>
+                    <ion-col *ngIf="dynamicMedias.actions.file" text-center>
+                        <button icon-start class="file-background" ion-button round color="{{dynamicMedias.actions.file.color}}">
+                            <input class="file-over" type="file" expandable accept="image/*" (change)="fileChange($event,dynamicMedias.actions.file)">
+                            <ion-icon name="{{dynamicMedias.actions.file.icon}}"></ion-icon>
+                            {{dynamicMedias.actions.file.name}}
+                        </button>
+                    </ion-col>
+                    <ion-col  *ngIf="dynamicMedias.actions.open" text-center>
+                        <button icon-start class="file-background" ion-button round color="{{myShow.color}}" (click)="onClickShowHide(myShow)">
+                            <ion-icon name="{{myShow.icon}}"></ion-icon>
+                            {{myShow.name}}
+                        </button>
+                    </ion-col>
+                </ion-row>
+
             </ion-col>
 
         </ion-row>

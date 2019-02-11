@@ -21,6 +21,11 @@ export class DynamicMediasPage {
 
   isMobile: boolean = false;
 
+  isHide:boolean = true;
+  showButton:any =  {key: "down", link_key:"up", name:"Mở rộng", color:"primary", icon:"arrow-dropdown-circle",  next:"DOWN"}
+  hideButton:any =  {key: "up", link_key:"down", name:"Thu gọn", color:"primary", icon:"arrow-dropup-circle", next:"UP"}
+  myShow:any;
+
   constructor(  private platform: Platform
               , private authService: ApiAuthService
               , private apiImageService: ApiImageService
@@ -35,6 +40,7 @@ export class DynamicMediasPage {
 
     this.dynamicMediasOrigin = this.navParams.get("list") ? this.navParams.get("list") : this.pubService.getDemoMedias();
     this.refresh();
+    this.myShow = this.showButton;
     
     this.callback = this.navParams.get("callback");
     this.step = this.navParams.get("step");
@@ -44,6 +50,7 @@ export class DynamicMediasPage {
       call_waiting_data()
       .then(list=>{
         this.refresh(list);
+        this.myShow = this.showButton;
       })
     }
   }
@@ -52,18 +59,27 @@ export class DynamicMediasPage {
     if (newList) this.dynamicMediasOrigin = newList;
     this.isMobile = (this.platform.platforms()[0]==='mobile');
     this.dynamicMedias = this.dynamicMediasOrigin;
+    this.showButton = (this.dynamicMedias.actions&&this.dynamicMedias.actions.open)?this.dynamicMedias.actions.open:this.showButton;
+    this.hideButton = (this.dynamicMedias.actions&&this.dynamicMedias.actions.close)?this.dynamicMedias.actions.close:this.hideButton;
+
   }
 
-  fileChange(event) {
-    if (event.target && event.target.files) {
-      const files: { [key: string]: File } = event.target.files;
+  fileChange(event,action) {
 
+    if (event.target && event.target.files) {
+
+      let size = (action&&action.size)?action.size:480; //default site anh
+
+      const files: any /* { [key: string]: File } */ = event.target.files;
       const processImages = new Promise((resolve,reject)=>{
         let fileProcessed = [];
         let countFile = Object.keys(files).length, countResize = 0;
+       
+        if (files.length===0) resolve(); 
+
         for (let key in files) { //index, length, item
           if (!isNaN(parseInt(key))) {
-            this.apiImageService.resizeImage(files[key].name,files[key],480)
+            this.apiImageService.resizeImage(files[key].name,files[key],size)
             .then(data=>{
               fileProcessed.push(data);
               if (++countResize>=countFile){
@@ -75,6 +91,7 @@ export class DynamicMediasPage {
             })
           }
         }
+        
       });
 
       let loading = this.loadingCtrl.create({
@@ -83,12 +100,13 @@ export class DynamicMediasPage {
       loading.present();
 
       processImages.then(data=>{
-        this.dynamicMediasOrigin.medias = data;
-        this.refresh();
+        if (data){
+          this.dynamicMediasOrigin.medias = data;
+          this.refresh();
+        }
         loading.dismiss();
       })
       .catch(err=>{
-        console.log(err);
         loading.dismiss();
       });
 
@@ -101,29 +119,30 @@ export class DynamicMediasPage {
   }
 
 
-  onClickMedia(idx,item){
-
-    console.log(idx,item);
-
-    
-    let btn = {}
-
-    this.processCommand(btn); 
+  onClickShowHide(btn){
+    this.isHide = !this.isHide;
+    this.myShow = this.myShow==this.hideButton?this.showButton:this.hideButton;
   }
 
   onClickHeader(btn){
     console.log(btn);
     this.processCommand(btn); 
+
   }
-  
-  onClickShortDetails(btn,item){
-    console.log(btn, item);
+
+  onClickMedia(idx,item){
+
+    console.log(idx,item);
+
+    let btn = {}
+
     this.processCommand(btn); 
   }
 
-  onClickActions(btn,item){
-    console.log(btn, item);
-    this.processCommand(btn); 
+
+  onClickAction(btn){
+    console.log(btn);
+    this.processCommand(btn);
   }
 
   processCommand(btn){
@@ -155,12 +174,101 @@ export class DynamicMediasPage {
           console.log('err getDynamicForm',err);
           loading.dismiss();
         })
+      }else if (btn.method==='FORM-DATA' 
+                && this.dynamicMedias 
+                && this.dynamicMedias.medias 
+                && this.dynamicMedias.medias.length > 0){
+
+        let loading = this.loadingCtrl.create({
+          content: 'Đang xử lý dữ liệu từ máy chủ ....'
+        });
+        loading.present();
+
+        let form_data: FormData = new FormData();
+        form_data.append("count_image", this.dynamicMedias.medias.length);
+        
+        this.dynamicMedias.medias.forEach((el,idx) => {
+          if (el.file && el.filename) form_data.append("image"+idx, el.file, el.filename);
+        });
+
+        if (btn.token) {
+          this.authService.postDynamicFormData(btn.url, form_data)
+          .then(data=>{
+            console.log('receive form data:',data);
+            loading.dismiss();
+  
+            this.next(btn);
+  
+          })
+          .catch(err=>{
+            console.log('err postDynamicFormData',err);
+            loading.dismiss();
+          })
+        }else{
+          this.pubService.postDynamicFormData(btn.url, form_data)
+          .then(data=>{
+            console.log('receive form data:',data);
+            loading.dismiss();
+  
+            this.next(btn);
+  
+          })
+          .catch(err=>{
+            console.log('err postDynamicFormData',err);
+            loading.dismiss();
+          })
+        }
+
+      }else if (btn.method==='POST' 
+                && this.dynamicMedias 
+                && this.dynamicMedias.medias 
+                && this.dynamicMedias.medias.length > 0){
+
+        let loading = this.loadingCtrl.create({
+          content: 'Đang xử lý dữ liệu từ máy chủ ....'
+        });
+        loading.present();
+
+        let json_data = {medias: []}
+        this.dynamicMedias.medias.forEach(el => {
+          json_data.medias.push({image:el.image})
+        });
+
+
+        if (btn.token) {
+          this.authService.postDynamicForm(btn.url, json_data)
+          .then(data=>{
+            console.log('receive:',data);
+            loading.dismiss();
+  
+            this.next(btn);
+  
+          })
+          .catch(err=>{
+            console.log('err postDynamicForm',err);
+            loading.dismiss();
+          })
+        }else{
+          this.pubService.postDynamicForm(btn.url, json_data)
+          .then(data=>{
+            console.log('receive:',data);
+            loading.dismiss();
+  
+            this.next(btn);
+  
+          })
+          .catch(err=>{
+            console.log('err postDynamicForm',err);
+            loading.dismiss();
+          })
+        }
+
       } else {
         this.next(btn);
       }
 
     } else {
-      console.log('do nothing',btn);
+      //console.log('do nothing',btn);
       this.next(btn);
     }
   }
