@@ -110,7 +110,6 @@ export class ApiImageService {
                                          + (allMetaData&&allMetaData.DateTimeDigitized?" * Ngày giờ số hóa: " + allMetaData.DateTimeDigitized:"")
                                          + (allMetaData&&allMetaData.GPSLatitude?" * Vĩ Độ: " + allMetaData.GPSLatitude + allMetaData.GPSLatitudeRef:"")
                                          + (allMetaData&&allMetaData.GPSLongitude?" * Kinh Độ: " + allMetaData.GPSLongitude + allMetaData.GPSLongitudeRef:"")
-                                         + (allMetaData&&allMetaData.GPSLongitude?" * Kinh Độ: " + allMetaData.GPSLongitude + allMetaData.GPSLongitudeRef:"")
                                          + (allMetaData&&allMetaData.GPSDateStamp?" * Ngày giờ tọa độ: " + allMetaData.GPSDateStamp + allMetaData.GPSTimeStamp:"")
 
                                          ,h3:(file.lastModified?new Date(file.lastModified).toISOString():file.lastModifiedDate)
