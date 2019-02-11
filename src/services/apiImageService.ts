@@ -2,8 +2,18 @@
 import { Injectable } from '@angular/core';
 import * as exif from 'exif-js';
 
+const orientation_standard = {
+    1:0,
+    3:180,
+    6:90,
+    8:270
+}
+
 @Injectable()
 export class ApiImageService {
+
+
+
     constructor() { }
     
     //dua vao doi tuong file image
@@ -34,8 +44,8 @@ export class ApiImageService {
                         let iw = img.width;
                         let ih = img.height;
                         let scale = Math.min((maxW / iw), (maxH / ih));
-                        let iwScaled = scale>1?iw: iw * scale;
-                        let ihScaled = scale>1?ih: ih * scale;
+                        let iwScaled = (scale<=0||scale>1)?iw: iw * scale;
+                        let ihScaled = (scale<=0||scale>1)?ih: ih * scale;
                         
                         //giam kich thuoc
                         canvas.width = iwScaled;
@@ -55,7 +65,7 @@ export class ApiImageService {
                                 context.rotate(180 * Math.PI / 180);
                                 context.drawImage(imageNew, -imageNew.width, -imageNew.height);
                                 
-                            } else if (originOrientation>4&&originOrientation<=6){
+                            } else if (originOrientation>4&&originOrientation<=7){
                                 //rotate 90
                                 //console.log('rotate 90');
                                 canvas.width = imageNew.height;
@@ -63,7 +73,7 @@ export class ApiImageService {
                                 context.rotate(90 * Math.PI / 180);
                                 context.drawImage(imageNew, 0 , -imageNew.height);
                                 
-                            } else if (originOrientation>6&&originOrientation<=8){
+                            } else if (originOrientation>7&&originOrientation<=9){
                                 //rotate 270
                                 //console.log('rotate 270');
                                 canvas.width = imageNew.height;
@@ -83,13 +93,26 @@ export class ApiImageService {
                                         file: newFile //formData post
                                         ,filename: filename
                                         ,h1: filename
-                                        ,p: "Kích cỡ cũ: " + file.size 
-                                        + "(" + img.width + "x" + img.height + ")"
-                                        + "; Kiểu file cũ: " + file.type 
-                                         + "; Hướng ảnh chụp: " + (originOrientation?"("+ originOrientation +")":"1")
-                                         + "; ***Kích cỡ mới: " + newFile.size 
-                                         + "(" + canvas.width + "x" + canvas.height + ")("+ canvas.toDataURL().length+")"
-                                         + "; Kiểu file mới: " + newFile.type 
+                                        ,p: " ***Kích cỡ cũ: " + file.size 
+                                         + "(" + img.width + "x" + img.height + ")"
+                                         + " * Kiểu file cũ: " + file.type 
+                                         + " * Hướng ảnh chụp: "  + orientation_standard[(originOrientation?originOrientation:1)]
+                                         + "(" + (originOrientation?"("+ originOrientation +")":"1") +")"
+                                         + " ***Kích cỡ mới: BIN=" + newFile.size 
+                                         + "(" + canvas.width + "x" + canvas.height + ") Base64="+ canvas.toDataURL().length+""
+                                         + " * Kiểu file mới: " + newFile.type 
+                                         + " ***Các tham số tạo ảnh: " 
+                                         + (allMetaData&&allMetaData.Make?" * Hãng sx máy ảnh: "+allMetaData.Make:"")
+                                         + (allMetaData&&allMetaData.Make?" * Đời máy ảnh: "+allMetaData.Model:"")
+                                         + (allMetaData&&allMetaData.Software?" * Phần mềm: "+allMetaData.Software:"")
+                                         + (allMetaData&&allMetaData.DateTime?" * Ngày giờ: "+allMetaData.DateTime:"")
+                                         + (allMetaData&&allMetaData.DateTimeOriginal?" * Ngày giờ gốc: "+allMetaData.DateTimeOriginal:"")
+                                         + (allMetaData&&allMetaData.DateTimeDigitized?" * Ngày giờ số hóa: " + allMetaData.DateTimeDigitized:"")
+                                         + (allMetaData&&allMetaData.GPSLatitude?" * Vĩ Độ: " + allMetaData.GPSLatitude + allMetaData.GPSLatitudeRef:"")
+                                         + (allMetaData&&allMetaData.GPSLongitude?" * Kinh Độ: " + allMetaData.GPSLongitude + allMetaData.GPSLongitudeRef:"")
+                                         + (allMetaData&&allMetaData.GPSLongitude?" * Kinh Độ: " + allMetaData.GPSLongitude + allMetaData.GPSLongitudeRef:"")
+                                         + (allMetaData&&allMetaData.GPSDateStamp?" * Ngày giờ tọa độ: " + allMetaData.GPSDateStamp + allMetaData.GPSTimeStamp:"")
+
                                          ,h3:(file.lastModified?new Date(file.lastModified).toISOString():file.lastModifiedDate)
                                          ,note: JSON.stringify(allMetaData)
                                         ,last_modified: file.lastModified?file.lastModified:file.lastModifiedDate.getTime()

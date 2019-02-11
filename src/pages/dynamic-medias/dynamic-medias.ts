@@ -26,6 +26,8 @@ export class DynamicMediasPage {
   hideButton:any =  {key: "up", link_key:"down", name:"Thu gọn", color:"primary", icon:"arrow-dropup-circle", next:"UP"}
   myShow:any;
 
+  isHideNote = false;
+
   constructor(  private platform: Platform
               , private authService: ApiAuthService
               , private apiImageService: ApiImageService
@@ -68,7 +70,7 @@ export class DynamicMediasPage {
 
     if (event.target && event.target.files) {
 
-      let size = (action&&action.size)?action.size:480; //default site anh
+      let size = (action&&action.size!==undefined&&action.size!==null)?action.size:480; //default site anh
 
       const files: any /* { [key: string]: File } */ = event.target.files;
       const processImages = new Promise((resolve,reject)=>{
@@ -118,6 +120,10 @@ export class DynamicMediasPage {
     }
   }
 
+
+  onClickShowNote(){
+    this.isHideNote = !this.isHideNote;
+  }
 
   onClickShowHide(btn){
     this.isHide = !this.isHide;

@@ -47,9 +47,9 @@ export class ApiHttpPublicService {
                 ,p: "Trái cây vựa, miền quê nhiều cá lắm đó"}
         ]
         ,actions:{
-            file: {name:"Open file", size: 300, color:"primary", icon: "image", next:"FILE"}
+            //file: {name:"Open file", size: 480, color:"primary", icon: "image", next:"FILE"}
             // ,
-            //files: {name:"Open files", color:"primary", icon: "images", next:"FILES"}
+            files: {name:"Open files", color:"primary", icon: "images", next:"FILES"}
             , open: {key: "down", link_key:"up", name:"Expand", color:"primary", icon:"arrow-dropdown",  next:"DOWN"}
             , close: {key: "up", link_key:"down", name:"Collapse", color:"primary", icon:"arrow-dropup", next:"UP"}
             , buttons: [
