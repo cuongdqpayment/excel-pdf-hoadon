@@ -1,6 +1,6 @@
+
 import { Component } from '@angular/core';
 import { CustomerPage } from '../customer/customer';
-import { InvoicePage } from '../invoice/invoice';
 import { ReportPage } from '../report/report';
 import { DynamicListPage } from '../dynamic-list/dynamic-list';
 import { NavController, ModalController, Platform, AlertController, LoadingController } from 'ionic-angular';
@@ -9,6 +9,7 @@ import { DynamicFormWebPage } from '../dynamic-form-web/dynamic-form-web';
 import { ApiResourceService } from '../../services/apiResourceServices';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { DynamicCardPage } from '../dynamic-card/dynamic-card';
+import { HomePage } from '../home/home';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -17,9 +18,9 @@ export class TabsPage {
 
   tabs: any = [
     {
-      root: DynamicCardPage,
-      title: 'Chi tiết',
-      icon: 'apps'
+      root: HomePage,
+      title: 'Home',
+      icon: 'home'
     },
     {
       root: DynamicListPage,
@@ -33,10 +34,9 @@ export class TabsPage {
       params:{}
     },
     {
-      root: ReportPage,
-      title: 'Báo cáo',
-      icon: 'document',
-      params:{}
+      root: DynamicCardPage,
+      title: 'Chi tiết',
+      icon: 'apps'
     }
   ];
 
@@ -55,6 +55,7 @@ export class TabsPage {
     //console.log('2. ngOnInit tabs')
 
     this.tabs[1].params = {
+      parent: this,
       step:'bill-cycle',
       callback: this.callbackList,
       call_waiting_data: this.callWaiting
@@ -73,11 +74,11 @@ export class TabsPage {
   /**
    * ham lay du lieu dynamic-list asyn delay
    */
-  callWaiting(){
+  callWaiting(that){
     return new Promise((resolve, reject) => {
-      this.getBillCycles()
+      that.getBillCycles()
       .then(result=>{
-        resolve(this.convertResult2DynamicList(result))     
+        resolve(that.convertResult2DynamicList(result))     
       })
       .catch(err=>{console.log('err',err)});
       })
@@ -89,9 +90,11 @@ export class TabsPage {
    * Ham goi lai khi cac lenh yeu cau xu ly ben ngoai
    * ADD, EDIT, PDF, ...
    */
-  callbackList(res?:{step?:string,data?:any, next?:string, item?:any, error?:any}){
+  callbackList( that, res?:{step?:string,data?:any, next?:string, item?:any, error?:any}){
     
     return new Promise((resolve, reject) => {
+      console.log('that:', that);
+      
       console.log('callback tabs', res);
       
       if (res.next == 'ADD' || res.next == 'EDIT'){
@@ -106,8 +109,9 @@ export class TabsPage {
         }
 
         //xu ly xong thi dismiss
-        this.openModal({
-          callback: this.callbackForm
+        that.openModal({
+          parent: that,
+          callback: that.callbackForm
           , step:'add-bill-cycle'
           , form: res.data
         })
@@ -127,16 +131,17 @@ export class TabsPage {
 
         let file = new Blob([res.data], { type: 'application/pdf' });            
         var fileURL = URL.createObjectURL(file);
-        const browser1 = this.inAppBrowser.create(fileURL,'_blank', 'hideurlbar=no,location=no,toolbarposition=top');
+        const browser1 = that.inAppBrowser.create(fileURL,'_blank', 'hideurlbar=no,location=no,toolbarposition=top');
       
       } else if (res.next == 'LIST' && res.data) {
         
-        console.log ('new list : ', this.convertResult2DynamicListDetails(res.data));
+        console.log ('new list : ', that.convertResult2DynamicListDetails(res.data));
 
-        this.navCtrl.push(DynamicListPage,{
+        that.navCtrl.push(DynamicListPage,{
+          parent: that,
           step:'invoice-list',
-          callback: this.callbackListInvoice,
-          list : this.convertResult2DynamicListDetails(res.data)
+          callback: that.callbackListInvoice,
+          list : that.convertResult2DynamicListDetails(res.data)
         })
 
       }
@@ -146,9 +151,10 @@ export class TabsPage {
   }
 
   //xu ly list cua invoice
-  callbackListInvoice(res?:{step?:string,data?:any, next?:string, item?:any, error?:any}){
+  callbackListInvoice(that,res?:{step?:string,data?:any, next?:string, item?:any, error?:any}){
   
     return new Promise((resolve, reject) => {
+      
       console.log('callbackListInvoice', res);
       
       if (res.next == 'EDIT' && res.item){
@@ -168,7 +174,7 @@ export class TabsPage {
 
   }
 
-  callbackForm = (res?:{step?:string,data?:any,error?:any}) => {
+  callbackForm = (that, res?:{step?:string,data?:any,error?:any}) => {
     return new Promise((resolve, reject) => {
       //console.log('callback callbackForm', res);
       if (res.step==='add-bill-cycle'&& res.data && res.data.bill_cycle && res.data.bill_date){
@@ -179,7 +185,7 @@ export class TabsPage {
         }
     
         console.log('billCycle OUT',billCycle);
-        this.presentConfirm({
+        that.presentConfirm({
           cancel_text:'Bỏ qua',
           ok_text: 'Đồng ý',
           title:'Xác nhận phát hành hóa đơn',
@@ -188,15 +194,15 @@ export class TabsPage {
                   + 'Với hóa đơn bắt đầu từ số: ' + res.data.invoice_no,
           ok:(isOK)=>{
             if (isOK){
-              this.callCreateInvoices(billCycle)
+              that.callCreateInvoices(billCycle)
               .then(rtrn=>{
                 console.log('Tao xong ky cuoc:',rtrn);
                 //tro ve home de xem ky cuoc
-                this.getBillCycles()
+                that.getBillCycles()
                 .then(result=>{
                   resolve({
-                    next:"CLOSE" //DISMISS THIS FORM
-                    , next_data: this.convertResult2DynamicList(result) //RETURN PARAM FOR PARENT
+                    next:"CLOSE" //DISMISS that FORM
+                    , next_data: that.convertResult2DynamicList(result) //RETURN PARAM FOR PARENT
                   });
                 })
                 .catch(err=>reject(err)); 
@@ -384,7 +390,7 @@ export class TabsPage {
         , h1: (this.platform.is('core')?"Tên khách hàng: ":"") + el.full_name
         , h2: (this.platform.is('core')?"Địa chỉ: ":"") + el.address
         , p: (this.platform.is('core')?"Số tiền: ":"") + el.sum_charge + " (" + el.bill_sum_charge_spell+")"
-        , note: el.invoice_no + "<br>" + el.bill_date.slice(6,8) + '/' + el.bill_date.slice(4,6) + '/' + el.bill_date.slice(0,4)  
+        , note: el.invoice_no + "-" + el.bill_date.slice(6,8) + '/' + el.bill_date.slice(4,6) + '/' + el.bill_date.slice(0,4)  
         , options: [
           { name:"Phát hành lẻ", icon:"calculator", color: "danger", next: "EDIT", }
           , {name:"In đơn lẻ", icon:"print", color: "primary", next: "PDF", url: "https://qld-invoices.herokuapp.com/db/pdf-invoices/"+el.bill_cycle + "/"+ el.cust_id , method:"GET"}

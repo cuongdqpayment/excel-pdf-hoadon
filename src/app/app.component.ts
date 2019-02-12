@@ -2,12 +2,7 @@ import { Component } from '@angular/core';
 import { Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { HomePage } from '../pages/home/home';
-import { DynamicCardPage } from '../pages/dynamic-card/dynamic-card';
-import { DynamicFormMobilePage } from '../pages/dynamic-form-mobile/dynamic-form-mobile';
-import { DynamicFormWebPage } from '../pages/dynamic-form-web/dynamic-form-web';
-import { DynamicCardSocialPage } from '../pages/dynamic-card-social/dynamic-card-social';
-import { DynamicMediasPage } from '../pages/dynamic-medias/dynamic-medias';
+import { LoginPage } from '../pages/login/login';
 
 
 @Component({
@@ -61,7 +56,7 @@ export class MyApp {
 
   viewDidLoad() {
 
-    this.rootPage  = DynamicMediasPage;
+    this.rootPage  = LoginPage;
         
   }
 
