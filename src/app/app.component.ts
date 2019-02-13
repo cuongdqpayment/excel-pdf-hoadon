@@ -3,6 +3,7 @@ import { Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
+import { SignaturePage } from '../pages/signature/signature';
 
 
 @Component({
@@ -56,7 +57,7 @@ export class MyApp {
 
   viewDidLoad() {
 
-    this.rootPage  = LoginPage;
+    this.rootPage  = SignaturePage;
         
   }
 

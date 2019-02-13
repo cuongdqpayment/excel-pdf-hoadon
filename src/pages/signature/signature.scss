@@ -5,13 +5,38 @@ page-signature {
         text-align: center;
     }
     
+    .draw-background {
+        position: absolute;
+        top: 10px;
+        left: 10%;
+        width: 80%;
+        height:50%;
+    }
+
     .draw-area{
 
         background-color: white;
-        height: 300px;
-        width: 300px;
+        height: 100%;
+        width: 100%;
         display: block;
     }
 
+
+    .badge-background {
+        position: relative;
+        text-align: left;
+    }
+
+    .badge-background .badge-alert {
+            position: absolute;
+            left: 30%;
+            top: 20%;
+            padding: 0;
+            margin: 0;
+            font-size: 0.6em;
+            height: 30%;
+            width: 70%;
+            color: #fff;
+    }
 
 }

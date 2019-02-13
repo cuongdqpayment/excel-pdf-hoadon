@@ -18,6 +18,7 @@ import { DynamicListPage } from '../pages/dynamic-list/dynamic-list';
 import { DynamicCardSocialPage } from '../pages/dynamic-card-social/dynamic-card-social';
 import { DynamicMediasPage } from '../pages/dynamic-medias/dynamic-medias';
 import { DynamicCardPage } from '../pages/dynamic-card/dynamic-card';
+import { SignaturePage } from '../pages/signature/signature';
 
 import { RegisterPage } from '../pages/register/register';
 import { SettingPage } from '../pages/setting/setting';
@@ -57,6 +58,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
     DynamicCardSocialPage,
     DynamicMediasPage,
     DynamicCardPage,
+    SignaturePage,
     
     ParametersPage,
     CustomerPage,
@@ -91,6 +93,7 @@ import { ResponseInterceptor } from '../interceptors/responseInterceptor';
     DynamicCardSocialPage,
     DynamicMediasPage,
     DynamicCardPage,
+    SignaturePage,
     
     ParametersPage,
     CustomerPage,

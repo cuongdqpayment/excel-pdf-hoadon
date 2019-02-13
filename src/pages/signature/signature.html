@@ -1,25 +1,29 @@
 <ion-header>
   <ion-toolbar>
+
     <ion-buttons left>
-      <button *ngFor="let colour of availableColours" icon-only ion-button (click)="changeColour(colour)">
-        <ion-icon [style.color]="colour" name="brush"></ion-icon>
+      <button *ngFor="let color of signatureForm.colors" icon-only ion-button (click)="changeColor(color)">
+        <ion-icon color="{{color}}" name="brush"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-buttons right>
-      <button color="secondary" ion-button icon-only (click)="showImage()">
-        <ion-icon name="ios-download"></ion-icon>
-      </button>
-      <button style="border: 1px solid #cecece;" ion-button icon-only style.color="#fff" (click)="changeColour('#fff')">
-        <ion-icon style="color: #fff;" name="square"></ion-icon>
+
+    <ion-title *ngIf="signatureForm.title">{{signatureForm.title}}</ion-title>
+
+    <ion-buttons right *ngFor="let btn of signatureForm.buttons">
+      <button class="badge-background" ion-button icon-only color="{{btn.color}}" (click)="onClickHeader(btn)">
+        <ion-icon name="{{btn.icon}}"></ion-icon>
+        <ion-badge class="badge-alert" color="danger" *ngIf="btn.alerts">{{
+          (btn.alerts?.length>99?'99+':btn.alerts?.length) }}</ion-badge>
       </button>
     </ion-buttons>
   </ion-toolbar>
+
 </ion-header>
 
-<ion-content no-padding class="background-page gradient" >
-      
-  <canvas class="draw-area" #myCanvas (touchstart)="handleStart($event)" (touchmove)="handleMove($event)"></canvas>
-      
+<ion-content no-padding class="background-page gradient">
+  <div class="draw-background">
+    <canvas class="draw-area" #myCanvas (touchstart)="handleStart($event)" (touchmove)="handleMove($event)"></canvas>
+  </div>
 </ion-content>
 
 <ion-footer>
@@ -30,20 +34,8 @@
       </button>
     </ion-buttons>
     <ion-buttons right>
-      <button color="dark" ion-button icon-only (click)="changeSize(5)">
-        <ion-icon style="font-size: 0.25em;" name="radio-button-on"></ion-icon>
-      </button>
-      <button color="dark" ion-button icon-only (click)="changeSize(10)">
-        <ion-icon style="font-size: 0.5em;" name="radio-button-on"></ion-icon>
-      </button>
-      <button color="dark" ion-button icon-only (click)="changeSize(20)">
-        <ion-icon style="font-size: 1em;" name="radio-button-on"></ion-icon>
-      </button>
-      <button color="dark" ion-button icon-only (click)="changeSize(50)">
-        <ion-icon style="font-size: 2em;" name="radio-button-on"></ion-icon>
-      </button>
-      <button color="dark" ion-button icon-only (click)="changeSize(200)">
-        <ion-icon style="font-size: 3em;" name="radio-button-on"></ion-icon>
+      <button *ngFor="let brush of signatureForm.brushes" color="{{brush.color}}" ion-button icon-only (click)="changeSize(brush.size)">
+        <ion-icon [style.font-size]="brush.style" name="{{brush.icon}}"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
