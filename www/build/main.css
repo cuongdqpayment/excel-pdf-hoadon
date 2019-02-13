@@ -122759,6 +122759,11 @@ page-setting .card-background-page .card-subtitle {
   color: #fff;
 }
 
+page-signature canvas {
+  display: block;
+  border: 1px solid #bbb2b2;
+}
+
 page-signature .background-page {
   background-color: #2d96de;
   text-align: center;
@@ -122767,9 +122772,6 @@ page-signature .background-page {
 page-signature .draw-background {
   position: absolute;
   top: 10px;
-  left: 10%;
-  width: 80%;
-  height: 50%;
 }
 
 page-signature .draw-area {

@@ -10,6 +10,7 @@ import { ApiResourceService } from '../../services/apiResourceServices';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { DynamicCardPage } from '../dynamic-card/dynamic-card';
 import { HomePage } from '../home/home';
+import { SignaturePage } from '../signature/signature';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -31,6 +32,12 @@ export class TabsPage {
       root: CustomerPage,
       title: 'Khách hàng',
       icon: 'contacts',
+      params:{}
+    },
+    {
+      root: SignaturePage,
+      title: 'Ký máy',
+      icon: 'brush',
       params:{}
     },
     {
