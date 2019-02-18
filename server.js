@@ -10,7 +10,7 @@ function main(isHttp, isHttps) {
   app.use(require('./ddos/ddos-config').express('ip', 'path'));
 
   //web tinh
-  app.use(express.static(__dirname + '/www'));
+  app.use('/qld',express.static(__dirname + '/www'));
 
   //CORS handle
   const cors = require('./handlers/cors-handler');
@@ -18,10 +18,10 @@ function main(isHttp, isHttps) {
 
   //su dung auth user -- xac thuc bang server mobifone
   const proxyAuth = require('./routes/auth-proxy');
-  app.use('/auth', proxyAuth); 
+  app.use('/qld/auth', proxyAuth); 
 
   const resource = require('./routes/resource-sqlite');
-  app.use('/db', resource); 
+  app.use('/qld/db', resource); 
 
   //ham tra loi cac dia chi khong co
   //The 404 Route (ALWAYS Keep this as the last route)
@@ -75,7 +75,7 @@ function main(isHttp, isHttps) {
 }
 
 //=false or port number >1000
-const isHttp = 8080; //cho web server // 9235 cho auth server
+const isHttp = 9236; //cho web server // 9235 cho auth server
 const isHttps = false //8443; 
 
 main(isHttp, isHttps);
