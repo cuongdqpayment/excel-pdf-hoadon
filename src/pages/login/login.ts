@@ -146,7 +146,7 @@ export class LoginPage {
                       , { type: "button"
                         , options: [
                             { name: "Trở về", next: "BACK"}
-                            , { name: "Xác nhận OTP", next: "CALLBACK", url: "https://c3.mobifone.vn/api/ext-auth/confirm-key", token: res.data.token}
+                            , { name: "Xác nhận OTP", next: "CALLBACK", url: ApiStorageService.authenticationServer+"/confirm-key", token: res.data.token}
                         ]
                       }]
                 }
