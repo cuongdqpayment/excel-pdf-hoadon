@@ -365,7 +365,7 @@ var createInvoicesCycle = (bill_cycle_in,bill_date_in,invoice_no_in, cust_id)=>{
     
                         let sqlInvoice = json2SqliteSQLUpdateCustomerId('invoices', invoice,  ['cust_id','bill_cycle']);
 
-                        console.log('sqlInvoice', sqlInvoice);
+                        //console.log('sqlInvoice', sqlInvoice);
 
                         var invoicePromise = new Promise((resolveInvoice,rejectInvoice)=>{
                             db_service.db.insert(sqlInvoice)

@@ -11,6 +11,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { DynamicCardPage } from '../dynamic-card/dynamic-card';
 import { HomePage } from '../home/home';
 import { SignaturePage } from '../signature/signature';
+import { ApiStorageService } from '../../services/apiStorageService';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -371,8 +372,8 @@ export class TabsPage {
         , note: "ngày " + el.bill_date_vn
         , options: [
           { name:"Phát hành lại", icon:"calculator", color: "danger", next: "EDIT", url: "assets/data/form-add-billcycle.json", method:"GET"}
-          , {name:"Tạo bản in", icon:"print", color: "primary", next: "PDF", url: "https://qld-invoices.herokuapp.com/db/pdf-invoices/"+el.bill_cycle, method:"GET"}
-          , {name:"Xem danh sách", icon:"list-box", color: "secondary", next: "LIST", url: "https://qld-invoices.herokuapp.com/db/json-invoices/"+el.bill_cycle, method:"GET"}
+          , {name:"Tạo bản in", icon:"print", color: "primary", next: "PDF", url: ApiStorageService.resourceServer+"/db/pdf-invoices/"+el.bill_cycle, method:"GET"}
+          , {name:"Xem danh sách", icon:"list-box", color: "secondary", next: "LIST", url: ApiStorageService.resourceServer+"/db/json-invoices/"+el.bill_cycle, method:"GET"}
         ]
       })
     })
@@ -400,7 +401,7 @@ export class TabsPage {
         , note: el.invoice_no + "-" + el.bill_date.slice(6,8) + '/' + el.bill_date.slice(4,6) + '/' + el.bill_date.slice(0,4)  
         , options: [
           { name:"Phát hành lẻ", icon:"calculator", color: "danger", next: "EDIT", }
-          , {name:"In đơn lẻ", icon:"print", color: "primary", next: "PDF", url: "https://qld-invoices.herokuapp.com/db/pdf-invoices/"+el.bill_cycle + "/"+ el.cust_id , method:"GET"}
+          , {name:"In đơn lẻ", icon:"print", color: "primary", next: "PDF", url: ApiStorageService.resourceServer+"/db/pdf-invoices/"+el.bill_cycle + "/"+ el.cust_id , method:"GET"}
           , {name:"Xem chi tiết", icon:"list-box", color: "secondary", next: "VIEW", }
         ]
       })
