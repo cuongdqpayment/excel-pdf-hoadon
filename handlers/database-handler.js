@@ -148,7 +148,7 @@ var selectInvoicesJson = (bill_cycle, cust_id) => {
             ' + custSelect + ' \
             and customers.cust_id = invoices.cust_id  \
             and customers.cust_id = invoices.cust_id \
-            ')
+            order by customers.cust_id')
             .then(results => {
                 invoices = results;
             })
@@ -283,7 +283,8 @@ var createInvoicesCycle = (bill_cycle_in,bill_date_in,invoice_no_in, cust_id)=>{
     let custSelect = cust_id ? 'and customers.cust_id = \'' + cust_id + '\' ' : '';
 
     var customerPromise = new Promise((resolveCustomers,rejectCustomers)=>{
-        db_service.db.getRsts('select cust_id, price_id, area_id, staff_id from customers where status=1 ' + custSelect)
+        db_service.db.getRsts('select cust_id, price_id, area_id, staff_id from customers where status=1 ' + custSelect 
+        + " order by id")
             .then(results => {
                 resolveCustomers(results);
             })
